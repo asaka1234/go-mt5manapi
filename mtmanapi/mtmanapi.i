@@ -3,6 +3,11 @@
 #include <windows.h>
 
 #include "MT5APIManager.h"
+#include "MT5APIConstants.h"
+#include "MT5APILogger.h"
+#include "MT5APITools.h"
+#include "MT5APITypes.h"
+
 %}
 
 %include <typemaps.i>
@@ -32,4 +37,9 @@ typedef int __time32_t;
 
 %include "windows.i"
 %include "MT5APIManager.h"
+%include "MT5APIManager.h"
+%include "MT5APIConstants.h"
+%include "MT5APILogger.h"
+%include "MT5APITools.h"
+%include "MT5APITypes.h"
 
