@@ -82,6 +82,8 @@
 typedef __time32_t time_t;
 typedef int __time32_t;
 
+typedef __int64 long long;
+
 %include "windows.i"
 %include "MT5APIConstants.h"
 %include "MT5APILogger.h"
