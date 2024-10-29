@@ -6,10 +6,10 @@
  * the SWIG interface file instead.
  * ----------------------------------------------------------------------------- */
 
-// source: mtmanapi.i
+// source: mt5api.i
 
-#ifndef SWIG_mtmanapi_WRAP_H_
-#define SWIG_mtmanapi_WRAP_H_
+#ifndef SWIG_mt5api_WRAP_H_
+#define SWIG_mt5api_WRAP_H_
 
 class Swig_memory;
 

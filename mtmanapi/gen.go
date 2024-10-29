@@ -1,2 +1,2 @@
 //go:generate make
-package mtmanapi
+package mt5api
