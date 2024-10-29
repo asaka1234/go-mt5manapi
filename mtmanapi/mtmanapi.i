@@ -1,13 +1,11 @@
 %module(directors="1") mtmanapi
 %{
 #include <windows.h>
-
 #include "MT5APIManager.h"
 #include "MT5APIConstants.h"
 #include "MT5APILogger.h"
 #include "MT5APITools.h"
 #include "MT5APITypes.h"
-
 %}
 
 %include <typemaps.i>
@@ -27,7 +25,6 @@
 
 %feature("director") PumpReceiver;
 %feature("director") DealReceiver;
-%feature("director") IMTManagerAPI;
 
 
 %inline %{
