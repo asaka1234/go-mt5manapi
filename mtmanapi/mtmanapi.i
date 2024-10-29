@@ -6,7 +6,7 @@
 #include "MT5APILogger.h"
 #include "MT5APIPublicKey.h"
 #include "MT5APITools.h"
-#include "Config\MMT5APIConfigCommon.h"
+#include "Config/MT5APIConfigCommon.h"
 #include "Config/MT5APIConfigFeeder.h"
 #include "Config/MT5APIConfigFirewall.h"
 #include "Config/MT5APIConfigGateway.h"
