@@ -27,6 +27,8 @@
 
 %feature("director") PumpReceiver;
 %feature("director") DealReceiver;
+%feature("director") IMTManagerAPI;
+
 
 %inline %{
 #define LPCSTR char*
