@@ -179,13 +179,13 @@ inline double SMTMath::PriceNormalize(const double val,UINT digits)
       digits=MTAPI_PRICE_DIGITS_MAX;
 //--- calculate dividers
    double p=s_decimal[digits];
-   dbl_integer=double(__int64(val));
+   dbl_integer=double(int(val));
    double dbl_fract=(val-dbl_integer)*p;
 //--- check sign
    if(val>0) dbl_fract+=s_rounder_math;
    else      dbl_fract-=s_rounder_math;
 //--- calc fractional part
-   dbl_fract=double(__int64(dbl_fract));
+   dbl_fract=double(int(dbl_fract));
 //--- summary
    return(dbl_integer+dbl_fract/p);
   }
