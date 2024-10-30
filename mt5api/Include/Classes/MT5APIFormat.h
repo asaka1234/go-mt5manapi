@@ -296,7 +296,7 @@ inline LPCWSTR SMTFormat::FormatDouble(CMTStr &str,double val,UINT digits)
 //--- convert to integer
    valdec=val*SMTMath::DecPow((int)digits_int);
 //--- check size
-   if(valdec>=double(_I64_MAX/100) || valdec<=double(_I64_MIN/100))
+   if(valdec>=double(_I64_MAX/(long long)100) || valdec<=double(_I64_MIN/(long long)100))
      {
       CMTStr32 fmt;
       int    pos;
@@ -329,7 +329,7 @@ inline LPCWSTR SMTFormat::FormatMoney(CMTStr &str,double val,UINT digits)
 //--- convert to integer
    valdec=val*SMTMath::DecPow((int)digits);
 //--- check size
-   if(valdec>=double(_I64_MAX/100) || valdec<=double(_I64_MIN/100))
+   if(valdec>=double(_I64_MAX/(long long)100) || valdec<=double(_I64_MIN/(long long)100))
      {
       CMTStr32 fmt;
       int    pos;
