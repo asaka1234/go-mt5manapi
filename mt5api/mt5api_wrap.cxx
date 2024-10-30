@@ -388,10 +388,11 @@ extern "C" {
 
 #include <stdio.h>
 #include <time.h>
-uint64_t GetTickCount64() {
-    struct timespec ts;
-    clock_gettime(CLOCK_MONOTONIC, &ts); // 使用 CLOCK_MONOTONIC 以获得系统启动以来的时间
-    return (ts.tv_sec * 1000) + (ts.tv_nsec / 1000000); // 秒转毫秒并加上纳秒转毫秒的一部分
+uint32_t GetTickCount64() {
+    return time(NULL);
+   // struct timespec ts;
+   // time(CLOCK_MONOTONIC, &ts); // 使用 CLOCK_MONOTONIC 以获得系统启动以来的时间
+   // return (ts.tv_sec * 1000) + (ts.tv_nsec / 1000000); // 秒转毫秒并加上纳秒转毫秒的一部分
 }
 
 
