@@ -12,8 +12,6 @@
 %include "carrays.i"
 
 
-%feature("director") IMTManagerAPI;
-
 %inline %{
 #define LPCSTR char*
 %}
