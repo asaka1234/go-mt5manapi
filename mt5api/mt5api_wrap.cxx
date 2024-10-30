@@ -386,6 +386,15 @@ static void* Swig_malloc(int c) {
 extern "C" {
 #endif
 
+#include <stdio.h>
+#include <time.h>
+uint64_t GetTickCount64() {
+    struct timespec ts;
+    clock_gettime(CLOCK_MONOTONIC, &ts); // 使用 CLOCK_MONOTONIC 以获得系统启动以来的时间
+    return (ts.tv_sec * 1000) + (ts.tv_nsec / 1000000); // 秒转毫秒并加上纳秒转毫秒的一部分
+}
+
+
 void _wrap_Swig_free_mt5api_2b555e28fa1ab890(void *_swig_go_0) {
   void *arg1 = (void *) 0 ;
   

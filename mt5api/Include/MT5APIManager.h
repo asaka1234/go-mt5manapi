@@ -1812,6 +1812,7 @@ inline MTAPIRES CMTManagerAPIFactory::LicenseCheckManager(IMTManagerAPI *manager
    wcscpy_s(license.name,_countof(license.name),name);
    CMTStr::Terminate(license.name);
 //--- initialize random generator
+// modified by custom cy
    srand(GetTickCount64() & 0x7fffffff);
 //--- generate sequence of random numbers
    for(license.random_size=0;license.random_size<sizeof(license.random);license.random_size++)
