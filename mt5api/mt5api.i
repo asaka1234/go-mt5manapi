@@ -11,17 +11,6 @@
 %include <typemaps.i>
 %include "carrays.i"
 
-%array_functions(ConGroup, ConGroupArray);
-%array_functions(ConGroupSec, ConGroupSecArray);
-%array_functions(UserRecord, UserRecordArray);
-%array_functions(TradeRecord, TradeRecordArray);
-%array_functions(ConSymbol, ConSymbolArray);
-%array_functions(SymbolInfo, SymbolInfoArray);
-%array_functions(RateInfo, RateInfoArray);
-%array_functions(TickInfo, TickInfoArray);
-%array_functions(ConSessions, ConSessionsArray);
-%array_functions(ConSession, ConSessionArray);
-%array_functions(RequestInfo, RequestInfoArray);
 
 %feature("director") IMTManagerAPI;
 
