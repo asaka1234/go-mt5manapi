@@ -1949,26 +1949,20 @@ import "unsafe"
 import _ "runtime/cgo"
 import "sync"
 
-
 type _ unsafe.Pointer
-
-
 
 var Swig_escape_always_false bool
 var Swig_escape_val interface{}
 
-
 type _swig_fnptr *byte
 type _swig_memberptr *byte
 
-
-func getSwigcptr(v interface { Swigcptr() uintptr }) uintptr {
+func getSwigcptr(v interface{ Swigcptr() uintptr }) uintptr {
 	if v == nil {
 		return 0
 	}
 	return v.Swigcptr()
 }
-
 
 type _ sync.Mutex
 
@@ -1983,13 +1977,16 @@ func cgo_panic__mt5api_024284ab9ca1e20a(p *byte) {
 	panic(string(s))
 }
 
+type swig_gostring struct {
+	p uintptr
+	n int
+}
 
-type swig_gostring struct { p uintptr; n int }
 func swigCopyString(s string) string {
-  p := *(*swig_gostring)(unsafe.Pointer(&s))
-  r := string((*[0x7fffffff]byte)(unsafe.Pointer(p.p))[:p.n])
-  Swig_free(p.p)
-  return r
+	p := *(*swig_gostring)(unsafe.Pointer(&s))
+	r := string((*[0x7fffffff]byte)(unsafe.Pointer(p.p))[:p.n])
+	Swig_free(p.p)
+	return r
 }
 
 func Swig_free(arg1 uintptr) {
@@ -2308,6 +2305,7 @@ func GetTickCount64() (_swig_ret Uint32_t) {
 }
 
 const MTManagerAPIVersion int = 4540
+
 func _swig_getMTManagerAPIDate() (_swig_ret Wchar_t) {
 	var swig_r Wchar_t
 	swig_r = (Wchar_t)(SwigcptrWchar_t(C._wrap_MTManagerAPIDate_mt5api_024284ab9ca1e20a()))
@@ -2315,6 +2313,7 @@ func _swig_getMTManagerAPIDate() (_swig_ret Wchar_t) {
 }
 
 var MTManagerAPIDate Wchar_t = _swig_getMTManagerAPIDate()
+
 type SwigcptrMTProxyInfo uintptr
 
 func (p SwigcptrMTProxyInfo) Swigcptr() uintptr {
@@ -2331,6 +2330,7 @@ func _swig_getMTProxyInfo_PROXY_SOCKS4_MTProxyInfo() (_swig_ret int) {
 }
 
 var MTProxyInfoPROXY_SOCKS4 int = _swig_getMTProxyInfo_PROXY_SOCKS4_MTProxyInfo()
+
 func _swig_getMTProxyInfo_PROXY_SOCKS5_MTProxyInfo() (_swig_ret int) {
 	var swig_r int
 	swig_r = (int)(C._wrap_PROXY_SOCKS5_MTProxyInfo_mt5api_024284ab9ca1e20a())
@@ -2338,6 +2338,7 @@ func _swig_getMTProxyInfo_PROXY_SOCKS5_MTProxyInfo() (_swig_ret int) {
 }
 
 var MTProxyInfoPROXY_SOCKS5 int = _swig_getMTProxyInfo_PROXY_SOCKS5_MTProxyInfo()
+
 func _swig_getMTProxyInfo_PROXY_HTTP_MTProxyInfo() (_swig_ret int) {
 	var swig_r int
 	swig_r = (int)(C._wrap_PROXY_HTTP_MTProxyInfo_mt5api_024284ab9ca1e20a())
@@ -2345,6 +2346,7 @@ func _swig_getMTProxyInfo_PROXY_HTTP_MTProxyInfo() (_swig_ret int) {
 }
 
 var MTProxyInfoPROXY_HTTP int = _swig_getMTProxyInfo_PROXY_HTTP_MTProxyInfo()
+
 func _swig_getMTProxyInfo_PROXY_FIRST_MTProxyInfo() (_swig_ret int) {
 	var swig_r int
 	swig_r = (int)(C._wrap_PROXY_FIRST_MTProxyInfo_mt5api_024284ab9ca1e20a())
@@ -2352,6 +2354,7 @@ func _swig_getMTProxyInfo_PROXY_FIRST_MTProxyInfo() (_swig_ret int) {
 }
 
 var MTProxyInfoPROXY_FIRST int = _swig_getMTProxyInfo_PROXY_FIRST_MTProxyInfo()
+
 func _swig_getMTProxyInfo_PROXY_LAST_MTProxyInfo() (_swig_ret int) {
 	var swig_r int
 	swig_r = (int)(C._wrap_PROXY_LAST_MTProxyInfo_mt5api_024284ab9ca1e20a())
@@ -2359,6 +2362,7 @@ func _swig_getMTProxyInfo_PROXY_LAST_MTProxyInfo() (_swig_ret int) {
 }
 
 var MTProxyInfoPROXY_LAST int = _swig_getMTProxyInfo_PROXY_LAST_MTProxyInfo()
+
 func (arg1 SwigcptrMTProxyInfo) SetEnable(arg2 int) {
 	_swig_i_0 := arg1
 	_swig_i_1 := arg2
@@ -2783,18 +2787,18 @@ type _swig_DirectorInterfaceIMTManagerAPILoggerServerRequest interface {
 	LoggerServerRequest(uint, uint, Signed_SS___int64, Signed_SS___int64, LPCWSTR, MTLogRecord, *uint) uint
 }
 
-func (swig_p *_swig_DirectorIMTManagerAPI) LoggerServerRequest(mode uint, type uint, from Signed_SS___int64, to Signed_SS___int64, filter LPCWSTR, records MTLogRecord, records_total *uint) uint {
+func (swig_p *_swig_DirectorIMTManagerAPI) LoggerServerRequest(mode uint, xtype uint, from Signed_SS___int64, to Signed_SS___int64, filter LPCWSTR, records MTLogRecord, records_total *uint) uint {
 	if swig_g, swig_ok := swig_p.v.(_swig_DirectorInterfaceIMTManagerAPILoggerServerRequest); swig_ok {
-		return swig_g.LoggerServerRequest(mode, type, from, to, filter, records, records_total)
+		return swig_g.LoggerServerRequest(mode, xtype, from, to, filter, records, records_total)
 	}
 	panic("call to pure virtual method")
 }
 
 //export Swig_DirectorIMTManagerAPI_callback_LoggerServerRequest_mt5api_024284ab9ca1e20a
-func Swig_DirectorIMTManagerAPI_callback_LoggerServerRequest_mt5api_024284ab9ca1e20a(swig_c int, mode uint, type uint, from uintptr, to uintptr, filter uintptr, records uintptr, records_total *uint) (swig_result uint) {
+func Swig_DirectorIMTManagerAPI_callback_LoggerServerRequest_mt5api_024284ab9ca1e20a(swig_c int, mode uint, xtype uint, from uintptr, to uintptr, filter uintptr, records uintptr, records_total *uint) (swig_result uint) {
 	var swig_r uint
 	swig_p := swigDirectorLookup(swig_c).(*_swig_DirectorIMTManagerAPI)
-	swig_r = swig_p.LoggerServerRequest(mode, type, SwigcptrSigned_SS___int64(from), SwigcptrSigned_SS___int64(to), SwigcptrLPCWSTR(filter), SwigcptrMTLogRecord(records), records_total)
+	swig_r = swig_p.LoggerServerRequest(mode, xtype, SwigcptrSigned_SS___int64(from), SwigcptrSigned_SS___int64(to), SwigcptrLPCWSTR(filter), SwigcptrMTLogRecord(records), records_total)
 	return swig_r
 }
 
@@ -4264,18 +4268,18 @@ type _swig_DirectorInterfaceIMTManagerAPIUserPasswordCheck interface {
 	UserPasswordCheck(uint, uint64, LPCWSTR) uint
 }
 
-func (swig_p *_swig_DirectorIMTManagerAPI) UserPasswordCheck(type uint, login uint64, password LPCWSTR) uint {
+func (swig_p *_swig_DirectorIMTManagerAPI) UserPasswordCheck(xtype uint, login uint64, password LPCWSTR) uint {
 	if swig_g, swig_ok := swig_p.v.(_swig_DirectorInterfaceIMTManagerAPIUserPasswordCheck); swig_ok {
-		return swig_g.UserPasswordCheck(type, login, password)
+		return swig_g.UserPasswordCheck(xtype, login, password)
 	}
 	panic("call to pure virtual method")
 }
 
 //export Swig_DirectorIMTManagerAPI_callback_UserPasswordCheck_mt5api_024284ab9ca1e20a
-func Swig_DirectorIMTManagerAPI_callback_UserPasswordCheck_mt5api_024284ab9ca1e20a(swig_c int, type uint, login uint64, password uintptr) (swig_result uint) {
+func Swig_DirectorIMTManagerAPI_callback_UserPasswordCheck_mt5api_024284ab9ca1e20a(swig_c int, xtype uint, login uint64, password uintptr) (swig_result uint) {
 	var swig_r uint
 	swig_p := swigDirectorLookup(swig_c).(*_swig_DirectorIMTManagerAPI)
-	swig_r = swig_p.UserPasswordCheck(type, login, SwigcptrLPCWSTR(password))
+	swig_r = swig_p.UserPasswordCheck(xtype, login, SwigcptrLPCWSTR(password))
 	return swig_r
 }
 
@@ -4283,18 +4287,18 @@ type _swig_DirectorInterfaceIMTManagerAPIUserPasswordChange interface {
 	UserPasswordChange(uint, uint64, LPCWSTR) uint
 }
 
-func (swig_p *_swig_DirectorIMTManagerAPI) UserPasswordChange(type uint, login uint64, password LPCWSTR) uint {
+func (swig_p *_swig_DirectorIMTManagerAPI) UserPasswordChange(xtype uint, login uint64, password LPCWSTR) uint {
 	if swig_g, swig_ok := swig_p.v.(_swig_DirectorInterfaceIMTManagerAPIUserPasswordChange); swig_ok {
-		return swig_g.UserPasswordChange(type, login, password)
+		return swig_g.UserPasswordChange(xtype, login, password)
 	}
 	panic("call to pure virtual method")
 }
 
 //export Swig_DirectorIMTManagerAPI_callback_UserPasswordChange_mt5api_024284ab9ca1e20a
-func Swig_DirectorIMTManagerAPI_callback_UserPasswordChange_mt5api_024284ab9ca1e20a(swig_c int, type uint, login uint64, password uintptr) (swig_result uint) {
+func Swig_DirectorIMTManagerAPI_callback_UserPasswordChange_mt5api_024284ab9ca1e20a(swig_c int, xtype uint, login uint64, password uintptr) (swig_result uint) {
 	var swig_r uint
 	swig_p := swigDirectorLookup(swig_c).(*_swig_DirectorIMTManagerAPI)
-	swig_r = swig_p.UserPasswordChange(type, login, SwigcptrLPCWSTR(password))
+	swig_r = swig_p.UserPasswordChange(xtype, login, SwigcptrLPCWSTR(password))
 	return swig_r
 }
 
@@ -6305,18 +6309,18 @@ type _swig_DirectorInterfaceIMTManagerAPIDealerBalance interface {
 	DealerBalance(uint64, float64, uint, LPCWSTR, *uint64) uint
 }
 
-func (swig_p *_swig_DirectorIMTManagerAPI) DealerBalance(login uint64, value float64, type uint, comment LPCWSTR, deal_id *uint64) uint {
+func (swig_p *_swig_DirectorIMTManagerAPI) DealerBalance(login uint64, value float64, xtype uint, comment LPCWSTR, deal_id *uint64) uint {
 	if swig_g, swig_ok := swig_p.v.(_swig_DirectorInterfaceIMTManagerAPIDealerBalance); swig_ok {
-		return swig_g.DealerBalance(login, value, type, comment, deal_id)
+		return swig_g.DealerBalance(login, value, xtype, comment, deal_id)
 	}
 	panic("call to pure virtual method")
 }
 
 //export Swig_DirectorIMTManagerAPI_callback_DealerBalance_mt5api_024284ab9ca1e20a
-func Swig_DirectorIMTManagerAPI_callback_DealerBalance_mt5api_024284ab9ca1e20a(swig_c int, login uint64, value float64, type uint, comment uintptr, deal_id *uint64) (swig_result uint) {
+func Swig_DirectorIMTManagerAPI_callback_DealerBalance_mt5api_024284ab9ca1e20a(swig_c int, login uint64, value float64, xtype uint, comment uintptr, deal_id *uint64) (swig_result uint) {
 	var swig_r uint
 	swig_p := swigDirectorLookup(swig_c).(*_swig_DirectorIMTManagerAPI)
-	swig_r = swig_p.DealerBalance(login, value, type, SwigcptrLPCWSTR(comment), deal_id)
+	swig_r = swig_p.DealerBalance(login, value, xtype, SwigcptrLPCWSTR(comment), deal_id)
 	return swig_r
 }
 
@@ -6324,18 +6328,18 @@ type _swig_DirectorInterfaceIMTManagerAPIDealerBalanceRaw interface {
 	DealerBalanceRaw(uint64, float64, uint, LPCWSTR, *uint64) uint
 }
 
-func (swig_p *_swig_DirectorIMTManagerAPI) DealerBalanceRaw(login uint64, value float64, type uint, comment LPCWSTR, deal_id *uint64) uint {
+func (swig_p *_swig_DirectorIMTManagerAPI) DealerBalanceRaw(login uint64, value float64, xtype uint, comment LPCWSTR, deal_id *uint64) uint {
 	if swig_g, swig_ok := swig_p.v.(_swig_DirectorInterfaceIMTManagerAPIDealerBalanceRaw); swig_ok {
-		return swig_g.DealerBalanceRaw(login, value, type, comment, deal_id)
+		return swig_g.DealerBalanceRaw(login, value, xtype, comment, deal_id)
 	}
 	panic("call to pure virtual method")
 }
 
 //export Swig_DirectorIMTManagerAPI_callback_DealerBalanceRaw_mt5api_024284ab9ca1e20a
-func Swig_DirectorIMTManagerAPI_callback_DealerBalanceRaw_mt5api_024284ab9ca1e20a(swig_c int, login uint64, value float64, type uint, comment uintptr, deal_id *uint64) (swig_result uint) {
+func Swig_DirectorIMTManagerAPI_callback_DealerBalanceRaw_mt5api_024284ab9ca1e20a(swig_c int, login uint64, value float64, xtype uint, comment uintptr, deal_id *uint64) (swig_result uint) {
 	var swig_r uint
 	swig_p := swigDirectorLookup(swig_c).(*_swig_DirectorIMTManagerAPI)
-	swig_r = swig_p.DealerBalanceRaw(login, value, type, SwigcptrLPCWSTR(comment), deal_id)
+	swig_r = swig_p.DealerBalanceRaw(login, value, xtype, SwigcptrLPCWSTR(comment), deal_id)
 	return swig_r
 }
 
@@ -7082,18 +7086,18 @@ type _swig_DirectorInterfaceIMTManagerAPIPasswordChange interface {
 	PasswordChange(uint, LPCWSTR) uint
 }
 
-func (swig_p *_swig_DirectorIMTManagerAPI) PasswordChange(type uint, password LPCWSTR) uint {
+func (swig_p *_swig_DirectorIMTManagerAPI) PasswordChange(xtype uint, password LPCWSTR) uint {
 	if swig_g, swig_ok := swig_p.v.(_swig_DirectorInterfaceIMTManagerAPIPasswordChange); swig_ok {
-		return swig_g.PasswordChange(type, password)
+		return swig_g.PasswordChange(xtype, password)
 	}
 	panic("call to pure virtual method")
 }
 
 //export Swig_DirectorIMTManagerAPI_callback_PasswordChange_mt5api_024284ab9ca1e20a
-func Swig_DirectorIMTManagerAPI_callback_PasswordChange_mt5api_024284ab9ca1e20a(swig_c int, type uint, password uintptr) (swig_result uint) {
+func Swig_DirectorIMTManagerAPI_callback_PasswordChange_mt5api_024284ab9ca1e20a(swig_c int, xtype uint, password uintptr) (swig_result uint) {
 	var swig_r uint
 	swig_p := swigDirectorLookup(swig_c).(*_swig_DirectorIMTManagerAPI)
-	swig_r = swig_p.PasswordChange(type, SwigcptrLPCWSTR(password))
+	swig_r = swig_p.PasswordChange(xtype, SwigcptrLPCWSTR(password))
 	return swig_r
 }
 
@@ -7690,18 +7694,18 @@ type _swig_DirectorInterfaceIMTManagerAPITradeProfit interface {
 	TradeProfit(LPCWSTR, LPCWSTR, uint, uint64, float64, float64, *float64, *float64) uint
 }
 
-func (swig_p *_swig_DirectorIMTManagerAPI) TradeProfit(group LPCWSTR, symbol LPCWSTR, type uint, volume uint64, price_open float64, price_close float64, profit *float64, profit_rate *float64) uint {
+func (swig_p *_swig_DirectorIMTManagerAPI) TradeProfit(group LPCWSTR, symbol LPCWSTR, xtype uint, volume uint64, price_open float64, price_close float64, profit *float64, profit_rate *float64) uint {
 	if swig_g, swig_ok := swig_p.v.(_swig_DirectorInterfaceIMTManagerAPITradeProfit); swig_ok {
-		return swig_g.TradeProfit(group, symbol, type, volume, price_open, price_close, profit, profit_rate)
+		return swig_g.TradeProfit(group, symbol, xtype, volume, price_open, price_close, profit, profit_rate)
 	}
 	panic("call to pure virtual method")
 }
 
 //export Swig_DirectorIMTManagerAPI_callback_TradeProfit_mt5api_024284ab9ca1e20a
-func Swig_DirectorIMTManagerAPI_callback_TradeProfit_mt5api_024284ab9ca1e20a(swig_c int, group uintptr, symbol uintptr, type uint, volume uint64, price_open float64, price_close float64, profit *float64, profit_rate *float64) (swig_result uint) {
+func Swig_DirectorIMTManagerAPI_callback_TradeProfit_mt5api_024284ab9ca1e20a(swig_c int, group uintptr, symbol uintptr, xtype uint, volume uint64, price_open float64, price_close float64, profit *float64, profit_rate *float64) (swig_result uint) {
 	var swig_r uint
 	swig_p := swigDirectorLookup(swig_c).(*_swig_DirectorIMTManagerAPI)
-	swig_r = swig_p.TradeProfit(SwigcptrLPCWSTR(group), SwigcptrLPCWSTR(symbol), type, volume, price_open, price_close, profit, profit_rate)
+	swig_r = swig_p.TradeProfit(SwigcptrLPCWSTR(group), SwigcptrLPCWSTR(symbol), xtype, volume, price_open, price_close, profit, profit_rate)
 	return swig_r
 }
 
@@ -7895,18 +7899,18 @@ type _swig_DirectorInterfaceIMTManagerAPITradeMarginCheck__SWIG_0 interface {
 	TradeMarginCheck__SWIG_0(uint64, LPCWSTR, uint, uint64, float64, IMTAccount, IMTAccount) uint
 }
 
-func (swig_p *_swig_DirectorIMTManagerAPI) TradeMarginCheck__SWIG_0(login uint64, symbol LPCWSTR, type uint, volume uint64, price float64, account_new IMTAccount, account_current IMTAccount) uint {
+func (swig_p *_swig_DirectorIMTManagerAPI) TradeMarginCheck__SWIG_0(login uint64, symbol LPCWSTR, xtype uint, volume uint64, price float64, account_new IMTAccount, account_current IMTAccount) uint {
 	if swig_g, swig_ok := swig_p.v.(_swig_DirectorInterfaceIMTManagerAPITradeMarginCheck__SWIG_0); swig_ok {
-		return swig_g.TradeMarginCheck__SWIG_0(login, symbol, type, volume, price, account_new, account_current)
+		return swig_g.TradeMarginCheck__SWIG_0(login, symbol, xtype, volume, price, account_new, account_current)
 	}
 	panic("call to pure virtual method")
 }
 
 //export Swig_DirectorIMTManagerAPI_callback_TradeMarginCheck__SWIG_0_mt5api_024284ab9ca1e20a
-func Swig_DirectorIMTManagerAPI_callback_TradeMarginCheck__SWIG_0_mt5api_024284ab9ca1e20a(swig_c int, login uint64, symbol uintptr, type uint, volume uint64, price float64, account_new uintptr, account_current uintptr) (swig_result uint) {
+func Swig_DirectorIMTManagerAPI_callback_TradeMarginCheck__SWIG_0_mt5api_024284ab9ca1e20a(swig_c int, login uint64, symbol uintptr, xtype uint, volume uint64, price float64, account_new uintptr, account_current uintptr) (swig_result uint) {
 	var swig_r uint
 	swig_p := swigDirectorLookup(swig_c).(*_swig_DirectorIMTManagerAPI)
-	swig_r = swig_p.TradeMarginCheck__SWIG_0(login, SwigcptrLPCWSTR(symbol), type, volume, price, SwigcptrIMTAccount(account_new), SwigcptrIMTAccount(account_current))
+	swig_r = swig_p.TradeMarginCheck__SWIG_0(login, SwigcptrLPCWSTR(symbol), xtype, volume, price, SwigcptrIMTAccount(account_new), SwigcptrIMTAccount(account_current))
 	return swig_r
 }
 
@@ -7914,18 +7918,18 @@ type _swig_DirectorInterfaceIMTManagerAPITradeMarginCheck__SWIG_1 interface {
 	TradeMarginCheck__SWIG_1(uint64, LPCWSTR, uint, uint64, float64, IMTAccount) uint
 }
 
-func (swig_p *_swig_DirectorIMTManagerAPI) TradeMarginCheck__SWIG_1(login uint64, symbol LPCWSTR, type uint, volume uint64, price float64, account_new IMTAccount) uint {
+func (swig_p *_swig_DirectorIMTManagerAPI) TradeMarginCheck__SWIG_1(login uint64, symbol LPCWSTR, xtype uint, volume uint64, price float64, account_new IMTAccount) uint {
 	if swig_g, swig_ok := swig_p.v.(_swig_DirectorInterfaceIMTManagerAPITradeMarginCheck__SWIG_1); swig_ok {
-		return swig_g.TradeMarginCheck__SWIG_1(login, symbol, type, volume, price, account_new)
+		return swig_g.TradeMarginCheck__SWIG_1(login, symbol, xtype, volume, price, account_new)
 	}
 	panic("call to pure virtual method")
 }
 
 //export Swig_DirectorIMTManagerAPI_callback_TradeMarginCheck__SWIG_1_mt5api_024284ab9ca1e20a
-func Swig_DirectorIMTManagerAPI_callback_TradeMarginCheck__SWIG_1_mt5api_024284ab9ca1e20a(swig_c int, login uint64, symbol uintptr, type uint, volume uint64, price float64, account_new uintptr) (swig_result uint) {
+func Swig_DirectorIMTManagerAPI_callback_TradeMarginCheck__SWIG_1_mt5api_024284ab9ca1e20a(swig_c int, login uint64, symbol uintptr, xtype uint, volume uint64, price float64, account_new uintptr) (swig_result uint) {
 	var swig_r uint
 	swig_p := swigDirectorLookup(swig_c).(*_swig_DirectorIMTManagerAPI)
-	swig_r = swig_p.TradeMarginCheck__SWIG_1(login, SwigcptrLPCWSTR(symbol), type, volume, price, SwigcptrIMTAccount(account_new))
+	swig_r = swig_p.TradeMarginCheck__SWIG_1(login, SwigcptrLPCWSTR(symbol), xtype, volume, price, SwigcptrIMTAccount(account_new))
 	return swig_r
 }
 
@@ -7933,18 +7937,18 @@ type _swig_DirectorInterfaceIMTManagerAPITradeMarginCheck__SWIG_2 interface {
 	TradeMarginCheck__SWIG_2(uint64, LPCWSTR, uint, uint64, float64) uint
 }
 
-func (swig_p *_swig_DirectorIMTManagerAPI) TradeMarginCheck__SWIG_2(login uint64, symbol LPCWSTR, type uint, volume uint64, price float64) uint {
+func (swig_p *_swig_DirectorIMTManagerAPI) TradeMarginCheck__SWIG_2(login uint64, symbol LPCWSTR, xtype uint, volume uint64, price float64) uint {
 	if swig_g, swig_ok := swig_p.v.(_swig_DirectorInterfaceIMTManagerAPITradeMarginCheck__SWIG_2); swig_ok {
-		return swig_g.TradeMarginCheck__SWIG_2(login, symbol, type, volume, price)
+		return swig_g.TradeMarginCheck__SWIG_2(login, symbol, xtype, volume, price)
 	}
 	panic("call to pure virtual method")
 }
 
 //export Swig_DirectorIMTManagerAPI_callback_TradeMarginCheck__SWIG_2_mt5api_024284ab9ca1e20a
-func Swig_DirectorIMTManagerAPI_callback_TradeMarginCheck__SWIG_2_mt5api_024284ab9ca1e20a(swig_c int, login uint64, symbol uintptr, type uint, volume uint64, price float64) (swig_result uint) {
+func Swig_DirectorIMTManagerAPI_callback_TradeMarginCheck__SWIG_2_mt5api_024284ab9ca1e20a(swig_c int, login uint64, symbol uintptr, xtype uint, volume uint64, price float64) (swig_result uint) {
 	var swig_r uint
 	swig_p := swigDirectorLookup(swig_c).(*_swig_DirectorIMTManagerAPI)
-	swig_r = swig_p.TradeMarginCheck__SWIG_2(login, SwigcptrLPCWSTR(symbol), type, volume, price)
+	swig_r = swig_p.TradeMarginCheck__SWIG_2(login, SwigcptrLPCWSTR(symbol), xtype, volume, price)
 	return swig_r
 }
 
@@ -8032,18 +8036,18 @@ type _swig_DirectorInterfaceIMTManagerAPITradeProfitExt interface {
 	TradeProfitExt(LPCWSTR, LPCWSTR, uint, uint64, float64, float64, *float64, *float64) uint
 }
 
-func (swig_p *_swig_DirectorIMTManagerAPI) TradeProfitExt(group LPCWSTR, symbol LPCWSTR, type uint, volume uint64, price_open float64, price_close float64, profit *float64, profit_rate *float64) uint {
+func (swig_p *_swig_DirectorIMTManagerAPI) TradeProfitExt(group LPCWSTR, symbol LPCWSTR, xtype uint, volume uint64, price_open float64, price_close float64, profit *float64, profit_rate *float64) uint {
 	if swig_g, swig_ok := swig_p.v.(_swig_DirectorInterfaceIMTManagerAPITradeProfitExt); swig_ok {
-		return swig_g.TradeProfitExt(group, symbol, type, volume, price_open, price_close, profit, profit_rate)
+		return swig_g.TradeProfitExt(group, symbol, xtype, volume, price_open, price_close, profit, profit_rate)
 	}
 	panic("call to pure virtual method")
 }
 
 //export Swig_DirectorIMTManagerAPI_callback_TradeProfitExt_mt5api_024284ab9ca1e20a
-func Swig_DirectorIMTManagerAPI_callback_TradeProfitExt_mt5api_024284ab9ca1e20a(swig_c int, group uintptr, symbol uintptr, type uint, volume uint64, price_open float64, price_close float64, profit *float64, profit_rate *float64) (swig_result uint) {
+func Swig_DirectorIMTManagerAPI_callback_TradeProfitExt_mt5api_024284ab9ca1e20a(swig_c int, group uintptr, symbol uintptr, xtype uint, volume uint64, price_open float64, price_close float64, profit *float64, profit_rate *float64) (swig_result uint) {
 	var swig_r uint
 	swig_p := swigDirectorLookup(swig_c).(*_swig_DirectorIMTManagerAPI)
-	swig_r = swig_p.TradeProfitExt(SwigcptrLPCWSTR(group), SwigcptrLPCWSTR(symbol), type, volume, price_open, price_close, profit, profit_rate)
+	swig_r = swig_p.TradeProfitExt(SwigcptrLPCWSTR(group), SwigcptrLPCWSTR(symbol), xtype, volume, price_open, price_close, profit, profit_rate)
 	return swig_r
 }
 
@@ -8051,18 +8055,18 @@ type _swig_DirectorInterfaceIMTManagerAPITradeMarginCheckExt__SWIG_0 interface {
 	TradeMarginCheckExt__SWIG_0(uint64, LPCWSTR, uint, uint64, float64, IMTAccount, IMTAccount) uint
 }
 
-func (swig_p *_swig_DirectorIMTManagerAPI) TradeMarginCheckExt__SWIG_0(login uint64, symbol LPCWSTR, type uint, volume uint64, price float64, account_new IMTAccount, account_current IMTAccount) uint {
+func (swig_p *_swig_DirectorIMTManagerAPI) TradeMarginCheckExt__SWIG_0(login uint64, symbol LPCWSTR, xtype uint, volume uint64, price float64, account_new IMTAccount, account_current IMTAccount) uint {
 	if swig_g, swig_ok := swig_p.v.(_swig_DirectorInterfaceIMTManagerAPITradeMarginCheckExt__SWIG_0); swig_ok {
-		return swig_g.TradeMarginCheckExt__SWIG_0(login, symbol, type, volume, price, account_new, account_current)
+		return swig_g.TradeMarginCheckExt__SWIG_0(login, symbol, xtype, volume, price, account_new, account_current)
 	}
 	panic("call to pure virtual method")
 }
 
 //export Swig_DirectorIMTManagerAPI_callback_TradeMarginCheckExt__SWIG_0_mt5api_024284ab9ca1e20a
-func Swig_DirectorIMTManagerAPI_callback_TradeMarginCheckExt__SWIG_0_mt5api_024284ab9ca1e20a(swig_c int, login uint64, symbol uintptr, type uint, volume uint64, price float64, account_new uintptr, account_current uintptr) (swig_result uint) {
+func Swig_DirectorIMTManagerAPI_callback_TradeMarginCheckExt__SWIG_0_mt5api_024284ab9ca1e20a(swig_c int, login uint64, symbol uintptr, xtype uint, volume uint64, price float64, account_new uintptr, account_current uintptr) (swig_result uint) {
 	var swig_r uint
 	swig_p := swigDirectorLookup(swig_c).(*_swig_DirectorIMTManagerAPI)
-	swig_r = swig_p.TradeMarginCheckExt__SWIG_0(login, SwigcptrLPCWSTR(symbol), type, volume, price, SwigcptrIMTAccount(account_new), SwigcptrIMTAccount(account_current))
+	swig_r = swig_p.TradeMarginCheckExt__SWIG_0(login, SwigcptrLPCWSTR(symbol), xtype, volume, price, SwigcptrIMTAccount(account_new), SwigcptrIMTAccount(account_current))
 	return swig_r
 }
 
@@ -8070,18 +8074,18 @@ type _swig_DirectorInterfaceIMTManagerAPITradeMarginCheckExt__SWIG_1 interface {
 	TradeMarginCheckExt__SWIG_1(uint64, LPCWSTR, uint, uint64, float64, IMTAccount) uint
 }
 
-func (swig_p *_swig_DirectorIMTManagerAPI) TradeMarginCheckExt__SWIG_1(login uint64, symbol LPCWSTR, type uint, volume uint64, price float64, account_new IMTAccount) uint {
+func (swig_p *_swig_DirectorIMTManagerAPI) TradeMarginCheckExt__SWIG_1(login uint64, symbol LPCWSTR, xtype uint, volume uint64, price float64, account_new IMTAccount) uint {
 	if swig_g, swig_ok := swig_p.v.(_swig_DirectorInterfaceIMTManagerAPITradeMarginCheckExt__SWIG_1); swig_ok {
-		return swig_g.TradeMarginCheckExt__SWIG_1(login, symbol, type, volume, price, account_new)
+		return swig_g.TradeMarginCheckExt__SWIG_1(login, symbol, xtype, volume, price, account_new)
 	}
 	panic("call to pure virtual method")
 }
 
 //export Swig_DirectorIMTManagerAPI_callback_TradeMarginCheckExt__SWIG_1_mt5api_024284ab9ca1e20a
-func Swig_DirectorIMTManagerAPI_callback_TradeMarginCheckExt__SWIG_1_mt5api_024284ab9ca1e20a(swig_c int, login uint64, symbol uintptr, type uint, volume uint64, price float64, account_new uintptr) (swig_result uint) {
+func Swig_DirectorIMTManagerAPI_callback_TradeMarginCheckExt__SWIG_1_mt5api_024284ab9ca1e20a(swig_c int, login uint64, symbol uintptr, xtype uint, volume uint64, price float64, account_new uintptr) (swig_result uint) {
 	var swig_r uint
 	swig_p := swigDirectorLookup(swig_c).(*_swig_DirectorIMTManagerAPI)
-	swig_r = swig_p.TradeMarginCheckExt__SWIG_1(login, SwigcptrLPCWSTR(symbol), type, volume, price, SwigcptrIMTAccount(account_new))
+	swig_r = swig_p.TradeMarginCheckExt__SWIG_1(login, SwigcptrLPCWSTR(symbol), xtype, volume, price, SwigcptrIMTAccount(account_new))
 	return swig_r
 }
 
@@ -8089,18 +8093,18 @@ type _swig_DirectorInterfaceIMTManagerAPITradeMarginCheckExt__SWIG_2 interface {
 	TradeMarginCheckExt__SWIG_2(uint64, LPCWSTR, uint, uint64, float64) uint
 }
 
-func (swig_p *_swig_DirectorIMTManagerAPI) TradeMarginCheckExt__SWIG_2(login uint64, symbol LPCWSTR, type uint, volume uint64, price float64) uint {
+func (swig_p *_swig_DirectorIMTManagerAPI) TradeMarginCheckExt__SWIG_2(login uint64, symbol LPCWSTR, xtype uint, volume uint64, price float64) uint {
 	if swig_g, swig_ok := swig_p.v.(_swig_DirectorInterfaceIMTManagerAPITradeMarginCheckExt__SWIG_2); swig_ok {
-		return swig_g.TradeMarginCheckExt__SWIG_2(login, symbol, type, volume, price)
+		return swig_g.TradeMarginCheckExt__SWIG_2(login, symbol, xtype, volume, price)
 	}
 	panic("call to pure virtual method")
 }
 
 //export Swig_DirectorIMTManagerAPI_callback_TradeMarginCheckExt__SWIG_2_mt5api_024284ab9ca1e20a
-func Swig_DirectorIMTManagerAPI_callback_TradeMarginCheckExt__SWIG_2_mt5api_024284ab9ca1e20a(swig_c int, login uint64, symbol uintptr, type uint, volume uint64, price float64) (swig_result uint) {
+func Swig_DirectorIMTManagerAPI_callback_TradeMarginCheckExt__SWIG_2_mt5api_024284ab9ca1e20a(swig_c int, login uint64, symbol uintptr, xtype uint, volume uint64, price float64) (swig_result uint) {
 	var swig_r uint
 	swig_p := swigDirectorLookup(swig_c).(*_swig_DirectorIMTManagerAPI)
-	swig_r = swig_p.TradeMarginCheckExt__SWIG_2(login, SwigcptrLPCWSTR(symbol), type, volume, price)
+	swig_r = swig_p.TradeMarginCheckExt__SWIG_2(login, SwigcptrLPCWSTR(symbol), xtype, volume, price)
 	return swig_r
 }
 
@@ -13615,6 +13619,7 @@ func (p SwigcptrIMTManagerAPI) DirectorInterface() interface{} {
 }
 
 type IMTManagerAPIEnPumpModes int
+
 func _swig_getIMTManagerAPI_PUMP_MODE_USERS_IMTManagerAPI() (_swig_ret IMTManagerAPIEnPumpModes) {
 	var swig_r IMTManagerAPIEnPumpModes
 	swig_r = (IMTManagerAPIEnPumpModes)(C._wrap_PUMP_MODE_USERS_IMTManagerAPI_mt5api_024284ab9ca1e20a())
@@ -13622,6 +13627,7 @@ func _swig_getIMTManagerAPI_PUMP_MODE_USERS_IMTManagerAPI() (_swig_ret IMTManage
 }
 
 var IMTManagerAPIPUMP_MODE_USERS IMTManagerAPIEnPumpModes = _swig_getIMTManagerAPI_PUMP_MODE_USERS_IMTManagerAPI()
+
 func _swig_getIMTManagerAPI_PUMP_MODE_ACTIVITY_IMTManagerAPI() (_swig_ret IMTManagerAPIEnPumpModes) {
 	var swig_r IMTManagerAPIEnPumpModes
 	swig_r = (IMTManagerAPIEnPumpModes)(C._wrap_PUMP_MODE_ACTIVITY_IMTManagerAPI_mt5api_024284ab9ca1e20a())
@@ -13629,6 +13635,7 @@ func _swig_getIMTManagerAPI_PUMP_MODE_ACTIVITY_IMTManagerAPI() (_swig_ret IMTMan
 }
 
 var IMTManagerAPIPUMP_MODE_ACTIVITY IMTManagerAPIEnPumpModes = _swig_getIMTManagerAPI_PUMP_MODE_ACTIVITY_IMTManagerAPI()
+
 func _swig_getIMTManagerAPI_PUMP_MODE_MAIL_IMTManagerAPI() (_swig_ret IMTManagerAPIEnPumpModes) {
 	var swig_r IMTManagerAPIEnPumpModes
 	swig_r = (IMTManagerAPIEnPumpModes)(C._wrap_PUMP_MODE_MAIL_IMTManagerAPI_mt5api_024284ab9ca1e20a())
@@ -13636,6 +13643,7 @@ func _swig_getIMTManagerAPI_PUMP_MODE_MAIL_IMTManagerAPI() (_swig_ret IMTManager
 }
 
 var IMTManagerAPIPUMP_MODE_MAIL IMTManagerAPIEnPumpModes = _swig_getIMTManagerAPI_PUMP_MODE_MAIL_IMTManagerAPI()
+
 func _swig_getIMTManagerAPI_PUMP_MODE_ORDERS_IMTManagerAPI() (_swig_ret IMTManagerAPIEnPumpModes) {
 	var swig_r IMTManagerAPIEnPumpModes
 	swig_r = (IMTManagerAPIEnPumpModes)(C._wrap_PUMP_MODE_ORDERS_IMTManagerAPI_mt5api_024284ab9ca1e20a())
@@ -13643,6 +13651,7 @@ func _swig_getIMTManagerAPI_PUMP_MODE_ORDERS_IMTManagerAPI() (_swig_ret IMTManag
 }
 
 var IMTManagerAPIPUMP_MODE_ORDERS IMTManagerAPIEnPumpModes = _swig_getIMTManagerAPI_PUMP_MODE_ORDERS_IMTManagerAPI()
+
 func _swig_getIMTManagerAPI_PUMP_MODE_NEWS_IMTManagerAPI() (_swig_ret IMTManagerAPIEnPumpModes) {
 	var swig_r IMTManagerAPIEnPumpModes
 	swig_r = (IMTManagerAPIEnPumpModes)(C._wrap_PUMP_MODE_NEWS_IMTManagerAPI_mt5api_024284ab9ca1e20a())
@@ -13650,6 +13659,7 @@ func _swig_getIMTManagerAPI_PUMP_MODE_NEWS_IMTManagerAPI() (_swig_ret IMTManager
 }
 
 var IMTManagerAPIPUMP_MODE_NEWS IMTManagerAPIEnPumpModes = _swig_getIMTManagerAPI_PUMP_MODE_NEWS_IMTManagerAPI()
+
 func _swig_getIMTManagerAPI_PUMP_MODE_POSITIONS_IMTManagerAPI() (_swig_ret IMTManagerAPIEnPumpModes) {
 	var swig_r IMTManagerAPIEnPumpModes
 	swig_r = (IMTManagerAPIEnPumpModes)(C._wrap_PUMP_MODE_POSITIONS_IMTManagerAPI_mt5api_024284ab9ca1e20a())
@@ -13657,6 +13667,7 @@ func _swig_getIMTManagerAPI_PUMP_MODE_POSITIONS_IMTManagerAPI() (_swig_ret IMTMa
 }
 
 var IMTManagerAPIPUMP_MODE_POSITIONS IMTManagerAPIEnPumpModes = _swig_getIMTManagerAPI_PUMP_MODE_POSITIONS_IMTManagerAPI()
+
 func _swig_getIMTManagerAPI_PUMP_MODE_GROUPS_IMTManagerAPI() (_swig_ret IMTManagerAPIEnPumpModes) {
 	var swig_r IMTManagerAPIEnPumpModes
 	swig_r = (IMTManagerAPIEnPumpModes)(C._wrap_PUMP_MODE_GROUPS_IMTManagerAPI_mt5api_024284ab9ca1e20a())
@@ -13664,6 +13675,7 @@ func _swig_getIMTManagerAPI_PUMP_MODE_GROUPS_IMTManagerAPI() (_swig_ret IMTManag
 }
 
 var IMTManagerAPIPUMP_MODE_GROUPS IMTManagerAPIEnPumpModes = _swig_getIMTManagerAPI_PUMP_MODE_GROUPS_IMTManagerAPI()
+
 func _swig_getIMTManagerAPI_PUMP_MODE_SYMBOLS_IMTManagerAPI() (_swig_ret IMTManagerAPIEnPumpModes) {
 	var swig_r IMTManagerAPIEnPumpModes
 	swig_r = (IMTManagerAPIEnPumpModes)(C._wrap_PUMP_MODE_SYMBOLS_IMTManagerAPI_mt5api_024284ab9ca1e20a())
@@ -13671,6 +13683,7 @@ func _swig_getIMTManagerAPI_PUMP_MODE_SYMBOLS_IMTManagerAPI() (_swig_ret IMTMana
 }
 
 var IMTManagerAPIPUMP_MODE_SYMBOLS IMTManagerAPIEnPumpModes = _swig_getIMTManagerAPI_PUMP_MODE_SYMBOLS_IMTManagerAPI()
+
 func _swig_getIMTManagerAPI_PUMP_MODE_HOLIDAYS_IMTManagerAPI() (_swig_ret IMTManagerAPIEnPumpModes) {
 	var swig_r IMTManagerAPIEnPumpModes
 	swig_r = (IMTManagerAPIEnPumpModes)(C._wrap_PUMP_MODE_HOLIDAYS_IMTManagerAPI_mt5api_024284ab9ca1e20a())
@@ -13678,6 +13691,7 @@ func _swig_getIMTManagerAPI_PUMP_MODE_HOLIDAYS_IMTManagerAPI() (_swig_ret IMTMan
 }
 
 var IMTManagerAPIPUMP_MODE_HOLIDAYS IMTManagerAPIEnPumpModes = _swig_getIMTManagerAPI_PUMP_MODE_HOLIDAYS_IMTManagerAPI()
+
 func _swig_getIMTManagerAPI_PUMP_MODE_TIME_IMTManagerAPI() (_swig_ret IMTManagerAPIEnPumpModes) {
 	var swig_r IMTManagerAPIEnPumpModes
 	swig_r = (IMTManagerAPIEnPumpModes)(C._wrap_PUMP_MODE_TIME_IMTManagerAPI_mt5api_024284ab9ca1e20a())
@@ -13685,6 +13699,7 @@ func _swig_getIMTManagerAPI_PUMP_MODE_TIME_IMTManagerAPI() (_swig_ret IMTManager
 }
 
 var IMTManagerAPIPUMP_MODE_TIME IMTManagerAPIEnPumpModes = _swig_getIMTManagerAPI_PUMP_MODE_TIME_IMTManagerAPI()
+
 func _swig_getIMTManagerAPI_PUMP_MODE_GATEWAYS_IMTManagerAPI() (_swig_ret IMTManagerAPIEnPumpModes) {
 	var swig_r IMTManagerAPIEnPumpModes
 	swig_r = (IMTManagerAPIEnPumpModes)(C._wrap_PUMP_MODE_GATEWAYS_IMTManagerAPI_mt5api_024284ab9ca1e20a())
@@ -13692,6 +13707,7 @@ func _swig_getIMTManagerAPI_PUMP_MODE_GATEWAYS_IMTManagerAPI() (_swig_ret IMTMan
 }
 
 var IMTManagerAPIPUMP_MODE_GATEWAYS IMTManagerAPIEnPumpModes = _swig_getIMTManagerAPI_PUMP_MODE_GATEWAYS_IMTManagerAPI()
+
 func _swig_getIMTManagerAPI_PUMP_MODE_REQUESTS_IMTManagerAPI() (_swig_ret IMTManagerAPIEnPumpModes) {
 	var swig_r IMTManagerAPIEnPumpModes
 	swig_r = (IMTManagerAPIEnPumpModes)(C._wrap_PUMP_MODE_REQUESTS_IMTManagerAPI_mt5api_024284ab9ca1e20a())
@@ -13699,6 +13715,7 @@ func _swig_getIMTManagerAPI_PUMP_MODE_REQUESTS_IMTManagerAPI() (_swig_ret IMTMan
 }
 
 var IMTManagerAPIPUMP_MODE_REQUESTS IMTManagerAPIEnPumpModes = _swig_getIMTManagerAPI_PUMP_MODE_REQUESTS_IMTManagerAPI()
+
 func _swig_getIMTManagerAPI_PUMP_MODE_PLUGINS_IMTManagerAPI() (_swig_ret IMTManagerAPIEnPumpModes) {
 	var swig_r IMTManagerAPIEnPumpModes
 	swig_r = (IMTManagerAPIEnPumpModes)(C._wrap_PUMP_MODE_PLUGINS_IMTManagerAPI_mt5api_024284ab9ca1e20a())
@@ -13706,6 +13723,7 @@ func _swig_getIMTManagerAPI_PUMP_MODE_PLUGINS_IMTManagerAPI() (_swig_ret IMTMana
 }
 
 var IMTManagerAPIPUMP_MODE_PLUGINS IMTManagerAPIEnPumpModes = _swig_getIMTManagerAPI_PUMP_MODE_PLUGINS_IMTManagerAPI()
+
 func _swig_getIMTManagerAPI_PUMP_MODE_CLIENTS_IMTManagerAPI() (_swig_ret IMTManagerAPIEnPumpModes) {
 	var swig_r IMTManagerAPIEnPumpModes
 	swig_r = (IMTManagerAPIEnPumpModes)(C._wrap_PUMP_MODE_CLIENTS_IMTManagerAPI_mt5api_024284ab9ca1e20a())
@@ -13713,6 +13731,7 @@ func _swig_getIMTManagerAPI_PUMP_MODE_CLIENTS_IMTManagerAPI() (_swig_ret IMTMana
 }
 
 var IMTManagerAPIPUMP_MODE_CLIENTS IMTManagerAPIEnPumpModes = _swig_getIMTManagerAPI_PUMP_MODE_CLIENTS_IMTManagerAPI()
+
 func _swig_getIMTManagerAPI_PUMP_MODE_SUBSCRIPTIONS_IMTManagerAPI() (_swig_ret IMTManagerAPIEnPumpModes) {
 	var swig_r IMTManagerAPIEnPumpModes
 	swig_r = (IMTManagerAPIEnPumpModes)(C._wrap_PUMP_MODE_SUBSCRIPTIONS_IMTManagerAPI_mt5api_024284ab9ca1e20a())
@@ -13720,6 +13739,7 @@ func _swig_getIMTManagerAPI_PUMP_MODE_SUBSCRIPTIONS_IMTManagerAPI() (_swig_ret I
 }
 
 var IMTManagerAPIPUMP_MODE_SUBSCRIPTIONS IMTManagerAPIEnPumpModes = _swig_getIMTManagerAPI_PUMP_MODE_SUBSCRIPTIONS_IMTManagerAPI()
+
 func _swig_getIMTManagerAPI_PUMP_MODE_FULL_IMTManagerAPI() (_swig_ret IMTManagerAPIEnPumpModes) {
 	var swig_r IMTManagerAPIEnPumpModes
 	swig_r = (IMTManagerAPIEnPumpModes)(C._wrap_PUMP_MODE_FULL_IMTManagerAPI_mt5api_024284ab9ca1e20a())
@@ -13727,7 +13747,9 @@ func _swig_getIMTManagerAPI_PUMP_MODE_FULL_IMTManagerAPI() (_swig_ret IMTManager
 }
 
 var IMTManagerAPIPUMP_MODE_FULL IMTManagerAPIEnPumpModes = _swig_getIMTManagerAPI_PUMP_MODE_FULL_IMTManagerAPI()
+
 type IMTManagerAPIEnExternalSyncModes int
+
 func _swig_getIMTManagerAPI_EXTERNAL_SYNC_ALL_IMTManagerAPI() (_swig_ret IMTManagerAPIEnExternalSyncModes) {
 	var swig_r IMTManagerAPIEnExternalSyncModes
 	swig_r = (IMTManagerAPIEnExternalSyncModes)(C._wrap_EXTERNAL_SYNC_ALL_IMTManagerAPI_mt5api_024284ab9ca1e20a())
@@ -13735,6 +13757,7 @@ func _swig_getIMTManagerAPI_EXTERNAL_SYNC_ALL_IMTManagerAPI() (_swig_ret IMTMana
 }
 
 var IMTManagerAPIEXTERNAL_SYNC_ALL IMTManagerAPIEnExternalSyncModes = _swig_getIMTManagerAPI_EXTERNAL_SYNC_ALL_IMTManagerAPI()
+
 func _swig_getIMTManagerAPI_EXTERNAL_SYNC_BALANCE_IMTManagerAPI() (_swig_ret IMTManagerAPIEnExternalSyncModes) {
 	var swig_r IMTManagerAPIEnExternalSyncModes
 	swig_r = (IMTManagerAPIEnExternalSyncModes)(C._wrap_EXTERNAL_SYNC_BALANCE_IMTManagerAPI_mt5api_024284ab9ca1e20a())
@@ -13742,6 +13765,7 @@ func _swig_getIMTManagerAPI_EXTERNAL_SYNC_BALANCE_IMTManagerAPI() (_swig_ret IMT
 }
 
 var IMTManagerAPIEXTERNAL_SYNC_BALANCE IMTManagerAPIEnExternalSyncModes = _swig_getIMTManagerAPI_EXTERNAL_SYNC_BALANCE_IMTManagerAPI()
+
 func _swig_getIMTManagerAPI_EXTERNAL_SYNC_POSITIONS_IMTManagerAPI() (_swig_ret IMTManagerAPIEnExternalSyncModes) {
 	var swig_r IMTManagerAPIEnExternalSyncModes
 	swig_r = (IMTManagerAPIEnExternalSyncModes)(C._wrap_EXTERNAL_SYNC_POSITIONS_IMTManagerAPI_mt5api_024284ab9ca1e20a())
@@ -13749,6 +13773,7 @@ func _swig_getIMTManagerAPI_EXTERNAL_SYNC_POSITIONS_IMTManagerAPI() (_swig_ret I
 }
 
 var IMTManagerAPIEXTERNAL_SYNC_POSITIONS IMTManagerAPIEnExternalSyncModes = _swig_getIMTManagerAPI_EXTERNAL_SYNC_POSITIONS_IMTManagerAPI()
+
 func _swig_getIMTManagerAPI_EXTERNAL_SYNC_ORDERS_IMTManagerAPI() (_swig_ret IMTManagerAPIEnExternalSyncModes) {
 	var swig_r IMTManagerAPIEnExternalSyncModes
 	swig_r = (IMTManagerAPIEnExternalSyncModes)(C._wrap_EXTERNAL_SYNC_ORDERS_IMTManagerAPI_mt5api_024284ab9ca1e20a())
@@ -13756,6 +13781,7 @@ func _swig_getIMTManagerAPI_EXTERNAL_SYNC_ORDERS_IMTManagerAPI() (_swig_ret IMTM
 }
 
 var IMTManagerAPIEXTERNAL_SYNC_ORDERS IMTManagerAPIEnExternalSyncModes = _swig_getIMTManagerAPI_EXTERNAL_SYNC_ORDERS_IMTManagerAPI()
+
 func _swig_getIMTManagerAPI_EXTERNAL_SYNC_LAST_IMTManagerAPI() (_swig_ret IMTManagerAPIEnExternalSyncModes) {
 	var swig_r IMTManagerAPIEnExternalSyncModes
 	swig_r = (IMTManagerAPIEnExternalSyncModes)(C._wrap_EXTERNAL_SYNC_LAST_IMTManagerAPI_mt5api_024284ab9ca1e20a())
@@ -13763,6 +13789,7 @@ func _swig_getIMTManagerAPI_EXTERNAL_SYNC_LAST_IMTManagerAPI() (_swig_ret IMTMan
 }
 
 var IMTManagerAPIEXTERNAL_SYNC_LAST IMTManagerAPIEnExternalSyncModes = _swig_getIMTManagerAPI_EXTERNAL_SYNC_LAST_IMTManagerAPI()
+
 func (arg1 SwigcptrIMTManagerAPI) Release() {
 	_swig_i_0 := arg1
 	C._wrap_IMTManagerAPI_Release_mt5api_024284ab9ca1e20a(C.uintptr_t(_swig_i_0))
@@ -19466,6 +19493,7 @@ func (p SwigcptrIMTAdminAPI) SwigIsIMTAdminAPI() {
 }
 
 type IMTAdminAPIEnPumpModes int
+
 func _swig_getIMTAdminAPI_PUMP_MODE_MAIL_IMTAdminAPI() (_swig_ret IMTAdminAPIEnPumpModes) {
 	var swig_r IMTAdminAPIEnPumpModes
 	swig_r = (IMTAdminAPIEnPumpModes)(C._wrap_PUMP_MODE_MAIL_IMTAdminAPI_mt5api_024284ab9ca1e20a())
@@ -19473,6 +19501,7 @@ func _swig_getIMTAdminAPI_PUMP_MODE_MAIL_IMTAdminAPI() (_swig_ret IMTAdminAPIEnP
 }
 
 var IMTAdminAPIPUMP_MODE_MAIL IMTAdminAPIEnPumpModes = _swig_getIMTAdminAPI_PUMP_MODE_MAIL_IMTAdminAPI()
+
 func _swig_getIMTAdminAPI_PUMP_MODE_NEWS_IMTAdminAPI() (_swig_ret IMTAdminAPIEnPumpModes) {
 	var swig_r IMTAdminAPIEnPumpModes
 	swig_r = (IMTAdminAPIEnPumpModes)(C._wrap_PUMP_MODE_NEWS_IMTAdminAPI_mt5api_024284ab9ca1e20a())
@@ -19480,6 +19509,7 @@ func _swig_getIMTAdminAPI_PUMP_MODE_NEWS_IMTAdminAPI() (_swig_ret IMTAdminAPIEnP
 }
 
 var IMTAdminAPIPUMP_MODE_NEWS IMTAdminAPIEnPumpModes = _swig_getIMTAdminAPI_PUMP_MODE_NEWS_IMTAdminAPI()
+
 func _swig_getIMTAdminAPI_PUMP_MODE_FULL_IMTAdminAPI() (_swig_ret IMTAdminAPIEnPumpModes) {
 	var swig_r IMTAdminAPIEnPumpModes
 	swig_r = (IMTAdminAPIEnPumpModes)(C._wrap_PUMP_MODE_FULL_IMTAdminAPI_mt5api_024284ab9ca1e20a())
@@ -19487,7 +19517,9 @@ func _swig_getIMTAdminAPI_PUMP_MODE_FULL_IMTAdminAPI() (_swig_ret IMTAdminAPIEnP
 }
 
 var IMTAdminAPIPUMP_MODE_FULL IMTAdminAPIEnPumpModes = _swig_getIMTAdminAPI_PUMP_MODE_FULL_IMTAdminAPI()
+
 type IMTAdminAPIEnExternalSyncModes int
+
 func _swig_getIMTAdminAPI_EXTERNAL_SYNC_ALL_IMTAdminAPI() (_swig_ret IMTAdminAPIEnExternalSyncModes) {
 	var swig_r IMTAdminAPIEnExternalSyncModes
 	swig_r = (IMTAdminAPIEnExternalSyncModes)(C._wrap_EXTERNAL_SYNC_ALL_IMTAdminAPI_mt5api_024284ab9ca1e20a())
@@ -19495,6 +19527,7 @@ func _swig_getIMTAdminAPI_EXTERNAL_SYNC_ALL_IMTAdminAPI() (_swig_ret IMTAdminAPI
 }
 
 var IMTAdminAPIEXTERNAL_SYNC_ALL IMTAdminAPIEnExternalSyncModes = _swig_getIMTAdminAPI_EXTERNAL_SYNC_ALL_IMTAdminAPI()
+
 func _swig_getIMTAdminAPI_EXTERNAL_SYNC_BALANCE_IMTAdminAPI() (_swig_ret IMTAdminAPIEnExternalSyncModes) {
 	var swig_r IMTAdminAPIEnExternalSyncModes
 	swig_r = (IMTAdminAPIEnExternalSyncModes)(C._wrap_EXTERNAL_SYNC_BALANCE_IMTAdminAPI_mt5api_024284ab9ca1e20a())
@@ -19502,6 +19535,7 @@ func _swig_getIMTAdminAPI_EXTERNAL_SYNC_BALANCE_IMTAdminAPI() (_swig_ret IMTAdmi
 }
 
 var IMTAdminAPIEXTERNAL_SYNC_BALANCE IMTAdminAPIEnExternalSyncModes = _swig_getIMTAdminAPI_EXTERNAL_SYNC_BALANCE_IMTAdminAPI()
+
 func _swig_getIMTAdminAPI_EXTERNAL_SYNC_POSITIONS_IMTAdminAPI() (_swig_ret IMTAdminAPIEnExternalSyncModes) {
 	var swig_r IMTAdminAPIEnExternalSyncModes
 	swig_r = (IMTAdminAPIEnExternalSyncModes)(C._wrap_EXTERNAL_SYNC_POSITIONS_IMTAdminAPI_mt5api_024284ab9ca1e20a())
@@ -19509,6 +19543,7 @@ func _swig_getIMTAdminAPI_EXTERNAL_SYNC_POSITIONS_IMTAdminAPI() (_swig_ret IMTAd
 }
 
 var IMTAdminAPIEXTERNAL_SYNC_POSITIONS IMTAdminAPIEnExternalSyncModes = _swig_getIMTAdminAPI_EXTERNAL_SYNC_POSITIONS_IMTAdminAPI()
+
 func _swig_getIMTAdminAPI_EXTERNAL_SYNC_ORDERS_IMTAdminAPI() (_swig_ret IMTAdminAPIEnExternalSyncModes) {
 	var swig_r IMTAdminAPIEnExternalSyncModes
 	swig_r = (IMTAdminAPIEnExternalSyncModes)(C._wrap_EXTERNAL_SYNC_ORDERS_IMTAdminAPI_mt5api_024284ab9ca1e20a())
@@ -19516,6 +19551,7 @@ func _swig_getIMTAdminAPI_EXTERNAL_SYNC_ORDERS_IMTAdminAPI() (_swig_ret IMTAdmin
 }
 
 var IMTAdminAPIEXTERNAL_SYNC_ORDERS IMTAdminAPIEnExternalSyncModes = _swig_getIMTAdminAPI_EXTERNAL_SYNC_ORDERS_IMTAdminAPI()
+
 func _swig_getIMTAdminAPI_EXTERNAL_SYNC_LAST_IMTAdminAPI() (_swig_ret IMTAdminAPIEnExternalSyncModes) {
 	var swig_r IMTAdminAPIEnExternalSyncModes
 	swig_r = (IMTAdminAPIEnExternalSyncModes)(C._wrap_EXTERNAL_SYNC_LAST_IMTAdminAPI_mt5api_024284ab9ca1e20a())
@@ -19523,6 +19559,7 @@ func _swig_getIMTAdminAPI_EXTERNAL_SYNC_LAST_IMTAdminAPI() (_swig_ret IMTAdminAP
 }
 
 var IMTAdminAPIEXTERNAL_SYNC_LAST IMTAdminAPIEnExternalSyncModes = _swig_getIMTAdminAPI_EXTERNAL_SYNC_LAST_IMTAdminAPI()
+
 func (arg1 SwigcptrIMTAdminAPI) Release() {
 	_swig_i_0 := arg1
 	C._wrap_IMTAdminAPI_Release_mt5api_024284ab9ca1e20a(C.uintptr_t(_swig_i_0))
@@ -26639,7 +26676,7 @@ func GetS_MTManagerVersion() (_swig_ret string) {
 	swig_r_p := C._wrap_s_MTManagerVersion_get_mt5api_024284ab9ca1e20a()
 	swig_r = *(*string)(unsafe.Pointer(&swig_r_p))
 	var swig_r_1 string
- swig_r_1 = swigCopyString(swig_r) 
+	swig_r_1 = swigCopyString(swig_r)
 	return swig_r_1
 }
 
@@ -26648,7 +26685,7 @@ func GetS_MTManagerCreate() (_swig_ret string) {
 	swig_r_p := C._wrap_s_MTManagerCreate_get_mt5api_024284ab9ca1e20a()
 	swig_r = *(*string)(unsafe.Pointer(&swig_r_p))
 	var swig_r_1 string
- swig_r_1 = swigCopyString(swig_r) 
+	swig_r_1 = swigCopyString(swig_r)
 	return swig_r_1
 }
 
@@ -26657,7 +26694,7 @@ func GetS_MTManagerCreateExt() (_swig_ret string) {
 	swig_r_p := C._wrap_s_MTManagerCreateExt_get_mt5api_024284ab9ca1e20a()
 	swig_r = *(*string)(unsafe.Pointer(&swig_r_p))
 	var swig_r_1 string
- swig_r_1 = swigCopyString(swig_r) 
+	swig_r_1 = swigCopyString(swig_r)
 	return swig_r_1
 }
 
@@ -26666,7 +26703,7 @@ func GetS_MTAdminCreate() (_swig_ret string) {
 	swig_r_p := C._wrap_s_MTAdminCreate_get_mt5api_024284ab9ca1e20a()
 	swig_r = *(*string)(unsafe.Pointer(&swig_r_p))
 	var swig_r_1 string
- swig_r_1 = swigCopyString(swig_r) 
+	swig_r_1 = swigCopyString(swig_r)
 	return swig_r_1
 }
 
@@ -26675,7 +26712,7 @@ func GetS_MTAdminCreateExt() (_swig_ret string) {
 	swig_r_p := C._wrap_s_MTAdminCreateExt_get_mt5api_024284ab9ca1e20a()
 	swig_r = *(*string)(unsafe.Pointer(&swig_r_p))
 	var swig_r_1 string
- swig_r_1 = swigCopyString(swig_r) 
+	swig_r_1 = swigCopyString(swig_r)
 	return swig_r_1
 }
 
@@ -26827,6 +26864,7 @@ type CMTManagerAPIFactory interface {
 }
 
 type EnMTAPIRetcode int
+
 func _swig_getMT_RET_OK() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_OK_mt5api_024284ab9ca1e20a())
@@ -26834,6 +26872,7 @@ func _swig_getMT_RET_OK() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_OK EnMTAPIRetcode = _swig_getMT_RET_OK()
+
 func _swig_getMT_RET_OK_NONE() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_OK_NONE_mt5api_024284ab9ca1e20a())
@@ -26841,6 +26880,7 @@ func _swig_getMT_RET_OK_NONE() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_OK_NONE EnMTAPIRetcode = _swig_getMT_RET_OK_NONE()
+
 func _swig_getMT_RET_ERROR() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_ERROR_mt5api_024284ab9ca1e20a())
@@ -26848,6 +26888,7 @@ func _swig_getMT_RET_ERROR() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_ERROR EnMTAPIRetcode = _swig_getMT_RET_ERROR()
+
 func _swig_getMT_RET_ERR_PARAMS() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_ERR_PARAMS_mt5api_024284ab9ca1e20a())
@@ -26855,6 +26896,7 @@ func _swig_getMT_RET_ERR_PARAMS() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_ERR_PARAMS EnMTAPIRetcode = _swig_getMT_RET_ERR_PARAMS()
+
 func _swig_getMT_RET_ERR_DATA() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_ERR_DATA_mt5api_024284ab9ca1e20a())
@@ -26862,6 +26904,7 @@ func _swig_getMT_RET_ERR_DATA() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_ERR_DATA EnMTAPIRetcode = _swig_getMT_RET_ERR_DATA()
+
 func _swig_getMT_RET_ERR_DISK() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_ERR_DISK_mt5api_024284ab9ca1e20a())
@@ -26869,6 +26912,7 @@ func _swig_getMT_RET_ERR_DISK() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_ERR_DISK EnMTAPIRetcode = _swig_getMT_RET_ERR_DISK()
+
 func _swig_getMT_RET_ERR_MEM() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_ERR_MEM_mt5api_024284ab9ca1e20a())
@@ -26876,6 +26920,7 @@ func _swig_getMT_RET_ERR_MEM() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_ERR_MEM EnMTAPIRetcode = _swig_getMT_RET_ERR_MEM()
+
 func _swig_getMT_RET_ERR_NETWORK() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_ERR_NETWORK_mt5api_024284ab9ca1e20a())
@@ -26883,6 +26928,7 @@ func _swig_getMT_RET_ERR_NETWORK() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_ERR_NETWORK EnMTAPIRetcode = _swig_getMT_RET_ERR_NETWORK()
+
 func _swig_getMT_RET_ERR_PERMISSIONS() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_ERR_PERMISSIONS_mt5api_024284ab9ca1e20a())
@@ -26890,6 +26936,7 @@ func _swig_getMT_RET_ERR_PERMISSIONS() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_ERR_PERMISSIONS EnMTAPIRetcode = _swig_getMT_RET_ERR_PERMISSIONS()
+
 func _swig_getMT_RET_ERR_TIMEOUT() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_ERR_TIMEOUT_mt5api_024284ab9ca1e20a())
@@ -26897,6 +26944,7 @@ func _swig_getMT_RET_ERR_TIMEOUT() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_ERR_TIMEOUT EnMTAPIRetcode = _swig_getMT_RET_ERR_TIMEOUT()
+
 func _swig_getMT_RET_ERR_CONNECTION() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_ERR_CONNECTION_mt5api_024284ab9ca1e20a())
@@ -26904,6 +26952,7 @@ func _swig_getMT_RET_ERR_CONNECTION() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_ERR_CONNECTION EnMTAPIRetcode = _swig_getMT_RET_ERR_CONNECTION()
+
 func _swig_getMT_RET_ERR_NOSERVICE() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_ERR_NOSERVICE_mt5api_024284ab9ca1e20a())
@@ -26911,6 +26960,7 @@ func _swig_getMT_RET_ERR_NOSERVICE() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_ERR_NOSERVICE EnMTAPIRetcode = _swig_getMT_RET_ERR_NOSERVICE()
+
 func _swig_getMT_RET_ERR_FREQUENT() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_ERR_FREQUENT_mt5api_024284ab9ca1e20a())
@@ -26918,6 +26968,7 @@ func _swig_getMT_RET_ERR_FREQUENT() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_ERR_FREQUENT EnMTAPIRetcode = _swig_getMT_RET_ERR_FREQUENT()
+
 func _swig_getMT_RET_ERR_NOTFOUND() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_ERR_NOTFOUND_mt5api_024284ab9ca1e20a())
@@ -26925,6 +26976,7 @@ func _swig_getMT_RET_ERR_NOTFOUND() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_ERR_NOTFOUND EnMTAPIRetcode = _swig_getMT_RET_ERR_NOTFOUND()
+
 func _swig_getMT_RET_ERR_PARTIAL() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_ERR_PARTIAL_mt5api_024284ab9ca1e20a())
@@ -26932,6 +26984,7 @@ func _swig_getMT_RET_ERR_PARTIAL() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_ERR_PARTIAL EnMTAPIRetcode = _swig_getMT_RET_ERR_PARTIAL()
+
 func _swig_getMT_RET_ERR_SHUTDOWN() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_ERR_SHUTDOWN_mt5api_024284ab9ca1e20a())
@@ -26939,6 +26992,7 @@ func _swig_getMT_RET_ERR_SHUTDOWN() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_ERR_SHUTDOWN EnMTAPIRetcode = _swig_getMT_RET_ERR_SHUTDOWN()
+
 func _swig_getMT_RET_ERR_CANCEL() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_ERR_CANCEL_mt5api_024284ab9ca1e20a())
@@ -26946,6 +27000,7 @@ func _swig_getMT_RET_ERR_CANCEL() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_ERR_CANCEL EnMTAPIRetcode = _swig_getMT_RET_ERR_CANCEL()
+
 func _swig_getMT_RET_ERR_DUPLICATE() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_ERR_DUPLICATE_mt5api_024284ab9ca1e20a())
@@ -26953,6 +27008,7 @@ func _swig_getMT_RET_ERR_DUPLICATE() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_ERR_DUPLICATE EnMTAPIRetcode = _swig_getMT_RET_ERR_DUPLICATE()
+
 func _swig_getMT_RET_AUTH_CLIENT_INVALID() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_AUTH_CLIENT_INVALID_mt5api_024284ab9ca1e20a())
@@ -26960,6 +27016,7 @@ func _swig_getMT_RET_AUTH_CLIENT_INVALID() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_AUTH_CLIENT_INVALID EnMTAPIRetcode = _swig_getMT_RET_AUTH_CLIENT_INVALID()
+
 func _swig_getMT_RET_AUTH_ACCOUNT_INVALID() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_AUTH_ACCOUNT_INVALID_mt5api_024284ab9ca1e20a())
@@ -26967,6 +27024,7 @@ func _swig_getMT_RET_AUTH_ACCOUNT_INVALID() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_AUTH_ACCOUNT_INVALID EnMTAPIRetcode = _swig_getMT_RET_AUTH_ACCOUNT_INVALID()
+
 func _swig_getMT_RET_AUTH_ACCOUNT_DISABLED() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_AUTH_ACCOUNT_DISABLED_mt5api_024284ab9ca1e20a())
@@ -26974,6 +27032,7 @@ func _swig_getMT_RET_AUTH_ACCOUNT_DISABLED() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_AUTH_ACCOUNT_DISABLED EnMTAPIRetcode = _swig_getMT_RET_AUTH_ACCOUNT_DISABLED()
+
 func _swig_getMT_RET_AUTH_ADVANCED() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_AUTH_ADVANCED_mt5api_024284ab9ca1e20a())
@@ -26981,6 +27040,7 @@ func _swig_getMT_RET_AUTH_ADVANCED() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_AUTH_ADVANCED EnMTAPIRetcode = _swig_getMT_RET_AUTH_ADVANCED()
+
 func _swig_getMT_RET_AUTH_CERTIFICATE() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_AUTH_CERTIFICATE_mt5api_024284ab9ca1e20a())
@@ -26988,6 +27048,7 @@ func _swig_getMT_RET_AUTH_CERTIFICATE() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_AUTH_CERTIFICATE EnMTAPIRetcode = _swig_getMT_RET_AUTH_CERTIFICATE()
+
 func _swig_getMT_RET_AUTH_CERTIFICATE_BAD() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_AUTH_CERTIFICATE_BAD_mt5api_024284ab9ca1e20a())
@@ -26995,6 +27056,7 @@ func _swig_getMT_RET_AUTH_CERTIFICATE_BAD() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_AUTH_CERTIFICATE_BAD EnMTAPIRetcode = _swig_getMT_RET_AUTH_CERTIFICATE_BAD()
+
 func _swig_getMT_RET_AUTH_NOTCONFIRMED() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_AUTH_NOTCONFIRMED_mt5api_024284ab9ca1e20a())
@@ -27002,6 +27064,7 @@ func _swig_getMT_RET_AUTH_NOTCONFIRMED() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_AUTH_NOTCONFIRMED EnMTAPIRetcode = _swig_getMT_RET_AUTH_NOTCONFIRMED()
+
 func _swig_getMT_RET_AUTH_SERVER_INTERNAL() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_AUTH_SERVER_INTERNAL_mt5api_024284ab9ca1e20a())
@@ -27009,6 +27072,7 @@ func _swig_getMT_RET_AUTH_SERVER_INTERNAL() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_AUTH_SERVER_INTERNAL EnMTAPIRetcode = _swig_getMT_RET_AUTH_SERVER_INTERNAL()
+
 func _swig_getMT_RET_AUTH_SERVER_BAD() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_AUTH_SERVER_BAD_mt5api_024284ab9ca1e20a())
@@ -27016,6 +27080,7 @@ func _swig_getMT_RET_AUTH_SERVER_BAD() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_AUTH_SERVER_BAD EnMTAPIRetcode = _swig_getMT_RET_AUTH_SERVER_BAD()
+
 func _swig_getMT_RET_AUTH_UPDATE_ONLY() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_AUTH_UPDATE_ONLY_mt5api_024284ab9ca1e20a())
@@ -27023,6 +27088,7 @@ func _swig_getMT_RET_AUTH_UPDATE_ONLY() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_AUTH_UPDATE_ONLY EnMTAPIRetcode = _swig_getMT_RET_AUTH_UPDATE_ONLY()
+
 func _swig_getMT_RET_AUTH_CLIENT_OLD() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_AUTH_CLIENT_OLD_mt5api_024284ab9ca1e20a())
@@ -27030,6 +27096,7 @@ func _swig_getMT_RET_AUTH_CLIENT_OLD() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_AUTH_CLIENT_OLD EnMTAPIRetcode = _swig_getMT_RET_AUTH_CLIENT_OLD()
+
 func _swig_getMT_RET_AUTH_MANAGER_NOCONFIG() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_AUTH_MANAGER_NOCONFIG_mt5api_024284ab9ca1e20a())
@@ -27037,6 +27104,7 @@ func _swig_getMT_RET_AUTH_MANAGER_NOCONFIG() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_AUTH_MANAGER_NOCONFIG EnMTAPIRetcode = _swig_getMT_RET_AUTH_MANAGER_NOCONFIG()
+
 func _swig_getMT_RET_AUTH_MANAGER_IPBLOCK() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_AUTH_MANAGER_IPBLOCK_mt5api_024284ab9ca1e20a())
@@ -27044,6 +27112,7 @@ func _swig_getMT_RET_AUTH_MANAGER_IPBLOCK() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_AUTH_MANAGER_IPBLOCK EnMTAPIRetcode = _swig_getMT_RET_AUTH_MANAGER_IPBLOCK()
+
 func _swig_getMT_RET_AUTH_GROUP_INVALID() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_AUTH_GROUP_INVALID_mt5api_024284ab9ca1e20a())
@@ -27051,6 +27120,7 @@ func _swig_getMT_RET_AUTH_GROUP_INVALID() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_AUTH_GROUP_INVALID EnMTAPIRetcode = _swig_getMT_RET_AUTH_GROUP_INVALID()
+
 func _swig_getMT_RET_AUTH_CA_DISABLED() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_AUTH_CA_DISABLED_mt5api_024284ab9ca1e20a())
@@ -27058,6 +27128,7 @@ func _swig_getMT_RET_AUTH_CA_DISABLED() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_AUTH_CA_DISABLED EnMTAPIRetcode = _swig_getMT_RET_AUTH_CA_DISABLED()
+
 func _swig_getMT_RET_AUTH_INVALID_ID() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_AUTH_INVALID_ID_mt5api_024284ab9ca1e20a())
@@ -27065,6 +27136,7 @@ func _swig_getMT_RET_AUTH_INVALID_ID() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_AUTH_INVALID_ID EnMTAPIRetcode = _swig_getMT_RET_AUTH_INVALID_ID()
+
 func _swig_getMT_RET_AUTH_INVALID_IP() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_AUTH_INVALID_IP_mt5api_024284ab9ca1e20a())
@@ -27072,6 +27144,7 @@ func _swig_getMT_RET_AUTH_INVALID_IP() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_AUTH_INVALID_IP EnMTAPIRetcode = _swig_getMT_RET_AUTH_INVALID_IP()
+
 func _swig_getMT_RET_AUTH_INVALID_TYPE() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_AUTH_INVALID_TYPE_mt5api_024284ab9ca1e20a())
@@ -27079,6 +27152,7 @@ func _swig_getMT_RET_AUTH_INVALID_TYPE() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_AUTH_INVALID_TYPE EnMTAPIRetcode = _swig_getMT_RET_AUTH_INVALID_TYPE()
+
 func _swig_getMT_RET_AUTH_SERVER_BUSY() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_AUTH_SERVER_BUSY_mt5api_024284ab9ca1e20a())
@@ -27086,6 +27160,7 @@ func _swig_getMT_RET_AUTH_SERVER_BUSY() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_AUTH_SERVER_BUSY EnMTAPIRetcode = _swig_getMT_RET_AUTH_SERVER_BUSY()
+
 func _swig_getMT_RET_AUTH_SERVER_CERT() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_AUTH_SERVER_CERT_mt5api_024284ab9ca1e20a())
@@ -27093,6 +27168,7 @@ func _swig_getMT_RET_AUTH_SERVER_CERT() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_AUTH_SERVER_CERT EnMTAPIRetcode = _swig_getMT_RET_AUTH_SERVER_CERT()
+
 func _swig_getMT_RET_AUTH_ACCOUNT_UNKNOWN() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_AUTH_ACCOUNT_UNKNOWN_mt5api_024284ab9ca1e20a())
@@ -27100,6 +27176,7 @@ func _swig_getMT_RET_AUTH_ACCOUNT_UNKNOWN() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_AUTH_ACCOUNT_UNKNOWN EnMTAPIRetcode = _swig_getMT_RET_AUTH_ACCOUNT_UNKNOWN()
+
 func _swig_getMT_RET_AUTH_SERVER_OLD() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_AUTH_SERVER_OLD_mt5api_024284ab9ca1e20a())
@@ -27107,6 +27184,7 @@ func _swig_getMT_RET_AUTH_SERVER_OLD() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_AUTH_SERVER_OLD EnMTAPIRetcode = _swig_getMT_RET_AUTH_SERVER_OLD()
+
 func _swig_getMT_RET_AUTH_SERVER_LIMIT() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_AUTH_SERVER_LIMIT_mt5api_024284ab9ca1e20a())
@@ -27114,6 +27192,7 @@ func _swig_getMT_RET_AUTH_SERVER_LIMIT() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_AUTH_SERVER_LIMIT EnMTAPIRetcode = _swig_getMT_RET_AUTH_SERVER_LIMIT()
+
 func _swig_getMT_RET_AUTH_MOBILE_DISABLED() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_AUTH_MOBILE_DISABLED_mt5api_024284ab9ca1e20a())
@@ -27121,6 +27200,7 @@ func _swig_getMT_RET_AUTH_MOBILE_DISABLED() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_AUTH_MOBILE_DISABLED EnMTAPIRetcode = _swig_getMT_RET_AUTH_MOBILE_DISABLED()
+
 func _swig_getMT_RET_AUTH_MANAGER_TYPE() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_AUTH_MANAGER_TYPE_mt5api_024284ab9ca1e20a())
@@ -27128,6 +27208,7 @@ func _swig_getMT_RET_AUTH_MANAGER_TYPE() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_AUTH_MANAGER_TYPE EnMTAPIRetcode = _swig_getMT_RET_AUTH_MANAGER_TYPE()
+
 func _swig_getMT_RET_AUTH_DEMO_DISABLED() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_AUTH_DEMO_DISABLED_mt5api_024284ab9ca1e20a())
@@ -27135,6 +27216,7 @@ func _swig_getMT_RET_AUTH_DEMO_DISABLED() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_AUTH_DEMO_DISABLED EnMTAPIRetcode = _swig_getMT_RET_AUTH_DEMO_DISABLED()
+
 func _swig_getMT_RET_AUTH_RESET_PASSWORD() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_AUTH_RESET_PASSWORD_mt5api_024284ab9ca1e20a())
@@ -27142,6 +27224,7 @@ func _swig_getMT_RET_AUTH_RESET_PASSWORD() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_AUTH_RESET_PASSWORD EnMTAPIRetcode = _swig_getMT_RET_AUTH_RESET_PASSWORD()
+
 func _swig_getMT_RET_AUTH_OTP_INVALID() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_AUTH_OTP_INVALID_mt5api_024284ab9ca1e20a())
@@ -27149,6 +27232,7 @@ func _swig_getMT_RET_AUTH_OTP_INVALID() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_AUTH_OTP_INVALID EnMTAPIRetcode = _swig_getMT_RET_AUTH_OTP_INVALID()
+
 func _swig_getMT_RET_AUTH_OTP_NEED_SECRET() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_AUTH_OTP_NEED_SECRET_mt5api_024284ab9ca1e20a())
@@ -27156,6 +27240,7 @@ func _swig_getMT_RET_AUTH_OTP_NEED_SECRET() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_AUTH_OTP_NEED_SECRET EnMTAPIRetcode = _swig_getMT_RET_AUTH_OTP_NEED_SECRET()
+
 func _swig_getMT_RET_AUTH_MIGRATION_MT4() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_AUTH_MIGRATION_MT4_mt5api_024284ab9ca1e20a())
@@ -27163,6 +27248,7 @@ func _swig_getMT_RET_AUTH_MIGRATION_MT4() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_AUTH_MIGRATION_MT4 EnMTAPIRetcode = _swig_getMT_RET_AUTH_MIGRATION_MT4()
+
 func _swig_getMT_RET_AUTH_MIGRATION_MT5() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_AUTH_MIGRATION_MT5_mt5api_024284ab9ca1e20a())
@@ -27170,6 +27256,7 @@ func _swig_getMT_RET_AUTH_MIGRATION_MT5() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_AUTH_MIGRATION_MT5 EnMTAPIRetcode = _swig_getMT_RET_AUTH_MIGRATION_MT5()
+
 func _swig_getMT_RET_AUTH_INVALID_VERIFY() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_AUTH_INVALID_VERIFY_mt5api_024284ab9ca1e20a())
@@ -27177,6 +27264,7 @@ func _swig_getMT_RET_AUTH_INVALID_VERIFY() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_AUTH_INVALID_VERIFY EnMTAPIRetcode = _swig_getMT_RET_AUTH_INVALID_VERIFY()
+
 func _swig_getMT_RET_AUTH_VERIFY_BAD_EMAIL() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_AUTH_VERIFY_BAD_EMAIL_mt5api_024284ab9ca1e20a())
@@ -27184,6 +27272,7 @@ func _swig_getMT_RET_AUTH_VERIFY_BAD_EMAIL() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_AUTH_VERIFY_BAD_EMAIL EnMTAPIRetcode = _swig_getMT_RET_AUTH_VERIFY_BAD_EMAIL()
+
 func _swig_getMT_RET_AUTH_VERIFY_BAD_PHONE() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_AUTH_VERIFY_BAD_PHONE_mt5api_024284ab9ca1e20a())
@@ -27191,6 +27280,7 @@ func _swig_getMT_RET_AUTH_VERIFY_BAD_PHONE() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_AUTH_VERIFY_BAD_PHONE EnMTAPIRetcode = _swig_getMT_RET_AUTH_VERIFY_BAD_PHONE()
+
 func _swig_getMT_RET_AUTH_API_DISABLED() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_AUTH_API_DISABLED_mt5api_024284ab9ca1e20a())
@@ -27198,6 +27288,7 @@ func _swig_getMT_RET_AUTH_API_DISABLED() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_AUTH_API_DISABLED EnMTAPIRetcode = _swig_getMT_RET_AUTH_API_DISABLED()
+
 func _swig_getMT_RET_CFG_LAST_ADMIN() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_CFG_LAST_ADMIN_mt5api_024284ab9ca1e20a())
@@ -27205,6 +27296,7 @@ func _swig_getMT_RET_CFG_LAST_ADMIN() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_CFG_LAST_ADMIN EnMTAPIRetcode = _swig_getMT_RET_CFG_LAST_ADMIN()
+
 func _swig_getMT_RET_CFG_LAST_ADMIN_GROUP() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_CFG_LAST_ADMIN_GROUP_mt5api_024284ab9ca1e20a())
@@ -27212,6 +27304,7 @@ func _swig_getMT_RET_CFG_LAST_ADMIN_GROUP() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_CFG_LAST_ADMIN_GROUP EnMTAPIRetcode = _swig_getMT_RET_CFG_LAST_ADMIN_GROUP()
+
 func _swig_getMT_RET_CFG_NOT_EMPTY() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_CFG_NOT_EMPTY_mt5api_024284ab9ca1e20a())
@@ -27219,6 +27312,7 @@ func _swig_getMT_RET_CFG_NOT_EMPTY() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_CFG_NOT_EMPTY EnMTAPIRetcode = _swig_getMT_RET_CFG_NOT_EMPTY()
+
 func _swig_getMT_RET_CFG_INVALID_RANGE() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_CFG_INVALID_RANGE_mt5api_024284ab9ca1e20a())
@@ -27226,6 +27320,7 @@ func _swig_getMT_RET_CFG_INVALID_RANGE() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_CFG_INVALID_RANGE EnMTAPIRetcode = _swig_getMT_RET_CFG_INVALID_RANGE()
+
 func _swig_getMT_RET_CFG_NOT_MANAGER_LOGIN() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_CFG_NOT_MANAGER_LOGIN_mt5api_024284ab9ca1e20a())
@@ -27233,6 +27328,7 @@ func _swig_getMT_RET_CFG_NOT_MANAGER_LOGIN() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_CFG_NOT_MANAGER_LOGIN EnMTAPIRetcode = _swig_getMT_RET_CFG_NOT_MANAGER_LOGIN()
+
 func _swig_getMT_RET_CFG_BUILTIN() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_CFG_BUILTIN_mt5api_024284ab9ca1e20a())
@@ -27240,6 +27336,7 @@ func _swig_getMT_RET_CFG_BUILTIN() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_CFG_BUILTIN EnMTAPIRetcode = _swig_getMT_RET_CFG_BUILTIN()
+
 func _swig_getMT_RET_CFG_DUPLICATE() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_CFG_DUPLICATE_mt5api_024284ab9ca1e20a())
@@ -27247,6 +27344,7 @@ func _swig_getMT_RET_CFG_DUPLICATE() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_CFG_DUPLICATE EnMTAPIRetcode = _swig_getMT_RET_CFG_DUPLICATE()
+
 func _swig_getMT_RET_CFG_LIMIT_REACHED() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_CFG_LIMIT_REACHED_mt5api_024284ab9ca1e20a())
@@ -27254,6 +27352,7 @@ func _swig_getMT_RET_CFG_LIMIT_REACHED() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_CFG_LIMIT_REACHED EnMTAPIRetcode = _swig_getMT_RET_CFG_LIMIT_REACHED()
+
 func _swig_getMT_RET_CFG_NO_ACCESS_TO_MAIN() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_CFG_NO_ACCESS_TO_MAIN_mt5api_024284ab9ca1e20a())
@@ -27261,6 +27360,7 @@ func _swig_getMT_RET_CFG_NO_ACCESS_TO_MAIN() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_CFG_NO_ACCESS_TO_MAIN EnMTAPIRetcode = _swig_getMT_RET_CFG_NO_ACCESS_TO_MAIN()
+
 func _swig_getMT_RET_CFG_DEALER_ID_EXIST() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_CFG_DEALER_ID_EXIST_mt5api_024284ab9ca1e20a())
@@ -27268,6 +27368,7 @@ func _swig_getMT_RET_CFG_DEALER_ID_EXIST() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_CFG_DEALER_ID_EXIST EnMTAPIRetcode = _swig_getMT_RET_CFG_DEALER_ID_EXIST()
+
 func _swig_getMT_RET_CFG_BIND_ADDR_EXIST() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_CFG_BIND_ADDR_EXIST_mt5api_024284ab9ca1e20a())
@@ -27275,6 +27376,7 @@ func _swig_getMT_RET_CFG_BIND_ADDR_EXIST() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_CFG_BIND_ADDR_EXIST EnMTAPIRetcode = _swig_getMT_RET_CFG_BIND_ADDR_EXIST()
+
 func _swig_getMT_RET_CFG_WORKING_TRADE() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_CFG_WORKING_TRADE_mt5api_024284ab9ca1e20a())
@@ -27282,6 +27384,7 @@ func _swig_getMT_RET_CFG_WORKING_TRADE() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_CFG_WORKING_TRADE EnMTAPIRetcode = _swig_getMT_RET_CFG_WORKING_TRADE()
+
 func _swig_getMT_RET_CFG_GATEWAY_NAME_EXIST() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_CFG_GATEWAY_NAME_EXIST_mt5api_024284ab9ca1e20a())
@@ -27289,6 +27392,7 @@ func _swig_getMT_RET_CFG_GATEWAY_NAME_EXIST() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_CFG_GATEWAY_NAME_EXIST EnMTAPIRetcode = _swig_getMT_RET_CFG_GATEWAY_NAME_EXIST()
+
 func _swig_getMT_RET_CFG_SWITCH_TO_BACKUP() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_CFG_SWITCH_TO_BACKUP_mt5api_024284ab9ca1e20a())
@@ -27296,6 +27400,7 @@ func _swig_getMT_RET_CFG_SWITCH_TO_BACKUP() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_CFG_SWITCH_TO_BACKUP EnMTAPIRetcode = _swig_getMT_RET_CFG_SWITCH_TO_BACKUP()
+
 func _swig_getMT_RET_CFG_NO_BACKUP_MODULE() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_CFG_NO_BACKUP_MODULE_mt5api_024284ab9ca1e20a())
@@ -27303,6 +27408,7 @@ func _swig_getMT_RET_CFG_NO_BACKUP_MODULE() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_CFG_NO_BACKUP_MODULE EnMTAPIRetcode = _swig_getMT_RET_CFG_NO_BACKUP_MODULE()
+
 func _swig_getMT_RET_CFG_NO_TRADE_MODULE() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_CFG_NO_TRADE_MODULE_mt5api_024284ab9ca1e20a())
@@ -27310,6 +27416,7 @@ func _swig_getMT_RET_CFG_NO_TRADE_MODULE() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_CFG_NO_TRADE_MODULE EnMTAPIRetcode = _swig_getMT_RET_CFG_NO_TRADE_MODULE()
+
 func _swig_getMT_RET_CFG_NO_HISTORY_MODULE() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_CFG_NO_HISTORY_MODULE_mt5api_024284ab9ca1e20a())
@@ -27317,6 +27424,7 @@ func _swig_getMT_RET_CFG_NO_HISTORY_MODULE() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_CFG_NO_HISTORY_MODULE EnMTAPIRetcode = _swig_getMT_RET_CFG_NO_HISTORY_MODULE()
+
 func _swig_getMT_RET_CFG_ANOTHER_SWITCH() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_CFG_ANOTHER_SWITCH_mt5api_024284ab9ca1e20a())
@@ -27324,6 +27432,7 @@ func _swig_getMT_RET_CFG_ANOTHER_SWITCH() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_CFG_ANOTHER_SWITCH EnMTAPIRetcode = _swig_getMT_RET_CFG_ANOTHER_SWITCH()
+
 func _swig_getMT_RET_CFG_NO_LICENSE_FILE() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_CFG_NO_LICENSE_FILE_mt5api_024284ab9ca1e20a())
@@ -27331,6 +27440,7 @@ func _swig_getMT_RET_CFG_NO_LICENSE_FILE() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_CFG_NO_LICENSE_FILE EnMTAPIRetcode = _swig_getMT_RET_CFG_NO_LICENSE_FILE()
+
 func _swig_getMT_RET_CFG_GATEWAY_LOGIN_EXIST() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_CFG_GATEWAY_LOGIN_EXIST_mt5api_024284ab9ca1e20a())
@@ -27338,6 +27448,7 @@ func _swig_getMT_RET_CFG_GATEWAY_LOGIN_EXIST() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_CFG_GATEWAY_LOGIN_EXIST EnMTAPIRetcode = _swig_getMT_RET_CFG_GATEWAY_LOGIN_EXIST()
+
 func _swig_getMT_RET_CFG_INVALID_COMPANY() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_CFG_INVALID_COMPANY_mt5api_024284ab9ca1e20a())
@@ -27345,6 +27456,7 @@ func _swig_getMT_RET_CFG_INVALID_COMPANY() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_CFG_INVALID_COMPANY EnMTAPIRetcode = _swig_getMT_RET_CFG_INVALID_COMPANY()
+
 func _swig_getMT_RET_USR_LAST_ADMIN() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_USR_LAST_ADMIN_mt5api_024284ab9ca1e20a())
@@ -27352,6 +27464,7 @@ func _swig_getMT_RET_USR_LAST_ADMIN() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_USR_LAST_ADMIN EnMTAPIRetcode = _swig_getMT_RET_USR_LAST_ADMIN()
+
 func _swig_getMT_RET_USR_LOGIN_EXHAUSTED() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_USR_LOGIN_EXHAUSTED_mt5api_024284ab9ca1e20a())
@@ -27359,6 +27472,7 @@ func _swig_getMT_RET_USR_LOGIN_EXHAUSTED() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_USR_LOGIN_EXHAUSTED EnMTAPIRetcode = _swig_getMT_RET_USR_LOGIN_EXHAUSTED()
+
 func _swig_getMT_RET_USR_LOGIN_PROHIBITED() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_USR_LOGIN_PROHIBITED_mt5api_024284ab9ca1e20a())
@@ -27366,6 +27480,7 @@ func _swig_getMT_RET_USR_LOGIN_PROHIBITED() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_USR_LOGIN_PROHIBITED EnMTAPIRetcode = _swig_getMT_RET_USR_LOGIN_PROHIBITED()
+
 func _swig_getMT_RET_USR_LOGIN_EXIST() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_USR_LOGIN_EXIST_mt5api_024284ab9ca1e20a())
@@ -27373,6 +27488,7 @@ func _swig_getMT_RET_USR_LOGIN_EXIST() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_USR_LOGIN_EXIST EnMTAPIRetcode = _swig_getMT_RET_USR_LOGIN_EXIST()
+
 func _swig_getMT_RET_USR_SUICIDE() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_USR_SUICIDE_mt5api_024284ab9ca1e20a())
@@ -27380,6 +27496,7 @@ func _swig_getMT_RET_USR_SUICIDE() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_USR_SUICIDE EnMTAPIRetcode = _swig_getMT_RET_USR_SUICIDE()
+
 func _swig_getMT_RET_USR_INVALID_PASSWORD() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_USR_INVALID_PASSWORD_mt5api_024284ab9ca1e20a())
@@ -27387,6 +27504,7 @@ func _swig_getMT_RET_USR_INVALID_PASSWORD() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_USR_INVALID_PASSWORD EnMTAPIRetcode = _swig_getMT_RET_USR_INVALID_PASSWORD()
+
 func _swig_getMT_RET_USR_LIMIT_REACHED() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_USR_LIMIT_REACHED_mt5api_024284ab9ca1e20a())
@@ -27394,6 +27512,7 @@ func _swig_getMT_RET_USR_LIMIT_REACHED() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_USR_LIMIT_REACHED EnMTAPIRetcode = _swig_getMT_RET_USR_LIMIT_REACHED()
+
 func _swig_getMT_RET_USR_HAS_TRADES() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_USR_HAS_TRADES_mt5api_024284ab9ca1e20a())
@@ -27401,6 +27520,7 @@ func _swig_getMT_RET_USR_HAS_TRADES() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_USR_HAS_TRADES EnMTAPIRetcode = _swig_getMT_RET_USR_HAS_TRADES()
+
 func _swig_getMT_RET_USR_DIFFERENT_SERVERS() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_USR_DIFFERENT_SERVERS_mt5api_024284ab9ca1e20a())
@@ -27408,6 +27528,7 @@ func _swig_getMT_RET_USR_DIFFERENT_SERVERS() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_USR_DIFFERENT_SERVERS EnMTAPIRetcode = _swig_getMT_RET_USR_DIFFERENT_SERVERS()
+
 func _swig_getMT_RET_USR_DIFFERENT_CURRENCY() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_USR_DIFFERENT_CURRENCY_mt5api_024284ab9ca1e20a())
@@ -27415,6 +27536,7 @@ func _swig_getMT_RET_USR_DIFFERENT_CURRENCY() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_USR_DIFFERENT_CURRENCY EnMTAPIRetcode = _swig_getMT_RET_USR_DIFFERENT_CURRENCY()
+
 func _swig_getMT_RET_USR_IMPORT_BALANCE() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_USR_IMPORT_BALANCE_mt5api_024284ab9ca1e20a())
@@ -27422,6 +27544,7 @@ func _swig_getMT_RET_USR_IMPORT_BALANCE() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_USR_IMPORT_BALANCE EnMTAPIRetcode = _swig_getMT_RET_USR_IMPORT_BALANCE()
+
 func _swig_getMT_RET_USR_IMPORT_GROUP() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_USR_IMPORT_GROUP_mt5api_024284ab9ca1e20a())
@@ -27429,6 +27552,7 @@ func _swig_getMT_RET_USR_IMPORT_GROUP() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_USR_IMPORT_GROUP EnMTAPIRetcode = _swig_getMT_RET_USR_IMPORT_GROUP()
+
 func _swig_getMT_RET_USR_ACCOUNT_EXIST() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_USR_ACCOUNT_EXIST_mt5api_024284ab9ca1e20a())
@@ -27436,6 +27560,7 @@ func _swig_getMT_RET_USR_ACCOUNT_EXIST() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_USR_ACCOUNT_EXIST EnMTAPIRetcode = _swig_getMT_RET_USR_ACCOUNT_EXIST()
+
 func _swig_getMT_RET_USR_IMPORT_ACCOUNT() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_USR_IMPORT_ACCOUNT_mt5api_024284ab9ca1e20a())
@@ -27443,6 +27568,7 @@ func _swig_getMT_RET_USR_IMPORT_ACCOUNT() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_USR_IMPORT_ACCOUNT EnMTAPIRetcode = _swig_getMT_RET_USR_IMPORT_ACCOUNT()
+
 func _swig_getMT_RET_USR_IMPORT_POSITIONS() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_USR_IMPORT_POSITIONS_mt5api_024284ab9ca1e20a())
@@ -27450,6 +27576,7 @@ func _swig_getMT_RET_USR_IMPORT_POSITIONS() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_USR_IMPORT_POSITIONS EnMTAPIRetcode = _swig_getMT_RET_USR_IMPORT_POSITIONS()
+
 func _swig_getMT_RET_USR_IMPORT_ORDERS() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_USR_IMPORT_ORDERS_mt5api_024284ab9ca1e20a())
@@ -27457,6 +27584,7 @@ func _swig_getMT_RET_USR_IMPORT_ORDERS() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_USR_IMPORT_ORDERS EnMTAPIRetcode = _swig_getMT_RET_USR_IMPORT_ORDERS()
+
 func _swig_getMT_RET_USR_IMPORT_DEALS() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_USR_IMPORT_DEALS_mt5api_024284ab9ca1e20a())
@@ -27464,6 +27592,7 @@ func _swig_getMT_RET_USR_IMPORT_DEALS() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_USR_IMPORT_DEALS EnMTAPIRetcode = _swig_getMT_RET_USR_IMPORT_DEALS()
+
 func _swig_getMT_RET_USR_IMPORT_HISTORY() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_USR_IMPORT_HISTORY_mt5api_024284ab9ca1e20a())
@@ -27471,6 +27600,7 @@ func _swig_getMT_RET_USR_IMPORT_HISTORY() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_USR_IMPORT_HISTORY EnMTAPIRetcode = _swig_getMT_RET_USR_IMPORT_HISTORY()
+
 func _swig_getMT_RET_USR_API_LIMIT_REACHED() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_USR_API_LIMIT_REACHED_mt5api_024284ab9ca1e20a())
@@ -27478,6 +27608,7 @@ func _swig_getMT_RET_USR_API_LIMIT_REACHED() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_USR_API_LIMIT_REACHED EnMTAPIRetcode = _swig_getMT_RET_USR_API_LIMIT_REACHED()
+
 func _swig_getMT_RET_TRADE_LIMIT_REACHED() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_TRADE_LIMIT_REACHED_mt5api_024284ab9ca1e20a())
@@ -27485,6 +27616,7 @@ func _swig_getMT_RET_TRADE_LIMIT_REACHED() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_TRADE_LIMIT_REACHED EnMTAPIRetcode = _swig_getMT_RET_TRADE_LIMIT_REACHED()
+
 func _swig_getMT_RET_TRADE_ORDER_EXIST() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_TRADE_ORDER_EXIST_mt5api_024284ab9ca1e20a())
@@ -27492,6 +27624,7 @@ func _swig_getMT_RET_TRADE_ORDER_EXIST() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_TRADE_ORDER_EXIST EnMTAPIRetcode = _swig_getMT_RET_TRADE_ORDER_EXIST()
+
 func _swig_getMT_RET_TRADE_ORDER_EXHAUSTED() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_TRADE_ORDER_EXHAUSTED_mt5api_024284ab9ca1e20a())
@@ -27499,6 +27632,7 @@ func _swig_getMT_RET_TRADE_ORDER_EXHAUSTED() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_TRADE_ORDER_EXHAUSTED EnMTAPIRetcode = _swig_getMT_RET_TRADE_ORDER_EXHAUSTED()
+
 func _swig_getMT_RET_TRADE_DEAL_EXHAUSTED() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_TRADE_DEAL_EXHAUSTED_mt5api_024284ab9ca1e20a())
@@ -27506,6 +27640,7 @@ func _swig_getMT_RET_TRADE_DEAL_EXHAUSTED() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_TRADE_DEAL_EXHAUSTED EnMTAPIRetcode = _swig_getMT_RET_TRADE_DEAL_EXHAUSTED()
+
 func _swig_getMT_RET_TRADE_MAX_MONEY() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_TRADE_MAX_MONEY_mt5api_024284ab9ca1e20a())
@@ -27513,6 +27648,7 @@ func _swig_getMT_RET_TRADE_MAX_MONEY() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_TRADE_MAX_MONEY EnMTAPIRetcode = _swig_getMT_RET_TRADE_MAX_MONEY()
+
 func _swig_getMT_RET_TRADE_DEAL_EXIST() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_TRADE_DEAL_EXIST_mt5api_024284ab9ca1e20a())
@@ -27520,6 +27656,7 @@ func _swig_getMT_RET_TRADE_DEAL_EXIST() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_TRADE_DEAL_EXIST EnMTAPIRetcode = _swig_getMT_RET_TRADE_DEAL_EXIST()
+
 func _swig_getMT_RET_TRADE_ORDER_PROHIBITED() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_TRADE_ORDER_PROHIBITED_mt5api_024284ab9ca1e20a())
@@ -27527,6 +27664,7 @@ func _swig_getMT_RET_TRADE_ORDER_PROHIBITED() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_TRADE_ORDER_PROHIBITED EnMTAPIRetcode = _swig_getMT_RET_TRADE_ORDER_PROHIBITED()
+
 func _swig_getMT_RET_TRADE_DEAL_PROHIBITED() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_TRADE_DEAL_PROHIBITED_mt5api_024284ab9ca1e20a())
@@ -27534,6 +27672,7 @@ func _swig_getMT_RET_TRADE_DEAL_PROHIBITED() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_TRADE_DEAL_PROHIBITED EnMTAPIRetcode = _swig_getMT_RET_TRADE_DEAL_PROHIBITED()
+
 func _swig_getMT_RET_TRADE_SPLIT_VOLUME() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_TRADE_SPLIT_VOLUME_mt5api_024284ab9ca1e20a())
@@ -27541,6 +27680,7 @@ func _swig_getMT_RET_TRADE_SPLIT_VOLUME() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_TRADE_SPLIT_VOLUME EnMTAPIRetcode = _swig_getMT_RET_TRADE_SPLIT_VOLUME()
+
 func _swig_getMT_RET_REPORT_SNAPSHOT() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_REPORT_SNAPSHOT_mt5api_024284ab9ca1e20a())
@@ -27548,6 +27688,7 @@ func _swig_getMT_RET_REPORT_SNAPSHOT() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_REPORT_SNAPSHOT EnMTAPIRetcode = _swig_getMT_RET_REPORT_SNAPSHOT()
+
 func _swig_getMT_RET_REPORT_NOTSUPPORTED() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_REPORT_NOTSUPPORTED_mt5api_024284ab9ca1e20a())
@@ -27555,6 +27696,7 @@ func _swig_getMT_RET_REPORT_NOTSUPPORTED() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_REPORT_NOTSUPPORTED EnMTAPIRetcode = _swig_getMT_RET_REPORT_NOTSUPPORTED()
+
 func _swig_getMT_RET_REPORT_NODATA() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_REPORT_NODATA_mt5api_024284ab9ca1e20a())
@@ -27562,6 +27704,7 @@ func _swig_getMT_RET_REPORT_NODATA() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_REPORT_NODATA EnMTAPIRetcode = _swig_getMT_RET_REPORT_NODATA()
+
 func _swig_getMT_RET_REPORT_TEMPLATE_BAD() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_REPORT_TEMPLATE_BAD_mt5api_024284ab9ca1e20a())
@@ -27569,6 +27712,7 @@ func _swig_getMT_RET_REPORT_TEMPLATE_BAD() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_REPORT_TEMPLATE_BAD EnMTAPIRetcode = _swig_getMT_RET_REPORT_TEMPLATE_BAD()
+
 func _swig_getMT_RET_REPORT_TEMPLATE_END() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_REPORT_TEMPLATE_END_mt5api_024284ab9ca1e20a())
@@ -27576,6 +27720,7 @@ func _swig_getMT_RET_REPORT_TEMPLATE_END() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_REPORT_TEMPLATE_END EnMTAPIRetcode = _swig_getMT_RET_REPORT_TEMPLATE_END()
+
 func _swig_getMT_RET_REPORT_INVALID_ROW() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_REPORT_INVALID_ROW_mt5api_024284ab9ca1e20a())
@@ -27583,6 +27728,7 @@ func _swig_getMT_RET_REPORT_INVALID_ROW() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_REPORT_INVALID_ROW EnMTAPIRetcode = _swig_getMT_RET_REPORT_INVALID_ROW()
+
 func _swig_getMT_RET_REPORT_LIMIT_REPEAT() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_REPORT_LIMIT_REPEAT_mt5api_024284ab9ca1e20a())
@@ -27590,6 +27736,7 @@ func _swig_getMT_RET_REPORT_LIMIT_REPEAT() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_REPORT_LIMIT_REPEAT EnMTAPIRetcode = _swig_getMT_RET_REPORT_LIMIT_REPEAT()
+
 func _swig_getMT_RET_REPORT_LIMIT_REPORT() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_REPORT_LIMIT_REPORT_mt5api_024284ab9ca1e20a())
@@ -27597,6 +27744,7 @@ func _swig_getMT_RET_REPORT_LIMIT_REPORT() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_REPORT_LIMIT_REPORT EnMTAPIRetcode = _swig_getMT_RET_REPORT_LIMIT_REPORT()
+
 func _swig_getMT_RET_HST_SYMBOL_NOTFOUND() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_HST_SYMBOL_NOTFOUND_mt5api_024284ab9ca1e20a())
@@ -27604,6 +27752,7 @@ func _swig_getMT_RET_HST_SYMBOL_NOTFOUND() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_HST_SYMBOL_NOTFOUND EnMTAPIRetcode = _swig_getMT_RET_HST_SYMBOL_NOTFOUND()
+
 func _swig_getMT_RET_REQUEST_INWAY() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_REQUEST_INWAY_mt5api_024284ab9ca1e20a())
@@ -27611,6 +27760,7 @@ func _swig_getMT_RET_REQUEST_INWAY() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_REQUEST_INWAY EnMTAPIRetcode = _swig_getMT_RET_REQUEST_INWAY()
+
 func _swig_getMT_RET_REQUEST_ACCEPTED() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_REQUEST_ACCEPTED_mt5api_024284ab9ca1e20a())
@@ -27618,6 +27768,7 @@ func _swig_getMT_RET_REQUEST_ACCEPTED() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_REQUEST_ACCEPTED EnMTAPIRetcode = _swig_getMT_RET_REQUEST_ACCEPTED()
+
 func _swig_getMT_RET_REQUEST_PROCESS() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_REQUEST_PROCESS_mt5api_024284ab9ca1e20a())
@@ -27625,6 +27776,7 @@ func _swig_getMT_RET_REQUEST_PROCESS() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_REQUEST_PROCESS EnMTAPIRetcode = _swig_getMT_RET_REQUEST_PROCESS()
+
 func _swig_getMT_RET_REQUEST_REQUOTE() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_REQUEST_REQUOTE_mt5api_024284ab9ca1e20a())
@@ -27632,6 +27784,7 @@ func _swig_getMT_RET_REQUEST_REQUOTE() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_REQUEST_REQUOTE EnMTAPIRetcode = _swig_getMT_RET_REQUEST_REQUOTE()
+
 func _swig_getMT_RET_REQUEST_PRICES() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_REQUEST_PRICES_mt5api_024284ab9ca1e20a())
@@ -27639,6 +27792,7 @@ func _swig_getMT_RET_REQUEST_PRICES() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_REQUEST_PRICES EnMTAPIRetcode = _swig_getMT_RET_REQUEST_PRICES()
+
 func _swig_getMT_RET_REQUEST_REJECT() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_REQUEST_REJECT_mt5api_024284ab9ca1e20a())
@@ -27646,6 +27800,7 @@ func _swig_getMT_RET_REQUEST_REJECT() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_REQUEST_REJECT EnMTAPIRetcode = _swig_getMT_RET_REQUEST_REJECT()
+
 func _swig_getMT_RET_REQUEST_CANCEL() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_REQUEST_CANCEL_mt5api_024284ab9ca1e20a())
@@ -27653,6 +27808,7 @@ func _swig_getMT_RET_REQUEST_CANCEL() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_REQUEST_CANCEL EnMTAPIRetcode = _swig_getMT_RET_REQUEST_CANCEL()
+
 func _swig_getMT_RET_REQUEST_PLACED() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_REQUEST_PLACED_mt5api_024284ab9ca1e20a())
@@ -27660,6 +27816,7 @@ func _swig_getMT_RET_REQUEST_PLACED() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_REQUEST_PLACED EnMTAPIRetcode = _swig_getMT_RET_REQUEST_PLACED()
+
 func _swig_getMT_RET_REQUEST_DONE() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_REQUEST_DONE_mt5api_024284ab9ca1e20a())
@@ -27667,6 +27824,7 @@ func _swig_getMT_RET_REQUEST_DONE() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_REQUEST_DONE EnMTAPIRetcode = _swig_getMT_RET_REQUEST_DONE()
+
 func _swig_getMT_RET_REQUEST_DONE_PARTIAL() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_REQUEST_DONE_PARTIAL_mt5api_024284ab9ca1e20a())
@@ -27674,6 +27832,7 @@ func _swig_getMT_RET_REQUEST_DONE_PARTIAL() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_REQUEST_DONE_PARTIAL EnMTAPIRetcode = _swig_getMT_RET_REQUEST_DONE_PARTIAL()
+
 func _swig_getMT_RET_REQUEST_ERROR() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_REQUEST_ERROR_mt5api_024284ab9ca1e20a())
@@ -27681,6 +27840,7 @@ func _swig_getMT_RET_REQUEST_ERROR() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_REQUEST_ERROR EnMTAPIRetcode = _swig_getMT_RET_REQUEST_ERROR()
+
 func _swig_getMT_RET_REQUEST_TIMEOUT() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_REQUEST_TIMEOUT_mt5api_024284ab9ca1e20a())
@@ -27688,6 +27848,7 @@ func _swig_getMT_RET_REQUEST_TIMEOUT() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_REQUEST_TIMEOUT EnMTAPIRetcode = _swig_getMT_RET_REQUEST_TIMEOUT()
+
 func _swig_getMT_RET_REQUEST_INVALID() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_REQUEST_INVALID_mt5api_024284ab9ca1e20a())
@@ -27695,6 +27856,7 @@ func _swig_getMT_RET_REQUEST_INVALID() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_REQUEST_INVALID EnMTAPIRetcode = _swig_getMT_RET_REQUEST_INVALID()
+
 func _swig_getMT_RET_REQUEST_INVALID_VOLUME() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_REQUEST_INVALID_VOLUME_mt5api_024284ab9ca1e20a())
@@ -27702,6 +27864,7 @@ func _swig_getMT_RET_REQUEST_INVALID_VOLUME() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_REQUEST_INVALID_VOLUME EnMTAPIRetcode = _swig_getMT_RET_REQUEST_INVALID_VOLUME()
+
 func _swig_getMT_RET_REQUEST_INVALID_PRICE() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_REQUEST_INVALID_PRICE_mt5api_024284ab9ca1e20a())
@@ -27709,6 +27872,7 @@ func _swig_getMT_RET_REQUEST_INVALID_PRICE() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_REQUEST_INVALID_PRICE EnMTAPIRetcode = _swig_getMT_RET_REQUEST_INVALID_PRICE()
+
 func _swig_getMT_RET_REQUEST_INVALID_STOPS() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_REQUEST_INVALID_STOPS_mt5api_024284ab9ca1e20a())
@@ -27716,6 +27880,7 @@ func _swig_getMT_RET_REQUEST_INVALID_STOPS() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_REQUEST_INVALID_STOPS EnMTAPIRetcode = _swig_getMT_RET_REQUEST_INVALID_STOPS()
+
 func _swig_getMT_RET_REQUEST_TRADE_DISABLED() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_REQUEST_TRADE_DISABLED_mt5api_024284ab9ca1e20a())
@@ -27723,6 +27888,7 @@ func _swig_getMT_RET_REQUEST_TRADE_DISABLED() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_REQUEST_TRADE_DISABLED EnMTAPIRetcode = _swig_getMT_RET_REQUEST_TRADE_DISABLED()
+
 func _swig_getMT_RET_REQUEST_MARKET_CLOSED() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_REQUEST_MARKET_CLOSED_mt5api_024284ab9ca1e20a())
@@ -27730,6 +27896,7 @@ func _swig_getMT_RET_REQUEST_MARKET_CLOSED() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_REQUEST_MARKET_CLOSED EnMTAPIRetcode = _swig_getMT_RET_REQUEST_MARKET_CLOSED()
+
 func _swig_getMT_RET_REQUEST_NO_MONEY() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_REQUEST_NO_MONEY_mt5api_024284ab9ca1e20a())
@@ -27737,6 +27904,7 @@ func _swig_getMT_RET_REQUEST_NO_MONEY() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_REQUEST_NO_MONEY EnMTAPIRetcode = _swig_getMT_RET_REQUEST_NO_MONEY()
+
 func _swig_getMT_RET_REQUEST_PRICE_CHANGED() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_REQUEST_PRICE_CHANGED_mt5api_024284ab9ca1e20a())
@@ -27744,6 +27912,7 @@ func _swig_getMT_RET_REQUEST_PRICE_CHANGED() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_REQUEST_PRICE_CHANGED EnMTAPIRetcode = _swig_getMT_RET_REQUEST_PRICE_CHANGED()
+
 func _swig_getMT_RET_REQUEST_PRICE_OFF() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_REQUEST_PRICE_OFF_mt5api_024284ab9ca1e20a())
@@ -27751,6 +27920,7 @@ func _swig_getMT_RET_REQUEST_PRICE_OFF() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_REQUEST_PRICE_OFF EnMTAPIRetcode = _swig_getMT_RET_REQUEST_PRICE_OFF()
+
 func _swig_getMT_RET_REQUEST_INVALID_EXP() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_REQUEST_INVALID_EXP_mt5api_024284ab9ca1e20a())
@@ -27758,6 +27928,7 @@ func _swig_getMT_RET_REQUEST_INVALID_EXP() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_REQUEST_INVALID_EXP EnMTAPIRetcode = _swig_getMT_RET_REQUEST_INVALID_EXP()
+
 func _swig_getMT_RET_REQUEST_ORDER_CHANGED() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_REQUEST_ORDER_CHANGED_mt5api_024284ab9ca1e20a())
@@ -27765,6 +27936,7 @@ func _swig_getMT_RET_REQUEST_ORDER_CHANGED() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_REQUEST_ORDER_CHANGED EnMTAPIRetcode = _swig_getMT_RET_REQUEST_ORDER_CHANGED()
+
 func _swig_getMT_RET_REQUEST_TOO_MANY() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_REQUEST_TOO_MANY_mt5api_024284ab9ca1e20a())
@@ -27772,6 +27944,7 @@ func _swig_getMT_RET_REQUEST_TOO_MANY() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_REQUEST_TOO_MANY EnMTAPIRetcode = _swig_getMT_RET_REQUEST_TOO_MANY()
+
 func _swig_getMT_RET_REQUEST_NO_CHANGES() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_REQUEST_NO_CHANGES_mt5api_024284ab9ca1e20a())
@@ -27779,6 +27952,7 @@ func _swig_getMT_RET_REQUEST_NO_CHANGES() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_REQUEST_NO_CHANGES EnMTAPIRetcode = _swig_getMT_RET_REQUEST_NO_CHANGES()
+
 func _swig_getMT_RET_REQUEST_AT_DISABLED_SERVER() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_REQUEST_AT_DISABLED_SERVER_mt5api_024284ab9ca1e20a())
@@ -27786,6 +27960,7 @@ func _swig_getMT_RET_REQUEST_AT_DISABLED_SERVER() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_REQUEST_AT_DISABLED_SERVER EnMTAPIRetcode = _swig_getMT_RET_REQUEST_AT_DISABLED_SERVER()
+
 func _swig_getMT_RET_REQUEST_AT_DISABLED_CLIENT() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_REQUEST_AT_DISABLED_CLIENT_mt5api_024284ab9ca1e20a())
@@ -27793,6 +27968,7 @@ func _swig_getMT_RET_REQUEST_AT_DISABLED_CLIENT() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_REQUEST_AT_DISABLED_CLIENT EnMTAPIRetcode = _swig_getMT_RET_REQUEST_AT_DISABLED_CLIENT()
+
 func _swig_getMT_RET_REQUEST_LOCKED() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_REQUEST_LOCKED_mt5api_024284ab9ca1e20a())
@@ -27800,6 +27976,7 @@ func _swig_getMT_RET_REQUEST_LOCKED() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_REQUEST_LOCKED EnMTAPIRetcode = _swig_getMT_RET_REQUEST_LOCKED()
+
 func _swig_getMT_RET_REQUEST_FROZEN() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_REQUEST_FROZEN_mt5api_024284ab9ca1e20a())
@@ -27807,6 +27984,7 @@ func _swig_getMT_RET_REQUEST_FROZEN() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_REQUEST_FROZEN EnMTAPIRetcode = _swig_getMT_RET_REQUEST_FROZEN()
+
 func _swig_getMT_RET_REQUEST_INVALID_FILL() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_REQUEST_INVALID_FILL_mt5api_024284ab9ca1e20a())
@@ -27814,6 +27992,7 @@ func _swig_getMT_RET_REQUEST_INVALID_FILL() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_REQUEST_INVALID_FILL EnMTAPIRetcode = _swig_getMT_RET_REQUEST_INVALID_FILL()
+
 func _swig_getMT_RET_REQUEST_CONNECTION() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_REQUEST_CONNECTION_mt5api_024284ab9ca1e20a())
@@ -27821,6 +28000,7 @@ func _swig_getMT_RET_REQUEST_CONNECTION() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_REQUEST_CONNECTION EnMTAPIRetcode = _swig_getMT_RET_REQUEST_CONNECTION()
+
 func _swig_getMT_RET_REQUEST_ONLY_REAL() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_REQUEST_ONLY_REAL_mt5api_024284ab9ca1e20a())
@@ -27828,6 +28008,7 @@ func _swig_getMT_RET_REQUEST_ONLY_REAL() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_REQUEST_ONLY_REAL EnMTAPIRetcode = _swig_getMT_RET_REQUEST_ONLY_REAL()
+
 func _swig_getMT_RET_REQUEST_LIMIT_ORDERS() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_REQUEST_LIMIT_ORDERS_mt5api_024284ab9ca1e20a())
@@ -27835,6 +28016,7 @@ func _swig_getMT_RET_REQUEST_LIMIT_ORDERS() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_REQUEST_LIMIT_ORDERS EnMTAPIRetcode = _swig_getMT_RET_REQUEST_LIMIT_ORDERS()
+
 func _swig_getMT_RET_REQUEST_LIMIT_VOLUME() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_REQUEST_LIMIT_VOLUME_mt5api_024284ab9ca1e20a())
@@ -27842,6 +28024,7 @@ func _swig_getMT_RET_REQUEST_LIMIT_VOLUME() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_REQUEST_LIMIT_VOLUME EnMTAPIRetcode = _swig_getMT_RET_REQUEST_LIMIT_VOLUME()
+
 func _swig_getMT_RET_REQUEST_INVALID_ORDER() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_REQUEST_INVALID_ORDER_mt5api_024284ab9ca1e20a())
@@ -27849,6 +28032,7 @@ func _swig_getMT_RET_REQUEST_INVALID_ORDER() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_REQUEST_INVALID_ORDER EnMTAPIRetcode = _swig_getMT_RET_REQUEST_INVALID_ORDER()
+
 func _swig_getMT_RET_REQUEST_POSITION_CLOSED() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_REQUEST_POSITION_CLOSED_mt5api_024284ab9ca1e20a())
@@ -27856,6 +28040,7 @@ func _swig_getMT_RET_REQUEST_POSITION_CLOSED() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_REQUEST_POSITION_CLOSED EnMTAPIRetcode = _swig_getMT_RET_REQUEST_POSITION_CLOSED()
+
 func _swig_getMT_RET_REQUEST_EXECUTION_SKIPPED() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_REQUEST_EXECUTION_SKIPPED_mt5api_024284ab9ca1e20a())
@@ -27863,6 +28048,7 @@ func _swig_getMT_RET_REQUEST_EXECUTION_SKIPPED() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_REQUEST_EXECUTION_SKIPPED EnMTAPIRetcode = _swig_getMT_RET_REQUEST_EXECUTION_SKIPPED()
+
 func _swig_getMT_RET_REQUEST_INVALID_CLOSE_VOLUME() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_REQUEST_INVALID_CLOSE_VOLUME_mt5api_024284ab9ca1e20a())
@@ -27870,6 +28056,7 @@ func _swig_getMT_RET_REQUEST_INVALID_CLOSE_VOLUME() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_REQUEST_INVALID_CLOSE_VOLUME EnMTAPIRetcode = _swig_getMT_RET_REQUEST_INVALID_CLOSE_VOLUME()
+
 func _swig_getMT_RET_REQUEST_CLOSE_ORDER_EXIST() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_REQUEST_CLOSE_ORDER_EXIST_mt5api_024284ab9ca1e20a())
@@ -27877,6 +28064,7 @@ func _swig_getMT_RET_REQUEST_CLOSE_ORDER_EXIST() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_REQUEST_CLOSE_ORDER_EXIST EnMTAPIRetcode = _swig_getMT_RET_REQUEST_CLOSE_ORDER_EXIST()
+
 func _swig_getMT_RET_REQUEST_LIMIT_POSITIONS() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_REQUEST_LIMIT_POSITIONS_mt5api_024284ab9ca1e20a())
@@ -27884,6 +28072,7 @@ func _swig_getMT_RET_REQUEST_LIMIT_POSITIONS() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_REQUEST_LIMIT_POSITIONS EnMTAPIRetcode = _swig_getMT_RET_REQUEST_LIMIT_POSITIONS()
+
 func _swig_getMT_RET_REQUEST_REJECT_CANCEL() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_REQUEST_REJECT_CANCEL_mt5api_024284ab9ca1e20a())
@@ -27891,6 +28080,7 @@ func _swig_getMT_RET_REQUEST_REJECT_CANCEL() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_REQUEST_REJECT_CANCEL EnMTAPIRetcode = _swig_getMT_RET_REQUEST_REJECT_CANCEL()
+
 func _swig_getMT_RET_REQUEST_LONG_ONLY() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_REQUEST_LONG_ONLY_mt5api_024284ab9ca1e20a())
@@ -27898,6 +28088,7 @@ func _swig_getMT_RET_REQUEST_LONG_ONLY() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_REQUEST_LONG_ONLY EnMTAPIRetcode = _swig_getMT_RET_REQUEST_LONG_ONLY()
+
 func _swig_getMT_RET_REQUEST_SHORT_ONLY() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_REQUEST_SHORT_ONLY_mt5api_024284ab9ca1e20a())
@@ -27905,6 +28096,7 @@ func _swig_getMT_RET_REQUEST_SHORT_ONLY() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_REQUEST_SHORT_ONLY EnMTAPIRetcode = _swig_getMT_RET_REQUEST_SHORT_ONLY()
+
 func _swig_getMT_RET_REQUEST_CLOSE_ONLY() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_REQUEST_CLOSE_ONLY_mt5api_024284ab9ca1e20a())
@@ -27912,6 +28104,7 @@ func _swig_getMT_RET_REQUEST_CLOSE_ONLY() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_REQUEST_CLOSE_ONLY EnMTAPIRetcode = _swig_getMT_RET_REQUEST_CLOSE_ONLY()
+
 func _swig_getMT_RET_REQUEST_PROHIBITED_BY_FIFO() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_REQUEST_PROHIBITED_BY_FIFO_mt5api_024284ab9ca1e20a())
@@ -27919,6 +28112,7 @@ func _swig_getMT_RET_REQUEST_PROHIBITED_BY_FIFO() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_REQUEST_PROHIBITED_BY_FIFO EnMTAPIRetcode = _swig_getMT_RET_REQUEST_PROHIBITED_BY_FIFO()
+
 func _swig_getMT_RET_REQUEST_HEDGE_PROHIBITED() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_REQUEST_HEDGE_PROHIBITED_mt5api_024284ab9ca1e20a())
@@ -27926,6 +28120,7 @@ func _swig_getMT_RET_REQUEST_HEDGE_PROHIBITED() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_REQUEST_HEDGE_PROHIBITED EnMTAPIRetcode = _swig_getMT_RET_REQUEST_HEDGE_PROHIBITED()
+
 func _swig_getMT_RET_REQUEST_RETURN() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_REQUEST_RETURN_mt5api_024284ab9ca1e20a())
@@ -27933,6 +28128,7 @@ func _swig_getMT_RET_REQUEST_RETURN() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_REQUEST_RETURN EnMTAPIRetcode = _swig_getMT_RET_REQUEST_RETURN()
+
 func _swig_getMT_RET_REQUEST_DONE_CANCEL() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_REQUEST_DONE_CANCEL_mt5api_024284ab9ca1e20a())
@@ -27940,6 +28136,7 @@ func _swig_getMT_RET_REQUEST_DONE_CANCEL() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_REQUEST_DONE_CANCEL EnMTAPIRetcode = _swig_getMT_RET_REQUEST_DONE_CANCEL()
+
 func _swig_getMT_RET_REQUEST_REQUOTE_RETURN() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_REQUEST_REQUOTE_RETURN_mt5api_024284ab9ca1e20a())
@@ -27947,6 +28144,7 @@ func _swig_getMT_RET_REQUEST_REQUOTE_RETURN() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_REQUEST_REQUOTE_RETURN EnMTAPIRetcode = _swig_getMT_RET_REQUEST_REQUOTE_RETURN()
+
 func _swig_getMT_RET_ERR_NOTIMPLEMENT() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_ERR_NOTIMPLEMENT_mt5api_024284ab9ca1e20a())
@@ -27954,6 +28152,7 @@ func _swig_getMT_RET_ERR_NOTIMPLEMENT() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_ERR_NOTIMPLEMENT EnMTAPIRetcode = _swig_getMT_RET_ERR_NOTIMPLEMENT()
+
 func _swig_getMT_RET_ERR_NOTMAIN() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_ERR_NOTMAIN_mt5api_024284ab9ca1e20a())
@@ -27961,6 +28160,7 @@ func _swig_getMT_RET_ERR_NOTMAIN() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_ERR_NOTMAIN EnMTAPIRetcode = _swig_getMT_RET_ERR_NOTMAIN()
+
 func _swig_getMT_RET_ERR_NOTSUPPORTED() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_ERR_NOTSUPPORTED_mt5api_024284ab9ca1e20a())
@@ -27968,6 +28168,7 @@ func _swig_getMT_RET_ERR_NOTSUPPORTED() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_ERR_NOTSUPPORTED EnMTAPIRetcode = _swig_getMT_RET_ERR_NOTSUPPORTED()
+
 func _swig_getMT_RET_ERR_DEADLOCK() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_ERR_DEADLOCK_mt5api_024284ab9ca1e20a())
@@ -27975,6 +28176,7 @@ func _swig_getMT_RET_ERR_DEADLOCK() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_ERR_DEADLOCK EnMTAPIRetcode = _swig_getMT_RET_ERR_DEADLOCK()
+
 func _swig_getMT_RET_ERR_LOCKED() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_ERR_LOCKED_mt5api_024284ab9ca1e20a())
@@ -27982,6 +28184,7 @@ func _swig_getMT_RET_ERR_LOCKED() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_ERR_LOCKED EnMTAPIRetcode = _swig_getMT_RET_ERR_LOCKED()
+
 func _swig_getMT_RET_MESSENGER_INVALID_PHONE() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_MESSENGER_INVALID_PHONE_mt5api_024284ab9ca1e20a())
@@ -27989,6 +28192,7 @@ func _swig_getMT_RET_MESSENGER_INVALID_PHONE() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_MESSENGER_INVALID_PHONE EnMTAPIRetcode = _swig_getMT_RET_MESSENGER_INVALID_PHONE()
+
 func _swig_getMT_RET_MESSENGER_NOT_MOBILE() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_MESSENGER_NOT_MOBILE_mt5api_024284ab9ca1e20a())
@@ -27996,6 +28200,7 @@ func _swig_getMT_RET_MESSENGER_NOT_MOBILE() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_MESSENGER_NOT_MOBILE EnMTAPIRetcode = _swig_getMT_RET_MESSENGER_NOT_MOBILE()
+
 func _swig_getMT_RET_SUBS_NOT_FOUND() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_SUBS_NOT_FOUND_mt5api_024284ab9ca1e20a())
@@ -28003,6 +28208,7 @@ func _swig_getMT_RET_SUBS_NOT_FOUND() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_SUBS_NOT_FOUND EnMTAPIRetcode = _swig_getMT_RET_SUBS_NOT_FOUND()
+
 func _swig_getMT_RET_SUBS_NOT_FOUND_CFG() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_SUBS_NOT_FOUND_CFG_mt5api_024284ab9ca1e20a())
@@ -28010,6 +28216,7 @@ func _swig_getMT_RET_SUBS_NOT_FOUND_CFG() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_SUBS_NOT_FOUND_CFG EnMTAPIRetcode = _swig_getMT_RET_SUBS_NOT_FOUND_CFG()
+
 func _swig_getMT_RET_SUBS_NOT_FOUND_USER() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_SUBS_NOT_FOUND_USER_mt5api_024284ab9ca1e20a())
@@ -28017,6 +28224,7 @@ func _swig_getMT_RET_SUBS_NOT_FOUND_USER() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_SUBS_NOT_FOUND_USER EnMTAPIRetcode = _swig_getMT_RET_SUBS_NOT_FOUND_USER()
+
 func _swig_getMT_RET_SUBS_DISABLED() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_SUBS_DISABLED_mt5api_024284ab9ca1e20a())
@@ -28024,6 +28232,7 @@ func _swig_getMT_RET_SUBS_DISABLED() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_SUBS_DISABLED EnMTAPIRetcode = _swig_getMT_RET_SUBS_DISABLED()
+
 func _swig_getMT_RET_SUBS_PERMISSION_USER() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_SUBS_PERMISSION_USER_mt5api_024284ab9ca1e20a())
@@ -28031,6 +28240,7 @@ func _swig_getMT_RET_SUBS_PERMISSION_USER() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_SUBS_PERMISSION_USER EnMTAPIRetcode = _swig_getMT_RET_SUBS_PERMISSION_USER()
+
 func _swig_getMT_RET_SUBS_PERMISSION_SUBSCRIBE() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_SUBS_PERMISSION_SUBSCRIBE_mt5api_024284ab9ca1e20a())
@@ -28038,6 +28248,7 @@ func _swig_getMT_RET_SUBS_PERMISSION_SUBSCRIBE() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_SUBS_PERMISSION_SUBSCRIBE EnMTAPIRetcode = _swig_getMT_RET_SUBS_PERMISSION_SUBSCRIBE()
+
 func _swig_getMT_RET_SUBS_PERMISSION_UNSUBSCRIBE() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_SUBS_PERMISSION_UNSUBSCRIBE_mt5api_024284ab9ca1e20a())
@@ -28045,6 +28256,7 @@ func _swig_getMT_RET_SUBS_PERMISSION_UNSUBSCRIBE() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_SUBS_PERMISSION_UNSUBSCRIBE EnMTAPIRetcode = _swig_getMT_RET_SUBS_PERMISSION_UNSUBSCRIBE()
+
 func _swig_getMT_RET_SUBS_REAL_ONLY() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_SUBS_REAL_ONLY_mt5api_024284ab9ca1e20a())
@@ -28052,6 +28264,7 @@ func _swig_getMT_RET_SUBS_REAL_ONLY() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_SUBS_REAL_ONLY EnMTAPIRetcode = _swig_getMT_RET_SUBS_REAL_ONLY()
+
 func _swig_getMT_RET_SUBS_PAYMENT_METHOD() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_SUBS_PAYMENT_METHOD_mt5api_024284ab9ca1e20a())
@@ -28059,6 +28272,7 @@ func _swig_getMT_RET_SUBS_PAYMENT_METHOD() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_SUBS_PAYMENT_METHOD EnMTAPIRetcode = _swig_getMT_RET_SUBS_PAYMENT_METHOD()
+
 func _swig_getMT_RET_PAY_REAL_ONLY() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_PAY_REAL_ONLY_mt5api_024284ab9ca1e20a())
@@ -28066,6 +28280,7 @@ func _swig_getMT_RET_PAY_REAL_ONLY() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_PAY_REAL_ONLY EnMTAPIRetcode = _swig_getMT_RET_PAY_REAL_ONLY()
+
 func _swig_getMT_RET_PAY_INVALID_AMOUNT() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_PAY_INVALID_AMOUNT_mt5api_024284ab9ca1e20a())
@@ -28073,6 +28288,7 @@ func _swig_getMT_RET_PAY_INVALID_AMOUNT() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_PAY_INVALID_AMOUNT EnMTAPIRetcode = _swig_getMT_RET_PAY_INVALID_AMOUNT()
+
 func _swig_getMT_RET_PAY_NOT_ALLOWED_DEPOSIT() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_PAY_NOT_ALLOWED_DEPOSIT_mt5api_024284ab9ca1e20a())
@@ -28080,6 +28296,7 @@ func _swig_getMT_RET_PAY_NOT_ALLOWED_DEPOSIT() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_PAY_NOT_ALLOWED_DEPOSIT EnMTAPIRetcode = _swig_getMT_RET_PAY_NOT_ALLOWED_DEPOSIT()
+
 func _swig_getMT_RET_PAY_NOT_ALLOWED_WITHDRAWAL() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_PAY_NOT_ALLOWED_WITHDRAWAL_mt5api_024284ab9ca1e20a())
@@ -28087,6 +28304,7 @@ func _swig_getMT_RET_PAY_NOT_ALLOWED_WITHDRAWAL() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_PAY_NOT_ALLOWED_WITHDRAWAL EnMTAPIRetcode = _swig_getMT_RET_PAY_NOT_ALLOWED_WITHDRAWAL()
+
 func _swig_getMT_RET_PAY_NOT_ALLOWED_GROUP() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_PAY_NOT_ALLOWED_GROUP_mt5api_024284ab9ca1e20a())
@@ -28094,6 +28312,7 @@ func _swig_getMT_RET_PAY_NOT_ALLOWED_GROUP() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_PAY_NOT_ALLOWED_GROUP EnMTAPIRetcode = _swig_getMT_RET_PAY_NOT_ALLOWED_GROUP()
+
 func _swig_getMT_RET_PAY_NOT_ALLOWED_COUNTRY() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_PAY_NOT_ALLOWED_COUNTRY_mt5api_024284ab9ca1e20a())
@@ -28101,6 +28320,7 @@ func _swig_getMT_RET_PAY_NOT_ALLOWED_COUNTRY() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_PAY_NOT_ALLOWED_COUNTRY EnMTAPIRetcode = _swig_getMT_RET_PAY_NOT_ALLOWED_COUNTRY()
+
 func _swig_getMT_RET_PAY_DECLINE_BY_RULES() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_PAY_DECLINE_BY_RULES_mt5api_024284ab9ca1e20a())
@@ -28108,6 +28328,7 @@ func _swig_getMT_RET_PAY_DECLINE_BY_RULES() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_PAY_DECLINE_BY_RULES EnMTAPIRetcode = _swig_getMT_RET_PAY_DECLINE_BY_RULES()
+
 func _swig_getMT_RET_PAY_DECLINE_BY_AML() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_PAY_DECLINE_BY_AML_mt5api_024284ab9ca1e20a())
@@ -28115,6 +28336,7 @@ func _swig_getMT_RET_PAY_DECLINE_BY_AML() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_PAY_DECLINE_BY_AML EnMTAPIRetcode = _swig_getMT_RET_PAY_DECLINE_BY_AML()
+
 func _swig_getMT_RET_PAY_LIMIT_DEPOSIT_MIN() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_PAY_LIMIT_DEPOSIT_MIN_mt5api_024284ab9ca1e20a())
@@ -28122,6 +28344,7 @@ func _swig_getMT_RET_PAY_LIMIT_DEPOSIT_MIN() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_PAY_LIMIT_DEPOSIT_MIN EnMTAPIRetcode = _swig_getMT_RET_PAY_LIMIT_DEPOSIT_MIN()
+
 func _swig_getMT_RET_PAY_LIMIT_DEPOSIT_MAX() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_PAY_LIMIT_DEPOSIT_MAX_mt5api_024284ab9ca1e20a())
@@ -28129,6 +28352,7 @@ func _swig_getMT_RET_PAY_LIMIT_DEPOSIT_MAX() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_PAY_LIMIT_DEPOSIT_MAX EnMTAPIRetcode = _swig_getMT_RET_PAY_LIMIT_DEPOSIT_MAX()
+
 func _swig_getMT_RET_PAY_LIMIT_WITHDRAWAL_MIN() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_PAY_LIMIT_WITHDRAWAL_MIN_mt5api_024284ab9ca1e20a())
@@ -28136,6 +28360,7 @@ func _swig_getMT_RET_PAY_LIMIT_WITHDRAWAL_MIN() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_PAY_LIMIT_WITHDRAWAL_MIN EnMTAPIRetcode = _swig_getMT_RET_PAY_LIMIT_WITHDRAWAL_MIN()
+
 func _swig_getMT_RET_PAY_LIMIT_WITHDRAWAL_MAX() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_PAY_LIMIT_WITHDRAWAL_MAX_mt5api_024284ab9ca1e20a())
@@ -28143,6 +28368,7 @@ func _swig_getMT_RET_PAY_LIMIT_WITHDRAWAL_MAX() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_PAY_LIMIT_WITHDRAWAL_MAX EnMTAPIRetcode = _swig_getMT_RET_PAY_LIMIT_WITHDRAWAL_MAX()
+
 func _swig_getMT_RET_PAY_PROVIDER_PAYMENT() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_PAY_PROVIDER_PAYMENT_mt5api_024284ab9ca1e20a())
@@ -28150,6 +28376,7 @@ func _swig_getMT_RET_PAY_PROVIDER_PAYMENT() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_PAY_PROVIDER_PAYMENT EnMTAPIRetcode = _swig_getMT_RET_PAY_PROVIDER_PAYMENT()
+
 func _swig_getMT_RET_PAY_PROVIDER_STATUS() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_PAY_PROVIDER_STATUS_mt5api_024284ab9ca1e20a())
@@ -28157,6 +28384,7 @@ func _swig_getMT_RET_PAY_PROVIDER_STATUS() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_PAY_PROVIDER_STATUS EnMTAPIRetcode = _swig_getMT_RET_PAY_PROVIDER_STATUS()
+
 func _swig_getMT_RET_PAY_CONVERSION() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_PAY_CONVERSION_mt5api_024284ab9ca1e20a())
@@ -28164,6 +28392,7 @@ func _swig_getMT_RET_PAY_CONVERSION() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_PAY_CONVERSION EnMTAPIRetcode = _swig_getMT_RET_PAY_CONVERSION()
+
 func _swig_getMT_RET_PAY_NOT_WAITING() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_PAY_NOT_WAITING_mt5api_024284ab9ca1e20a())
@@ -28171,6 +28400,7 @@ func _swig_getMT_RET_PAY_NOT_WAITING() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_PAY_NOT_WAITING EnMTAPIRetcode = _swig_getMT_RET_PAY_NOT_WAITING()
+
 func _swig_getMT_RET_PAY_VERIFICATION() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_PAY_VERIFICATION_mt5api_024284ab9ca1e20a())
@@ -28178,6 +28408,7 @@ func _swig_getMT_RET_PAY_VERIFICATION() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_PAY_VERIFICATION EnMTAPIRetcode = _swig_getMT_RET_PAY_VERIFICATION()
+
 func _swig_getMT_RET_PAY_INVOICE() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_PAY_INVOICE_mt5api_024284ab9ca1e20a())
@@ -28185,6 +28416,7 @@ func _swig_getMT_RET_PAY_INVOICE() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_PAY_INVOICE EnMTAPIRetcode = _swig_getMT_RET_PAY_INVOICE()
+
 func _swig_getMT_RET_PAY_INVALID_CURRENCY() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_PAY_INVALID_CURRENCY_mt5api_024284ab9ca1e20a())
@@ -28192,6 +28424,7 @@ func _swig_getMT_RET_PAY_INVALID_CURRENCY() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_PAY_INVALID_CURRENCY EnMTAPIRetcode = _swig_getMT_RET_PAY_INVALID_CURRENCY()
+
 func _swig_getMT_RET_PAY_LIMIT_REACHED() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_PAY_LIMIT_REACHED_mt5api_024284ab9ca1e20a())
@@ -28199,6 +28432,7 @@ func _swig_getMT_RET_PAY_LIMIT_REACHED() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_PAY_LIMIT_REACHED EnMTAPIRetcode = _swig_getMT_RET_PAY_LIMIT_REACHED()
+
 func _swig_getMT_RET_PAY_PROVIDER_REFUND() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_PAY_PROVIDER_REFUND_mt5api_024284ab9ca1e20a())
@@ -28206,6 +28440,7 @@ func _swig_getMT_RET_PAY_PROVIDER_REFUND() (_swig_ret EnMTAPIRetcode) {
 }
 
 var MT_RET_PAY_PROVIDER_REFUND EnMTAPIRetcode = _swig_getMT_RET_PAY_PROVIDER_REFUND()
+
 func _swig_getMT_RET_PAY_DECLINE_BY_CARDHOLDER_NAME() (_swig_ret EnMTAPIRetcode) {
 	var swig_r EnMTAPIRetcode
 	swig_r = (EnMTAPIRetcode)(C._wrap_MT_RET_PAY_DECLINE_BY_CARDHOLDER_NAME_mt5api_024284ab9ca1e20a())
@@ -28213,7 +28448,9 @@ func _swig_getMT_RET_PAY_DECLINE_BY_CARDHOLDER_NAME() (_swig_ret EnMTAPIRetcode)
 }
 
 var MT_RET_PAY_DECLINE_BY_CARDHOLDER_NAME EnMTAPIRetcode = _swig_getMT_RET_PAY_DECLINE_BY_CARDHOLDER_NAME()
+
 type EnMTLogCode int
+
 func _swig_getMTLogFolder() (_swig_ret EnMTLogCode) {
 	var swig_r EnMTLogCode
 	swig_r = (EnMTLogCode)(C._wrap_MTLogFolder_mt5api_024284ab9ca1e20a())
@@ -28221,6 +28458,7 @@ func _swig_getMTLogFolder() (_swig_ret EnMTLogCode) {
 }
 
 var MTLogFolder EnMTLogCode = _swig_getMTLogFolder()
+
 func _swig_getMTLogOK() (_swig_ret EnMTLogCode) {
 	var swig_r EnMTLogCode
 	swig_r = (EnMTLogCode)(C._wrap_MTLogOK_mt5api_024284ab9ca1e20a())
@@ -28228,6 +28466,7 @@ func _swig_getMTLogOK() (_swig_ret EnMTLogCode) {
 }
 
 var MTLogOK EnMTLogCode = _swig_getMTLogOK()
+
 func _swig_getMTLogWarn() (_swig_ret EnMTLogCode) {
 	var swig_r EnMTLogCode
 	swig_r = (EnMTLogCode)(C._wrap_MTLogWarn_mt5api_024284ab9ca1e20a())
@@ -28235,6 +28474,7 @@ func _swig_getMTLogWarn() (_swig_ret EnMTLogCode) {
 }
 
 var MTLogWarn EnMTLogCode = _swig_getMTLogWarn()
+
 func _swig_getMTLogErr() (_swig_ret EnMTLogCode) {
 	var swig_r EnMTLogCode
 	swig_r = (EnMTLogCode)(C._wrap_MTLogErr_mt5api_024284ab9ca1e20a())
@@ -28242,6 +28482,7 @@ func _swig_getMTLogErr() (_swig_ret EnMTLogCode) {
 }
 
 var MTLogErr EnMTLogCode = _swig_getMTLogErr()
+
 func _swig_getMTLogAtt() (_swig_ret EnMTLogCode) {
 	var swig_r EnMTLogCode
 	swig_r = (EnMTLogCode)(C._wrap_MTLogAtt_mt5api_024284ab9ca1e20a())
@@ -28249,6 +28490,7 @@ func _swig_getMTLogAtt() (_swig_ret EnMTLogCode) {
 }
 
 var MTLogAtt EnMTLogCode = _swig_getMTLogAtt()
+
 func _swig_getMTLogLogin() (_swig_ret EnMTLogCode) {
 	var swig_r EnMTLogCode
 	swig_r = (EnMTLogCode)(C._wrap_MTLogLogin_mt5api_024284ab9ca1e20a())
@@ -28256,6 +28498,7 @@ func _swig_getMTLogLogin() (_swig_ret EnMTLogCode) {
 }
 
 var MTLogLogin EnMTLogCode = _swig_getMTLogLogin()
+
 func _swig_getMTLogFirst() (_swig_ret EnMTLogCode) {
 	var swig_r EnMTLogCode
 	swig_r = (EnMTLogCode)(C._wrap_MTLogFirst_mt5api_024284ab9ca1e20a())
@@ -28263,6 +28506,7 @@ func _swig_getMTLogFirst() (_swig_ret EnMTLogCode) {
 }
 
 var MTLogFirst EnMTLogCode = _swig_getMTLogFirst()
+
 func _swig_getMTLogLast() (_swig_ret EnMTLogCode) {
 	var swig_r EnMTLogCode
 	swig_r = (EnMTLogCode)(C._wrap_MTLogLast_mt5api_024284ab9ca1e20a())
@@ -28270,7 +28514,9 @@ func _swig_getMTLogLast() (_swig_ret EnMTLogCode) {
 }
 
 var MTLogLast EnMTLogCode = _swig_getMTLogLast()
+
 type EnMTLogType int
+
 func _swig_getMTLogTypeAll() (_swig_ret EnMTLogType) {
 	var swig_r EnMTLogType
 	swig_r = (EnMTLogType)(C._wrap_MTLogTypeAll_mt5api_024284ab9ca1e20a())
@@ -28278,6 +28524,7 @@ func _swig_getMTLogTypeAll() (_swig_ret EnMTLogType) {
 }
 
 var MTLogTypeAll EnMTLogType = _swig_getMTLogTypeAll()
+
 func _swig_getMTLogTypeCfg() (_swig_ret EnMTLogType) {
 	var swig_r EnMTLogType
 	swig_r = (EnMTLogType)(C._wrap_MTLogTypeCfg_mt5api_024284ab9ca1e20a())
@@ -28285,6 +28532,7 @@ func _swig_getMTLogTypeCfg() (_swig_ret EnMTLogType) {
 }
 
 var MTLogTypeCfg EnMTLogType = _swig_getMTLogTypeCfg()
+
 func _swig_getMTLogTypeSys() (_swig_ret EnMTLogType) {
 	var swig_r EnMTLogType
 	swig_r = (EnMTLogType)(C._wrap_MTLogTypeSys_mt5api_024284ab9ca1e20a())
@@ -28292,6 +28540,7 @@ func _swig_getMTLogTypeSys() (_swig_ret EnMTLogType) {
 }
 
 var MTLogTypeSys EnMTLogType = _swig_getMTLogTypeSys()
+
 func _swig_getMTLogTypeNet() (_swig_ret EnMTLogType) {
 	var swig_r EnMTLogType
 	swig_r = (EnMTLogType)(C._wrap_MTLogTypeNet_mt5api_024284ab9ca1e20a())
@@ -28299,6 +28548,7 @@ func _swig_getMTLogTypeNet() (_swig_ret EnMTLogType) {
 }
 
 var MTLogTypeNet EnMTLogType = _swig_getMTLogTypeNet()
+
 func _swig_getMTLogTypeHst() (_swig_ret EnMTLogType) {
 	var swig_r EnMTLogType
 	swig_r = (EnMTLogType)(C._wrap_MTLogTypeHst_mt5api_024284ab9ca1e20a())
@@ -28306,6 +28556,7 @@ func _swig_getMTLogTypeHst() (_swig_ret EnMTLogType) {
 }
 
 var MTLogTypeHst EnMTLogType = _swig_getMTLogTypeHst()
+
 func _swig_getMTLogTypeUser() (_swig_ret EnMTLogType) {
 	var swig_r EnMTLogType
 	swig_r = (EnMTLogType)(C._wrap_MTLogTypeUser_mt5api_024284ab9ca1e20a())
@@ -28313,6 +28564,7 @@ func _swig_getMTLogTypeUser() (_swig_ret EnMTLogType) {
 }
 
 var MTLogTypeUser EnMTLogType = _swig_getMTLogTypeUser()
+
 func _swig_getMTLogTypeTrade() (_swig_ret EnMTLogType) {
 	var swig_r EnMTLogType
 	swig_r = (EnMTLogType)(C._wrap_MTLogTypeTrade_mt5api_024284ab9ca1e20a())
@@ -28320,6 +28572,7 @@ func _swig_getMTLogTypeTrade() (_swig_ret EnMTLogType) {
 }
 
 var MTLogTypeTrade EnMTLogType = _swig_getMTLogTypeTrade()
+
 func _swig_getMTLogTypeAPI() (_swig_ret EnMTLogType) {
 	var swig_r EnMTLogType
 	swig_r = (EnMTLogType)(C._wrap_MTLogTypeAPI_mt5api_024284ab9ca1e20a())
@@ -28327,6 +28580,7 @@ func _swig_getMTLogTypeAPI() (_swig_ret EnMTLogType) {
 }
 
 var MTLogTypeAPI EnMTLogType = _swig_getMTLogTypeAPI()
+
 func _swig_getMTLogTypeNotify() (_swig_ret EnMTLogType) {
 	var swig_r EnMTLogType
 	swig_r = (EnMTLogType)(C._wrap_MTLogTypeNotify_mt5api_024284ab9ca1e20a())
@@ -28334,6 +28588,7 @@ func _swig_getMTLogTypeNotify() (_swig_ret EnMTLogType) {
 }
 
 var MTLogTypeNotify EnMTLogType = _swig_getMTLogTypeNotify()
+
 func _swig_getMTLogTypeLiveUpdate() (_swig_ret EnMTLogType) {
 	var swig_r EnMTLogType
 	swig_r = (EnMTLogType)(C._wrap_MTLogTypeLiveUpdate_mt5api_024284ab9ca1e20a())
@@ -28341,6 +28596,7 @@ func _swig_getMTLogTypeLiveUpdate() (_swig_ret EnMTLogType) {
 }
 
 var MTLogTypeLiveUpdate EnMTLogType = _swig_getMTLogTypeLiveUpdate()
+
 func _swig_getMTLogTypeSendMail() (_swig_ret EnMTLogType) {
 	var swig_r EnMTLogType
 	swig_r = (EnMTLogType)(C._wrap_MTLogTypeSendMail_mt5api_024284ab9ca1e20a())
@@ -28348,6 +28604,7 @@ func _swig_getMTLogTypeSendMail() (_swig_ret EnMTLogType) {
 }
 
 var MTLogTypeSendMail EnMTLogType = _swig_getMTLogTypeSendMail()
+
 func _swig_getMTLogTypeFirst() (_swig_ret EnMTLogType) {
 	var swig_r EnMTLogType
 	swig_r = (EnMTLogType)(C._wrap_MTLogTypeFirst_mt5api_024284ab9ca1e20a())
@@ -28355,6 +28612,7 @@ func _swig_getMTLogTypeFirst() (_swig_ret EnMTLogType) {
 }
 
 var MTLogTypeFirst EnMTLogType = _swig_getMTLogTypeFirst()
+
 func _swig_getMTLogTypeLast() (_swig_ret EnMTLogType) {
 	var swig_r EnMTLogType
 	swig_r = (EnMTLogType)(C._wrap_MTLogTypeLast_mt5api_024284ab9ca1e20a())
@@ -28362,7 +28620,9 @@ func _swig_getMTLogTypeLast() (_swig_ret EnMTLogType) {
 }
 
 var MTLogTypeLast EnMTLogType = _swig_getMTLogTypeLast()
+
 type EnMTLogRequestMode int
+
 func _swig_getMTLogModeStd() (_swig_ret EnMTLogRequestMode) {
 	var swig_r EnMTLogRequestMode
 	swig_r = (EnMTLogRequestMode)(C._wrap_MTLogModeStd_mt5api_024284ab9ca1e20a())
@@ -28370,6 +28630,7 @@ func _swig_getMTLogModeStd() (_swig_ret EnMTLogRequestMode) {
 }
 
 var MTLogModeStd EnMTLogRequestMode = _swig_getMTLogModeStd()
+
 func _swig_getMTLogModeErr() (_swig_ret EnMTLogRequestMode) {
 	var swig_r EnMTLogRequestMode
 	swig_r = (EnMTLogRequestMode)(C._wrap_MTLogModeErr_mt5api_024284ab9ca1e20a())
@@ -28377,6 +28638,7 @@ func _swig_getMTLogModeErr() (_swig_ret EnMTLogRequestMode) {
 }
 
 var MTLogModeErr EnMTLogRequestMode = _swig_getMTLogModeErr()
+
 func _swig_getMTLogModeFull() (_swig_ret EnMTLogRequestMode) {
 	var swig_r EnMTLogRequestMode
 	swig_r = (EnMTLogRequestMode)(C._wrap_MTLogModeFull_mt5api_024284ab9ca1e20a())
@@ -28384,6 +28646,7 @@ func _swig_getMTLogModeFull() (_swig_ret EnMTLogRequestMode) {
 }
 
 var MTLogModeFull EnMTLogRequestMode = _swig_getMTLogModeFull()
+
 func _swig_getMTLogModeFirst() (_swig_ret EnMTLogRequestMode) {
 	var swig_r EnMTLogRequestMode
 	swig_r = (EnMTLogRequestMode)(C._wrap_MTLogModeFirst_mt5api_024284ab9ca1e20a())
@@ -28391,6 +28654,7 @@ func _swig_getMTLogModeFirst() (_swig_ret EnMTLogRequestMode) {
 }
 
 var MTLogModeFirst EnMTLogRequestMode = _swig_getMTLogModeFirst()
+
 func _swig_getMTLogModeLast() (_swig_ret EnMTLogRequestMode) {
 	var swig_r EnMTLogRequestMode
 	swig_r = (EnMTLogRequestMode)(C._wrap_MTLogModeLast_mt5api_024284ab9ca1e20a())
@@ -28398,7 +28662,9 @@ func _swig_getMTLogModeLast() (_swig_ret EnMTLogRequestMode) {
 }
 
 var MTLogModeLast EnMTLogRequestMode = _swig_getMTLogModeLast()
+
 type EnMTLogFlags int
+
 func _swig_getLOG_FLAGS_NONE() (_swig_ret EnMTLogFlags) {
 	var swig_r EnMTLogFlags
 	swig_r = (EnMTLogFlags)(C._wrap_LOG_FLAGS_NONE_mt5api_024284ab9ca1e20a())
@@ -28406,6 +28672,7 @@ func _swig_getLOG_FLAGS_NONE() (_swig_ret EnMTLogFlags) {
 }
 
 var LOG_FLAGS_NONE EnMTLogFlags = _swig_getLOG_FLAGS_NONE()
+
 func _swig_getLOG_FLAGS_CORRUPTED() (_swig_ret EnMTLogFlags) {
 	var swig_r EnMTLogFlags
 	swig_r = (EnMTLogFlags)(C._wrap_LOG_FLAGS_CORRUPTED_mt5api_024284ab9ca1e20a())
@@ -28413,6 +28680,7 @@ func _swig_getLOG_FLAGS_CORRUPTED() (_swig_ret EnMTLogFlags) {
 }
 
 var LOG_FLAGS_CORRUPTED EnMTLogFlags = _swig_getLOG_FLAGS_CORRUPTED()
+
 func _swig_getLOG_FLAGS_FIRST() (_swig_ret EnMTLogFlags) {
 	var swig_r EnMTLogFlags
 	swig_r = (EnMTLogFlags)(C._wrap_LOG_FLAGS_FIRST_mt5api_024284ab9ca1e20a())
@@ -28420,6 +28688,7 @@ func _swig_getLOG_FLAGS_FIRST() (_swig_ret EnMTLogFlags) {
 }
 
 var LOG_FLAGS_FIRST EnMTLogFlags = _swig_getLOG_FLAGS_FIRST()
+
 func _swig_getLOG_FLAGS_ALL() (_swig_ret EnMTLogFlags) {
 	var swig_r EnMTLogFlags
 	swig_r = (EnMTLogFlags)(C._wrap_LOG_FLAGS_ALL_mt5api_024284ab9ca1e20a())
@@ -28427,6 +28696,7 @@ func _swig_getLOG_FLAGS_ALL() (_swig_ret EnMTLogFlags) {
 }
 
 var LOG_FLAGS_ALL EnMTLogFlags = _swig_getLOG_FLAGS_ALL()
+
 type SwigcptrMTLogRecord uintptr
 
 func (p SwigcptrMTLogRecord) Swigcptr() uintptr {
@@ -28622,7 +28892,7 @@ func (arg1 SwigcptrMTLicenseCheck) GetRandom() (_swig_ret string) {
 	swig_r_p := C._wrap_MTLicenseCheck_random_get_mt5api_024284ab9ca1e20a(C.uintptr_t(_swig_i_0))
 	swig_r = *(*string)(unsafe.Pointer(&swig_r_p))
 	var swig_r_1 string
- swig_r_1 = swigCopyString(swig_r) 
+	swig_r_1 = swigCopyString(swig_r)
 	return swig_r_1
 }
 
@@ -28680,7 +28950,7 @@ func (arg1 SwigcptrMTLicenseCheck) GetSign() (_swig_ret string) {
 	swig_r_p := C._wrap_MTLicenseCheck_sign_get_mt5api_024284ab9ca1e20a(C.uintptr_t(_swig_i_0))
 	swig_r = *(*string)(unsafe.Pointer(&swig_r_p))
 	var swig_r_1 string
- swig_r_1 = swigCopyString(swig_r) 
+	swig_r_1 = swigCopyString(swig_r)
 	return swig_r_1
 }
 
@@ -28744,1336 +29014,1499 @@ type MTLicenseCheck interface {
 	GetSign_reserved() (_swig_ret *int)
 }
 
-
 type SwigcptrIMTGeo uintptr
 type IMTGeo interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrIMTGeo) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrIMTConGatewaySink uintptr
 type IMTConGatewaySink interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrIMTConGatewaySink) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrIMTClientArray uintptr
 type IMTClientArray interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrIMTClientArray) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrIMTConCommon uintptr
 type IMTConCommon interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrIMTConCommon) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrIMTECNHistoryFillingArray uintptr
 type IMTECNHistoryFillingArray interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrIMTECNHistoryFillingArray) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrIMTConGatewayModule uintptr
 type IMTConGatewayModule interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrIMTConGatewayModule) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrIMTCertificate uintptr
 type IMTCertificate interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrIMTCertificate) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrIMTDaily uintptr
 type IMTDaily interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrIMTDaily) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrIMTECNProvider uintptr
 type IMTECNProvider interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrIMTECNProvider) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrIMTDailyArray uintptr
 type IMTDailyArray interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrIMTDailyArray) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrIMTConMessengerGroup uintptr
 type IMTConMessengerGroup interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrIMTConMessengerGroup) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrUserRecord uintptr
 type UserRecord interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrUserRecord) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrLPWSTR uintptr
 type LPWSTR interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrLPWSTR) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrIMTConGroup uintptr
 type IMTConGroup interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrIMTConGroup) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrIMTConAutomationSink uintptr
 type IMTConAutomationSink interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrIMTConAutomationSink) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrIMTECNHistoryDealArray uintptr
 type IMTECNHistoryDealArray interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrIMTECNHistoryDealArray) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrIMTECNHistoryFilling uintptr
 type IMTECNHistoryFilling interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrIMTECNHistoryFilling) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrIMTConReport uintptr
 type IMTConReport interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrIMTConReport) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrIMTConCommTier uintptr
 type IMTConCommTier interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrIMTConCommTier) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrIMTConGateway uintptr
 type IMTConGateway interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrIMTConGateway) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrIMTConVPSGroup uintptr
 type IMTConVPSGroup interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrIMTConVPSGroup) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrMTTickShort uintptr
 type MTTickShort interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrMTTickShort) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrIMTConKYC uintptr
 type IMTConKYC interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrIMTConKYC) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrIMTConSubscriptionSink uintptr
 type IMTConSubscriptionSink interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrIMTConSubscriptionSink) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrIMTComment uintptr
 type IMTComment interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrIMTComment) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrIMTPositionArray uintptr
 type IMTPositionArray interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrIMTPositionArray) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrIMTUser uintptr
 type IMTUser interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrIMTUser) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrIMTConHolidaySink uintptr
 type IMTConHolidaySink interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrIMTConHolidaySink) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrIMTUserArray uintptr
 type IMTUserArray interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrIMTUserArray) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrIMTConAutomation uintptr
 type IMTConAutomation interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrIMTConAutomation) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrIMTConMessengerSink uintptr
 type IMTConMessengerSink interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrIMTConMessengerSink) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrIMTRequestSink uintptr
 type IMTRequestSink interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrIMTRequestSink) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrIMTAttachmentArray uintptr
 type IMTAttachmentArray interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrIMTAttachmentArray) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrIMTDealArray uintptr
 type IMTDealArray interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrIMTDealArray) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrIMTConLeverageRule uintptr
 type IMTConLeverageRule interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrIMTConLeverageRule) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrIMTConAddressRange uintptr
 type IMTConAddressRange interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrIMTConAddressRange) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrIMTByteStream uintptr
 type IMTByteStream interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrIMTByteStream) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrIMTConMessengerCountry uintptr
 type IMTConMessengerCountry interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrIMTConMessengerCountry) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrRateInfo uintptr
 type RateInfo interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrRateInfo) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrIMTClient uintptr
 type IMTClient interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrIMTClient) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrTickInfo uintptr
 type TickInfo interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrTickInfo) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrIMTExposureSink uintptr
 type IMTExposureSink interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrIMTExposureSink) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrIMTConSymbolSession uintptr
 type IMTConSymbolSession interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrIMTConSymbolSession) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrIMTSubscriptionHistoryArray uintptr
 type IMTSubscriptionHistoryArray interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrIMTSubscriptionHistoryArray) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrIMTConEmailSink uintptr
 type IMTConEmailSink interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrIMTConEmailSink) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrIMTECNMatchingArray uintptr
 type IMTECNMatchingArray interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrIMTECNMatchingArray) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrIMTECNProviderArray uintptr
 type IMTECNProviderArray interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrIMTECNProviderArray) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrIMTConReportModule uintptr
 type IMTConReportModule interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrIMTConReportModule) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrIMTPosition uintptr
 type IMTPosition interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrIMTPosition) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrIMTConParam uintptr
 type IMTConParam interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrIMTConParam) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrIMTBookSink uintptr
 type IMTBookSink interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrIMTBookSink) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrIMTDealSink uintptr
 type IMTDealSink interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrIMTDealSink) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrMTTickStat uintptr
 type MTTickStat interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrMTTickStat) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrIMTOnlineArray uintptr
 type IMTOnlineArray interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrIMTOnlineArray) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrIMTConPluginModule uintptr
 type IMTConPluginModule interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrIMTConPluginModule) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrUint32_t uintptr
 type Uint32_t interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrUint32_t) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrIMTConCommission uintptr
 type IMTConCommission interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrIMTConCommission) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrIMTConClusterState uintptr
 type IMTConClusterState interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrIMTConClusterState) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrIMTSubscription uintptr
 type IMTSubscription interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrIMTSubscription) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrIMTConTime uintptr
 type IMTConTime interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrIMTConTime) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrIMTConGroupArray uintptr
 type IMTConGroupArray interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrIMTConGroupArray) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrIMTConSymbol uintptr
 type IMTConSymbol interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrIMTConSymbol) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrIMTConPlugin uintptr
 type IMTConPlugin interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrIMTConPlugin) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrTradeRecord uintptr
 type TradeRecord interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrTradeRecord) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrIMTConSpreadLeg uintptr
 type IMTConSpreadLeg interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrIMTConSpreadLeg) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrIMTConMessenger uintptr
 type IMTConMessenger interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrIMTConMessenger) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrIMTOrderArray uintptr
 type IMTOrderArray interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrIMTOrderArray) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrIMTDocumentArray uintptr
 type IMTDocumentArray interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrIMTDocumentArray) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrIMTConFeederSink uintptr
 type IMTConFeederSink interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrIMTConFeederSink) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrIMTConKYCCountry uintptr
 type IMTConKYCCountry interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrIMTConKYCCountry) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrIMTAccount uintptr
 type IMTAccount interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrIMTAccount) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrIMTPositionSink uintptr
 type IMTPositionSink interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrIMTPositionSink) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrIMTConGroupSymbol uintptr
 type IMTConGroupSymbol interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrIMTConGroupSymbol) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrMTChartBar uintptr
 type MTChartBar interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrMTChartBar) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrIMTECNMatching uintptr
 type IMTECNMatching interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrIMTECNMatching) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrIMTMailSink uintptr
 type IMTMailSink interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrIMTMailSink) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrLPCWSTR uintptr
 type LPCWSTR interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrLPCWSTR) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrIMTConGatewayTranslate uintptr
 type IMTConGatewayTranslate interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrIMTConGatewayTranslate) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrIMTConAutoParam uintptr
 type IMTConAutoParam interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrIMTConAutoParam) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrIMTConHoliday uintptr
 type IMTConHoliday interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrIMTConHoliday) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrIMTConFeederTranslate uintptr
 type IMTConFeederTranslate interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrIMTConFeederTranslate) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrIMTConHistorySync uintptr
 type IMTConHistorySync interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrIMTConHistorySync) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrIMTConAutoAction uintptr
 type IMTConAutoAction interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrIMTConAutoAction) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrIMTConBackupFolder uintptr
 type IMTConBackupFolder interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrIMTConBackupFolder) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrIMTConFeeder uintptr
 type IMTConFeeder interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrIMTConFeeder) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrIMTConRouteSink uintptr
 type IMTConRouteSink interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrIMTConRouteSink) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrIMTConEmail uintptr
 type IMTConEmail interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrIMTConEmail) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrIMTConManager uintptr
 type IMTConManager interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrIMTConManager) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrIMTConAutoCondition uintptr
 type IMTConAutoCondition interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrIMTConAutoCondition) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrIMTRequestArray uintptr
 type IMTRequestArray interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrIMTRequestArray) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrSymbolInfo uintptr
 type SymbolInfo interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrSymbolInfo) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrIMTConManagerSink uintptr
 type IMTConManagerSink interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrIMTConManagerSink) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrIMTConFirewallSink uintptr
 type IMTConFirewallSink interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrIMTConFirewallSink) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrIMTConServer uintptr
 type IMTConServer interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrIMTConServer) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrIMTConHistorySyncSink uintptr
 type IMTConHistorySyncSink interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrIMTConHistorySyncSink) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrIMTConSpread uintptr
 type IMTConSpread interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrIMTConSpread) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrMTTick uintptr
 type MTTick interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrMTTick) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrIMTConSymbolArray uintptr
 type IMTConSymbolArray interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrIMTConSymbolArray) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrIMTConSymbolSink uintptr
 type IMTConSymbolSink interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrIMTConSymbolSink) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrRequestInfo uintptr
 type RequestInfo interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrRequestInfo) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrIMTConVPSSink uintptr
 type IMTConVPSSink interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrIMTConVPSSink) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrMTBook uintptr
 type MTBook interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrMTBook) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrIMTConReportSink uintptr
 type IMTConReportSink interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrIMTConReportSink) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrIMTECNFilling uintptr
 type IMTECNFilling interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrIMTECNFilling) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrIMTConAccountAgreement uintptr
 type IMTConAccountAgreement interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrIMTConAccountAgreement) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrIMTExposure uintptr
 type IMTExposure interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrIMTExposure) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrIMTECNHistoryMatching uintptr
 type IMTECNHistoryMatching interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrIMTECNHistoryMatching) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrIMTConFirewall uintptr
 type IMTConFirewall interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrIMTConFirewall) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrIMTSummaryArray uintptr
 type IMTSummaryArray interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrIMTSummaryArray) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrIMTConFeederModule uintptr
 type IMTConFeederModule interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrIMTConFeederModule) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrIMTAccountSink uintptr
 type IMTAccountSink interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrIMTAccountSink) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrIMTConLeverageTier uintptr
 type IMTConLeverageTier interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrIMTConLeverageTier) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrIMTConCommonSink uintptr
 type IMTConCommonSink interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrIMTConCommonSink) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrIMTOrder uintptr
 type IMTOrder interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrIMTOrder) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrIMTCommentArray uintptr
 type IMTCommentArray interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrIMTCommentArray) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrIMTConLeverage uintptr
 type IMTConLeverage interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrIMTConLeverage) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrIMTConPluginSink uintptr
 type IMTConPluginSink interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrIMTConPluginSink) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrIMTExposureArray uintptr
 type IMTExposureArray interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrIMTExposureArray) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrConGroup uintptr
 type ConGroup interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrConGroup) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrIMTOnline uintptr
 type IMTOnline interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrIMTOnline) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrIMTConLeverageArray uintptr
 type IMTConLeverageArray interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrIMTConLeverageArray) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrIMTSubscriptionArray uintptr
 type IMTSubscriptionArray interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrIMTSubscriptionArray) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrIMTConCondition uintptr
 type IMTConCondition interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrIMTConCondition) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrIMTConSubscription uintptr
 type IMTConSubscription interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrIMTConSubscription) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrIMTDeal uintptr
 type IMTDeal interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrIMTDeal) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrIMTSummarySink uintptr
 type IMTSummarySink interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrIMTSummarySink) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrIMTConVPSCondition uintptr
 type IMTConVPSCondition interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrIMTConVPSCondition) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrIMTConSubscriptionSymbol uintptr
 type IMTConSubscriptionSymbol interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrIMTConSubscriptionSymbol) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrIMTRequest uintptr
 type IMTRequest interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrIMTRequest) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrIMTNewsSink uintptr
 type IMTNewsSink interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrIMTNewsSink) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrIMTAttachment uintptr
 type IMTAttachment interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrIMTAttachment) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrIMTSummary uintptr
 type IMTSummary interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrIMTSummary) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrIMTConSpreadSink uintptr
 type IMTConSpreadSink interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrIMTConSpreadSink) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrConSymbol uintptr
 type ConSymbol interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrConSymbol) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrConGroupSec uintptr
 type ConGroupSec interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrConGroupSec) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrIMTConKYCSink uintptr
 type IMTConKYCSink interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrIMTConKYCSink) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrIMTECNHistoryMatchingArray uintptr
 type IMTECNHistoryMatchingArray interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrIMTECNHistoryMatchingArray) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrIMTTickSink uintptr
 type IMTTickSink interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrIMTTickSink) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrConSessions uintptr
 type ConSessions interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrConSessions) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrIMTOrderSink uintptr
 type IMTOrderSink interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrIMTOrderSink) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrIMTSubscriptionHistory uintptr
 type IMTSubscriptionHistory interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrIMTSubscriptionHistory) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrConSession uintptr
 type ConSession interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrConSession) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrSigned_SS___int64 uintptr
 type Signed_SS___int64 interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrSigned_SS___int64) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrIMTConVPSRule uintptr
 type IMTConVPSRule interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrIMTConVPSRule) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrIMTConVPS uintptr
 type IMTConVPS interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrIMTConVPS) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrIMTMail uintptr
 type IMTMail interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrIMTMail) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrIMTConfirm uintptr
 type IMTConfirm interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrIMTConfirm) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrIMTConAccountAllocation uintptr
 type IMTConAccountAllocation interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrIMTConAccountAllocation) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrWchar_t uintptr
 type Wchar_t interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrWchar_t) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrIMTConSubscriptionNews uintptr
 type IMTConSubscriptionNews interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrIMTConSubscriptionNews) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrIMTConServerRange uintptr
 type IMTConServerRange interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrIMTConServerRange) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrIMTConTimeSink uintptr
 type IMTConTimeSink interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrIMTConTimeSink) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrIMTConManagerAccess uintptr
 type IMTConManagerAccess interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrIMTConManagerAccess) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrIMTECNFillingArray uintptr
 type IMTECNFillingArray interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrIMTECNFillingArray) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrIMTConRoute uintptr
 type IMTConRoute interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrIMTConRoute) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrIMTConGroupSink uintptr
 type IMTConGroupSink interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrIMTConGroupSink) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrIMTUserSink uintptr
 type IMTUserSink interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrIMTUserSink) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrIMTConManagerReport uintptr
 type IMTConManagerReport interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrIMTConManagerReport) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrIMTAccountArray uintptr
 type IMTAccountArray interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrIMTAccountArray) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrIMTConServerSink uintptr
 type IMTConServerSink interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrIMTConServerSink) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrIMTNews uintptr
 type IMTNews interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrIMTNews) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrIMTECNHistoryDeal uintptr
 type IMTECNHistoryDeal interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrIMTECNHistoryDeal) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrIMTConLeverageSink uintptr
 type IMTConLeverageSink interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrIMTConLeverageSink) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrIMTConRouteDealer uintptr
 type IMTConRouteDealer interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrIMTConRouteDealer) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrIMTConKYCGroup uintptr
 type IMTConKYCGroup interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrIMTConKYCGroup) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrIMTDocument uintptr
 type IMTDocument interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrIMTDocument) Swigcptr() uintptr {
 	return uintptr(p)
 }
-
-
 
 var swigDirectorTrack struct {
 	sync.Mutex
@@ -30115,5 +30548,3 @@ func swigDirectorDelete(c int) {
 	}
 	delete(swigDirectorTrack.m, c)
 }
-
-
