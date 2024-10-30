@@ -987,6 +987,27 @@ intgo _wrap_EXTERNAL_SYNC_LAST_IMTManagerAPI_mt5api_34c283227cc4d52d() {
 }
 
 
+IMTManagerAPI *_wrap_new_IMTManagerAPI_mt5api_34c283227cc4d52d() {
+  IMTManagerAPI *result = 0 ;
+  IMTManagerAPI *_swig_go_result;
+
+
+  result = (IMTManagerAPI *)new IMTManagerAPI();
+  *(IMTManagerAPI **)&_swig_go_result = (IMTManagerAPI *)result;
+  return _swig_go_result;
+}
+
+
+void _wrap_delete_IMTManagerSink_mt5api_34c283227cc4d52d(IMTManagerAPI *_swig_go_0) {
+  IMTManagerAPI *arg1 = (IMTManagerAPI *) 0 ;
+
+  arg1 = *(IMTManagerAPI **)&_swig_go_0;
+
+  delete arg1;
+
+}
+
+
 void _wrap_IMTManagerAPI_Release_mt5api_34c283227cc4d52d(IMTManagerAPI *_swig_go_0) {
   IMTManagerAPI *arg1 = (IMTManagerAPI *) 0 ;
   
