@@ -240,6 +240,7 @@ typedef _gostring_ swig_type_210;
 typedef _gostring_ swig_type_211;
 extern void _wrap_Swig_free_mt5api_2b555e28fa1ab890(uintptr_t arg1);
 extern uintptr_t _wrap_Swig_malloc_mt5api_2b555e28fa1ab890(swig_intgo arg1);
+extern uintptr_t _wrap_GetTickCount64_mt5api_2b555e28fa1ab890(void);
 extern uintptr_t _wrap_MTManagerAPIDate_mt5api_2b555e28fa1ab890(void);
 extern swig_intgo _wrap_PROXY_SOCKS4_MTProxyInfo_mt5api_2b555e28fa1ab890(void);
 extern swig_intgo _wrap_PROXY_SOCKS5_MTProxyInfo_mt5api_2b555e28fa1ab890(void);
@@ -1921,6 +1922,12 @@ func Swig_malloc(arg1 int) (_swig_ret uintptr) {
 	var swig_r uintptr
 	_swig_i_0 := arg1
 	swig_r = (uintptr)(C._wrap_Swig_malloc_mt5api_2b555e28fa1ab890(C.swig_intgo(_swig_i_0)))
+	return swig_r
+}
+
+func GetTickCount64() (_swig_ret Uint32_t) {
+	var swig_r Uint32_t
+	swig_r = (Uint32_t)(SwigcptrUint32_t(C._wrap_GetTickCount64_mt5api_2b555e28fa1ab890()))
 	return swig_r
 }
 
@@ -17686,6 +17693,14 @@ type IMTConPluginModule interface {
 	Swigcptr() uintptr;
 }
 func (p SwigcptrIMTConPluginModule) Swigcptr() uintptr {
+	return uintptr(p)
+}
+
+type SwigcptrUint32_t uintptr
+type Uint32_t interface {
+	Swigcptr() uintptr;
+}
+func (p SwigcptrUint32_t) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
