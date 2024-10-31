@@ -24828,7 +24828,7 @@ intgo _wrap_CMTManagerAPIFactory_Initialize__SWIG_0_mt5api_34c283227cc4d52d(CMTM
   //std::wcout<< "----start----" << wstr << std::endl;
 
 
-  printf("---start init---%S\n",wstr);
+  printf("---start init---%S------buaa\n",wstr);
   result = (MTAPIRES)(arg1)->Initialize(arg2);
 
   std::cout<< "----end----" << result<<"\n";
