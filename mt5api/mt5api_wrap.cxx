@@ -187,8 +187,8 @@ static void _swig_gopanic(const char *p) {
 
 
 
-typedef long long intgo;
-typedef unsigned long long uintgo;
+typedef int intgo;
+typedef unsigned int uintgo;
 
 
 # if !defined(__clang__) && (defined(__i386__) || defined(__x86_64__))
