@@ -76,7 +76,7 @@
 
 %inline %{
 #define LPCSTR char*
-#define LPCWSTR wchar_t*
+#define LPCWSTR const wchar_t*
 %}
 
 typedef __time32_t time_t;
