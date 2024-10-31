@@ -1770,9 +1770,12 @@ intgo _wrap_IMTManagerAPI_GroupGet_mt5api_352fc565db4ddcc0(IMTManagerAPI *_swig_
   }
   arg2 = (LPCWSTR)*argp2;
   
-  arg3 = *(IMTConGroup **)&_swig_go_2; 
+  arg3 = *(IMTConGroup **)&_swig_go_2;
   
   result = (MTAPIRES)(arg1)->GroupGet(arg2,arg3);
+
+  printf("---name:%S---111\n",arg2);
+
   _swig_go_result = result; 
   return _swig_go_result;
 }
