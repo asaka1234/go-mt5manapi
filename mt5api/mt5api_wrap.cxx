@@ -24803,6 +24803,7 @@ void _wrap_delete_CMTManagerAPIFactory_mt5api_34c283227cc4d52d(CMTManagerAPIFact
   
 }
 
+#include <iostream>
 
 intgo _wrap_CMTManagerAPIFactory_Initialize__SWIG_0_mt5api_34c283227cc4d52d(CMTManagerAPIFactory *_swig_go_0, LPCWSTR *_swig_go_1) {
   CMTManagerAPIFactory *arg1 = (CMTManagerAPIFactory *) 0 ;
@@ -24819,10 +24820,16 @@ intgo _wrap_CMTManagerAPIFactory_Initialize__SWIG_0_mt5api_34c283227cc4d52d(CMTM
   }
   arg2 = (LPCWSTR)*argp2;
 
-  arg2 = "./MT5APIManager64.dll";
-  printf("---start init---%s\n",arg2);
+
+  //arg2 = "./MT5APIManager64.dll";
+  cout<< "----start----" << arg2<<"\n";
+
+  //printf("---start init---%s\n",arg2);
   result = (MTAPIRES)(arg1)->Initialize(arg2);
-  printf("---end init---%s\n",arg2);
+
+  cout<< "----end----" << result<<"\n";
+
+  //printf("---end init---%s\n",arg2);
   _swig_go_result = result; 
   return _swig_go_result;
 }
