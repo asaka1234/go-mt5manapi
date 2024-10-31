@@ -9,6 +9,7 @@
 // source: mt5api.i
 
 #include <iostream>
+#include <iconv.h>
 
 extern
 #ifdef __cplusplus
