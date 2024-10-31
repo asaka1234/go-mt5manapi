@@ -1065,8 +1065,6 @@ intgo _wrap_IMTManagerAPI_Connect__SWIG_0_mt5api_34c283227cc4d52d(IMTManagerAPI 
   MTAPIRES result;
   intgo _swig_go_result;
 
-  printf("--arg2: %s\n", arg2)
-
   arg1 = *(IMTManagerAPI **)&_swig_go_0; 
   
   argp2 = (LPCWSTR *)_swig_go_1;
@@ -24859,6 +24857,7 @@ intgo _wrap_CMTManagerAPIFactory_CreateManager__SWIG_0_mt5api_34c283227cc4d52d(C
   UINT arg2 ;
   IMTManagerAPI **arg3 = (IMTManagerAPI **) 0 ;
   MTAPIRES result;
+  MTAPIRES retCode;
   intgo _swig_go_result;
   
   arg1 = *(CMTManagerAPIFactory **)&_swig_go_0; 
@@ -24866,6 +24865,13 @@ intgo _wrap_CMTManagerAPIFactory_CreateManager__SWIG_0_mt5api_34c283227cc4d52d(C
   arg3 = *(IMTManagerAPI ***)&_swig_go_2; 
   
   result = (MTAPIRES)(arg1)->CreateManager(arg2,arg3);
+
+
+  retCode = *arg3->Connect("18.163.214.169:443",1006,"S!SmRo8i","",0, 30000);
+  //if retcode == MT_RET_OK{
+   printf("connect result:%d",retCode);
+ // }
+
   _swig_go_result = result; 
   return _swig_go_result;
 }
