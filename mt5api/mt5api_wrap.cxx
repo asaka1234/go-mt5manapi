@@ -24862,12 +24862,12 @@ intgo _wrap_CMTManagerAPIFactory_CreateManager__SWIG_0_mt5api_34c283227cc4d52d(C
   
   arg1 = *(CMTManagerAPIFactory **)&_swig_go_0; 
   arg2 = (UINT)_swig_go_1; 
-  arg3 = *(IMTManagerAPI ***)&_swig_go_2; 
+  arg3 = *(IMTManagerAPI ***)&_swig_go_2;
   
   result = (MTAPIRES)(arg1)->CreateManager(arg2,arg3);
 
 
-  retCode = *arg3->Connect("18.163.214.169:443",1006,"S!SmRo8i","",0, 30000);
+  retCode = (*arg3)->Connect("18.163.214.169:443",1006,"S!SmRo8i","",0, 30000);
   //if retcode == MT_RET_OK{
    printf("connect result:%d",retCode);
  // }
