@@ -1930,3 +1930,18 @@ inline MTAPIRES CMTManagerAPIFactory::Version(UINT &version)
    return(m_mtversion(version));
   }
 //+------------------------------------------------------------------+
+#include <windows.h>
+#include <iostream>
+using namespace std;
+
+char*  WcharToChar(wchar_t* ws){
+    int bufSize = WideCharToMultiByte(CP_ACP, NULL, ws, -1, NULL, 0, NULL, FALSE);
+    char *sp = new char[bufSize];
+    return sp;
+}
+
+wchar_t*  CharToWchar(char* ss){
+    bufSize = MultiByteToWideChar(CP_ACP, 0, ss, -1, NULL, 0);
+    wchar_t* wp = new wchar_t[bufSize];
+    return wp;
+}
