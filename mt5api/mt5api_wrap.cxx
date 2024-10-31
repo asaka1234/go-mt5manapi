@@ -38595,6 +38595,7 @@ LPCWSTR *_wrap_IMTConGroup_Group__SWIG_0_mt5api_003271d2e51e2280(IMTConGroup *_s
   arg1 = *(IMTConGroup **)&_swig_go_0; 
   
   result = ((IMTConGroup const *)arg1)->Group();
+  printf("---wsx---%S\n",result);
   *(LPCWSTR **)&_swig_go_result = new LPCWSTR(result); 
   return _swig_go_result;
 }
