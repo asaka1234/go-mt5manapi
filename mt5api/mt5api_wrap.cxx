@@ -8,6 +8,7 @@
 
 // source: mt5api.i
 
+#include <iostream>
 
 extern
 #ifdef __cplusplus
@@ -24803,7 +24804,7 @@ void _wrap_delete_CMTManagerAPIFactory_mt5api_34c283227cc4d52d(CMTManagerAPIFact
   
 }
 
-#include <iostream>
+
 
 intgo _wrap_CMTManagerAPIFactory_Initialize__SWIG_0_mt5api_34c283227cc4d52d(CMTManagerAPIFactory *_swig_go_0, LPCWSTR *_swig_go_1) {
   CMTManagerAPIFactory *arg1 = (CMTManagerAPIFactory *) 0 ;
