@@ -24823,12 +24823,12 @@ intgo _wrap_CMTManagerAPIFactory_Initialize__SWIG_0_mt5api_34c283227cc4d52d(CMTM
 
 
  //LPCWSTR wstr = L"你好，世界！";
- const wchar_t* wstr = L"abccc";
+ const LPCWSTR wstr = L"abccc";
 
   //std::wcout<< "----start----" << wstr << std::endl;
 
 
-  printf("---start init---%S------buaa\n",wstr);
+  printf("---start init---%S---%S---buaa\n",wstr, arg2);
   result = (MTAPIRES)(arg1)->Initialize(arg2);
 
   std::cout<< "----end----" << result<<"\n";
