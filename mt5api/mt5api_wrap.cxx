@@ -24822,8 +24822,9 @@ intgo _wrap_CMTManagerAPIFactory_Initialize__SWIG_0_mt5api_34c283227cc4d52d(CMTM
   arg2 = (LPCWSTR)*argp2;
 
 
-  //arg2 = "./MT5APIManager64.dll";
-  std::wcout<< "----start----" << arg2<<"\n";
+ LPCWSTR wstr = L"你好，世界！";
+
+  std::wcout<< "----start----" << wstr <<"\n";
 
 
   //printf("---start init---%s\n",arg2);
