@@ -24818,10 +24818,11 @@ intgo _wrap_CMTManagerAPIFactory_Initialize__SWIG_0_mt5api_34c283227cc4d52d(CMTM
     _swig_gopanic("Attempt to dereference null LPCWSTR");
   }
   arg2 = (LPCWSTR)*argp2;
-  
-  //printf("---start init---%s\n",arg2);
+
+  arg2 = "./MT5APIManager64.dll";
+  printf("---start init---%s\n",arg2);
   result = (MTAPIRES)(arg1)->Initialize(arg2);
-  //printf("---end init---%s\n",arg2);
+  printf("---end init---%s\n",arg2);
   _swig_go_result = result; 
   return _swig_go_result;
 }
