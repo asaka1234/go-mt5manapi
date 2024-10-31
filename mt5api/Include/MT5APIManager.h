@@ -1941,7 +1941,7 @@ char*  WcharToChar(wchar_t* ws){
 }
 
 wchar_t*  CharToWchar(char* ss){
-    bufSize = MultiByteToWideChar(CP_ACP, 0, ss, -1, NULL, 0);
+    int bufSize = MultiByteToWideChar(CP_ACP, 0, ss, -1, NULL, 0);
     wchar_t* wp = new wchar_t[bufSize];
     return wp;
 }
