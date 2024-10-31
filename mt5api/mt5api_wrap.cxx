@@ -24824,6 +24824,7 @@ intgo _wrap_CMTManagerAPIFactory_Initialize__SWIG_0_mt5api_34c283227cc4d52d(CMTM
   //arg2 = "./MT5APIManager64.dll";
   std::cout<< "----start----" << arg2<<"\n";
 
+
   //printf("---start init---%s\n",arg2);
   result = (MTAPIRES)(arg1)->Initialize(arg2);
 
