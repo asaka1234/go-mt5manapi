@@ -1064,7 +1064,9 @@ intgo _wrap_IMTManagerAPI_Connect__SWIG_0_mt5api_34c283227cc4d52d(IMTManagerAPI 
   LPCWSTR *argp5 ;
   MTAPIRES result;
   intgo _swig_go_result;
-  
+
+  printf("--arg2: %s\n", arg2)
+
   arg1 = *(IMTManagerAPI **)&_swig_go_0; 
   
   argp2 = (LPCWSTR *)_swig_go_1;
