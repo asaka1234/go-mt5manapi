@@ -7,6 +7,7 @@
 #include "Include\MT5APILogger.h"
 #include "Include\MT5APIPublicKey.h"
 #include "Include\MT5APITools.h"
+#include "Include\MT5APITypes.h"
 
 #include "Include\Config\MT5APIConfigCommon.h"
 #include "Include\Config\MT5APIConfigFeeder.h"
@@ -87,6 +88,7 @@ typedef long long __time32_t;
 %include "Include\\MT5APILogger.h"
 %include "Include\\MT5APIPublicKey.h"
 %include "Include\\MT5APITools.h"
+%include "Include\\MT5APITypes.h"
 
 %include "Include\\Config\\MT5APIConfigCommon.h"
 %include "Include\\Config\\MT5APIConfigFeeder.h"

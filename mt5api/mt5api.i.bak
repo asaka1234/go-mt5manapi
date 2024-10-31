@@ -6,7 +6,9 @@
 #include "Include\MT5APIConstants.h"
 #include "Include\MT5APILogger.h"
 #include "Include\MT5APITools.h"
+%include "Include\\MT5APIPublicKey.h"
 #include "Include\MT5APITypes.h"
+
 #include "Include\Bases\MT5APIAccount.h"
 #include "Include\Bases\MT5APIAttachment.h"
 #include "Include\Bases\MT5APIBook.h"
