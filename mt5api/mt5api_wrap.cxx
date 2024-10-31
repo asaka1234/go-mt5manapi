@@ -25060,37 +25060,6 @@ intgo _wrap_CMTManagerAPIFactory_Version_mt5api_352fc565db4ddcc0(CMTManagerAPIFa
 }
 
 
-_gostring_ _wrap_WcharToChar_mt5api_352fc565db4ddcc0(wchar_t *_swig_go_0) {
-  wchar_t *arg1 = (wchar_t *) 0 ;
-  char *result = 0 ;
-  _gostring_ _swig_go_result;
-  
-  arg1 = *(wchar_t **)&_swig_go_0; 
-  
-  result = (char *)WcharToChar(arg1);
-  _swig_go_result = Swig_AllocateString((char*)result, result ? strlen((char*)result) : 0); 
-  return _swig_go_result;
-}
-
-
-wchar_t *_wrap_CharToWchar_mt5api_352fc565db4ddcc0(_gostring_ _swig_go_0) {
-  char *arg1 = (char *) 0 ;
-  wchar_t *result = 0 ;
-  wchar_t *_swig_go_result;
-  
-  
-  arg1 = (char *)malloc(_swig_go_0.n + 1);
-  memcpy(arg1, _swig_go_0.p, _swig_go_0.n);
-  arg1[_swig_go_0.n] = '\0';
-  
-  
-  result = (wchar_t *)CharToWchar(arg1);
-  *(wchar_t **)&_swig_go_result = (wchar_t *)result; 
-  free(arg1); 
-  return _swig_go_result;
-}
-
-
 intgo _wrap_MT_RET_OK_mt5api_352fc565db4ddcc0() {
   EnMTAPIRetcode result;
   intgo _swig_go_result;
