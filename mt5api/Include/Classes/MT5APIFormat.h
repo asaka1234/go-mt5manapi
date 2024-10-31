@@ -19,6 +19,12 @@ class SMTFormat
   {
 private:
    //--- constants
+   #define  SIG_DECIMAL L'.'
+   #define SIG_NEGATIVE L'-'
+   #define SIG_THOUSAND L' '
+   #define VOLUME_K L'K'
+   #define VOLUME_M L'M'
+   /*
    enum constants
      {
       SIG_DECIMAL    =L'.',
@@ -27,6 +33,7 @@ private:
       VOLUME_K       =L'K',
       VOLUME_M       =L'M',
      };
+    */
 
 public:
    //--- error
