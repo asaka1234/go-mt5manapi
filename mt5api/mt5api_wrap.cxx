@@ -1111,7 +1111,7 @@ intgo _wrap_IMTManagerAPI_Connect__SWIG_0_mt5api_1255e0f7fde5457d(IMTManagerAPI 
 
   wprintf_s(L"====>connect manager: %p\n ", arg1);
 
-    IMTUser *user=(MTAPIRES)(arg1)->UserCreate();
+    IMTUser *user= arg1->UserCreate();
     MTAPIRES res1 = (MTAPIRES)(arg1)->UserRequest(UINT64(8960), user);
     wprintf_s(L"====>new request, result:%d, login:%d\n ",res1, user->Login());
 
