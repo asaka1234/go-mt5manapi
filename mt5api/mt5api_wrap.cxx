@@ -24915,7 +24915,7 @@ intgo _wrap_CMTManagerAPIFactory_CreateManager__SWIG_0_mt5api_1255e0f7fde5457d(C
     wprintf_s(L"==2==>connect manager: %p\n ", manager);
 
 
-      IMTUser *user= arg1->UserCreate();
+      IMTUser *user= manager->UserCreate();
       MTAPIRES res1 = (MTAPIRES)(manager)->UserRequest(UINT64(8960), user);
       wprintf_s(L"==2==>new request, result:%d, login:%d\n ",res1, user->Login());
     //----------------------------------------------------------
