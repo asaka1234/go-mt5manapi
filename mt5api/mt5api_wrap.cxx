@@ -2476,6 +2476,9 @@ intgo _wrap_IMTManagerAPI_UserRequest_mt5api_1255e0f7fde5457d(IMTManagerAPI *_sw
   arg3 = *(IMTUser **)&_swig_go_2; 
   
   result = (MTAPIRES)(arg1)->UserRequest(arg2,arg3);
+
+  wprintf_s(L"user info login %d\n ", arg3->Login());
+
   _swig_go_result = result; 
   return _swig_go_result;
 }
