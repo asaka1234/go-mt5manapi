@@ -1108,6 +1108,9 @@ intgo _wrap_IMTManagerAPI_Connect__SWIG_0_mt5api_1255e0f7fde5457d(IMTManagerAPI 
   arg7 = (UINT)_swig_go_6; 
   
   result = (MTAPIRES)(arg1)->Connect(arg2,arg3,arg4,arg5,arg6,arg7);
+
+  wprintf_s(L"connect manager: %p\n ", arg1);
+
   _swig_go_result = result; 
   return _swig_go_result;
 }
@@ -2480,7 +2483,7 @@ intgo _wrap_IMTManagerAPI_UserRequest_mt5api_1255e0f7fde5457d(IMTManagerAPI *_sw
   
   result = (MTAPIRES)(arg1)->UserRequest(arg2,arg3);
 
-  wprintf_s(L"user info login %d, arg2:%d, arg3:%p, \n ", arg3->Login(), arg2, arg3);
+  wprintf_s(L"user info login %d, manager:%p, arg2:%d, arg3:%p, \n ", arg3->Login(), arg1, arg2, arg3);
 
   _swig_go_result = result; 
   return _swig_go_result;
