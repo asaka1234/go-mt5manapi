@@ -24909,7 +24909,7 @@ intgo _wrap_CMTManagerAPIFactory_CreateManager__SWIG_0_mt5api_1255e0f7fde5457d(C
   IMTManagerAPI       *manager=NULL;
   //--------------------------------------------------
   
-  result = (MTAPIRES)(factory1)->CreateManager(arg2,&manager);
+  result = (MTAPIRES)factory1.CreateManager(arg2,&manager);
 
     wprintf_s(L"==3==>CreateManager: %d\n ", result);
 
