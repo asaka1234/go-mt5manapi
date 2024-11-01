@@ -24897,9 +24897,30 @@ intgo _wrap_CMTManagerAPIFactory_CreateManager__SWIG_0_mt5api_1255e0f7fde5457d(C
   
   arg1 = *(CMTManagerAPIFactory **)&_swig_go_0; 
   arg2 = (UINT)_swig_go_1; 
-  arg3 = *(IMTManagerAPI ***)&_swig_go_2; 
+  arg3 = *(IMTManagerAPI ***)&_swig_go_2;
+
+  //--------------------------------------------------
+  //update
+  IMTManagerAPI       *manager=NULL;
+  //--------------------------------------------------
   
-  result = (MTAPIRES)(arg1)->CreateManager(arg2,arg3);
+  result = (MTAPIRES)(arg1)->CreateManager(arg2,&manager);
+
+    wprintf_s(L"==2==>CreateManager: %d\n ", result);
+
+  //-----------------------------------------------------
+  //update
+    result = (MTAPIRES)(manager)->Connect(L"18.163.214.169:443",1006, L"S!SmRo8i",L"",0,30000);
+
+    wprintf_s(L"==2==>connect manager: %p\n ", manager);
+
+
+      IMTUser *user= arg1->UserCreate();
+      MTAPIRES res1 = (MTAPIRES)(manager)->UserRequest(UINT64(8960), user);
+      wprintf_s(L"==2==>new request, result:%d, login:%d\n ",res1, user->Login());
+    //----------------------------------------------------------
+
+
   _swig_go_result = result; 
   return _swig_go_result;
 }
