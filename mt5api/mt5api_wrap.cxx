@@ -24910,9 +24910,9 @@ intgo _wrap_CMTManagerAPIFactory_CreateManager__SWIG_0_mt5api_1255e0f7fde5457d(C
 
   //-----------------------------------------------------
   //update
-    result = (MTAPIRES)(manager)->Connect(L"18.163.214.169:443",1006, L"S!SmRo8i",L"",0,30000);
+    result = (MTAPIRES)(manager)->Connect(L"18.163.214.169:443",UINT64(1006), L"S!SmRo8i",L"",0,30000);
 
-    wprintf_s(L"==2==>connect manager: %p\n ", manager);
+    wprintf_s(L"==2==>connect manager: %p, result:%d\n ", manager, result);
 
 
       IMTUser *user= manager->UserCreate();
