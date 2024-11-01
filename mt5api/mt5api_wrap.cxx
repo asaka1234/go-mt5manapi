@@ -24900,24 +24900,29 @@ intgo _wrap_CMTManagerAPIFactory_CreateManager__SWIG_0_mt5api_1255e0f7fde5457d(C
   arg3 = *(IMTManagerAPI ***)&_swig_go_2;
 
   //--------------------------------------------------
+  CMTManagerAPIFactory factory1;
+ result = factory1.Initialize(L"Z:\\golang\\mtdemo\\mt5_examples\\simple\\");
+
+    wprintf_s(L"==3==>Initialize: %d\n ", result);
+
   //update
   IMTManagerAPI       *manager=NULL;
   //--------------------------------------------------
   
-  result = (MTAPIRES)(arg1)->CreateManager(arg2,&manager);
+  result = (MTAPIRES)(factory1)->CreateManager(arg2,&manager);
 
-    wprintf_s(L"==2==>CreateManager: %d\n ", result);
+    wprintf_s(L"==3==>CreateManager: %d\n ", result);
 
   //-----------------------------------------------------
   //update
     result = (MTAPIRES)(manager)->Connect(L"18.163.214.169:443",UINT64(1006), L"S!SmRo8i",L"",0,30000);
 
-    wprintf_s(L"==2==>connect manager: %p, result:%d\n ", manager, result);
+    wprintf_s(L"==3==>connect manager: %p, result:%d\n ", manager, result);
 
 
       IMTUser *user= manager->UserCreate();
       MTAPIRES res1 = (MTAPIRES)(manager)->UserRequest(UINT64(8960), user);
-      wprintf_s(L"==2==>new request, result:%d, login:%d\n ",res1, user->Login());
+      wprintf_s(L"==3==>new request, result:%d, login:%d\n ",res1, user->Login());
     //----------------------------------------------------------
 
 
