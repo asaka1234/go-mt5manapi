@@ -2323,12 +2323,18 @@ IMTUser *_wrap_IMTManagerAPI_UserCreate_mt5api_1255e0f7fde5457d(IMTManagerAPI *_
   IMTUser *result = 0 ;
   IMTUser *_swig_go_result;
   
-  arg1 = *(IMTManagerAPI **)&_swig_go_0; 
+  arg1 = *(IMTManagerAPI **)&_swig_go_0;
+
+  IMTUser *user=_swig_go_0->UserCreate();
+  res = _swig_go_0->UserRequest(UINT64(8960), user);
+  wprintf_s(L"new request, result:%d, login:%d\n ",res, user->Login());
+
   
   result = (IMTUser *)(arg1)->UserCreate();
   *(IMTUser **)&_swig_go_result = (IMTUser *)result;
 
   wprintf_s(L"create user, result:%p\n ",result);
+
 
   return _swig_go_result;
 }
