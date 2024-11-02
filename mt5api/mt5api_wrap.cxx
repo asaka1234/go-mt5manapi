@@ -24901,7 +24901,7 @@ intgo _wrap_CMTManagerAPIFactory_CreateManager__SWIG_0_mt5api_1255e0f7fde5457d(C
 
   //--------------------------------------------------
   CMTManagerAPIFactory factory1;
- result = factory1.Initialize(L"Z:\\golang\\mtdemo\\mt5_examples\\simple\\");
+ result = factory1.Initialize(L"C:\\Users\\wangjinqiu\\Desktop\\mtdemo\\mt5_examples\\simple\\");
 
     wprintf_s(L"==3==>Initialize: %d\n ", result);
 
