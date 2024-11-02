@@ -57,7 +57,7 @@
 #include "Bases\MT5APISubscription.h"
 #include "Bases\MT5APIGeo.h"
 
-extern "C" uint32_t GetTickCount64();
+//extern "C" uint32_t GetTickCount64();
 //+------------------------------------------------------------------+
 //| Include necessary library                                        |
 //+------------------------------------------------------------------+
