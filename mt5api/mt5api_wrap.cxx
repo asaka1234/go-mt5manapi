@@ -187,8 +187,8 @@ static void _swig_gopanic(const char *p) {
 
 
 
-typedef long long intgo;
-typedef unsigned long long uintgo;
+typedef int intgo;
+typedef unsigned int uintgo;
 
 
 # if !defined(__clang__) && (defined(__i386__) || defined(__x86_64__))
@@ -421,17 +421,6 @@ void *_wrap_Swig_malloc_mt5api_1255e0f7fde5457d(intgo _swig_go_0) {
   
   result = (void *)Swig_malloc(arg1);
   *(void **)&_swig_go_result = (void *)result; 
-  return _swig_go_result;
-}
-
-
-uint32_t *_wrap_GetTickCount64_mt5api_1255e0f7fde5457d() {
-  uint32_t result;
-  uint32_t *_swig_go_result;
-  
-  
-  result = GetTickCount64();
-  *(uint32_t **)&_swig_go_result = new uint32_t(result); 
   return _swig_go_result;
 }
 
@@ -1108,14 +1097,6 @@ intgo _wrap_IMTManagerAPI_Connect__SWIG_0_mt5api_1255e0f7fde5457d(IMTManagerAPI 
   arg7 = (UINT)_swig_go_6; 
   
   result = (MTAPIRES)(arg1)->Connect(arg2,arg3,arg4,arg5,arg6,arg7);
-
-  wprintf_s(L"====>connect manager: %p\n ", arg1);
-
-    IMTUser *user= arg1->UserCreate();
-    MTAPIRES res1 = (MTAPIRES)(arg1)->UserRequest(UINT64(8960), user);
-    wprintf_s(L"====>new request, result:%d, login:%d\n ",res1, user->Login());
-
-
   _swig_go_result = result; 
   return _swig_go_result;
 }
@@ -2328,19 +2309,10 @@ IMTUser *_wrap_IMTManagerAPI_UserCreate_mt5api_1255e0f7fde5457d(IMTManagerAPI *_
   IMTUser *result = 0 ;
   IMTUser *_swig_go_result;
   
-  arg1 = *(IMTManagerAPI **)&_swig_go_0;
-
-  IMTUser *user=_swig_go_0->UserCreate();
-  MTAPIRES res1 = _swig_go_0->UserRequest(UINT64(8960), user);
-  wprintf_s(L"new request, result:%d, login:%d\n ",res1, user->Login());
-
+  arg1 = *(IMTManagerAPI **)&_swig_go_0; 
   
   result = (IMTUser *)(arg1)->UserCreate();
-  *(IMTUser **)&_swig_go_result = (IMTUser *)result;
-
-  wprintf_s(L"create user, result:%p\n ",result);
-
-
+  *(IMTUser **)&_swig_go_result = (IMTUser *)result; 
   return _swig_go_result;
 }
 
@@ -2493,9 +2465,6 @@ intgo _wrap_IMTManagerAPI_UserRequest_mt5api_1255e0f7fde5457d(IMTManagerAPI *_sw
   arg3 = *(IMTUser **)&_swig_go_2; 
   
   result = (MTAPIRES)(arg1)->UserRequest(arg2,arg3);
-
-  wprintf_s(L"user info login %d, manager:%p, arg2:%d, arg3:%p, \n ", arg3->Login(), arg1, arg2, arg3);
-
   _swig_go_result = result; 
   return _swig_go_result;
 }
@@ -24897,35 +24866,9 @@ intgo _wrap_CMTManagerAPIFactory_CreateManager__SWIG_0_mt5api_1255e0f7fde5457d(C
   
   arg1 = *(CMTManagerAPIFactory **)&_swig_go_0; 
   arg2 = (UINT)_swig_go_1; 
-  arg3 = *(IMTManagerAPI ***)&_swig_go_2;
-
-  //--------------------------------------------------
-  CMTManagerAPIFactory factory1;
- result = factory1.Initialize(L"C:\\Users\\wangjinqiu\\Desktop\\mtdemo\\mt5_examples\\simple\\");
-
-    wprintf_s(L"==3==>Initialize: %d\n ", result);
-
-  //update
-  IMTManagerAPI       *manager=NULL;
-  //--------------------------------------------------
+  arg3 = *(IMTManagerAPI ***)&_swig_go_2; 
   
-  result = (MTAPIRES)factory1.CreateManager(arg2,&manager);
-
-    wprintf_s(L"==3==>CreateManager: %d\n ", result);
-
-  //-----------------------------------------------------
-  //update
-    result = (MTAPIRES)(manager)->Connect(L"18.163.214.169:443",UINT64(1006), L"S!SmRo8i",L"",0,30000);
-
-    wprintf_s(L"==3==>connect manager: %p, result:%d\n ", manager, result);
-
-
-      IMTUser *user= manager->UserCreate();
-      MTAPIRES res1 = (MTAPIRES)(manager)->UserRequest(UINT64(8960), user);
-      wprintf_s(L"==3==>new request, result:%d, login:%d\n ",res1, user->Login());
-    //----------------------------------------------------------
-
-
+  result = (MTAPIRES)(arg1)->CreateManager(arg2,arg3);
   _swig_go_result = result; 
   return _swig_go_result;
 }
