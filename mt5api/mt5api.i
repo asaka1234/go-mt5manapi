@@ -1,19 +1,12 @@
 %module(directors="1") mt5api
-
-#pragma SWIG nowarn=SWIGWARN_CPP11_ALIAS_DECLARATION
-
 %{
 // 确保在Windows平台使用正确的调用约定
-// #ifdef _WIN32
-// # define SWIGSTDCALL __stdcall
-// #else
-// # define SWIGSTDCALL
-// #endif
-
-
 #ifdef _WIN32
-#pragma comment(linker, "/EXPORT:registerCallback=_registerCallback@4")
+# define SWIGSTDCALL __stdcall
+#else
+# define SWIGSTDCALL
 #endif
+
 
 #include <windows.h>
 
@@ -51,13 +44,13 @@ typedef __time32_t time_t;
 typedef long long __time32_t;
 
 // 为回调类型定义正确的调用约定
-// #ifdef _WIN32
-// %typemap(ctype) unsigned int (SWIGSTDCALL *)(void *) "unsigned int (__stdcall *)(void *)"
-// %typemap(imtype) unsigned int (SWIG_STDCALL *)(void *) "uint"
-// %typemap(cstype) unsigned int (SWIG_STDCALL *)(void *) "Example.CallbackDelegate"
-// #else
-// %typemap(ctype) unsigned int (*)(void *) "unsigned int (*)(void *)"
-// #endif
+#ifdef _WIN32
+%typemap(ctype) unsigned int (SWIGSTDCALL *)(void *) "unsigned int (__stdcall *)(void *)"
+%typemap(imtype) unsigned int (SWIG_STDCALL *)(void *) "uint"
+%typemap(cstype) unsigned int (SWIG_STDCALL *)(void *) "Example.CallbackDelegate"
+#else
+%typemap(ctype) unsigned int (*)(void *) "unsigned int (*)(void *)"
+#endif
 
 %include "windows.i"
 
