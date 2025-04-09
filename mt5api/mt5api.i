@@ -1,5 +1,12 @@
 %module(directors="1") mt5api
 %{
+// 确保在Windows平台使用正确的调用约定
+#ifdef _WIN32
+# define SWIGSTDCALL __stdcall
+#else
+# define SWIGSTDCALL
+#endif
+
 #include <windows.h>
 
 #include "Include\MT5APIManager.h"
@@ -34,6 +41,13 @@
 
 typedef __time32_t time_t;
 typedef long long __time32_t;
+
+// 为回调类型定义正确的调用约定
+#ifdef _WIN32
+%typemap(ctype) unsigned int (SWIGSTDCALL *)(void *) "unsigned int (__stdcall *)(void *)"
+#else
+%typemap(ctype) unsigned int (*)(void *) "unsigned int (*)(void *)"
+#endif
 
 %include "windows.i"
 
