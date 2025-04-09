@@ -45,6 +45,8 @@ typedef long long __time32_t;
 // 为回调类型定义正确的调用约定
 #ifdef _WIN32
 %typemap(ctype) unsigned int (SWIGSTDCALL *)(void *) "unsigned int (__stdcall *)(void *)"
+%typemap(imtype) unsigned int (SWIG_STDCALL *)(void *) "uint"
+%typemap(cstype) unsigned int (SWIG_STDCALL *)(void *) "Example.CallbackDelegate"
 #else
 %typemap(ctype) unsigned int (*)(void *) "unsigned int (*)(void *)"
 #endif
