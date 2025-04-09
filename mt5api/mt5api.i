@@ -1,10 +1,16 @@
 %module(directors="1") mt5api
 %{
-// 确保在Windows平台使用正确的调用约定
-#ifdef _WIN32
-# define SWIGSTDCALL __stdcall
+// 平台调用约定强制定义
+#if defined(_WIN32) || defined(__CYGWIN__)
+# define SWIG_WINAPI __stdcall
+# ifdef __MINGW32__
+#  define SWIG_EXPORT __declspec(dllexport)
+# else
+#  define SWIG_EXPORT
+# endif
 #else
-# define SWIGSTDCALL
+# define SWIG_WINAPI
+# define SWIG_EXPORT
 #endif
 
 
@@ -43,14 +49,14 @@
 typedef __time32_t time_t;
 typedef long long __time32_t;
 
-// 为回调类型定义正确的调用约定
-#ifdef _WIN32
-%typemap(ctype) unsigned int (SWIGSTDCALL *)(void *) "unsigned int (__stdcall *)(void *)"
-%typemap(imtype) unsigned int (SWIG_STDCALL *)(void *) "uint"
-%typemap(cstype) unsigned int (SWIG_STDCALL *)(void *) "Example.CallbackDelegate"
-#else
-%typemap(ctype) unsigned int (*)(void *) "unsigned int (*)(void *)"
-#endif
+// 关键：精确的类型映射控制
+%typemap(ctype)  unsigned int (SWIG_WINAPI *callback_t)(void *)
+    "unsigned int (SWIG_WINAPI *)(void *)"
+%typemap(imtype) unsigned int (SWIG_WINAPI *callback_t)(void *)
+    "uintptr_t"
+%typemap(goin)   unsigned int (SWIG_WINAPI *callback_t)(void *)
+    "%{ $1 = (unsigned int (SWIG_WINAPI *)(void *))$input; %}"
+
 
 %include "windows.i"
 
