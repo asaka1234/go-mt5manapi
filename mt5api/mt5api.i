@@ -35,6 +35,23 @@
 #include "Include\Classes\MT5APIProcess.h"
 #include "Include\Classes\MT5APIFile.h"
 #include "Include\Classes\MT5APIMemPack.h"
+
+// 存储 Go 回调函数的全局变量
+static unsigned int (*go_callback)(void*) = NULL;
+
+// __stdcall 适配器函数
+unsigned int __stdcall callback_adapter(void* p) {
+    if (go_callback) {
+        return go_callback(p);
+    }
+    return 0;
+}
+
+// 注册 Go 回调函数
+void RegisterGoCallback(unsigned int (*callback)(void*)) {
+    go_callback = callback;
+}
+
 %}
 
 %include <typemaps.i>
@@ -44,19 +61,18 @@
 %inline %{
 #define LPCSTR char*
 #define LPCWSTR const wchar_t*
+
+void RegisterGoCallback(unsigned int (*callback)(void*));
+
 %}
+
+
+// 声明原始 Start 函数
+bool Start(unsigned int (__stdcall *)(void*), void*, const UINT);
 
 typedef __time32_t time_t;
 typedef long long __time32_t;
 
-// 在 SWIG 接口文件中添加
-%{
-// __stdcall 包装函数
-unsigned int __stdcall GoCallbackAdapter(void* param) {
-    // 调用原始的 Go 回调函数
-    return ((unsigned int (*)(void*))_swig_go_1)(param);
-}
-%}
 
 %include "windows.i"
 
