@@ -49,14 +49,14 @@
 typedef __time32_t time_t;
 typedef long long __time32_t;
 
-// 关键：精确的类型映射控制
-%typemap(ctype)  unsigned int (SWIG_WINAPI *callback_t)(void *)
-    "unsigned int (SWIG_WINAPI *)(void *)"
-%typemap(imtype) unsigned int (SWIG_WINAPI *callback_t)(void *)
-    "uintptr_t"
-%typemap(goin)   unsigned int (SWIG_WINAPI *callback_t)(void *)
-    "%{ $1 = (unsigned int (SWIG_WINAPI *)(void *))$input; %}"
-
+// 在 SWIG 接口文件中添加
+%{
+// __stdcall 包装函数
+unsigned int __stdcall GoCallbackAdapter(void* param) {
+    // 调用原始的 Go 回调函数
+    return ((unsigned int (*)(void*))_swig_go_1)(param);
+}
+%}
 
 %include "windows.i"
 
