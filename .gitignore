@@ -5,5 +5,5 @@ vendor
 .goland
 .idea
 runtime/*
-vtgo
+.DS_Store
 .idea
