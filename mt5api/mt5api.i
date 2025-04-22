@@ -35,23 +35,6 @@
 #include "Include\Classes\MT5APIProcess.h"
 #include "Include\Classes\MT5APIFile.h"
 #include "Include\Classes\MT5APIMemPack.h"
-
-// 存储 Go 回调函数的全局变量
-static unsigned int (*go_callback)(void*) = NULL;
-
-// __stdcall 适配器函数
-unsigned int __stdcall callback_adapter(void* p) {
-    if (go_callback) {
-        return go_callback(p);
-    }
-    return 0;
-}
-
-// 注册 Go 回调函数
-void RegisterGoCallback(unsigned int (*callback)(void*)) {
-    go_callback = callback;
-}
-
 %}
 
 %include <typemaps.i>
@@ -61,9 +44,6 @@ void RegisterGoCallback(unsigned int (*callback)(void*)) {
 %inline %{
 #define LPCSTR char*
 #define LPCWSTR const wchar_t*
-
-void RegisterGoCallback(unsigned int (*callback)(void*));
-
 %}
 
 
