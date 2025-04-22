@@ -47,9 +47,6 @@
 %}
 
 
-// 声明原始 Start 函数
-bool Start(unsigned int (__stdcall *)(void*), void*, const UINT);
-
 typedef __time32_t time_t;
 typedef long long __time32_t;
 
