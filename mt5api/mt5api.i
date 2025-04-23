@@ -45,46 +45,6 @@
 #define LPCWSTR const wchar_t*
 %}
 
-%{
-#include <stdlib.h>
-#include <string.h>
-
-// 辅助函数：Go字符串 -> LPCWSTR (宽字符)
-static wchar_t* GoStringToLPCWSTR(const char* goStr) {
-    int len = MultiByteToWideChar(CP_UTF8, 0, goStr, -1, NULL, 0);
-    wchar_t* wstr = (wchar_t*)malloc(len * sizeof(wchar_t));
-    MultiByteToWideChar(CP_UTF8, 0, goStr, -1, wstr, len);
-    return wstr;
-}
-
-// 辅助函数：LPCWSTR -> Go字符串
-static char* LPCWSTRToGoString(const wchar_t* wstr) {
-    int len = WideCharToMultiByte(CP_UTF8, 0, wstr, -1, NULL, 0, NULL, NULL);
-    char* goStr = (char*)malloc(len);
-    WideCharToMultiByte(CP_UTF8, 0, wstr, -1, goStr, len, NULL, NULL);
-    return goStr;
-}
-%}
-
-// 清理分配的内存
-%typemap(freearg) LPCWSTR {
-    free((wchar_t*)$1);
-}
-
-// 输入类型映射 (Go -> C)
-%typemap(in) LPCWSTR {
-    $1 = GoStringToLPCWSTR($input.p);
-}
-
-// 输出类型映射 (C -> Go)
-%typemap(out) LPCWSTR {
-    $result = Swig_AllocString(LPCWSTRToGoString($1));
-    free((char*)$1);
-}
-
-// 应用类型映射到特定函数
-%apply LPCWSTR { const wchar_t* }; // 也可以处理const变体
-
 
 typedef __time32_t time_t;
 typedef long long __time32_t;
