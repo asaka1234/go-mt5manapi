@@ -1,2 +1,2 @@
 # mtmanapi
-golang wrapper for mt4 manager api (32/64)
+golang wrapper for mt5 manager api (32)
