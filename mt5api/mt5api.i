@@ -45,6 +45,35 @@
 #define LPCWSTR const wchar_t*
 %}
 
+// 定义 LPCWSTR 到 Go string 的类型映射
+%typemap(gotype) LPCWSTR "string"
+%typemap(in) LPCWSTR {
+    $1 = (LPCWSTR)GoStringToWideChar($input); // Go string -> LPCWSTR
+}
+%typemap(out) LPCWSTR {
+    $result = WideCharToGoString($1); // LPCWSTR -> Go string
+}
+
+// 辅助函数（需在 %{ %} 中实现）
+%{
+#include <stdlib.h>
+#include <string.h>
+
+wchar_t* GoStringToWideChar(const char* goStr) {
+    int len = MultiByteToWideChar(CP_UTF8, 0, goStr, -1, NULL, 0);
+    wchar_t* wstr = (wchar_t*)malloc(len * sizeof(wchar_t));
+    MultiByteToWideChar(CP_UTF8, 0, goStr, -1, wstr, len);
+    return wstr;
+}
+
+char* WideCharToGoString(const wchar_t* wstr) {
+    int len = WideCharToMultiByte(CP_UTF8, 0, wstr, -1, NULL, 0, NULL, NULL);
+    char* goStr = (char*)malloc(len);
+    WideCharToMultiByte(CP_UTF8, 0, wstr, -1, goStr, len, NULL, NULL);
+    return goStr;
+}
+%}
+
 
 typedef __time32_t time_t;
 typedef long long __time32_t;
