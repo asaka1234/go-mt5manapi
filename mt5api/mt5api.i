@@ -34,6 +34,8 @@
 #include "Include\Classes\MT5APIProcess.h"
 #include "Include\Classes\MT5APIFile.h"
 #include "Include\Classes\MT5APIMemPack.h"
+
+#include "Include\Config\MT5APIConfigGroup.h"
 %}
 
 %include <typemaps.i>
@@ -69,3 +71,5 @@ typedef long long __time32_t;
 %include "Include\\Classes\\MT5APIProcess.h"
 %include "Include\\Classes\\MT5APIFile.h"
 %include "Include\\Classes\\MT5APIMemPack.h"
+
+%include "Include\\Config\\MT5APIConfigGroup.h"
