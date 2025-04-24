@@ -48,6 +48,12 @@
 // 启用 director 功能以支持从 Go 继承 C++ 类
 %feature("director") IMTTickSink;
 
+// 重命名重载函数以避免Go中的命名冲突
+%rename(OnTickShort) IMTTickSink::OnTick(LPCWSTR /*symbol*/,const MTTickShort& /*tick*/);
+%rename(OnTickServer) IMTTickSink::OnTick(const int /*feeder*/,const MTTick& /*tick*/);
+%rename(OnTickStatShort) IMTTickSink::OnTickStat(const MTTickStat& /*tick*/);
+%rename(OnTickStatServer) IMTTickSink::OnTickStat(const int /*feeder*/,const MTTickStat& /*tstat*/);
+
 /*
 %typemap(goin) LPCWSTR "string"
 %typemap(in) LPCWSTR {
