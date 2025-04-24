@@ -13,4 +13,37 @@
 
 class Swig_memory;
 
+class SwigDirector_IMTTickSink : public IMTTickSink
+{
+ public:
+  SwigDirector_IMTTickSink(int swig_p);
+  void _swig_upcall_OnTick__SWIG_0(LPCWSTR arg0,MTTickShort const &arg1) {
+    IMTTickSink::OnTick(arg0,arg1);
+  }
+  virtual void OnTick(LPCWSTR arg0,MTTickShort const &arg1);
+  void _swig_upcall_OnTickStat__SWIG_0(MTTickStat const &arg0) {
+    IMTTickSink::OnTickStat(arg0);
+  }
+  virtual void OnTickStat(MTTickStat const &arg0);
+  MTAPIRES _swig_upcall_HookTick(int const arg0,MTTick &arg1) {
+    return IMTTickSink::HookTick(arg0,arg1);
+  }
+  virtual MTAPIRES HookTick(int const arg0,MTTick &arg1);
+  MTAPIRES _swig_upcall_HookTickStat(int const arg0,MTTickStat &arg1) {
+    return IMTTickSink::HookTickStat(arg0,arg1);
+  }
+  virtual MTAPIRES HookTickStat(int const arg0,MTTickStat &arg1);
+  void _swig_upcall_OnTick__SWIG_1(int const arg0,MTTick const &arg1) {
+    IMTTickSink::OnTick(arg0,arg1);
+  }
+  virtual void OnTick(int const arg0,MTTick const &arg1);
+  void _swig_upcall_OnTickStat__SWIG_1(int const arg0,MTTickStat const &arg1) {
+    IMTTickSink::OnTickStat(arg0,arg1);
+  }
+  virtual void OnTickStat(int const arg0,MTTickStat const &arg1);
+ private:
+  intgo go_val;
+  Swig_memory *swig_mem;
+};
+
 #endif

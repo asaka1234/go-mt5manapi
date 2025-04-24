@@ -43,10 +43,25 @@
 %include "carrays.i"
 
 
+//-------------------------------------
+
+// 启用 director 功能以支持从 Go 继承 C++ 类
+%feature("director") IMTTickSink;
+
+/*
+%typemap(goin) LPCWSTR "string"
+%typemap(in) LPCWSTR {
+    $1 = (LPCWSTR)SWIG_GoString($input);
+}
+*/
+//-------------------------------------
+
+
 %inline %{
 #define LPCSTR char*
 #define LPCWSTR const wchar_t*
 %}
+
 
 typedef __time32_t time_t;
 typedef long long __time32_t;
