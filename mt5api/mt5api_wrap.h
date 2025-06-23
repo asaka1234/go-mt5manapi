@@ -46,4 +46,33 @@ class SwigDirector_IMTTickSink : public IMTTickSink
   Swig_memory *swig_mem;
 };
 
+class SwigDirector_IMTPositionSink : public IMTPositionSink
+{
+ public:
+  SwigDirector_IMTPositionSink(int swig_p);
+  void _swig_upcall_OnPositionAdd(IMTPosition const *arg0) {
+    IMTPositionSink::OnPositionAdd(arg0);
+  }
+  virtual void OnPositionAdd(IMTPosition const *arg0);
+  void _swig_upcall_OnPositionUpdate(IMTPosition const *arg0) {
+    IMTPositionSink::OnPositionUpdate(arg0);
+  }
+  virtual void OnPositionUpdate(IMTPosition const *arg0);
+  void _swig_upcall_OnPositionDelete(IMTPosition const *arg0) {
+    IMTPositionSink::OnPositionDelete(arg0);
+  }
+  virtual void OnPositionDelete(IMTPosition const *arg0);
+  void _swig_upcall_OnPositionClean(UINT64 const arg0) {
+    IMTPositionSink::OnPositionClean(arg0);
+  }
+  virtual void OnPositionClean(UINT64 const arg0);
+  void _swig_upcall_OnPositionSync() {
+    IMTPositionSink::OnPositionSync();
+  }
+  virtual void OnPositionSync();
+ private:
+  intgo go_val;
+  Swig_memory *swig_mem;
+};
+
 #endif

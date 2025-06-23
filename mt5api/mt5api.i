@@ -37,6 +37,7 @@
 
 #include "Include\Config\MT5APIConfigGroup.h"
 #include "Include\Bases\MT5APITick.h"
+#include "Include\Bases\MT5APIPosition.h"
 %}
 
 %include <typemaps.i>
@@ -53,6 +54,10 @@
 %rename(OnTickServer) IMTTickSink::OnTick(const int /*feeder*/,const MTTick& /*tick*/);
 %rename(OnTickStatShort) IMTTickSink::OnTickStat(const MTTickStat& /*tick*/);
 %rename(OnTickStatServer) IMTTickSink::OnTickStat(const int /*feeder*/,const MTTickStat& /*tstat*/);
+
+
+// 启用 director 功能以支持从 Go 继承 C++ 类
+%feature("director") IMTPositionSink;
 
 /*
 %typemap(goin) LPCWSTR "string"
@@ -96,3 +101,4 @@ typedef long long __time32_t;
 
 %include "Include\\Config\\MT5APIConfigGroup.h"
 %include "Include\\Bases\\MT5APITick.h"
+%include "Include\\Bases\\MT5APIPosition.h"
