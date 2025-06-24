@@ -38,6 +38,7 @@
 #include "Include\Config\MT5APIConfigGroup.h"
 #include "Include\Bases\MT5APITick.h"
 #include "Include\Bases\MT5APIPosition.h"
+#include "Include\Config\MT5APIConfigTime.h"
 %}
 
 %include <typemaps.i>
@@ -102,3 +103,4 @@ typedef long long __time32_t;
 %include "Include\\Config\\MT5APIConfigGroup.h"
 %include "Include\\Bases\\MT5APITick.h"
 %include "Include\\Bases\\MT5APIPosition.h"
+%include "Include\\Config\\MT5APIConfigTime.h"

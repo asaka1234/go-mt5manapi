@@ -6,7 +6,7 @@
  * the SWIG interface file instead.
  * ----------------------------------------------------------------------------- */
 
-// source: mt5api.i
+// source: .\mt5api.i
 
 #ifndef SWIG_mt5api_WRAP_H_
 #define SWIG_mt5api_WRAP_H_
