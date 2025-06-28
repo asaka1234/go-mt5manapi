@@ -75,4 +75,41 @@ class SwigDirector_IMTPositionSink : public IMTPositionSink
   Swig_memory *swig_mem;
 };
 
+class SwigDirector_IMTDealSink : public IMTDealSink
+{
+ public:
+  SwigDirector_IMTDealSink(int swig_p);
+  void _swig_upcall_OnDealAdd(IMTDeal const *arg0) {
+    IMTDealSink::OnDealAdd(arg0);
+  }
+  virtual void OnDealAdd(IMTDeal const *arg0);
+  void _swig_upcall_OnDealUpdate(IMTDeal const *arg0) {
+    IMTDealSink::OnDealUpdate(arg0);
+  }
+  virtual void OnDealUpdate(IMTDeal const *arg0);
+  void _swig_upcall_OnDealDelete(IMTDeal const *arg0) {
+    IMTDealSink::OnDealDelete(arg0);
+  }
+  virtual void OnDealDelete(IMTDeal const *arg0);
+  void _swig_upcall_OnDealClean(UINT64 const arg0) {
+    IMTDealSink::OnDealClean(arg0);
+  }
+  virtual void OnDealClean(UINT64 const arg0);
+  void _swig_upcall_OnDealSync() {
+    IMTDealSink::OnDealSync();
+  }
+  virtual void OnDealSync();
+  void _swig_upcall_OnDealPerform(IMTDeal const *arg0,IMTAccount *arg1,IMTPosition *arg2) {
+    IMTDealSink::OnDealPerform(arg0,arg1,arg2);
+  }
+  virtual void OnDealPerform(IMTDeal const *arg0,IMTAccount *arg1,IMTPosition *arg2);
+  void _swig_upcall_OnDealPerformCloseBy(IMTDeal const *arg0,IMTDeal const *arg1,IMTAccount *arg2,IMTPosition *arg3) {
+    IMTDealSink::OnDealPerformCloseBy(arg0,arg1,arg2,arg3);
+  }
+  virtual void OnDealPerformCloseBy(IMTDeal const *arg0,IMTDeal const *arg1,IMTAccount *arg2,IMTPosition *arg3);
+ private:
+  intgo go_val;
+  Swig_memory *swig_mem;
+};
+
 #endif
