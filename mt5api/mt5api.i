@@ -36,6 +36,7 @@
 #include "Include\Classes\MT5APIMemPack.h"
 
 #include "Include\Config\MT5APIConfigGroup.h"
+#include "Include\Config\MT5APIConfigSymbol.h"
 #include "Include\Bases\MT5APITick.h"
 #include "Include\Bases\MT5APIPosition.h"
 #include "Include\Config\MT5APIConfigTime.h"
@@ -103,6 +104,7 @@ typedef long long __time32_t;
 %include "Include\\Classes\\MT5APIMemPack.h"
 
 %include "Include\\Config\\MT5APIConfigGroup.h"
+%include "Include\\Config\\MT5APIConfigSymbol.h"
 %include "Include\\Bases\\MT5APITick.h"
 %include "Include\\Bases\\MT5APIPosition.h"
 %include "Include\\Config\\MT5APIConfigTime.h"
