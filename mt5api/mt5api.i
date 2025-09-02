@@ -41,6 +41,7 @@
 #include "Include\Bases\MT5APIPosition.h"
 #include "Include\Config\MT5APIConfigTime.h"
 #include "Include\Bases\MT5APIDeal.h"
+#include "Include\Bases\MT5APIUser.h"
 %}
 
 %include <typemaps.i>
@@ -62,6 +63,7 @@
 // 启用 director 功能以支持从 Go 继承 C++ 类
 %feature("director") IMTPositionSink;
 %feature("director") IMTDealSink;
+%feature("director") IMTUserSink;
 
 /*
 %typemap(goin) LPCWSTR "string"
@@ -109,3 +111,4 @@ typedef long long __time32_t;
 %include "Include\\Bases\\MT5APIPosition.h"
 %include "Include\\Config\\MT5APIConfigTime.h"
 %include "Include\\Bases\\MT5APIDeal.h"
+%include "Include\\Bases\\MT5APIUser.h"

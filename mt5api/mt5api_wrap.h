@@ -6,12 +6,105 @@
  * the SWIG interface file instead.
  * ----------------------------------------------------------------------------- */
 
-// source: mt5api.i
+// source: .\mt5api.i
 
 #ifndef SWIG_mt5api_WRAP_H_
 #define SWIG_mt5api_WRAP_H_
 
 class Swig_memory;
+
+class SwigDirector_IMTUserSink : public IMTUserSink
+{
+ public:
+  SwigDirector_IMTUserSink(int swig_p);
+  void _swig_upcall_OnUserAdd(IMTUser const *arg0) {
+    IMTUserSink::OnUserAdd(arg0);
+  }
+  virtual void OnUserAdd(IMTUser const *arg0);
+  void _swig_upcall_OnUserUpdate(IMTUser const *arg0) {
+    IMTUserSink::OnUserUpdate(arg0);
+  }
+  virtual void OnUserUpdate(IMTUser const *arg0);
+  void _swig_upcall_OnUserDelete(IMTUser const *arg0) {
+    IMTUserSink::OnUserDelete(arg0);
+  }
+  virtual void OnUserDelete(IMTUser const *arg0);
+  void _swig_upcall_OnUserClean(UINT64 const arg0) {
+    IMTUserSink::OnUserClean(arg0);
+  }
+  virtual void OnUserClean(UINT64 const arg0);
+  void _swig_upcall_OnUserLogin(LPCWSTR arg0,IMTUser const *arg1,UINT const arg2) {
+    IMTUserSink::OnUserLogin(arg0,arg1,arg2);
+  }
+  virtual void OnUserLogin(LPCWSTR arg0,IMTUser const *arg1,UINT const arg2);
+  void _swig_upcall_OnUserSync() {
+    IMTUserSink::OnUserSync();
+  }
+  virtual void OnUserSync();
+  MTAPIRES _swig_upcall_HookUserAdd(IMTUser *arg0) {
+    return IMTUserSink::HookUserAdd(arg0);
+  }
+  virtual MTAPIRES HookUserAdd(IMTUser *arg0);
+  MTAPIRES _swig_upcall_HookUserUpdate(IMTUser const *arg0,IMTUser *arg1) {
+    return IMTUserSink::HookUserUpdate(arg0,arg1);
+  }
+  virtual MTAPIRES HookUserUpdate(IMTUser const *arg0,IMTUser *arg1);
+  MTAPIRES _swig_upcall_HookUserDelete(IMTUser const *arg0) {
+    return IMTUserSink::HookUserDelete(arg0);
+  }
+  virtual MTAPIRES HookUserDelete(IMTUser const *arg0);
+  MTAPIRES _swig_upcall_HookUserLogin(LPCWSTR arg0,IMTUser const *arg1,UINT const arg2) {
+    return IMTUserSink::HookUserLogin(arg0,arg1,arg2);
+  }
+  virtual MTAPIRES HookUserLogin(LPCWSTR arg0,IMTUser const *arg1,UINT const arg2);
+  void _swig_upcall_OnUserLogout(LPCWSTR arg0,IMTUser const *arg1,UINT const arg2) {
+    IMTUserSink::OnUserLogout(arg0,arg1,arg2);
+  }
+  virtual void OnUserLogout(LPCWSTR arg0,IMTUser const *arg1,UINT const arg2);
+  void _swig_upcall_OnUserArchive(IMTUser const *arg0) {
+    IMTUserSink::OnUserArchive(arg0);
+  }
+  virtual void OnUserArchive(IMTUser const *arg0);
+  void _swig_upcall_OnUserRestore(IMTUser const *arg0) {
+    IMTUserSink::OnUserRestore(arg0);
+  }
+  virtual void OnUserRestore(IMTUser const *arg0);
+  MTAPIRES _swig_upcall_HookUserArchive(IMTUser const *arg0) {
+    return IMTUserSink::HookUserArchive(arg0);
+  }
+  virtual MTAPIRES HookUserArchive(IMTUser const *arg0);
+  MTAPIRES _swig_upcall_HookUserLoginExt(IMTUser const *arg0,IMTOnline const *arg1) {
+    return IMTUserSink::HookUserLoginExt(arg0,arg1);
+  }
+  virtual MTAPIRES HookUserLoginExt(IMTUser const *arg0,IMTOnline const *arg1);
+  void _swig_upcall_OnUserLoginExt(IMTUser const *arg0,IMTOnline const *arg1) {
+    IMTUserSink::OnUserLoginExt(arg0,arg1);
+  }
+  virtual void OnUserLoginExt(IMTUser const *arg0,IMTOnline const *arg1);
+  void _swig_upcall_OnUserLogoutExt(IMTUser const *arg0,IMTOnline const *arg1) {
+    IMTUserSink::OnUserLogoutExt(arg0,arg1);
+  }
+  virtual void OnUserLogoutExt(IMTUser const *arg0,IMTOnline const *arg1);
+  void _swig_upcall_OnUserAddExt(IMTUser const *arg0,LPCWSTR arg1,LPCWSTR arg2) {
+    IMTUserSink::OnUserAddExt(arg0,arg1,arg2);
+  }
+  virtual void OnUserAddExt(IMTUser const *arg0,LPCWSTR arg1,LPCWSTR arg2);
+  void _swig_upcall_OnUserChangePassword(IMTUser const *arg0,UINT const arg1,LPCWSTR arg2) {
+    IMTUserSink::OnUserChangePassword(arg0,arg1,arg2);
+  }
+  virtual void OnUserChangePassword(IMTUser const *arg0,UINT const arg1,LPCWSTR arg2);
+  MTAPIRES _swig_upcall_HookUserAddExt(IMTUser *arg0,LPCWSTR arg1,LPCWSTR arg2) {
+    return IMTUserSink::HookUserAddExt(arg0,arg1,arg2);
+  }
+  virtual MTAPIRES HookUserAddExt(IMTUser *arg0,LPCWSTR arg1,LPCWSTR arg2);
+  MTAPIRES _swig_upcall_HookUserChangePassword(IMTUser const *arg0,UINT const arg1,LPCWSTR arg2) {
+    return IMTUserSink::HookUserChangePassword(arg0,arg1,arg2);
+  }
+  virtual MTAPIRES HookUserChangePassword(IMTUser const *arg0,UINT const arg1,LPCWSTR arg2);
+ private:
+  intgo go_val;
+  Swig_memory *swig_mem;
+};
 
 class SwigDirector_IMTTickSink : public IMTTickSink
 {
