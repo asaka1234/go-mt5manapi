@@ -23,8 +23,6 @@
 #include "Include\MT5APITools.h"
 #include "Include\MT5APITypes.h"
 
-#include "Include\Bases\MT5APIUser.h"
-
 #include "Include\Classes\MT5APIStr.h"
 #include "Include\Classes\MT5APIMath.h"
 #include "Include\Classes\MT5APIFormat.h"
@@ -42,6 +40,7 @@
 #include "Include\Config\MT5APIConfigTime.h"
 #include "Include\Bases\MT5APIDeal.h"
 #include "Include\Bases\MT5APIUser.h"
+#include "Include\Bases\MT5APIOnline.h"
 %}
 
 %include <typemaps.i>
@@ -93,8 +92,6 @@ typedef long long __time32_t;
 %include "Include\\MT5APITools.h"
 %include "Include\\MT5APITypes.h"
 
-%include "Include\\Bases\\MT5APIUser.h"
-
 %include "Include\\Classes\\MT5APIStr.h"
 %include "Include\\Classes\\MT5APIMath.h"
 %include "Include\\Classes\\MT5APIFormat.h"
@@ -112,3 +109,4 @@ typedef long long __time32_t;
 %include "Include\\Config\\MT5APIConfigTime.h"
 %include "Include\\Bases\\MT5APIDeal.h"
 %include "Include\\Bases\\MT5APIUser.h"
+%include "Include\\Bases\\MT5APIOnline.h"
