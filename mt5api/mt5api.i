@@ -42,6 +42,7 @@
 #include "Include\Bases\MT5APIUser.h"
 #include "Include\Bases\MT5APIOnline.h"
 #include "Include\Bases\MT5APIRequest.h"
+#include "Include\Bases\MT5APIOrder.h"
 %}
 
 %include <typemaps.i>
@@ -112,3 +113,4 @@ typedef long long __time32_t;
 %include "Include\\Bases\\MT5APIUser.h"
 %include "Include\\Bases\\MT5APIOnline.h"
 %include "Include\\Bases\\MT5APIRequest.h"
+%include "Include\\Bases\\MT5APIOrder.h"
