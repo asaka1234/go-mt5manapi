@@ -13,6 +13,23 @@
 
 class Swig_memory;
 
+class SwigDirector_IMTDealerSink : public IMTDealerSink
+{
+ public:
+  SwigDirector_IMTDealerSink(int swig_p);
+  void _swig_upcall_OnDealerResult(IMTConfirm const *arg0) {
+    IMTDealerSink::OnDealerResult(arg0);
+  }
+  virtual void OnDealerResult(IMTConfirm const *arg0);
+  void _swig_upcall_OnDealerAnswer(IMTRequest const *arg0) {
+    IMTDealerSink::OnDealerAnswer(arg0);
+  }
+  virtual void OnDealerAnswer(IMTRequest const *arg0);
+ private:
+  intgo go_val;
+  Swig_memory *swig_mem;
+};
+
 class SwigDirector_IMTTickSink : public IMTTickSink
 {
  public:
