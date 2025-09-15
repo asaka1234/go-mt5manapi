@@ -13,6 +13,27 @@
 
 class Swig_memory;
 
+class SwigDirector_IMTManagerSink : public IMTManagerSink
+{
+ public:
+  SwigDirector_IMTManagerSink(int swig_p);
+  void _swig_upcall_OnDisconnect() {
+    IMTManagerSink::OnDisconnect();
+  }
+  virtual void OnDisconnect();
+  void _swig_upcall_OnTradeAccountSet(MTAPIRES const arg0,INT64 const arg1,IMTUser const *arg2,IMTAccount const *arg3,IMTOrderArray const *arg4,IMTPositionArray const *arg5) {
+    IMTManagerSink::OnTradeAccountSet(arg0,arg1,arg2,arg3,arg4,arg5);
+  }
+  virtual void OnTradeAccountSet(MTAPIRES const arg0,INT64 const arg1,IMTUser const *arg2,IMTAccount const *arg3,IMTOrderArray const *arg4,IMTPositionArray const *arg5);
+  void _swig_upcall_OnConnect() {
+    IMTManagerSink::OnConnect();
+  }
+  virtual void OnConnect();
+ private:
+  intgo go_val;
+  Swig_memory *swig_mem;
+};
+
 class SwigDirector_IMTDealerSink : public IMTDealerSink
 {
  public:
