@@ -1,4 +1,4 @@
 package mt5api
 
-// #cgo LDFLAGS: -lws2_32 -static
+// #cgo windows,amd64 LDFLAGS: -lws2_32 -static
 import "C"
