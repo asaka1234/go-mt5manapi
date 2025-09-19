@@ -1,4 +1,4 @@
 package mt5api
 
-// #cgo LDFLAGS: -lws2_32 -static  -L"C:/Program Files/LLVM/lib"
+// #cgo LDFLAGS: -v -lws2_32 -static
 import "C"
