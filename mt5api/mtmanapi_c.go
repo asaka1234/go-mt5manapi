@@ -1,4 +1,4 @@
 package mt5api
 
-// #cgo LDFLAGS: -v -lws2_32 -static
+// #cgo windows,msvc LDFLAGS: /link ws2_32.lib kernel32.lib
 import "C"
