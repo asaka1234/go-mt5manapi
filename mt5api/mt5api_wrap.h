@@ -51,6 +51,43 @@ class SwigDirector_IMTDealerSink : public IMTDealerSink
   Swig_memory *swig_mem;
 };
 
+class SwigDirector_IMTConGroupSink : public IMTConGroupSink
+{
+ public:
+  SwigDirector_IMTConGroupSink(int swig_p);
+  void _swig_upcall_OnGroupAdd(IMTConGroup const *arg0) {
+    IMTConGroupSink::OnGroupAdd(arg0);
+  }
+  virtual void OnGroupAdd(IMTConGroup const *arg0);
+  void _swig_upcall_OnGroupUpdate(IMTConGroup const *arg0) {
+    IMTConGroupSink::OnGroupUpdate(arg0);
+  }
+  virtual void OnGroupUpdate(IMTConGroup const *arg0);
+  void _swig_upcall_OnGroupDelete(IMTConGroup const *arg0) {
+    IMTConGroupSink::OnGroupDelete(arg0);
+  }
+  virtual void OnGroupDelete(IMTConGroup const *arg0);
+  void _swig_upcall_OnGroupSync() {
+    IMTConGroupSink::OnGroupSync();
+  }
+  virtual void OnGroupSync();
+  MTAPIRES _swig_upcall_HookGroupAdd(UINT64 const arg0,IMTConGroup *arg1) {
+    return IMTConGroupSink::HookGroupAdd(arg0,arg1);
+  }
+  virtual MTAPIRES HookGroupAdd(UINT64 const arg0,IMTConGroup *arg1);
+  MTAPIRES _swig_upcall_HookGroupUpdate(UINT64 const arg0,IMTConGroup const *arg1,IMTConGroup *arg2) {
+    return IMTConGroupSink::HookGroupUpdate(arg0,arg1,arg2);
+  }
+  virtual MTAPIRES HookGroupUpdate(UINT64 const arg0,IMTConGroup const *arg1,IMTConGroup *arg2);
+  MTAPIRES _swig_upcall_HookGroupDelete(UINT64 const arg0,IMTConGroup const *arg1) {
+    return IMTConGroupSink::HookGroupDelete(arg0,arg1);
+  }
+  virtual MTAPIRES HookGroupDelete(UINT64 const arg0,IMTConGroup const *arg1);
+ private:
+  intgo go_val;
+  Swig_memory *swig_mem;
+};
+
 class SwigDirector_IMTTickSink : public IMTTickSink
 {
  public:
