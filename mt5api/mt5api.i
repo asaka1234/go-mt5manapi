@@ -71,6 +71,7 @@
 %feature("director") IMTDealerSink;
 %feature("director") IMTManagerSink;
 %feature("director") IMTConGroupSink;
+%feature("director") IMTUserSink;
 
 /*
 %typemap(goin) LPCWSTR "string"
