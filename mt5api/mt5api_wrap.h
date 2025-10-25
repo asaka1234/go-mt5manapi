@@ -280,4 +280,33 @@ class SwigDirector_IMTUserSink : public IMTUserSink
   Swig_memory *swig_mem;
 };
 
+class SwigDirector_IMTOrderSink : public IMTOrderSink
+{
+ public:
+  SwigDirector_IMTOrderSink(int swig_p);
+  void _swig_upcall_OnOrderAdd(IMTOrder const *arg0) {
+    IMTOrderSink::OnOrderAdd(arg0);
+  }
+  virtual void OnOrderAdd(IMTOrder const *arg0);
+  void _swig_upcall_OnOrderUpdate(IMTOrder const *arg0) {
+    IMTOrderSink::OnOrderUpdate(arg0);
+  }
+  virtual void OnOrderUpdate(IMTOrder const *arg0);
+  void _swig_upcall_OnOrderDelete(IMTOrder const *arg0) {
+    IMTOrderSink::OnOrderDelete(arg0);
+  }
+  virtual void OnOrderDelete(IMTOrder const *arg0);
+  void _swig_upcall_OnOrderClean(UINT64 const arg0) {
+    IMTOrderSink::OnOrderClean(arg0);
+  }
+  virtual void OnOrderClean(UINT64 const arg0);
+  void _swig_upcall_OnOrderSync() {
+    IMTOrderSink::OnOrderSync();
+  }
+  virtual void OnOrderSync();
+ private:
+  intgo go_val;
+  Swig_memory *swig_mem;
+};
+
 #endif

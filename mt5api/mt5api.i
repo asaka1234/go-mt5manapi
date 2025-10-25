@@ -67,6 +67,7 @@
 // 启用 director 功能以支持从 Go 继承 C++ 类
 %feature("director") IMTPositionSink;
 %feature("director") IMTDealSink;
+%feature("director") IMTOrderSink;
 %feature("director") IMTUserSink;
 %feature("director") IMTDealerSink;
 %feature("director") IMTManagerSink;
