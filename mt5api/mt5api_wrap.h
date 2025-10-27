@@ -309,4 +309,29 @@ class SwigDirector_IMTOrderSink : public IMTOrderSink
   Swig_memory *swig_mem;
 };
 
+class SwigDirector_IMTAccountSink : public IMTAccountSink
+{
+ public:
+  SwigDirector_IMTAccountSink(int swig_p);
+  void _swig_upcall_OnAccountMarginCallEnter(IMTAccount const *arg0,IMTConGroup const *arg1) {
+    IMTAccountSink::OnAccountMarginCallEnter(arg0,arg1);
+  }
+  virtual void OnAccountMarginCallEnter(IMTAccount const *arg0,IMTConGroup const *arg1);
+  void _swig_upcall_OnAccountMarginCallLeave(IMTAccount const *arg0,IMTConGroup const *arg1) {
+    IMTAccountSink::OnAccountMarginCallLeave(arg0,arg1);
+  }
+  virtual void OnAccountMarginCallLeave(IMTAccount const *arg0,IMTConGroup const *arg1);
+  void _swig_upcall_OnAccountStopOutEnter(IMTAccount const *arg0,IMTConGroup const *arg1) {
+    IMTAccountSink::OnAccountStopOutEnter(arg0,arg1);
+  }
+  virtual void OnAccountStopOutEnter(IMTAccount const *arg0,IMTConGroup const *arg1);
+  void _swig_upcall_OnAccountStopOutLeave(IMTAccount const *arg0,IMTConGroup const *arg1) {
+    IMTAccountSink::OnAccountStopOutLeave(arg0,arg1);
+  }
+  virtual void OnAccountStopOutLeave(IMTAccount const *arg0,IMTConGroup const *arg1);
+ private:
+  intgo go_val;
+  Swig_memory *swig_mem;
+};
+
 #endif

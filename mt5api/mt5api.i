@@ -37,6 +37,7 @@
 #include "Include\Config\MT5APIConfigSymbol.h"
 #include "Include\Bases\MT5APITick.h"
 #include "Include\Bases\MT5APIPosition.h"
+#include "Include\Bases\MT5APIAccount.h"
 #include "Include\Config\MT5APIConfigTime.h"
 #include "Include\Bases\MT5APIDeal.h"
 #include "Include\Bases\MT5APIUser.h"
@@ -73,6 +74,7 @@
 %feature("director") IMTManagerSink;
 %feature("director") IMTConGroupSink;
 %feature("director") IMTUserSink;
+%feature("director") IMTAccountSink;
 
 /*
 %typemap(goin) LPCWSTR "string"
@@ -123,3 +125,4 @@ typedef long long __time32_t;
 %include "Include\\Bases\\MT5APIRequest.h"
 %include "Include\\Bases\\MT5APIOrder.h"
 %include "Include\\Bases\\MT5APIChart.h"
+%include "Include\\Bases\\MT5APIAccount.h"
