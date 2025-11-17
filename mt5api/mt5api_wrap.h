@@ -150,6 +150,23 @@ class SwigDirector_IMTPositionSink : public IMTPositionSink
   Swig_memory *swig_mem;
 };
 
+class SwigDirector_IMTConTimeSink : public IMTConTimeSink
+{
+ public:
+  SwigDirector_IMTConTimeSink(int swig_p);
+  void _swig_upcall_OnTimeUpdate(IMTConTime const *arg0) {
+    IMTConTimeSink::OnTimeUpdate(arg0);
+  }
+  virtual void OnTimeUpdate(IMTConTime const *arg0);
+  void _swig_upcall_OnTimeSync() {
+    IMTConTimeSink::OnTimeSync();
+  }
+  virtual void OnTimeSync();
+ private:
+  intgo go_val;
+  Swig_memory *swig_mem;
+};
+
 class SwigDirector_IMTDealSink : public IMTDealSink
 {
  public:

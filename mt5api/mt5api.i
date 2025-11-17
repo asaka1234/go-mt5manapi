@@ -75,6 +75,7 @@
 %feature("director") IMTConGroupSink;
 %feature("director") IMTUserSink;
 %feature("director") IMTAccountSink;
+%feature("director") IMTConTimeSink;
 
 /*
 %typemap(goin) LPCWSTR "string"
