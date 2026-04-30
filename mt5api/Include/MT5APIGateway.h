@@ -4,8 +4,9 @@
 //|                                               www.metaquotes.net |
 //+------------------------------------------------------------------+
 #pragma once
-#include <wincrypt.h>
 #include <winsock2.h>
+#include <windows.h>
+#include <wincrypt.h>
 #include "MT5APIConstants.h"
 #include "MT5APITools.h"
 #include "MT5APILogger.h"
