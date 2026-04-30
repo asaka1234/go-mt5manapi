@@ -16,6 +16,7 @@
 
 #include <windows.h>
 
+#include "Include\MT5APIGateway.h"
 #include "Include\MT5APIManager.h"
 #include "Include\MT5APIConstants.h"
 #include "Include\MT5APILogger.h"
@@ -102,6 +103,7 @@ typedef long long __time32_t;
 
 %include "windows.i"
 
+%include "Include\\MT5APIGateway.h"
 %include "Include\\MT5APIManager.h"
 %include "Include\\MT5APIConstants.h"
 %include "Include\\MT5APILogger.h"
