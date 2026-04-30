@@ -14,6 +14,11 @@
 #endif
 
 
+#define _WINSOCKAPI_        // 禁止 winsock.h
+#define WIN32_LEAN_AND_MEAN
+#define NOMINMAX
+
+#include <winsock2.h>       // 必须在 windows.h 前
 #include <windows.h>
 
 #include "Include\MT5APIGateway.h"
