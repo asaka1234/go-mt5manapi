@@ -147,6 +147,7 @@ typedef long long __time32_t;
 %include "Include\\Config\\MT5APIConfigTime.h"
 %include "Include\\Config\\MT5APIConfigVPS.h"
 
+
 %include "Include\\Classes\\MT5APIFile.h"
 %include "Include\\Classes\\MT5APIFormat.h"
 %include "Include\\Classes\\MT5APIMath.h"
