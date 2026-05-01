@@ -58,40 +58,6 @@
 %include <typemaps.i>
 %include "carrays.i"
 
-%include "cpointer.i"
-
-// ==========================
-// Go []string → wchar_t**
-// ==========================
-%typemap(goin) (int argc, wchar_t **argv) {
-    int i;
-    $1 = (int)len($input);
-    if ($1 > 0) {
-        $2 = (wchar_t**)malloc(sizeof(wchar_t*) * $1);
-        for(i = 0; i < $1; i++) {
-            char *s = (char*)GoStringIndex($input, i);
-
-            int len = MultiByteToWideChar(CP_UTF8, 0, s, -1, NULL, 0);
-            wchar_t *ws = (wchar_t*)malloc(sizeof(wchar_t) * len);
-            MultiByteToWideChar(CP_UTF8, 0, s, -1, ws, len);
-
-            $2[i] = ws;
-        }
-    } else {
-        $2 = NULL;
-    }
-}
-
-// 释放内存
-%typemap(freearg) (int argc, wchar_t **argv) {
-    if ($2) {
-        for(int i = 0; i < $1; i++) {
-            free($2[i]);
-        }
-        free($2);
-    }
-}
-
 //-------------------------------------
 
 %array_functions(MTChartBar, MTChartBarArray);
