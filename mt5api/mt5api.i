@@ -85,6 +85,7 @@
 %feature("director") IMTConTimeSink;
 %feature("director") IMTConSymbolSink;
 %feature("director") IMTConHolidaySink;
+%feature("director") IMTGatewaySink;
 
 /*
 %typemap(goin) LPCWSTR "string"
