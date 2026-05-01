@@ -752,9 +752,20 @@ inline bool CMTGatewayAPIFactory::FindLibrary(wchar_t *path,const size_t path_ma
 // 添加这个辅助函数
 IMTGatewayAPI* CreateGatewayHelper(MTGatewayInfo* info, int* retCode) {
     IMTGatewayAPI* gateway = nullptr;
-    int ret = CMTGatewayAPIFactory::Create(*info, &gateway);
-    if (retCode) {
-        *retCode = ret;
+
+    // 先创建 factory 对象
+    CMTGatewayAPIFactory factory;
+
+    // 初始化 factory（根据头文件，需要先调用 Initialize）
+    MTAPIRES initRet = factory.Initialize();
+    if (initRet != 0) {
+        if (retCode) *retCode = initRet;
+        return nullptr;
     }
+
+    // 调用 Create 方法（注意它是 const 成员函数）
+    int ret = factory.Create(*info, &gateway);
+
+    if (retCode) *retCode = ret;
     return (ret == 0) ? gateway : nullptr;
 }
