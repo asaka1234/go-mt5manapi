@@ -6814,6 +6814,23 @@ IMTGatewayAPI *_wrap_CreateGatewayHelper_mt5api_7794f1f623e14350(MTGatewayInfo *
 }
 
 
+IMTGatewayAPI *_wrap_CreateGatewayHelper2_mt5api_7794f1f623e14350(CMTGatewayAPIFactory *_swig_go_0, MTGatewayInfo *_swig_go_1, intgo *_swig_go_2) {
+  CMTGatewayAPIFactory *arg1 = 0 ;
+  MTGatewayInfo *arg2 = 0 ;
+  int *arg3 = 0 ;
+  IMTGatewayAPI *result = 0 ;
+  IMTGatewayAPI *_swig_go_result;
+  
+  arg1 = *(CMTGatewayAPIFactory **)&_swig_go_0; 
+  arg2 = *(MTGatewayInfo **)&_swig_go_1; 
+  arg3 = *(int **)&_swig_go_2; 
+  
+  result = (IMTGatewayAPI *)CreateGatewayHelper2(*arg1,arg2,arg3);
+  *(IMTGatewayAPI **)&_swig_go_result = (IMTGatewayAPI *)result; 
+  return _swig_go_result;
+}
+
+
 wchar_t *_wrap_MTManagerAPIDate_mt5api_7794f1f623e14350() {
   wchar_t *result = 0 ;
   wchar_t *_swig_go_result;

@@ -991,6 +991,7 @@ extern swig_intgo _wrap_CMTGatewayAPIFactory_Create__SWIG_2_mt5api_7794f1f623e14
 extern swig_intgo _wrap_CMTGatewayAPIFactory_LicenseCheck_mt5api_7794f1f623e14350(uintptr_t arg1, uintptr_t arg2);
 extern void _wrap_delete_CMTGatewayAPIFactory_mt5api_7794f1f623e14350(uintptr_t arg1);
 extern uintptr_t _wrap_CreateGatewayHelper_mt5api_7794f1f623e14350(uintptr_t arg1, swig_voidp arg2);
+extern uintptr_t _wrap_CreateGatewayHelper2_mt5api_7794f1f623e14350(uintptr_t arg1, uintptr_t arg2, swig_voidp arg3);
 extern uintptr_t _wrap_MTManagerAPIDate_mt5api_7794f1f623e14350(void);
 extern swig_intgo _wrap_PROXY_SOCKS4_MTProxyInfo_mt5api_7794f1f623e14350(void);
 extern swig_intgo _wrap_PROXY_SOCKS5_MTProxyInfo_mt5api_7794f1f623e14350(void);
@@ -8728,6 +8729,15 @@ func CreateGatewayHelper(arg1 MTGatewayInfo, arg2 *int) (_swig_ret IMTGatewayAPI
 	_swig_i_0 := getSwigcptr(arg1)
 	_swig_i_1 := arg2
 	swig_r = (IMTGatewayAPI)(SwigcptrIMTGatewayAPI(C._wrap_CreateGatewayHelper_mt5api_7794f1f623e14350(C.uintptr_t(_swig_i_0), C.swig_voidp(_swig_i_1))))
+	return swig_r
+}
+
+func CreateGatewayHelper2(arg1 CMTGatewayAPIFactory, arg2 MTGatewayInfo, arg3 *int) (_swig_ret IMTGatewayAPI) {
+	var swig_r IMTGatewayAPI
+	_swig_i_0 := getSwigcptr(arg1)
+	_swig_i_1 := getSwigcptr(arg2)
+	_swig_i_2 := arg3
+	swig_r = (IMTGatewayAPI)(SwigcptrIMTGatewayAPI(C._wrap_CreateGatewayHelper2_mt5api_7794f1f623e14350(C.uintptr_t(_swig_i_0), C.uintptr_t(_swig_i_1), C.swig_voidp(_swig_i_2))))
 	return swig_r
 }
 

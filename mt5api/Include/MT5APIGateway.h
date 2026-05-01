@@ -769,3 +769,12 @@ IMTGatewayAPI* CreateGatewayHelper(MTGatewayInfo* info, int* retCode) {
     if (retCode) *retCode = ret;
     return (ret == 0) ? gateway : nullptr;
 }
+
+IMTGatewayAPI* CreateGatewayHelper2(CMTGatewayAPIFactory& factory,
+                                    MTGatewayInfo* info,
+                                    int* retCode) {
+    IMTGatewayAPI* gateway = nullptr;
+    int ret = factory.Create(*info, &gateway);
+    if (retCode) *retCode = ret;
+    return (ret == 0) ? gateway : nullptr;
+}
