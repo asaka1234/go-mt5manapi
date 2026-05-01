@@ -57,17 +57,7 @@
 
 %include <typemaps.i>
 %include "carrays.i"
-%include <cpointer.i>
 
-%pointer_functions(IMTGatewayAPI*, GatewayPtr);
-
-class CMTGatewayAPIFactory {
-public:
-    static int Create(MTGatewayInfo& info, IMTGatewayAPI** gateway, int argc=0, wchar_t** argv=NULL);
-};
-
-// 声明其他需要的类型
-struct MTGatewayInfo;
 //-------------------------------------
 
 %array_functions(MTChartBar, MTChartBarArray);
