@@ -512,15 +512,7 @@ static const LPCSTR s_MTGatewayCreate              ="MTGatewayCreate";
 static const LPCSTR s_MTGatewayCreateLocal         ="MTGatewayCreateLocal";
 static const LPCSTR s_MTGatewayExceptionHandler    ="MTGatewayExceptionHandler";
 
-// 添加这个辅助函数
-IMTGatewayAPI* CreateGatewayHelper(MTGatewayInfo* info, int* retCode) {
-    IMTGatewayAPI* gateway = nullptr;
-    int ret = CMTGatewayAPIFactory::Create(*info, &gateway);
-    if (retCode) {
-        *retCode = ret;
-    }
-    return (ret == 0) ? gateway : nullptr;
-}
+
 
 //+------------------------------------------------------------------+
 //| Gateway factory                                                  |
@@ -756,3 +748,13 @@ inline bool CMTGatewayAPIFactory::FindLibrary(wchar_t *path,const size_t path_ma
    return(true);
   }
 //+------------------------------------------------------------------+
+
+// 添加这个辅助函数
+IMTGatewayAPI* CreateGatewayHelper(MTGatewayInfo* info, int* retCode) {
+    IMTGatewayAPI* gateway = nullptr;
+    int ret = CMTGatewayAPIFactory::Create(*info, &gateway);
+    if (retCode) {
+        *retCode = ret;
+    }
+    return (ret == 0) ? gateway : nullptr;
+}

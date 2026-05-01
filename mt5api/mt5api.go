@@ -980,7 +980,6 @@ extern swig_type_16 _wrap_s_MTGatewayVersion_get_mt5api_7794f1f623e14350(void);
 extern swig_type_17 _wrap_s_MTGatewayCreate_get_mt5api_7794f1f623e14350(void);
 extern swig_type_18 _wrap_s_MTGatewayCreateLocal_get_mt5api_7794f1f623e14350(void);
 extern swig_type_19 _wrap_s_MTGatewayExceptionHandler_get_mt5api_7794f1f623e14350(void);
-extern uintptr_t _wrap_CreateGatewayHelper_mt5api_7794f1f623e14350(uintptr_t arg1, swig_voidp arg2);
 extern uintptr_t _wrap_new_CMTGatewayAPIFactory_mt5api_7794f1f623e14350(void);
 extern swig_intgo _wrap_CMTGatewayAPIFactory_Initialize_mt5api_7794f1f623e14350(uintptr_t arg1);
 extern swig_intgo _wrap_CMTGatewayAPIFactory_Shutdown_mt5api_7794f1f623e14350(uintptr_t arg1);
@@ -991,6 +990,7 @@ extern swig_intgo _wrap_CMTGatewayAPIFactory_Create__SWIG_1_mt5api_7794f1f623e14
 extern swig_intgo _wrap_CMTGatewayAPIFactory_Create__SWIG_2_mt5api_7794f1f623e14350(uintptr_t arg1, uintptr_t arg2, uintptr_t arg3);
 extern swig_intgo _wrap_CMTGatewayAPIFactory_LicenseCheck_mt5api_7794f1f623e14350(uintptr_t arg1, uintptr_t arg2);
 extern void _wrap_delete_CMTGatewayAPIFactory_mt5api_7794f1f623e14350(uintptr_t arg1);
+extern uintptr_t _wrap_CreateGatewayHelper_mt5api_7794f1f623e14350(uintptr_t arg1, swig_voidp arg2);
 extern uintptr_t _wrap_MTManagerAPIDate_mt5api_7794f1f623e14350(void);
 extern swig_intgo _wrap_PROXY_SOCKS4_MTProxyInfo_mt5api_7794f1f623e14350(void);
 extern swig_intgo _wrap_PROXY_SOCKS5_MTProxyInfo_mt5api_7794f1f623e14350(void);
@@ -8605,14 +8605,6 @@ func GetS_MTGatewayExceptionHandler() (_swig_ret string) {
 	return swig_r_1
 }
 
-func CreateGatewayHelper(arg1 MTGatewayInfo, arg2 *int) (_swig_ret IMTGatewayAPI) {
-	var swig_r IMTGatewayAPI
-	_swig_i_0 := getSwigcptr(arg1)
-	_swig_i_1 := arg2
-	swig_r = (IMTGatewayAPI)(SwigcptrIMTGatewayAPI(C._wrap_CreateGatewayHelper_mt5api_7794f1f623e14350(C.uintptr_t(_swig_i_0), C.swig_voidp(_swig_i_1))))
-	return swig_r
-}
-
 type SwigcptrCMTGatewayAPIFactory uintptr
 
 func (p SwigcptrCMTGatewayAPIFactory) Swigcptr() uintptr {
@@ -8729,6 +8721,14 @@ type CMTGatewayAPIFactory interface {
 	ExceptionHandler(arg2 LPCWSTR, arg3 LPCWSTR, arg4 int, arg5 int, arg6 LPCWSTR, arg7 int, arg8 LPCWSTR) (_swig_ret uint)
 	Version(arg2 *uint) (_swig_ret uint)
 	Create(a ...interface{}) uint
+}
+
+func CreateGatewayHelper(arg1 MTGatewayInfo, arg2 *int) (_swig_ret IMTGatewayAPI) {
+	var swig_r IMTGatewayAPI
+	_swig_i_0 := getSwigcptr(arg1)
+	_swig_i_1 := arg2
+	swig_r = (IMTGatewayAPI)(SwigcptrIMTGatewayAPI(C._wrap_CreateGatewayHelper_mt5api_7794f1f623e14350(C.uintptr_t(_swig_i_0), C.swig_voidp(_swig_i_1))))
+	return swig_r
 }
 
 const MTManagerAPIVersion int = 4540

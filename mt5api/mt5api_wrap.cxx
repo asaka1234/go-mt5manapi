@@ -6603,21 +6603,6 @@ _gostring_ _wrap_s_MTGatewayExceptionHandler_get_mt5api_7794f1f623e14350() {
 }
 
 
-IMTGatewayAPI *_wrap_CreateGatewayHelper_mt5api_7794f1f623e14350(MTGatewayInfo *_swig_go_0, intgo *_swig_go_1) {
-  MTGatewayInfo *arg1 = 0 ;
-  int *arg2 = 0 ;
-  IMTGatewayAPI *result = 0 ;
-  IMTGatewayAPI *_swig_go_result;
-  
-  arg1 = *(MTGatewayInfo **)&_swig_go_0; 
-  arg2 = *(int **)&_swig_go_1; 
-  
-  result = (IMTGatewayAPI *)CreateGatewayHelper(arg1,arg2);
-  *(IMTGatewayAPI **)&_swig_go_result = (IMTGatewayAPI *)result; 
-  return _swig_go_result;
-}
-
-
 CMTGatewayAPIFactory *_wrap_new_CMTGatewayAPIFactory_mt5api_7794f1f623e14350() {
   CMTGatewayAPIFactory *result = 0 ;
   CMTGatewayAPIFactory *_swig_go_result;
@@ -6811,6 +6796,21 @@ void _wrap_delete_CMTGatewayAPIFactory_mt5api_7794f1f623e14350(CMTGatewayAPIFact
   
   delete arg1;
   
+}
+
+
+IMTGatewayAPI *_wrap_CreateGatewayHelper_mt5api_7794f1f623e14350(MTGatewayInfo *_swig_go_0, intgo *_swig_go_1) {
+  MTGatewayInfo *arg1 = 0 ;
+  int *arg2 = 0 ;
+  IMTGatewayAPI *result = 0 ;
+  IMTGatewayAPI *_swig_go_result;
+  
+  arg1 = *(MTGatewayInfo **)&_swig_go_0; 
+  arg2 = *(int **)&_swig_go_1; 
+  
+  result = (IMTGatewayAPI *)CreateGatewayHelper(arg1,arg2);
+  *(IMTGatewayAPI **)&_swig_go_result = (IMTGatewayAPI *)result; 
+  return _swig_go_result;
 }
 
 
