@@ -87,6 +87,12 @@
 %feature("director") IMTConHolidaySink;
 %feature("director") IMTGatewaySink;
 
+%rename(OnDealerAnswerConfirm)  IMTGatewaySink::OnDealerAnswer(const MTAPIRES      /*retcode*/,const IMTConfirm*   /*confirm*/) ;
+%rename(OnDealerAnswerExecution)  IMTGatewaySink::OnDealerAnswer(const UINT64        /*login*/,const MTAPIRES      /*retcode*/,const IMTExecution* /*execution*/) ;
+
+%rename(OnGatewayConfig)  IMTGatewaySink::OnGatewayConfig(const UINT64 /*login*/,const IMTConGateway* /*config*/);
+%rename(OnFeedConfigFeed)  IMTGatewaySink::OnGatewayConfig(const UINT64 /*login*/,const IMTConFeeder*  /*config*/);
+
 /*
 %typemap(goin) LPCWSTR "string"
 %typemap(in) LPCWSTR {

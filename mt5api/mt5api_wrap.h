@@ -25,11 +25,11 @@ class SwigDirector_IMTGatewaySink : public IMTGatewaySink
     IMTGatewaySink::OnServerDisconnect(arg0,arg1,arg2);
   }
   virtual void OnServerDisconnect(LPCWSTR arg0,UINT const arg1,UINT64 const arg2);
-  void _swig_upcall_OnGatewayConfig__SWIG_0(UINT64 const arg0,IMTConGateway const *arg1) {
+  void _swig_upcall_OnGatewayConfig(UINT64 const arg0,IMTConGateway const *arg1) {
     IMTGatewaySink::OnGatewayConfig(arg0,arg1);
   }
   virtual void OnGatewayConfig(UINT64 const arg0,IMTConGateway const *arg1);
-  void _swig_upcall_OnGatewayConfig__SWIG_1(UINT64 const arg0,IMTConFeeder const *arg1) {
+  void _swig_upcall_OnFeedConfigFeed(UINT64 const arg0,IMTConFeeder const *arg1) {
     IMTGatewaySink::OnGatewayConfig(arg0,arg1);
   }
   virtual void OnGatewayConfig(UINT64 const arg0,IMTConFeeder const *arg1);
@@ -49,11 +49,11 @@ class SwigDirector_IMTGatewaySink : public IMTGatewaySink
     IMTGatewaySink::OnDealerLock(arg0,arg1,arg2,arg3,arg4,arg5);
   }
   virtual void OnDealerLock(MTAPIRES const arg0,IMTRequest const *arg1,IMTUser const *arg2,IMTAccount const *arg3,IMTOrder const *arg4,IMTPosition const *arg5);
-  void _swig_upcall_OnDealerAnswer__SWIG_0(MTAPIRES const arg0,IMTConfirm const *arg1) {
+  void _swig_upcall_OnDealerAnswerConfirm(MTAPIRES const arg0,IMTConfirm const *arg1) {
     IMTGatewaySink::OnDealerAnswer(arg0,arg1);
   }
   virtual void OnDealerAnswer(MTAPIRES const arg0,IMTConfirm const *arg1);
-  void _swig_upcall_OnDealerAnswer__SWIG_1(UINT64 const arg0,MTAPIRES const arg1,IMTExecution const *arg2) {
+  void _swig_upcall_OnDealerAnswerExecution(UINT64 const arg0,MTAPIRES const arg1,IMTExecution const *arg2) {
     IMTGatewaySink::OnDealerAnswer(arg0,arg1,arg2);
   }
   virtual void OnDealerAnswer(UINT64 const arg0,MTAPIRES const arg1,IMTExecution const *arg2);
