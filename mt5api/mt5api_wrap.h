@@ -29,7 +29,7 @@ class SwigDirector_IMTGatewaySink : public IMTGatewaySink
     IMTGatewaySink::OnGatewayConfig(arg0,arg1);
   }
   virtual void OnGatewayConfig(UINT64 const arg0,IMTConGateway const *arg1);
-  void _swig_upcall_OnFeedConfigFeed(UINT64 const arg0,IMTConFeeder const *arg1) {
+  void _swig_upcall_OnFeedConfig(UINT64 const arg0,IMTConFeeder const *arg1) {
     IMTGatewaySink::OnGatewayConfig(arg0,arg1);
   }
   virtual void OnGatewayConfig(UINT64 const arg0,IMTConFeeder const *arg1);

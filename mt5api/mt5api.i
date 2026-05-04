@@ -95,7 +95,7 @@
 %rename(OnDealerAnswerExecution)  IMTGatewaySink::OnDealerAnswer(const UINT64        /*login*/,const MTAPIRES      /*retcode*/,const IMTExecution* /*execution*/) ;
 
 %rename(OnGatewayConfig)  IMTGatewaySink::OnGatewayConfig(const UINT64 /*login*/,const IMTConGateway* /*config*/);
-%rename(OnFeedConfigFeed)  IMTGatewaySink::OnGatewayConfig(const UINT64 /*login*/,const IMTConFeeder*  /*config*/);
+%rename(OnFeedConfig)  IMTGatewaySink::OnGatewayConfig(const UINT64 /*login*/,const IMTConFeeder*  /*config*/);
 
 /*
 %typemap(goin) LPCWSTR "string"
