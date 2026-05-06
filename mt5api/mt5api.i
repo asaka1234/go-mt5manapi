@@ -66,6 +66,7 @@
 //-------------------------------------
 
 %array_functions(MTChartBar, MTChartBarArray);
+%array_functions(MTBookItem, MTBookItemArray);
 
 // 启用 director 功能以支持从 Go 继承 C++ 类
 %feature("director") IMTTickSink;
