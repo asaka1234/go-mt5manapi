@@ -63,6 +63,9 @@
 %include <typemaps.i>
 %include "carrays.i"
 //-------------------------------------
+%include <stdint.i>
+
+%apply long long { INT64 };
 
 %array_functions(MTChartBar, MTChartBarArray);
 %array_functions(MTBookItem, MTBookItemArray);
