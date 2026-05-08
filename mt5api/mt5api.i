@@ -62,13 +62,29 @@
 
 %include <typemaps.i>
 %include "carrays.i"
-
 //-------------------------------------
 
 %array_functions(MTChartBar, MTChartBarArray);
 %array_functions(MTBookItem, MTBookItemArray);
 %array_functions(MTBook,MTBookArray);
 %array_functions(MTTick,MTTickArray);
+
+// 在你的 .i 文件中，MTBook 结构体定义之后添加
+%extend MTBook {
+    void SetItem(int index, const MTBookItem& item) {
+        if (index >= 0 && index < 128) {
+            $self->items[index] = item;
+        }
+    }
+
+    MTBookItem GetItem(int index) {
+        if (index >= 0 && index < 128) {
+            return $self->items[index];
+        }
+        MTBookItem empty;
+        return empty;
+    }
+}
 
 // 启用 director 功能以支持从 Go 继承 C++ 类
 %feature("director") IMTTickSink;
