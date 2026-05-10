@@ -71,6 +71,7 @@
 %array_functions(MTBookItem, MTBookItemArray);
 %array_functions(MTBook,MTBookArray);
 %array_functions(MTTick,MTTickArray);
+%array_functions(LPWSTR,LPWSTRArray);
 
 // 在你的 .i 文件中，MTBook 结构体定义之后添加
 %extend MTBook {
