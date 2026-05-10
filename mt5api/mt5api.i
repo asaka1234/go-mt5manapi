@@ -113,6 +113,7 @@
 %feature("director") IMTConSymbolSink;
 %feature("director") IMTConHolidaySink;
 %feature("director") IMTGatewaySink;
+%feature("director") IMTBookSink;
 
 %rename(OnDealerAnswerConfirm)  IMTGatewaySink::OnDealerAnswer(const MTAPIRES      /*retcode*/,const IMTConfirm*   /*confirm*/) ;
 %rename(OnDealerAnswerExecution)  IMTGatewaySink::OnDealerAnswer(const UINT64        /*login*/,const MTAPIRES      /*retcode*/,const IMTExecution* /*execution*/) ;

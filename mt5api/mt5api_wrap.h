@@ -498,4 +498,17 @@ class SwigDirector_IMTAccountSink : public IMTAccountSink
   Swig_memory *swig_mem;
 };
 
+class SwigDirector_IMTBookSink : public IMTBookSink
+{
+ public:
+  SwigDirector_IMTBookSink(int swig_p);
+  void _swig_upcall_OnBook(MTBook const &arg0) {
+    IMTBookSink::OnBook(arg0);
+  }
+  virtual void OnBook(MTBook const &arg0);
+ private:
+  intgo go_val;
+  Swig_memory *swig_mem;
+};
+
 #endif
