@@ -7781,7 +7781,23 @@ intgo _wrap_CMTGatewayAPIFactory_Create__SWIG_0_mt5api_61b023a1d9ecabb4(CMTGatew
   arg2 = *(MTGatewayInfo **)&_swig_go_1; 
   arg3 = *(IMTGatewayAPI ***)&_swig_go_2; 
   arg4 = (int)_swig_go_3; 
-  arg5 = *(wchar_t ***)&_swig_go_4; 
+  arg5 = *(wchar_t ***)&_swig_go_4;
+
+  // ========== 打印 arg5 数组内容 ==========
+  printf("arg4 (array length) = %d\n", arg4);
+
+  for (int i = 0; i < arg4; i++) {
+      if (arg5[i] != NULL) {
+          // wchar_t* 是宽字符，用 %ls 打印
+          printf("arg5[%d] = %ls\n", i, arg5[i]);
+
+          // 或者用 wprintf
+          // wprintf(L"arg5[%d] = %s\n", i, arg5[i]);
+      } else {
+          printf("arg5[%d] = NULL\n", i);
+      }
+  }
+  // =====================================
   
   result = (MTAPIRES)((CMTGatewayAPIFactory const *)arg1)->Create(*arg2,arg3,arg4,arg5);
   _swig_go_result = result; 
