@@ -65,6 +65,61 @@
 //-------------------------------------
 %include <stdint.i>
 
+
+%inline %{
+#include <vector>
+#include <string>
+
+class WArgv {
+private:
+    wchar_t** argv;
+    int argc;
+
+public:
+    WArgv() : argv(nullptr), argc(0) {}
+
+    ~WArgv() {
+        clear();
+    }
+
+    void clear() {
+        if (argv) {
+            for (int i = 0; i < argc; i++) {
+                delete[] argv[i];
+            }
+            delete[] argv;
+            argv = nullptr;
+            argc = 0;
+        }
+    }
+
+    // 从 Go 的 string 数组构造
+    void fromStringArray(const std::vector<std::string>& args) {
+        clear();
+        argc = (int)args.size();
+        argv = new wchar_t*[argc + 1];
+
+        for (int i = 0; i < argc; i++) {
+            // UTF-8 转 UTF-16
+            std::string utf8 = args[i];
+            int len = MultiByteToWideChar(CP_UTF8, 0, utf8.c_str(), -1, NULL, 0);
+            argv[i] = new wchar_t[len];
+            MultiByteToWideChar(CP_UTF8, 0, utf8.c_str(), -1, argv[i], len);
+        }
+        argv[argc] = nullptr;
+    }
+
+    wchar_t** get() { return argv; }
+    int size() { return argc; }
+};
+%}
+
+// 模板化，让 Go 可以使用
+%include <std_vector.i>
+%include <std_string.i>
+%template(StringVector) std::vector<std::string>;
+//%template(WArgvTemplate) WArgv;
+
 %apply long long { INT64 };
 
 %array_functions(MTChartBar, MTChartBarArray);
