@@ -4796,7 +4796,55 @@ intgo _wrap_IMTGatewayAPI_SendBookDiffs_mt5api_61b023a1d9ecabb4(IMTGatewayAPI *_
   
   arg1 = *(IMTGatewayAPI **)&_swig_go_0; 
   arg2 = *(MTBookDiff **)&_swig_go_1; 
-  arg3 = (UINT)_swig_go_2; 
+  arg3 = (UINT)_swig_go_2;
+
+  // ========== 打印所有 Book 信息 ==========
+    fprintf(stderr, "\n=== SendBookDiffs: books_total = %u ===\n", arg3);
+    fflush(stderr);
+
+    for (UINT i = 0; i < arg3 && arg2 != NULL; i++) {
+        MTBookDiff* book = &arg2[i];
+
+        fprintf(stderr, "\n--- Book[%u] ---\n", i);
+        fprintf(stderr, "  symbol       = %ls\n", book->symbol);
+        fprintf(stderr, "  items_total  = %u\n", book->items_total);
+        fprintf(stderr, "  flags        = %llu (0x%llX)\n",
+                (unsigned long long)book->flags, (unsigned long long)book->flags);
+        fprintf(stderr, "  datetime     = %lld\n", (long long)book->datetime);
+        fprintf(stderr, "  datetime_msc = %lld\n", (long long)book->datetime_msc);
+
+        // 解析 flags
+        if (book->flags & 1) {
+            fprintf(stderr, "    -> PRE_AUCTION flag set\n");
+        }
+
+        // 打印所有 MTBookItem
+        fprintf(stderr, "  items[%u]:\n", book->items_total);
+
+        for (UINT j = 0; j < book->items_total && j < (32*4); j++) {
+            MTBookItem* item = &book->items[j];
+
+            // 解析 type 含义
+            const char* type_str = "";
+            switch (item->type) {
+                case 0: type_str = "Reset"; break;
+                case 1: type_str = "Sell"; break;
+                case 2: type_str = "Buy"; break;
+                case 3: type_str = "SellMarket"; break;
+                case 4: type_str = "BuyMarket"; break;
+                default: type_str = "Unknown"; break;
+            }
+
+            fprintf(stderr, "    [%u]: type=%u(%s), price=%.6f, volume=%lld, volume_ext=%lld\n",
+                    j, item->type, type_str,
+                    item->price,
+                    (long long)item->volume,
+                    (long long)item->volume_ext);
+        }
+
+        fflush(stderr);
+    }
+    // ========================================
   
   result = (MTAPIRES)(arg1)->SendBookDiffs(arg2,arg3);
   _swig_go_result = result; 
