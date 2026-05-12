@@ -4752,7 +4752,35 @@ intgo _wrap_IMTGatewayAPI_SendTicks_mt5api_61b023a1d9ecabb4(IMTGatewayAPI *_swig
   arg1 = *(IMTGatewayAPI **)&_swig_go_0; 
   arg2 = *(MTTick **)&_swig_go_1; 
   arg3 = (UINT)_swig_go_2; 
-  
+
+  // ========== 打印所有 Ticks ==========
+  fprintf(stderr, "\n=== SendTicks: count = %u ===\n", arg3);
+  fflush(stderr);
+
+  for (UINT i = 0; i < arg3 && arg2 != NULL; i++) {
+      MTTick* tick = &arg2[i];
+
+      fprintf(stderr, "\n--- Tick[%u] ---\n", i);
+      fprintf(stderr, "  symbol      = %ls\n", tick->symbol);
+      fprintf(stderr, "  bank        = %ls\n", tick->bank);
+      fprintf(stderr, "  datetime    = %lld\n", (long long)tick->datetime);
+      fprintf(stderr, "  bid         = %.6f\n", tick->bid);
+      fprintf(stderr, "  ask         = %.6f\n", tick->ask);
+      fprintf(stderr, "  last        = %.6f\n", tick->last);
+      fprintf(stderr, "  volume      = %llu\n", (unsigned long long)tick->volume);
+      fprintf(stderr, "  datetime_msc= %lld\n", (long long)tick->datetime_msc);
+      fprintf(stderr, "  flags       = %llu (0x%llX)\n",
+              (unsigned long long)tick->flags, (unsigned long long)tick->flags);
+      fprintf(stderr, "  volume_ext  = %llu\n", (unsigned long long)tick->volume_ext);
+
+      // 解析 flags 含义
+      if (tick->flags & 1) fprintf(stderr, "    -> BUY flag set\n");
+      if (tick->flags & 2) fprintf(stderr, "    -> SELL flag set\n");
+
+      fflush(stderr);
+  }
+  // ====================================
+
   result = (MTAPIRES)(arg1)->SendTicks(arg2,arg3);
   _swig_go_result = result; 
   return _swig_go_result;
