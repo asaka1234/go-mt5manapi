@@ -4753,6 +4753,7 @@ intgo _wrap_IMTGatewayAPI_SendTicks_mt5api_61b023a1d9ecabb4(IMTGatewayAPI *_swig
   arg2 = *(MTTick **)&_swig_go_1; 
   arg3 = (UINT)_swig_go_2; 
 
+  /*
   // ========== 打印所有 Ticks ==========
   fprintf(stderr, "\n=== SendTicks: count = %u ===\n", arg3);
   fflush(stderr);
@@ -4780,6 +4781,7 @@ intgo _wrap_IMTGatewayAPI_SendTicks_mt5api_61b023a1d9ecabb4(IMTGatewayAPI *_swig
       fflush(stderr);
   }
   // ====================================
+  */
 
   result = (MTAPIRES)(arg1)->SendTicks(arg2,arg3);
   _swig_go_result = result; 
@@ -4798,6 +4800,7 @@ intgo _wrap_IMTGatewayAPI_SendBookDiffs_mt5api_61b023a1d9ecabb4(IMTGatewayAPI *_
   arg2 = *(MTBookDiff **)&_swig_go_1; 
   arg3 = (UINT)_swig_go_2;
 
+  /*
   // ========== 打印所有 Book 信息 ==========
     fprintf(stderr, "\n=== SendBookDiffs: books_total = %u ===\n", arg3);
     fflush(stderr);
@@ -4845,6 +4848,7 @@ intgo _wrap_IMTGatewayAPI_SendBookDiffs_mt5api_61b023a1d9ecabb4(IMTGatewayAPI *_
         fflush(stderr);
     }
     // ========================================
+  */
   
   result = (MTAPIRES)(arg1)->SendBookDiffs(arg2,arg3);
   _swig_go_result = result; 
@@ -4897,6 +4901,7 @@ intgo _wrap_IMTGatewayAPI_SendBooks_mt5api_61b023a1d9ecabb4(IMTGatewayAPI *_swig
   arg2 = *(MTBook **)&_swig_go_1; 
   arg3 = (UINT)_swig_go_2;
 
+  /*
   // ========== 打印所有 Book 信息 ==========
   fprintf(stderr, "\n=== SendBooks: books_total = %u ===\n", arg3);
   fflush(stderr);
@@ -4944,6 +4949,7 @@ intgo _wrap_IMTGatewayAPI_SendBooks_mt5api_61b023a1d9ecabb4(IMTGatewayAPI *_swig
       fflush(stderr);
   }
   // ========================================
+  */
   
   result = (MTAPIRES)(arg1)->SendBooks(arg2,arg3);
   _swig_go_result = result; 
