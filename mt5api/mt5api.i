@@ -65,6 +65,20 @@
 //-------------------------------------
 %include <stdint.i>
 
+%define FIX_PTR_TYPE(T)
+
+%typemap(in) T * {
+    $1 = (T*)$input;
+}
+
+%typemap(out) T * {
+    $result = SWIG_NewPointerObj((void*)$1, $descriptor(T *), 0);
+}
+
+%enddef
+
+FIX_PTR_TYPE(IMTDeal)
+
 
 %inline %{
 #include <vector>
