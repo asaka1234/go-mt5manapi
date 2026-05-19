@@ -7782,7 +7782,23 @@ intgo _wrap_CMTGatewayAPIFactory_Create__SWIG_0_mt5api_d6d80f17aa7d7d09(CMTGatew
   arg3 = *(IMTGatewayAPI ***)&_swig_go_2; 
   arg4 = (int)_swig_go_3; 
   arg5 = *(wchar_t ***)&_swig_go_4; 
-  
+
+  //-------------------------------------------------
+  int argc = arg4;
+  wchar_t** argv = (wchar_t**)arg5;
+
+  wprintf(L"argc=%d\n", argc);
+
+  for(int i=0; i<argc; i++)
+  {
+      if(argv[i])
+          wprintf(L"argv[%d]=%ls\n", i, argv[i]);
+      else
+          wprintf(L"argv[%d]=NULL\n", i);
+  }
+
+  //-------------------------------------------------
+
   result = (MTAPIRES)((CMTGatewayAPIFactory const *)arg1)->Create(*arg2,arg3,arg4,arg5);
   _swig_go_result = result; 
   return _swig_go_result;
