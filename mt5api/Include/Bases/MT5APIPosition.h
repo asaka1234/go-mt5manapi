@@ -1,6 +1,6 @@
-//+------------------------------------------------------------------+
+﻿//+------------------------------------------------------------------+
 //|                                                 MetaTrader 5 API |
-//|                             Copyright 2000-2024, MetaQuotes Ltd. |
+//|                             Copyright 2000-2026, MetaQuotes Ltd. |
 //|                                               www.metaquotes.net |
 //+------------------------------------------------------------------+
 #pragma once
@@ -68,9 +68,11 @@ public:
       POSITION_REASON_WEB      =17,          // position placed by web terminal
       POSITION_REASON_SPLIT    =18,          // position placed due split
       POSITION_REASON_CORPORATE_ACTION=19,   // position placed due corporate action
+      POSITION_REASON_ULTENCY  =20,          // position placed due Ultency
+      POSITION_REASON_COVERAGE =21,          // position placed due coverage actions
       //--- enumeration borders
       POSITION_REASON_FIRST    =POSITION_REASON_CLIENT,
-      POSITION_REASON_LAST     =POSITION_REASON_CORPORATE_ACTION
+      POSITION_REASON_LAST     =POSITION_REASON_COVERAGE
      };
    //--- modification flags
    enum EnTradeModifyFlags
@@ -94,28 +96,28 @@ public:
    virtual MTAPIRES  Clear(void)=0;
    virtual LPCWSTR   Print(MTAPISTR& string) const=0;
    //--- owner client login
-   virtual UINT64    Login(void) const=0;
+   virtual uint64_t  Login(void) const=0;
    //--- position symbol
    virtual LPCWSTR   Symbol(void) const=0;
    virtual MTAPIRES  Symbol(LPCWSTR symbol)=0;
    //--- EnPositionAction
-   virtual UINT      Action(void) const=0;
-   virtual MTAPIRES  Action(const UINT action)=0;
+   virtual uint32_t  Action(void) const=0;
+   virtual MTAPIRES  Action(const uint32_t action)=0;
    //--- price digits
-   virtual UINT      Digits(void) const=0;
-   virtual MTAPIRES  Digits(const UINT digits)=0;
+   virtual uint32_t  Digits(void) const=0;
+   virtual MTAPIRES  Digits(const uint32_t digits)=0;
    //--- currency digits
-   virtual UINT      DigitsCurrency(void) const=0;
-   virtual MTAPIRES  DigitsCurrency(const UINT digits)=0;
+   virtual uint32_t  DigitsCurrency(void) const=0;
+   virtual MTAPIRES  DigitsCurrency(const uint32_t digits)=0;
    //--- symbol contract size
    virtual double    ContractSize(void) const=0;
    virtual MTAPIRES  ContractSize(const double contract_size)=0;
    //--- position create time
-   virtual INT64     TimeCreate(void) const=0;
-   virtual MTAPIRES  TimeCreate(const INT64 time)=0;
+   virtual int64_t   TimeCreate(void) const=0;
+   virtual MTAPIRES  TimeCreate(const int64_t time)=0;
    //--- position last update time
-   virtual INT64     TimeUpdate(void) const=0;
-   virtual MTAPIRES  TimeUpdate(const INT64 time)=0;
+   virtual int64_t   TimeUpdate(void) const=0;
+   virtual MTAPIRES  TimeUpdate(const int64_t time)=0;
    //--- position weighted average open price
    virtual double    PriceOpen(void) const=0;
    virtual MTAPIRES  PriceOpen(const double price)=0;
@@ -129,8 +131,8 @@ public:
    virtual double    PriceTP(void) const=0;
    virtual MTAPIRES  PriceTP(const double price)=0;
    //--- position volume
-   virtual UINT64    Volume(void) const=0;
-   virtual MTAPIRES  Volume(const UINT64 volume)=0;
+   virtual uint64_t  Volume(void) const=0;
+   virtual MTAPIRES  Volume(const uint64_t volume)=0;
    //--- position floating profit
    virtual double    Profit(void) const=0;
    virtual MTAPIRES  Profit(const double profit)=0;
@@ -147,65 +149,74 @@ public:
    virtual double    RateMargin(void) const=0;
    virtual MTAPIRES  RateMargin(const double rate)=0;
    //--- expert id (filled by expert advisor)
-   virtual UINT64    ExpertID(void) const=0;
-   virtual MTAPIRES  ExpertID(const UINT64 id)=0;
+   virtual uint64_t  ExpertID(void) const=0;
+   virtual MTAPIRES  ExpertID(const uint64_t id)=0;
    //--- expert position id
-   virtual UINT64    ExpertPositionID(void) const=0;
-   virtual MTAPIRES  ExpertPositionID(const UINT64 id)=0;
+   virtual uint64_t  ExpertPositionID(void) const=0;
+   virtual MTAPIRES  ExpertPositionID(const uint64_t id)=0;
    //--- comment
    virtual LPCWSTR   Comment(void) const=0;
    virtual MTAPIRES  Comment(LPCWSTR comment)=0;
    //--- order activation state, time and price
-   virtual UINT      ActivationMode(void) const=0;
-   virtual INT64     ActivationTime(void) const=0;
+   virtual uint32_t  ActivationMode(void) const=0;
+   virtual int64_t   ActivationTime(void) const=0;
    virtual double    ActivationPrice(void) const=0;
-   virtual UINT      ActivationFlags(void) const=0;
+   virtual uint32_t  ActivationFlags(void) const=0;
    //--- position internal data for API usage
-   virtual MTAPIRES  ApiDataSet(const USHORT app_id,const UCHAR id,const INT64 value)=0;
-   virtual MTAPIRES  ApiDataSet(const USHORT app_id,const UCHAR id,const UINT64 value)=0;
-   virtual MTAPIRES  ApiDataSet(const USHORT app_id,const UCHAR id,const double value)=0;
-   virtual MTAPIRES  ApiDataGet(const USHORT app_id,const UCHAR id,INT64& value) const=0;
-   virtual MTAPIRES  ApiDataGet(const USHORT app_id,const UCHAR id,UINT64& value) const=0;
-   virtual MTAPIRES  ApiDataGet(const USHORT app_id,const UCHAR id,double& value) const=0;
-   virtual MTAPIRES  ApiDataClear(const USHORT app_id)=0;
+   virtual MTAPIRES  ApiDataSet(const uint16_t app_id,const uint8_t id,const int64_t value)=0;
+   virtual MTAPIRES  ApiDataSet(const uint16_t app_id,const uint8_t id,const uint64_t value)=0;
+   virtual MTAPIRES  ApiDataSet(const uint16_t app_id,const uint8_t id,const double value)=0;
+   virtual MTAPIRES  ApiDataGet(const uint16_t app_id,const uint8_t id,int64_t& value) const=0;
+   virtual MTAPIRES  ApiDataGet(const uint16_t app_id,const uint8_t id,uint64_t& value) const=0;
+   virtual MTAPIRES  ApiDataGet(const uint16_t app_id,const uint8_t id,double& value) const=0;
+   virtual MTAPIRES  ApiDataClear(const uint16_t app_id)=0;
    virtual MTAPIRES  ApiDataClearAll(void)=0;
-   //--- position create time in msc since 1970.01.01
-   virtual INT64     TimeCreateMsc(void) const=0;
-   virtual MTAPIRES  TimeCreateMsc(const INT64 time)=0;
-   //--- position last update time in msc since 1970.01.01
-   virtual INT64     TimeUpdateMsc(void) const=0;
-   virtual MTAPIRES  TimeUpdateMsc(const INT64 time)=0;
+   //--- position create time in us since 1970.01.01
+   virtual int64_t   TimeCreateMsc(void) const=0;
+   virtual MTAPIRES  TimeCreateMsc(const int64_t time)=0;
+   //--- position last update time in us since 1970.01.01
+   virtual int64_t   TimeUpdateMsc(void) const=0;
+   virtual MTAPIRES  TimeUpdateMsc(const int64_t time)=0;
    //--- order activation state, time and price
-   virtual MTAPIRES  ActivationMode(const UINT mode)=0;
-   virtual MTAPIRES  ActivationTime(const INT64 atm)=0;
+   virtual MTAPIRES  ActivationMode(const uint32_t mode)=0;
+   virtual MTAPIRES  ActivationTime(const int64_t atm)=0;
    virtual MTAPIRES  ActivationPrice(const double price)=0;
-   virtual MTAPIRES  ActivationFlags(const UINT flags)=0;
+   virtual MTAPIRES  ActivationFlags(const uint32_t flags)=0;
    //--- processed dealer login (0-means auto) (first position deal dealer)
-   virtual UINT64    Dealer(void) const=0;
-   virtual MTAPIRES  Dealer(const UINT64 dealer)=0;
+   virtual uint64_t  Dealer(void) const=0;
+   virtual MTAPIRES  Dealer(const uint64_t dealer)=0;
    //--- user record internal data for API usage
-   virtual MTAPIRES  ApiDataUpdate(const UINT pos,const USHORT app_id,const UCHAR id,const INT64 value)=0;
-   virtual MTAPIRES  ApiDataUpdate(const UINT pos,const USHORT app_id,const UCHAR id,const UINT64 value)=0;
-   virtual MTAPIRES  ApiDataUpdate(const UINT pos,const USHORT app_id,const UCHAR id,const double value)=0;
-   virtual MTAPIRES  ApiDataNext(const UINT pos,USHORT& app_id,UCHAR& id,INT64& value) const=0;
-   virtual MTAPIRES  ApiDataNext(const UINT pos,USHORT& app_id,UCHAR& id,UINT64& value) const=0;
-   virtual MTAPIRES  ApiDataNext(const UINT pos,USHORT& app_id,UCHAR& id,double& value) const=0;
+   virtual MTAPIRES  ApiDataUpdate(const uint32_t pos,const uint16_t app_id,const uint8_t id,const int64_t value)=0;
+   virtual MTAPIRES  ApiDataUpdate(const uint32_t pos,const uint16_t app_id,const uint8_t id,const uint64_t value)=0;
+   virtual MTAPIRES  ApiDataUpdate(const uint32_t pos,const uint16_t app_id,const uint8_t id,const double value)=0;
+   virtual MTAPIRES  ApiDataNext(const uint32_t pos,uint16_t& app_id,uint8_t& id,int64_t& value) const=0;
+   virtual MTAPIRES  ApiDataNext(const uint32_t pos,uint16_t& app_id,uint8_t& id,uint64_t& value) const=0;
+   virtual MTAPIRES  ApiDataNext(const uint32_t pos,uint16_t& app_id,uint8_t& id,double& value) const=0;
    //--- owner client login
-   virtual MTAPIRES  LoginSet(const UINT64 login)=0;
+   virtual MTAPIRES  LoginSet(const uint64_t login)=0;
    //--- position ticket
-   virtual UINT64    Position(void) const=0;
+   virtual uint64_t  Position(void) const=0;
    //--- position ticket in external system (exchange, ECN, etc)
    virtual LPCWSTR   ExternalID(void) const=0;
    virtual MTAPIRES  ExternalID(LPCWSTR id)=0;
    //--- modification flags
-   virtual UINT      ModificationFlags(void) const=0;
+   virtual uint32_t  ModificationFlags(void) const=0;
    //--- position reason - EnPositionReason
-   virtual UINT      Reason(void) const=0;
+   virtual uint32_t  Reason(void) const=0;
    //--- position volume
-   virtual UINT64    VolumeExt(void) const=0;
-   virtual MTAPIRES  VolumeExt(const UINT64 volume)=0;
+   virtual uint64_t  VolumeExt(void) const=0;
+   virtual MTAPIRES  VolumeExt(const uint64_t volume)=0;
    //--- EnPositionReason
-   virtual MTAPIRES  ReasonSet(const UINT reason)=0;
+   virtual MTAPIRES  ReasonSet(const uint32_t reason)=0;
+   //--- execution price on gateway
+   virtual double    PriceGateway(void) const=0;
+   virtual MTAPIRES  PriceGateway(const double price)=0;
+   //--- confirmed gateway volume with extended accuracy
+   virtual uint64_t  VolumeGatewayExt(void) const=0;
+   virtual MTAPIRES  VolumeGatewayExt(const uint64_t volume)=0;
+   //--- confirmed gateway deal type
+   virtual uint32_t  ActionGateway(void) const=0;
+   virtual MTAPIRES  ActionGateway(const uint32_t action)=0;
    //--- explicit destructor is prohibited
 protected:
                     ~IMTPosition(void) {}
@@ -226,24 +237,24 @@ public:
    virtual MTAPIRES  Add(IMTPositionArray* array)=0;
    virtual MTAPIRES  AddCopy(const IMTPositionArray* array)=0;
    //--- delete & detach
-   virtual MTAPIRES  Delete(const UINT pos)=0;
-   virtual IMTPosition* Detach(const UINT pos)=0;
+   virtual MTAPIRES  Delete(const uint32_t pos)=0;
+   virtual IMTPosition* Detach(const uint32_t pos)=0;
    //--- update
-   virtual MTAPIRES  Update(const UINT pos,IMTPosition* position)=0;
-   virtual MTAPIRES  UpdateCopy(const UINT pos,const IMTPosition* position)=0;
-   virtual MTAPIRES  Shift(const UINT pos,const int shift)=0;
+   virtual MTAPIRES  Update(const uint32_t pos,IMTPosition* position)=0;
+   virtual MTAPIRES  UpdateCopy(const uint32_t pos,const IMTPosition* position)=0;
+   virtual MTAPIRES  Shift(const uint32_t pos,const int32_t shift)=0;
    //--- data access
-   virtual UINT      Total(void) const=0;
-   virtual IMTPosition* Next(const UINT index) const=0;
+   virtual uint32_t  Total(void) const=0;
+   virtual IMTPosition* Next(const uint32_t index) const=0;
    //--- sorting and search
    virtual MTAPIRES  Sort(MTSortFunctionPtr sort_function)=0;
-   virtual int       Search(const void *key,MTSortFunctionPtr sort_function) const=0;
-   virtual int       SearchGreatOrEq(const void *key,MTSortFunctionPtr sort_function) const=0;
-   virtual int       SearchGreater(const void *key,MTSortFunctionPtr sort_function) const=0;
-   virtual int       SearchLessOrEq(const void *key,MTSortFunctionPtr sort_function) const=0;
-   virtual int       SearchLess(const void *key,MTSortFunctionPtr sort_function) const=0;
-   virtual int       SearchLeft(const void *key,MTSortFunctionPtr sort_function) const=0;
-   virtual int       SearchRight(const void *key,MTSortFunctionPtr sort_function) const=0;
+   virtual int32_t   Search(const void *key,MTSortFunctionPtr sort_function) const=0;
+   virtual int32_t   SearchGreatOrEq(const void *key,MTSortFunctionPtr sort_function) const=0;
+   virtual int32_t   SearchGreater(const void *key,MTSortFunctionPtr sort_function) const=0;
+   virtual int32_t   SearchLessOrEq(const void *key,MTSortFunctionPtr sort_function) const=0;
+   virtual int32_t   SearchLess(const void *key,MTSortFunctionPtr sort_function) const=0;
+   virtual int32_t   SearchLeft(const void *key,MTSortFunctionPtr sort_function) const=0;
+   virtual int32_t   SearchRight(const void *key,MTSortFunctionPtr sort_function) const=0;
    //--- explicit destructor is prohibited
 protected:
                     ~IMTPositionArray(void) {}
@@ -257,7 +268,7 @@ public:
    virtual void      OnPositionAdd(const IMTPosition* /*position*/)    {  }
    virtual void      OnPositionUpdate(const IMTPosition* /*position*/) {  }
    virtual void      OnPositionDelete(const IMTPosition* /*position*/) {  }
-   virtual void      OnPositionClean(const UINT64 /*login*/)           {  }
+   virtual void      OnPositionClean(const uint64_t /*login*/)           {  }
    virtual void      OnPositionSync(void)                              {  }
   };
 //+------------------------------------------------------------------+

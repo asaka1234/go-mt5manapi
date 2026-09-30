@@ -1,6 +1,6 @@
-//+------------------------------------------------------------------+
+﻿//+------------------------------------------------------------------+
 //|                                                 MetaTrader 5 API |
-//|                             Copyright 2000-2024, MetaQuotes Ltd. |
+//|                             Copyright 2000-2026, MetaQuotes Ltd. |
 //|                                               www.metaquotes.net |
 //+------------------------------------------------------------------+
 #pragma once
@@ -457,9 +457,27 @@ public:
       //--- borders
       PARAM_ACTION_MESSAGE_JOURNAL_FIRST          =3101,
       PARAM_ACTION_MESSAGE_JOURNAL_LAST           =3200,
+      //--- 
+      //--- ACTION_ACCOUNT_LIMIT_CHANGE_POSITIONS
+      //--- 
+      PARAM_ACTION_ACCOUNT_LIMIT_CHANGE_POSITIONS       =3201,
+      PARAM_ACTION_ACCOUNT_LIMIT_CHANGE_POSITIONS_LOGINS=3202,
+      PARAM_ACTION_ACCOUNT_LIMIT_CHANGE_POSITIONS_GROUPS=3203,
+      //--- borders
+      PARAM_ACTION_ACCOUNT_LIMIT_CHANGE_POSITIONS_FIRST =3201,
+      PARAM_ACTION_ACCOUNT_LIMIT_CHANGE_POSITIONS_LAST  =3300,
+      //--- 
+      //--- ACTION_ACCOUNT_LIMIT_CHANGE_ORDERS
+      //--- 
+      PARAM_ACTION_ACCOUNT_LIMIT_CHANGE_ORDERS       =3301,
+      PARAM_ACTION_ACCOUNT_LIMIT_CHANGE_ORDERS_LOGINS=3302,
+      PARAM_ACTION_ACCOUNT_LIMIT_CHANGE_ORDERS_GROUPS=3303,
+      //--- borders
+      PARAM_ACTION_ACCOUNT_LIMIT_CHANGE_ORDERS_FIRST =3301,
+      PARAM_ACTION_ACCOUNT_LIMIT_CHANGE_ORDERS_LAST  =3400,
       //--- borders
       PARAM_FIRST                                 =PARAM_ACTION_MESSAGE_PUSH_TO_LOGINS,
-      PARAM_LAST                                  =PARAM_ACTION_MESSAGE_CHANNEL_LAST
+      PARAM_LAST                                  =PARAM_ACTION_ACCOUNT_LIMIT_CHANGE_ORDERS_LAST
      };
    //--- parameters types
    enum EnParamType
@@ -490,16 +508,16 @@ public:
    virtual MTAPIRES  Assign(const IMTConAutoParam* param)=0;
    virtual MTAPIRES  Clear(void)=0;
    //--- param type
-   virtual UINT      Param(void) const=0;
-   virtual MTAPIRES  Param(const UINT param)=0;
+   virtual uint32_t  Param(void) const=0;
+   virtual MTAPIRES  Param(const uint32_t param)=0;
    //--- type
-   virtual UINT      ValueType(void) const=0;
+   virtual uint32_t  ValueType(void) const=0;
    //--- value int
-   virtual INT64     ValueInt(void) const=0;
-   virtual MTAPIRES  ValueInt(const INT64 value)=0;
+   virtual int64_t     ValueInt(void) const=0;
+   virtual MTAPIRES  ValueInt(const int64_t value)=0;
    //--- value uint
-   virtual UINT64    ValueUInt(void) const=0;
-   virtual MTAPIRES  ValueUInt(const UINT64 value)=0;
+   virtual uint64_t    ValueUInt(void) const=0;
+   virtual MTAPIRES  ValueUInt(const uint64_t value)=0;
    //--- value double
    virtual double    ValueDouble(void) const=0;
    virtual MTAPIRES  ValueDouble(const double value)=0;
@@ -513,32 +531,32 @@ public:
    virtual double    ValueMoney(void) const=0;
    virtual MTAPIRES  ValueMoney(const double value)=0;
    //--- value volume
-   virtual UINT64    ValueVolume(void) const=0;
-   virtual MTAPIRES  ValueVolume(const UINT64 value)=0;
+   virtual uint64_t    ValueVolume(void) const=0;
+   virtual MTAPIRES  ValueVolume(const uint64_t value)=0;
    //--- value datetime
-   virtual INT64     ValueDatetime(void) const=0;
-   virtual MTAPIRES  ValueDatetime(const INT64 value)=0;
+   virtual int64_t     ValueDatetime(void) const=0;
+   virtual MTAPIRES  ValueDatetime(const int64_t value)=0;
    //--- value leverage
-   virtual INT64     ValueLeverage(void) const=0;
-   virtual MTAPIRES  ValueLeverage(const INT64 value)=0;
+   virtual int64_t     ValueLeverage(void) const=0;
+   virtual MTAPIRES  ValueLeverage(const int64_t value)=0;
    //--- value bool
    virtual bool      ValueBool(void) const=0;
    virtual MTAPIRES  ValueBool(const bool value)=0;
    //--- value time
-   virtual UINT      ValueTime(void) const=0;
-   virtual MTAPIRES  ValueTime(const UINT value)=0;
+   virtual uint32_t  ValueTime(void) const=0;
+   virtual MTAPIRES  ValueTime(const uint32_t value)=0;
    //--- value date
-   virtual INT64     ValueDate(void) const=0;
-   virtual MTAPIRES  ValueDate(const INT64 value)=0;
+   virtual int64_t     ValueDate(void) const=0;
+   virtual MTAPIRES  ValueDate(const int64_t value)=0;
    //--- value percent
-   virtual UINT      ValuePercent(void) const=0;
-   virtual MTAPIRES  ValuePercent(const UINT value)=0;
+   virtual uint32_t  ValuePercent(void) const=0;
+   virtual MTAPIRES  ValuePercent(const uint32_t value)=0;
    //--- value language
-   virtual UINT      ValueLanguage(void) const=0;
-   virtual MTAPIRES  ValueLanguage(const UINT value)=0;
+   virtual uint32_t  ValueLanguage(void) const=0;
+   virtual MTAPIRES  ValueLanguage(const uint32_t value)=0;
    //--- value server
-   virtual UINT64    ValueServer(void) const=0;
-   virtual MTAPIRES  ValueServer(const UINT64 value)=0;
+   virtual uint64_t    ValueServer(void) const=0;
+   virtual MTAPIRES  ValueServer(const uint64_t value)=0;
    //--- value html
    virtual LPCWSTR   ValueHTML(void) const=0;
    virtual MTAPIRES  ValueHTML(LPCWSTR value)=0;
@@ -589,6 +607,8 @@ public:
       ACTION_ACCOUNT_DISABLE_REPORTS  =1017,
       ACTION_ACCOUNT_ENABLE_VPS       =1018,
       ACTION_ACCOUNT_DISABLE_VPS      =1019,
+      ACTION_ACCOUNT_CHANGE_LIMIT_POSITIONS=1020,
+      ACTION_ACCOUNT_CHANGE_LIMIT_ORDERS=1021,
       //--- accounts borders
       ACTION_ACCOUNT_FIRST            =1001,
       ACTION_ACCOUNT_LAST             =2000,
@@ -659,19 +679,19 @@ public:
    virtual MTAPIRES  Assign(const IMTConAutoAction* action)=0;
    virtual MTAPIRES  Clear(void)=0;
    //--- action type
-   virtual UINT      Action(void) const=0;
-   virtual MTAPIRES  Action(const UINT condition)=0;
+   virtual uint32_t  Action(void) const=0;
+   virtual MTAPIRES  Action(const uint32_t condition)=0;
    //--- name
    virtual LPCWSTR   Name(void) const=0;
    virtual MTAPIRES  Name(LPCWSTR name)=0;
    //--- accounts
    virtual MTAPIRES  ParamAdd(IMTConAutoParam* param)=0;
-   virtual MTAPIRES  ParamUpdate(const UINT pos,const IMTConAutoParam* param)=0;
-   virtual MTAPIRES  ParamDelete(const UINT pos)=0;
+   virtual MTAPIRES  ParamUpdate(const uint32_t pos,const IMTConAutoParam* param)=0;
+   virtual MTAPIRES  ParamDelete(const uint32_t pos)=0;
    virtual MTAPIRES  ParamClear(void)=0;
-   virtual MTAPIRES  ParamShift(const UINT pos,const int shift)=0;
-   virtual UINT      ParamTotal(void) const=0;
-   virtual MTAPIRES  ParamNext(const UINT pos,IMTConAutoParam* param) const=0;
+   virtual MTAPIRES  ParamShift(const uint32_t pos,const int32_t shift)=0;
+   virtual uint32_t  ParamTotal(void) const=0;
+   virtual MTAPIRES  ParamNext(const uint32_t pos,IMTConAutoParam* param) const=0;
    //--- explicit destructor is prohibited
 protected:
                     ~IMTConAutoAction(void) {}
@@ -731,8 +751,16 @@ public:
       CONDITION_ACCOUNT_STATUS              =1036,
       CONDITION_ACCOUNT_COMPANY             =1037,
       CONDITION_ACCOUNT_CLIENT_ID           =1038,
-      CONDITION_ACCOUNT_ACTIVITY_BALANCE_ELAPSED=1039,
-      CONDITION_ACCOUNT_ACTIVITY_CREDIT_ELAPSED =1040,
+      CONDITION_ACCOUNT_ACTIVITY_BALANCE_ELAPSED =1039,
+      CONDITION_ACCOUNT_ACTIVITY_CREDIT_ELAPSED  =1040,
+      CONDITION_ACCOUNT_LASTDAY_BALANCE          =1041,
+      CONDITION_ACCOUNT_LASTDAY_BALANCE_PERCENT  =1042,
+      CONDITION_ACCOUNT_LASTDAY_EQUITY           =1043,
+      CONDITION_ACCOUNT_LASTDAY_EQUITY_PERCENT   =1044,
+      CONDITION_ACCOUNT_LASTMONTH_BALANCE        =1045,
+      CONDITION_ACCOUNT_LASTMONTH_BALANCE_PERCENT=1046,
+      CONDITION_ACCOUNT_LASTMONTH_EQUITY         =1047,
+      CONDITION_ACCOUNT_LASTMONTH_EQUITY_PERCENT =1048,
       //--- account conditions borders
       CONDITION_ACCOUNT_FIRST               =1001,
       CONDITION_ACCOUNT_LAST                =2000,
@@ -905,9 +933,33 @@ public:
       //--- Connections conditions
       CONDITION_CONNECTION_FIRST            =15001,
       CONDITION_CONNECTION_LAST             =16000,
+      //--- Payments conditions
+      CONDITION_PAYMENT_ACTION              =16001,
+      CONDITION_PAYMENT_AMOUNT              =16002,
+      CONDITION_PAYMENT_CURRENCY            =16003,
+      CONDITION_PAYMENT_COMMISSION          =16004,
+      CONDITION_PAYMENT_WALLET_AMOUNT       =16005,
+      CONDITION_PAYMENT_WALLET_CURRENCY     =16006,
+      CONDITION_PAYMENT_WALLET_COMMISSION   =16007,
+      CONDITION_PAYMENT_DESCRIPTION         =16008,
+      CONDITION_PAYMENT_MANAGER             =16009,
+      CONDITION_PAYMENT_TYPE                =16010,
+      CONDITION_PAYMENT_PROVIDER_TYPE       =16011,
+      CONDITION_PAYMENT_PROVIDER_NAME       =16012,
+      CONDITION_PAYMENT_CLIENT_IP           =16013,
+      CONDITION_PAYMENT_CLIENT_TYPE         =16014,
+      CONDITION_PAYMENT_CLIENT_DEAL         =16015,
+      CONDITION_PAYMENT_EXTERNAL_ID         =16016,
+      CONDITION_PAYMENT_EXTERNAL_ERROR_CODE =16017,
+      CONDITION_PAYMENT_EXTERNAL_ERROR_DESC =16018,
+      CONDITION_PAYMENT_REJECT_CODE         =16019,
+      CONDITION_PAYMENT_REJECT_DESC         =16020,
+      //--- Payments conditions
+      CONDITION_PAYMENT_FIRST               =16001,
+      CONDITION_PAYMENT_LAST                =17000,
       //--- borders
       CONDITION_FIRST                       =CONDITION_DATETIME_FIRST,
-      CONDITION_LAST                        =CONDITION_CONNECTION_LAST
+      CONDITION_LAST                        =CONDITION_PAYMENT_LAST
      };
    //--- condition comparison method
    enum EnConditionRule
@@ -951,28 +1003,34 @@ public:
       TYPE_KYC_STATE               =22,
       TYPE_LOGIN                   =23,
       TYPE_DURATION                =24,
+      TYPE_SERVER_STATE            =25,
+      TYPE_PAY_ACTION              =26,
+      TYPE_PAY_TYPE                =27,
+      TYPE_PAY_PROVIDER            =28,
+      TYPE_CONNECTION              =29,
+      TYPE_PERCENT_SIGNED          =30,
       //--- borders
       TYPE_FIRST                   =TYPE_NONE,
-      TYPE_LAST                    =TYPE_DURATION
+      TYPE_LAST                    =TYPE_PERCENT_SIGNED
      };
    //--- common methods
    virtual void      Release(void)=0;
    virtual MTAPIRES  Assign(const IMTConAutoCondition* condition)=0;
    virtual MTAPIRES  Clear(void)=0;
    //--- condition type
-   virtual UINT      Condition(void) const=0;
-   virtual MTAPIRES  Condition(const UINT condition)=0;
+   virtual uint32_t  Condition(void) const=0;
+   virtual MTAPIRES  Condition(const uint32_t condition)=0;
    //--- condition rule
-   virtual UINT      Rule(void) const=0;
-   virtual MTAPIRES  Rule(const UINT rule)=0;
+   virtual uint32_t  Rule(void) const=0;
+   virtual MTAPIRES  Rule(const uint32_t rule)=0;
    //--- type
-   virtual UINT      ValueType(void) const=0;
+   virtual uint32_t  ValueType(void) const=0;
    //--- value int
-   virtual INT64     ValueInt(void) const=0;
-   virtual MTAPIRES  ValueInt(const INT64 value)=0;
+   virtual int64_t     ValueInt(void) const=0;
+   virtual MTAPIRES  ValueInt(const int64_t value)=0;
    //--- value uint
-   virtual UINT64    ValueUInt(void) const=0;
-   virtual MTAPIRES  ValueUInt(const UINT64 value)=0;
+   virtual uint64_t    ValueUInt(void) const=0;
+   virtual MTAPIRES  ValueUInt(const uint64_t value)=0;
    //--- value double
    virtual double    ValueDouble(void) const=0;
    virtual MTAPIRES  ValueDouble(const double value)=0;
@@ -986,53 +1044,53 @@ public:
    virtual double    ValueMoney(void) const=0;
    virtual MTAPIRES  ValueMoney(const double value)=0;
    //--- value volume
-   virtual UINT64    ValueVolume(void) const=0;
-   virtual MTAPIRES  ValueVolume(const UINT64 value)=0;
+   virtual uint64_t    ValueVolume(void) const=0;
+   virtual MTAPIRES  ValueVolume(const uint64_t value)=0;
    //--- value datetime
-   virtual INT64     ValueDatetime(void) const=0;
-   virtual MTAPIRES  ValueDatetime(const INT64 value)=0;
+   virtual int64_t     ValueDatetime(void) const=0;
+   virtual MTAPIRES  ValueDatetime(const int64_t value)=0;
    //--- value leverage
-   virtual INT64     ValueLeverage(void) const=0;
-   virtual MTAPIRES  ValueLeverage(const INT64 value)=0;
+   virtual int64_t     ValueLeverage(void) const=0;
+   virtual MTAPIRES  ValueLeverage(const int64_t value)=0;
    //--- value bool
    virtual bool      ValueBool(void) const=0;
    virtual MTAPIRES  ValueBool(const bool value)=0;
    //--- value time
-   virtual UINT      ValueTime(void) const=0;
-   virtual MTAPIRES  ValueTime(const UINT value)=0;
+   virtual uint32_t  ValueTime(void) const=0;
+   virtual MTAPIRES  ValueTime(const uint32_t value)=0;
    //--- value date
-   virtual INT64     ValueDate(void) const=0;
-   virtual MTAPIRES  ValueDate(const INT64 value)=0;
+   virtual int64_t     ValueDate(void) const=0;
+   virtual MTAPIRES  ValueDate(const int64_t value)=0;
    //--- value percent
-   virtual UINT      ValuePercent(void) const=0;
-   virtual MTAPIRES  ValuePercent(const UINT value)=0;
+   virtual uint32_t  ValuePercent(void) const=0;
+   virtual MTAPIRES  ValuePercent(const uint32_t value)=0;
    //--- value language
-   virtual UINT      ValueLanguage(void) const=0;
-   virtual MTAPIRES  ValueLanguage(const UINT value)=0;
+   virtual uint32_t  ValueLanguage(void) const=0;
+   virtual MTAPIRES  ValueLanguage(const uint32_t value)=0;
    //--- value server
-   virtual UINT64    ValueServer(void) const=0;
-   virtual MTAPIRES  ValueServer(const UINT64 value)=0;
+   virtual uint64_t    ValueServer(void) const=0;
+   virtual MTAPIRES  ValueServer(const uint64_t value)=0;
    //--- value position
-   virtual UINT      ValuePositionType(void) const=0;
-   virtual MTAPIRES  ValuePositionType(const UINT value)=0;
+   virtual uint32_t  ValuePositionType(void) const=0;
+   virtual MTAPIRES  ValuePositionType(const uint32_t value)=0;
    //--- value reason
-   virtual UINT      ValueReason(void) const=0;
-   virtual MTAPIRES  ValueReason(const UINT value)=0;
+   virtual uint32_t  ValueReason(void) const=0;
+   virtual MTAPIRES  ValueReason(const uint32_t value)=0;
    //--- value deal type
-   virtual UINT      ValueDealType(void) const=0;
-   virtual MTAPIRES  ValueDealType(const UINT value)=0;
+   virtual uint32_t  ValueDealType(void) const=0;
+   virtual MTAPIRES  ValueDealType(const uint32_t value)=0;
    //--- value deal entry
-   virtual UINT      ValueDealEntry(void) const=0;
-   virtual MTAPIRES  ValueDealEntry(const UINT value)=0;
+   virtual uint32_t  ValueDealEntry(void) const=0;
+   virtual MTAPIRES  ValueDealEntry(const uint32_t value)=0;
    //--- value order type
-   virtual UINT      ValueOrderType(void) const=0;
-   virtual MTAPIRES  ValueOrderType(const UINT value)=0;
+   virtual uint32_t  ValueOrderType(void) const=0;
+   virtual MTAPIRES  ValueOrderType(const uint32_t value)=0;
    //--- value order state
-   virtual UINT      ValueOrderState(void) const=0;
-   virtual MTAPIRES  ValueOrderState(const UINT value)=0;
+   virtual uint32_t  ValueOrderState(void) const=0;
+   virtual MTAPIRES  ValueOrderState(const uint32_t value)=0;
    //--- logic
-   virtual UINT      OrId(void) const=0;
-   virtual MTAPIRES  OrId(const UINT or_id)=0;
+   virtual uint32_t  OrId(void) const=0;
+   virtual MTAPIRES  OrId(const uint32_t or_id)=0;
    //--- explicit destructor is prohibited
 protected:
                     ~IMTConAutoCondition(void) {}
@@ -1195,12 +1253,29 @@ public:
       TRIGGER_MANAGER_POSITION_RESTORE=12011,
       TRIGGER_MANAGER_ACCOUNT_POSITIONS_FIX=12012,
       TRIGGER_MANAGER_ACCOUNT_BALANCE_FIX  =12013,
+      TRIGGER_MANAGER_EXPORT_ACCOUNTS =12014,
+      TRIGGER_MANAGER_EXPORT_CLIENTS  =12015,
+      TRIGGER_MANAGER_EXPORT_ORDERS   =12016,
+      TRIGGER_MANAGER_EXPORT_POSITIONS=12017,
+      TRIGGER_MANAGER_EXPORT_DEALS    =12018,
+      TRIGGER_MANAGER_EXPORT_REPORTS  =12019,
       //---  
       TRIGGER_MANAGER_FIRST           =12001,
       TRIGGER_MANAGER_LAST            =13000,
+      //--- 
+      //--- payment events
+      //--- 
+      TRIGGER_PAYMENT_REQUEST         =13001,
+      TRIGGER_PAYMENT_REJECT          =13002,
+      TRIGGER_PAYMENT_CONFIRM         =13003,
+      TRIGGER_PAYMENT_DONE            =13004,
+      TRIGGER_PAYMENT_FAIL            =13005,
+      //---
+      TRIGGER_PAYMENT_FIRST           =13001,
+      TRIGGER_PAYMENT_LAST            =14000,
       //--- external triggers borders  
       TRIGGER_FIRST                   =TRIGGER_SCHEDULE_FIRST,
-      TRIGGER_LAST                    =TRIGGER_MANAGER_LAST
+      TRIGGER_LAST                    =TRIGGER_PAYMENT_LAST
      };
    //--- weekdays flags
    enum EnTriggerWeekdays
@@ -1241,7 +1316,7 @@ public:
       TRIGGER_MONTHS_LAST     =TRIGGER_MONTHS_DEC
      };
    //--- month days flags
-   enum EnTriggerMonthDays : UINT
+   enum EnTriggerMonthDays : uint32_t
      {
       TRIGGER_MONTHDAY_1      =0x00000001,
       TRIGGER_MONTHDAY_2      =0x00000002,
@@ -1274,73 +1349,74 @@ public:
       TRIGGER_MONTHDAY_29     =0x10000000,
       TRIGGER_MONTHDAY_30     =0x20000000,
       TRIGGER_MONTHDAY_31     =0x40000000,
+      TRIGGER_MONTHDAY_LASTDAY=0x80000000,
       //--- flag borders
       TRIGGER_MONTHDAY_NONE   =0,
       TRIGGER_MONTHDAY_ALL    =0x7FFFFFFF,
       TRIGGER_MONTHDAY_FIRST  =TRIGGER_MONTHDAY_1,
-      TRIGGER_MONTHDAY_LAST   =TRIGGER_MONTHDAY_31
+      TRIGGER_MONTHDAY_LAST   =TRIGGER_MONTHDAY_LASTDAY
      };
    //--- common methods
    virtual void      Release(void)=0;
    virtual MTAPIRES  Assign(const IMTConAutomation* automation)=0;
    virtual MTAPIRES  Clear(void)=0;
    //--- uniq ids
-   virtual UINT64    ID(void) const=0;
-   virtual UINT64    ParentID(void) const=0;
+   virtual uint64_t    ID(void) const=0;
+   virtual uint64_t    ParentID(void) const=0;
    //--- name
    virtual LPCWSTR   Name(void) const=0;
    virtual MTAPIRES  Name(LPCWSTR name)=0;
    //--- trigger type
-   virtual UINT      Trigger(void) const=0;
-   virtual MTAPIRES  Trigger(const UINT trigger)=0;
+   virtual uint32_t  Trigger(void) const=0;
+   virtual MTAPIRES  Trigger(const uint32_t trigger)=0;
    //--- trigger flags
-   virtual UINT64    Flags(void) const=0;
-   virtual MTAPIRES  Flags(const UINT64 flags)=0;
+   virtual uint64_t    Flags(void) const=0;
+   virtual MTAPIRES  Flags(const uint64_t flags)=0;
    //--- time start
-   virtual INT64     TimeStart(void) const=0;
-   virtual MTAPIRES  TimeStart(const INT64 start)=0;
+   virtual int64_t     TimeStart(void) const=0;
+   virtual MTAPIRES  TimeStart(const int64_t start)=0;
    //--- time expire
-   virtual INT64     TimeExpire(void) const=0;
-   virtual MTAPIRES  TimeExpire(const INT64 expire)=0;
+   virtual int64_t     TimeExpire(void) const=0;
+   virtual MTAPIRES  TimeExpire(const int64_t expire)=0;
    //--- time weekdays flags
-   virtual UINT      TimeWeekdays(void) const=0;
-   virtual MTAPIRES  TimeWeekdays(const UINT weekdays)=0;
+   virtual uint32_t  TimeWeekdays(void) const=0;
+   virtual MTAPIRES  TimeWeekdays(const uint32_t weekdays)=0;
    //--- time months flags
-   virtual UINT      TimeMonths(void) const=0;
-   virtual MTAPIRES  TimeMonths(const UINT months)=0;
+   virtual uint32_t  TimeMonths(void) const=0;
+   virtual MTAPIRES  TimeMonths(const uint32_t months)=0;
    //--- time monthdays flags
-   virtual UINT      TimeMonthdays(void) const=0;
-   virtual MTAPIRES  TimeMonthdays(const UINT monthdays)=0;
+   virtual uint32_t  TimeMonthdays(void) const=0;
+   virtual MTAPIRES  TimeMonthdays(const uint32_t monthdays)=0;
    //--- event pause - minutes part (0-59)
-   virtual UINT      EventPauseMinutes(void) const=0;
-   virtual MTAPIRES  EventPauseMinutes(const UINT minutes)=0;
+   virtual uint32_t  EventPauseMinutes(void) const=0;
+   virtual MTAPIRES  EventPauseMinutes(const uint32_t minutes)=0;
    //--- event pause - hours part (0-23)
-   virtual UINT      EventPauseHours(void) const=0;
-   virtual MTAPIRES  EventPauseHours(const UINT hours)=0;
+   virtual uint32_t  EventPauseHours(void) const=0;
+   virtual MTAPIRES  EventPauseHours(const uint32_t hours)=0;
    //--- event pause - hours part (0-30)
-   virtual UINT      EventPauseDays(void) const=0;
-   virtual MTAPIRES  EventPauseDays(const UINT days)=0;
+   virtual uint32_t  EventPauseDays(void) const=0;
+   virtual MTAPIRES  EventPauseDays(const uint32_t days)=0;
    //--- event repeats
-   virtual UINT      EventRepeats(void) const=0;
-   virtual MTAPIRES  EventRepeats(const UINT repeats)=0;
+   virtual uint32_t  EventRepeats(void) const=0;
+   virtual MTAPIRES  EventRepeats(const uint32_t repeats)=0;
    //--- conditions
    virtual MTAPIRES  ConditionAdd(IMTConAutoCondition* condition)=0;
-   virtual MTAPIRES  ConditionUpdate(const UINT pos,const IMTConAutoCondition* condition)=0;
-   virtual MTAPIRES  ConditionDelete(const UINT pos)=0;
+   virtual MTAPIRES  ConditionUpdate(const uint32_t pos,const IMTConAutoCondition* condition)=0;
+   virtual MTAPIRES  ConditionDelete(const uint32_t pos)=0;
    virtual MTAPIRES  ConditionClear(void)=0;
-   virtual MTAPIRES  ConditionShift(const UINT pos,const int shift)=0;
-   virtual UINT      ConditionTotal(void) const=0;
-   virtual MTAPIRES  ConditionNext(const UINT pos,IMTConAutoCondition* condition) const=0;
+   virtual MTAPIRES  ConditionShift(const uint32_t pos,const int32_t shift)=0;
+   virtual uint32_t  ConditionTotal(void) const=0;
+   virtual MTAPIRES  ConditionNext(const uint32_t pos,IMTConAutoCondition* condition) const=0;
    //--- actions
    virtual MTAPIRES  ActionAdd(IMTConAutoAction* action)=0;
-   virtual MTAPIRES  ActionUpdate(const UINT pos,const IMTConAutoAction* action)=0;
-   virtual MTAPIRES  ActionDelete(const UINT pos)=0;
+   virtual MTAPIRES  ActionUpdate(const uint32_t pos,const IMTConAutoAction* action)=0;
+   virtual MTAPIRES  ActionDelete(const uint32_t pos)=0;
    virtual MTAPIRES  ActionClear(void)=0;
-   virtual MTAPIRES  ActionShift(const UINT pos,const int shift)=0;
-   virtual UINT      ActionTotal(void) const=0;
-   virtual MTAPIRES  ActionNext(const UINT pos,IMTConAutoAction* action) const=0;
+   virtual MTAPIRES  ActionShift(const uint32_t pos,const int32_t shift)=0;
+   virtual uint32_t  ActionTotal(void) const=0;
+   virtual MTAPIRES  ActionNext(const uint32_t pos,IMTConAutoAction* action) const=0;
    //--- parent id
-   virtual MTAPIRES  ParentIDSet(const UINT64 parent_id)=0;
+   virtual MTAPIRES  ParentIDSet(const uint64_t parent_id)=0;
    //--- explicit destructor is prohibited
 protected:
                     ~IMTConAutomation(void) {}

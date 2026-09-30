@@ -1,6 +1,6 @@
-//+------------------------------------------------------------------+
+﻿//+------------------------------------------------------------------+
 //|                                                 MetaTrader 5 API |
-//|                             Copyright 2000-2024, MetaQuotes Ltd. |
+//|                             Copyright 2000-2026, MetaQuotes Ltd. |
 //|                                               www.metaquotes.net |
 //+------------------------------------------------------------------+
 #pragma once
@@ -8,6 +8,7 @@
 #include "MT5APIStr.h"
 #include "MT5APIMath.h"
 #include "MT5APITime.h"
+#include "MT5APIPeriod.h"
 #include "..\Bases\MT5APITick.h"
 #include "..\Bases\MT5APIOrder.h"
 #include "..\Bases\MT5APIDeal.h"
@@ -19,71 +20,66 @@ class SMTFormat
   {
 private:
    //--- constants
-   #define  SIG_DECIMAL L'.'
-   #define SIG_NEGATIVE L'-'
-   #define SIG_THOUSAND L' '
-   #define VOLUME_K L'K'
-   #define VOLUME_M L'M'
-   /*
    enum constants
      {
-      SIG_DECIMAL    =L'.',
-      SIG_NEGATIVE   =L'-',
-      SIG_THOUSAND   =L' ',
-      VOLUME_K       =L'K',
-      VOLUME_M       =L'M',
+      SIG_DECIMAL    ='.',
+      SIG_NEGATIVE   ='-',
+      SIG_THOUSAND   =' ',
+      VOLUME_K       ='K',
+      VOLUME_M       ='M',
      };
-    */
 
 public:
    //--- error
    static LPCWSTR    FormatError(const MTAPIRES retcode);
    //--- double to string
-   static LPCWSTR    FormatDouble(CMTStr &str,double val,UINT digits);
-   static LPCWSTR    FormatMoney(CMTStr &str,double val,UINT digits);
+   static LPCWSTR    FormatDouble(CMTStr &str,double val,uint32_t digits);
+   static LPCWSTR    FormatMoney(CMTStr &str,double val,uint32_t digits);
    //--- price to string
-   static LPCWSTR    FormatPrice(CMTStr &str,double val,UINT digits,UINT extra_digits=0);
-   static LPCWSTR    FormatPrices(CMTStr &str,MTTickShort& tick,const UINT digits);
+   static LPCWSTR    FormatPrice(CMTStr &str,double val,uint32_t digits,uint32_t extra_digits=0);
+   static LPCWSTR    FormatPrices(CMTStr &str,MTTickShort& tick,const uint32_t digits);
    //--- volume & size
    static LPCWSTR    FormatVolumeDouble(CMTStr &str,const double volume,const bool compact);
-   static LPCWSTR    FormatVolume(CMTStr &str,const UINT64 volume,const bool compact=true);
-   static LPCWSTR    FormatVolumeExt(CMTStr &str,const UINT64 volume,const bool compact=true);
-   static LPCWSTR    FormatVolumeOrder(CMTStr &str,const UINT64 volume_initial,const UINT64 volume_current);
-   static LPCWSTR    FormatVolumeExtOrder(CMTStr &str,const UINT64 volume_initial,const UINT64 volume_current);
+   static LPCWSTR    FormatVolume(CMTStr &str,const uint64_t volume,const bool compact=true);
+   static LPCWSTR    FormatVolumeExt(CMTStr &str,const uint64_t volume,const bool compact=true);
+   static LPCWSTR    FormatVolumeOrder(CMTStr &str,const uint64_t volume_initial,const uint64_t volume_current);
+   static LPCWSTR    FormatVolumeExtOrder(CMTStr &str,const uint64_t volume_initial,const uint64_t volume_current);
    static LPCWSTR    FormatSize(CMTStr &str,const double size,const bool compact=true);
    static LPCWSTR    FormatSizeOrder(CMTStr &str,const double size_initial,const double size_current);
    //--- date & time
    static LPCWSTR    FormatDateTime(CMTStr &str,const SYSTEMTIME &st,bool useTime=true,bool useSec=false);
-   static LPCWSTR    FormatDateTime(CMTStr &str,INT64 ctm,bool useTime=true,bool useSec=false);
+   static LPCWSTR    FormatDateTime(CMTStr &str,int64_t ctm,bool useTime=true,bool useSec=false);
    static LPCWSTR    FormatDateTimeMsc(CMTStr &str,const SYSTEMTIME &st,bool useTime=true,bool useSec=false);
-   static LPCWSTR    FormatDateTimeMsc(CMTStr &str,INT64 ctm,bool useTime=true,bool useSec=false);
-   static LPCWSTR    FormatTime(CMTStr &str,INT64 ctm,bool useSec=false);
-   static LPCWSTR    FormatTimeMsc(CMTStr &str,INT64 ctm,bool useSec=false);
+   static LPCWSTR    FormatDateTimeMsc(CMTStr &str,int64_t ctm,bool useTime=true,bool useSec=false);
+   static LPCWSTR    FormatTime(CMTStr &str,int64_t ctm,bool useSec=false);
+   static LPCWSTR    FormatTimeMsc(CMTStr &str,int64_t ctm,bool useSec=false);
    //--- IP & port
-   static LPCWSTR    FormatIP(CMTStr &str,const UINT ip,const UINT port=0);
-   static LPCWSTR    FormatIP(CMTStr &str,const USHORT* ip,const UINT port=0);
+   static LPCWSTR    FormatIP(CMTStr &str,const uint32_t ip,const uint32_t port=0);
+   static LPCWSTR    FormatIP(CMTStr &str,const uint16_t* ip,const uint32_t port=0);
    //--- positions
-   static LPCWSTR    FormatPositionType(CMTStr &str,const UINT type);
+   static LPCWSTR    FormatPositionType(CMTStr &str,const uint32_t type);
    //--- orders
-   static LPCWSTR    FormatOrderType(CMTStr &str,const UINT type);
-   static LPCWSTR    FormatOrderStatus(CMTStr &str,const UINT status);
-   static LPCWSTR    FormatOrderTypeFilling(CMTStr &str,const UINT type);
-   static LPCWSTR    FormatOrderTypeTime(CMTStr &str,const UINT type);
-   static LPCWSTR    FormatOrderTypeReason(CMTStr &str,UINT reason);
-   static LPCWSTR    FormatOrderPrice(CMTStr &str,const double price_order,const double price_trigger,const UINT digits);
+   static LPCWSTR    FormatOrderType(CMTStr &str,const uint32_t type);
+   static LPCWSTR    FormatOrderStatus(CMTStr &str,const uint32_t status);
+   static LPCWSTR    FormatOrderTypeFilling(CMTStr &str,const uint32_t type);
+   static LPCWSTR    FormatOrderTypeTime(CMTStr &str,const uint32_t type);
+   static LPCWSTR    FormatOrderTypeReason(CMTStr &str,uint32_t reason);
+   static LPCWSTR    FormatOrderPrice(CMTStr &str,const double price_order,const double price_trigger,const uint32_t digits);
    //--- deals
-   static LPCWSTR    FormatDealAction(CMTStr &str,const UINT action);
-   static LPCWSTR    FormatDealEntry(CMTStr &str,const UINT entry);
+   static LPCWSTR    FormatDealAction(CMTStr &str,const uint32_t action);
+   static LPCWSTR    FormatDealEntry(CMTStr &str,const uint32_t entry);
    //--- 
-   static LPCWSTR    FormatModifyFlags(CMTStr &str,const UINT modify_flags);
+   static LPCWSTR    FormatModifyFlags(CMTStr &str,const uint32_t modify_flags);
+   //--- period
+   static LPCWSTR    FormatPeriod(CMTStr &str,MTPERIOD period);
 
 private:
-   //--- UINT64 to string
-   static LPCWSTR    FormatDouble(CMTStr &str,UINT64 val,UINT digits);
-   static LPCWSTR    FormatDoubleBrief(CMTStr &str,UINT64 val,UINT digits);
-   static LPCWSTR    FormatMoney(CMTStr &str,UINT64 val,UINT digits);
+   //--- uint64_t to string
+   static LPCWSTR    FormatDouble(CMTStr &str,uint64_t val,uint32_t digits);
+   static LPCWSTR    FormatDoubleBrief(CMTStr &str,uint64_t val,uint32_t digits);
+   static LPCWSTR    FormatMoney(CMTStr &str,uint64_t val,uint32_t digits);
    //--- trim zero
-   static void       TrimZeros(CMTStr &str,UINT extra_digits=UINT_MAX);
+   static void       TrimZeros(CMTStr &str,uint32_t extra_digits=UINT_MAX);
   };
 //+------------------------------------------------------------------+
 //| Retcode description                                              |
@@ -97,7 +93,7 @@ inline LPCWSTR SMTFormat::FormatError(const MTAPIRES retcode)
       LPCWSTR           desc;
      };
 //--- errors
-   static ErrorDesc errors[]=
+   static const ErrorDesc errors[]=
      {
         { MT_RET_OK,                    L"Done"                             },
       { MT_RET_OK_NONE,               L"OK/None"                          },
@@ -172,7 +168,7 @@ inline LPCWSTR SMTFormat::FormatError(const MTAPIRES retcode)
       { MT_RET_CFG_NO_HISTORY_MODULE, L"History server module is absent"        },
       { MT_RET_CFG_ANOTHER_SWITCH,    L"Another switching process in progress"  },
       { MT_RET_CFG_NO_LICENSE_FILE,   L"License file is absent"                 },
-      { MT_RET_CFG_GATEWAY_LOGIN_EXIST,L"Gateway with same login already exist" },
+      { MT_RET_CFG_GATEWAY_LOGIN_EXIST,L"Gateway with same login already exists"},
       { MT_RET_CFG_INVALID_COMPANY    ,L"Company name does not belong to a license or whitelabel" },
       //--- client errors
       { MT_RET_USR_LAST_ADMIN,        L"Last admin account cannot be deleted" },
@@ -187,13 +183,14 @@ inline LPCWSTR SMTFormat::FormatError(const MTAPIRES retcode)
       { MT_RET_USR_DIFFERENT_CURRENCY,L"Attempt to move account to group with different currency" },
       { MT_RET_USR_IMPORT_BALANCE,    L"Account balance import error"      },
       { MT_RET_USR_IMPORT_GROUP,      L"Imported account has invalid group"},
-      { MT_RET_USR_ACCOUNT_EXIST,     L"Account already exist"             },
+      { MT_RET_USR_ACCOUNT_EXIST,     L"Account already exists"            },
       { MT_RET_USR_IMPORT_ACCOUNT,    L"Account trade data importing error"      },
       { MT_RET_USR_IMPORT_POSITIONS,  L"Account trade positions importing error" },
       { MT_RET_USR_IMPORT_ORDERS,     L"Account open orders importing error"     },
       { MT_RET_USR_IMPORT_DEALS,      L"Account deals history importing error"   },
       { MT_RET_USR_IMPORT_HISTORY,    L"Account orders history importing error"  },
       { MT_RET_USR_API_LIMIT_REACHED, L"Users with API enabled limit reached"    },
+      { MT_RET_USR_ULTENCY_COVERAGE,  L"Account is used as an Ultency coverage account"},
       //--- trade errors
       { MT_RET_TRADE_LIMIT_REACHED,   L"Order or deal limit reached"      },
       { MT_RET_TRADE_ORDER_EXIST,     L"Order already exists"             },
@@ -285,28 +282,29 @@ inline LPCWSTR SMTFormat::FormatError(const MTAPIRES retcode)
       { MT_RET_SUBS_REAL_ONLY,             L"Subscriptions are available for real users only" },
       { MT_RET_SUBS_PAYMENT_METHOD,        L"Unsupported payment method"                      },
       //--- default
-      { INT_MAX,                        L"Network problem"                },
+      { INT_MAX,                           L"Network problem"                },
      };
 //--- search description
-   for(UINT i=0;i<_countof(errors);i++)
-      if(errors[i].code==retcode) return(errors[i].desc);
+   for(uint32_t i=0;i<_countof(errors);i++)
+      if(errors[i].code==retcode)
+         return(errors[i].desc);
 //--- default value
    return(L"Unknown error");
   }
 //+------------------------------------------------------------------+
 //| Format double value                                              |
 //+------------------------------------------------------------------+
-inline LPCWSTR SMTFormat::FormatDouble(CMTStr &str,double val,UINT digits)
+inline LPCWSTR SMTFormat::FormatDouble(CMTStr &str,double val,uint32_t digits)
   {
-   double valdec;
-   UINT   digits_int=(digits<10)?digits:10;
+   double   valdec;
+   uint32_t digits_int=(digits<10)?digits:10;
 //--- convert to integer
    valdec=val*SMTMath::DecPow((int)digits_int);
 //--- check size
-   if(valdec>=double(_I64_MAX/(long long)100) || valdec<=double(_I64_MIN/(long long)100))
+   if(valdec>=double(_I64_MAX/100i64) || valdec<=double(_I64_MIN/100i64))
      {
       CMTStr32 fmt;
-      int    pos;
+      int32_t    pos;
       //--- format using CRT
       fmt.Format(L"%%.0%ulf",digits_int);
       str.Format(fmt.Str(),val);
@@ -318,10 +316,10 @@ inline LPCWSTR SMTFormat::FormatDouble(CMTStr &str,double val,UINT digits)
      }
 //--- format fast
    if(val>=0)
-      FormatDouble(str,UINT64(valdec+0.5),digits_int);
+      FormatDouble(str,uint64_t(valdec+0.5),digits_int);
    else
      {
-      FormatDouble(str,UINT64(0.5-valdec),digits_int);
+      FormatDouble(str,uint64_t(0.5-valdec),digits_int);
       str.Insert(0,SIG_NEGATIVE);
      }
 //---
@@ -330,16 +328,16 @@ inline LPCWSTR SMTFormat::FormatDouble(CMTStr &str,double val,UINT digits)
 //+------------------------------------------------------------------+
 //| Format money                                                     |
 //+------------------------------------------------------------------+
-inline LPCWSTR SMTFormat::FormatMoney(CMTStr &str,double val,UINT digits)
+inline LPCWSTR SMTFormat::FormatMoney(CMTStr &str,double val,uint32_t digits)
   {
    double valdec;
 //--- convert to integer
    valdec=val*SMTMath::DecPow((int)digits);
 //--- check size
-   if(valdec>=double(_I64_MAX/(long long)100) || valdec<=double(_I64_MIN/(long long)100))
+   if(valdec>=double(_I64_MAX/100i64) || valdec<=double(_I64_MIN/100i64))
      {
       CMTStr32 fmt;
-      int    pos;
+      int32_t    pos;
       //--- format using CRT
       fmt.Format(L"%%.0%ulf",digits);
       str.Format(fmt.Str(),val);
@@ -348,16 +346,16 @@ inline LPCWSTR SMTFormat::FormatMoney(CMTStr &str,double val,UINT digits)
       if(pos>=0) str.Buffer()[pos]=SIG_DECIMAL;
       //--- insert thousands delimeters
       for(pos=str.FindRChar(L'.')-3;pos>=3;pos-=3)
-         str.Insert((UINT)pos,SIG_THOUSAND);
+         str.Insert((uint32_t)pos,SIG_THOUSAND);
       //---
       return(str.Str());
      }
 //--- format fast
    if(val>=0)
-      FormatMoney(str,UINT64(valdec+0.5),digits);
+      FormatMoney(str,uint64_t(valdec+0.5),digits);
    else
      {
-      FormatMoney(str,UINT64(0.5-valdec),digits);
+      FormatMoney(str,uint64_t(0.5-valdec),digits);
       str.Insert(0,SIG_NEGATIVE);
      }
 //---
@@ -366,7 +364,7 @@ inline LPCWSTR SMTFormat::FormatMoney(CMTStr &str,double val,UINT digits)
 //+------------------------------------------------------------------+
 //| Format price                                                     |
 //+------------------------------------------------------------------+
-inline LPCWSTR SMTFormat::FormatPrice(CMTStr &str,double val,UINT digits,UINT extra_digits)
+inline LPCWSTR SMTFormat::FormatPrice(CMTStr &str,double val,uint32_t digits,uint32_t extra_digits)
   {
 //--- format with extra digits
    FormatDouble(str,val,digits+extra_digits);
@@ -378,7 +376,7 @@ inline LPCWSTR SMTFormat::FormatPrice(CMTStr &str,double val,UINT digits,UINT ex
 //+------------------------------------------------------------------+
 //| Current prices                                                   |
 //+------------------------------------------------------------------+
-inline LPCWSTR SMTFormat::FormatPrices(CMTStr &str,MTTickShort& tick,const UINT digits)
+inline LPCWSTR SMTFormat::FormatPrices(CMTStr &str,MTTickShort& tick,const uint32_t digits)
   {
    CMTStr32 sbid,sask,slast;
 //--- check last prices
@@ -420,21 +418,21 @@ inline LPCWSTR SMTFormat::FormatVolumeDouble(CMTStr &str,const double volume,con
 //+------------------------------------------------------------------+
 //| Format trade volume                                              |
 //+------------------------------------------------------------------+
-inline LPCWSTR SMTFormat::FormatVolume(CMTStr &str,const UINT64 volume,const bool compact/*=true*/)
+inline LPCWSTR SMTFormat::FormatVolume(CMTStr &str,const uint64_t volume,const bool compact/*=true*/)
   {
    return(FormatVolumeDouble(str,SMTMath::VolumeToDouble(volume),compact));
   }
 //+------------------------------------------------------------------+
 //| Format trade volume                                              |
 //+------------------------------------------------------------------+
-inline LPCWSTR SMTFormat::FormatVolumeExt(CMTStr &str,const UINT64 volume,const bool compact/*=true*/)
+inline LPCWSTR SMTFormat::FormatVolumeExt(CMTStr &str,const uint64_t volume,const bool compact/*=true*/)
   {
    return(FormatVolumeDouble(str,SMTMath::VolumeExtToDouble(volume),compact));
   }
 //+------------------------------------------------------------------+
 //| Format order volume                                              |
 //+------------------------------------------------------------------+
-inline LPCWSTR SMTFormat::FormatVolumeOrder(CMTStr &str,const UINT64 volume_initial,const UINT64 volume_current)
+inline LPCWSTR SMTFormat::FormatVolumeOrder(CMTStr &str,const uint64_t volume_initial,const uint64_t volume_current)
   {
    CMTStr64 vol_filled,vol_init;
 //--- 
@@ -446,7 +444,7 @@ inline LPCWSTR SMTFormat::FormatVolumeOrder(CMTStr &str,const UINT64 volume_init
 //+------------------------------------------------------------------+
 //| Format order volume                                              |
 //+------------------------------------------------------------------+
-inline LPCWSTR SMTFormat::FormatVolumeExtOrder(CMTStr &str,const UINT64 volume_initial,const UINT64 volume_current)
+inline LPCWSTR SMTFormat::FormatVolumeExtOrder(CMTStr &str,const uint64_t volume_initial,const uint64_t volume_current)
   {
    CMTStr64 vol_filled,vol_init;
 //--- 
@@ -494,7 +492,7 @@ inline LPCWSTR SMTFormat::FormatDateTime(CMTStr &str,const SYSTEMTIME &st,bool u
 //+------------------------------------------------------------------+
 //| Format date & time                                               |
 //+------------------------------------------------------------------+
-inline LPCWSTR SMTFormat::FormatDateTime(CMTStr &str,INT64 ctm,bool useTime/*=true*/,bool useSec/*=false*/)
+inline LPCWSTR SMTFormat::FormatDateTime(CMTStr &str,int64_t ctm,bool useTime/*=true*/,bool useSec/*=false*/)
   {
    tm ttm={};
 //---
@@ -531,7 +529,7 @@ inline LPCWSTR SMTFormat::FormatDateTimeMsc(CMTStr &str,const SYSTEMTIME &st,boo
 //+------------------------------------------------------------------+
 //| Format date & time                                               |
 //+------------------------------------------------------------------+
-inline LPCWSTR SMTFormat::FormatDateTimeMsc(CMTStr &str,INT64 ctm,bool useTime/*=true*/,bool useSec/*=false*/)
+inline LPCWSTR SMTFormat::FormatDateTimeMsc(CMTStr &str,int64_t ctm,bool useTime/*=true*/,bool useSec/*=false*/)
   {
    tm ttm={};
 //---
@@ -552,7 +550,7 @@ inline LPCWSTR SMTFormat::FormatDateTimeMsc(CMTStr &str,INT64 ctm,bool useTime/*
 //+------------------------------------------------------------------+
 //| Format time                                                      |
 //+------------------------------------------------------------------+
-inline LPCWSTR SMTFormat::FormatTime(CMTStr &str,INT64 ctm,bool useSec/*=false*/)
+inline LPCWSTR SMTFormat::FormatTime(CMTStr &str,int64_t ctm,bool useSec/*=false*/)
   {
    tm ttm={};
 //---
@@ -567,7 +565,7 @@ inline LPCWSTR SMTFormat::FormatTime(CMTStr &str,INT64 ctm,bool useSec/*=false*/
 //+------------------------------------------------------------------+
 //| Format time                                                      |
 //+------------------------------------------------------------------+
-inline LPCWSTR SMTFormat::FormatTimeMsc(CMTStr &str,INT64 ctm,bool useSec/*=false*/)
+inline LPCWSTR SMTFormat::FormatTimeMsc(CMTStr &str,int64_t ctm,bool useSec/*=false*/)
   {
    tm ttm={};
 //---
@@ -582,7 +580,7 @@ inline LPCWSTR SMTFormat::FormatTimeMsc(CMTStr &str,INT64 ctm,bool useSec/*=fals
 //+------------------------------------------------------------------+
 //| Format IP[:port]                                                 |
 //+------------------------------------------------------------------+
-inline LPCWSTR SMTFormat::FormatIP(CMTStr &str,const UINT ip,const UINT port/*=0*/)
+inline LPCWSTR SMTFormat::FormatIP(CMTStr &str,const uint32_t ip,const uint32_t port/*=0*/)
   {
    if(port>0) str.Format(L"%d.%d.%d.%d:%u",ip&255,(ip>>8)&255,(ip>>16)&255,(ip>>24)&255,port);
    else       str.Format(L"%d.%d.%d.%d",   ip&255,(ip>>8)&255,(ip>>16)&255,(ip>>24)&255);
@@ -592,7 +590,7 @@ inline LPCWSTR SMTFormat::FormatIP(CMTStr &str,const UINT ip,const UINT port/*=0
 //+------------------------------------------------------------------+
 //| Format IP[:port]                                                 |
 //+------------------------------------------------------------------+
-inline LPCWSTR SMTFormat::FormatIP(CMTStr &str,const USHORT *ip,const UINT port/*=0*/)
+inline LPCWSTR SMTFormat::FormatIP(CMTStr &str,const uint16_t *ip,const uint32_t port/*=0*/)
   {
    if(ip)
      {
@@ -609,7 +607,7 @@ inline LPCWSTR SMTFormat::FormatIP(CMTStr &str,const USHORT *ip,const UINT port/
 //+------------------------------------------------------------------+
 //| Position type                                                    |
 //+------------------------------------------------------------------+
-inline LPCWSTR SMTFormat::FormatPositionType(CMTStr &str,const UINT type)
+inline LPCWSTR SMTFormat::FormatPositionType(CMTStr &str,const uint32_t type)
   {
 //--- clear
    str.Clear();
@@ -625,7 +623,7 @@ inline LPCWSTR SMTFormat::FormatPositionType(CMTStr &str,const UINT type)
 //+------------------------------------------------------------------+
 //| Order type                                                       |
 //+------------------------------------------------------------------+
-inline LPCWSTR SMTFormat::FormatOrderType(CMTStr &str,const UINT type)
+inline LPCWSTR SMTFormat::FormatOrderType(CMTStr &str,const uint32_t type)
   {
 //--- clear
    str.Clear();
@@ -647,7 +645,7 @@ inline LPCWSTR SMTFormat::FormatOrderType(CMTStr &str,const UINT type)
 //+------------------------------------------------------------------+
 //| Order status                                                     |
 //+------------------------------------------------------------------+
-inline LPCWSTR SMTFormat::FormatOrderStatus(CMTStr &str,const UINT status)
+inline LPCWSTR SMTFormat::FormatOrderStatus(CMTStr &str,const uint32_t status)
   {
 //--- clear
    str.Clear();
@@ -671,7 +669,7 @@ inline LPCWSTR SMTFormat::FormatOrderStatus(CMTStr &str,const UINT status)
 //+------------------------------------------------------------------+
 //| Order filling type                                               |
 //+------------------------------------------------------------------+
-inline LPCWSTR SMTFormat::FormatOrderTypeFilling(CMTStr &str,const UINT type)
+inline LPCWSTR SMTFormat::FormatOrderTypeFilling(CMTStr &str,const uint32_t type)
   {
 //--- clear
    str.Clear();
@@ -688,7 +686,7 @@ inline LPCWSTR SMTFormat::FormatOrderTypeFilling(CMTStr &str,const UINT type)
 //+------------------------------------------------------------------+
 //| Order expiration type                                            |
 //+------------------------------------------------------------------+
-inline LPCWSTR SMTFormat::FormatOrderTypeTime(CMTStr &str,const UINT type)
+inline LPCWSTR SMTFormat::FormatOrderTypeTime(CMTStr &str,const uint32_t type)
   {
 //--- clear
    str.Clear();
@@ -705,7 +703,7 @@ inline LPCWSTR SMTFormat::FormatOrderTypeTime(CMTStr &str,const UINT type)
 //+------------------------------------------------------------------+
 //| Order reason                                                     |
 //+------------------------------------------------------------------+
-inline LPCWSTR SMTFormat::FormatOrderTypeReason(CMTStr &str,UINT reason)
+inline LPCWSTR SMTFormat::FormatOrderTypeReason(CMTStr &str,uint32_t reason)
   {
 //--- clear
    str.Clear();
@@ -738,7 +736,7 @@ inline LPCWSTR SMTFormat::FormatOrderTypeReason(CMTStr &str,UINT reason)
 //+------------------------------------------------------------------+
 //| Order price                                                      |
 //+------------------------------------------------------------------+
-inline LPCWSTR SMTFormat::FormatOrderPrice(CMTStr &str,const double price_order,const double price_trigger,const UINT digits)
+inline LPCWSTR SMTFormat::FormatOrderPrice(CMTStr &str,const double price_order,const double price_trigger,const uint32_t digits)
   {
    CMTStr64 price,trigger;
 //--- clear
@@ -752,8 +750,10 @@ inline LPCWSTR SMTFormat::FormatOrderPrice(CMTStr &str,const double price_order,
      }
    else
      {
-      if(price_order!=0) FormatPrice(str,price_order,digits);
-      else               str.Assign(L"market");
+      if(price_order!=0)
+         FormatPrice(str,price_order,digits);
+      else
+         str.Assign(L"market");
      }
 //--- return
    return(str.Str());
@@ -761,7 +761,7 @@ inline LPCWSTR SMTFormat::FormatOrderPrice(CMTStr &str,const double price_order,
 //+------------------------------------------------------------------+
 //| Deal action                                                      |
 //+------------------------------------------------------------------+
-inline LPCWSTR SMTFormat::FormatDealAction(CMTStr &str,const UINT action)
+inline LPCWSTR SMTFormat::FormatDealAction(CMTStr &str,const uint32_t action)
   {
 //--- clear
    str.Clear();
@@ -781,7 +781,7 @@ inline LPCWSTR SMTFormat::FormatDealAction(CMTStr &str,const UINT action)
       case IMTDeal::DEAL_AGENT_DAILY       : str.Assign(L"daily agent commission");   break;
       case IMTDeal::DEAL_AGENT_MONTHLY     : str.Assign(L"monthly agent commission"); break;
       case IMTDeal::DEAL_INTERESTRATE      : str.Assign(L"interest rate");            break;
-      case IMTDeal::DEAL_BUY_CANCELED      : str.Assign(L"canceled buy");          break;
+      case IMTDeal::DEAL_BUY_CANCELED      : str.Assign(L"canceled buy");             break;
       case IMTDeal::DEAL_SELL_CANCELED     : str.Assign(L"canceled sell");            break;
       case IMTDeal::DEAL_DIVIDEND          : str.Assign(L"dividend");                 break;
       case IMTDeal::DEAL_DIVIDEND_FRANKED  : str.Assign(L"franked dividend");         break;
@@ -795,7 +795,7 @@ inline LPCWSTR SMTFormat::FormatDealAction(CMTStr &str,const UINT action)
 //+------------------------------------------------------------------+
 //| Deal direction                                                   |
 //+------------------------------------------------------------------+
-inline LPCWSTR SMTFormat::FormatDealEntry(CMTStr &str,const UINT entry)
+inline LPCWSTR SMTFormat::FormatDealEntry(CMTStr &str,const uint32_t entry)
   {
 //--- clear
    str.Clear();
@@ -813,12 +813,12 @@ inline LPCWSTR SMTFormat::FormatDealEntry(CMTStr &str,const UINT entry)
 //+------------------------------------------------------------------+
 //| Modify flags                                                     |
 //+------------------------------------------------------------------+
-inline LPCWSTR SMTFormat::FormatModifyFlags(CMTStr &str,const UINT modify_flags)
+inline LPCWSTR SMTFormat::FormatModifyFlags(CMTStr &str,const uint32_t modify_flags)
   {
 //--- description
-   static struct
+   static const struct
      {
-      UINT              flag;
+      uint32_t          flag;
       LPCWSTR           desc;
      } modify_flags_desc[]=
    {
@@ -831,11 +831,11 @@ inline LPCWSTR SMTFormat::FormatModifyFlags(CMTStr &str,const UINT modify_flags)
       { IMTOrder::MODIFY_FLAGS_API_SERVER,  L"Server API"       },
       { IMTOrder::MODIFY_FLAGS_API_GATEWAY, L"Gateway API"      }
      };
-//--- counter
-   UINT added=0;
 //--- collect description
+   uint32_t added=0;
+
    str.Clear();
-   for(UINT i=0;i<_countof(modify_flags_desc);i++)
+   for(uint32_t i=0;i<_countof(modify_flags_desc);i++)
       if(modify_flags_desc[i].flag&modify_flags)
         {
          //--- add comma
@@ -848,19 +848,58 @@ inline LPCWSTR SMTFormat::FormatModifyFlags(CMTStr &str,const UINT modify_flags)
    return(str.Str());
   }
 //+------------------------------------------------------------------+
+//| Period                                                           |
+//+------------------------------------------------------------------+
+inline LPCWSTR SMTFormat::FormatPeriod(CMTStr &str,const MTPERIOD period)
+  {
+//--- period size
+   const uint32_t period_size=SMTPeriod::PeriodSize(period);
+//--- by period type
+   switch(SMTPeriod::PeriodType(period))
+     {
+      case SMTPeriod::HISTORY_PERIOD_TYPE_MINUTE:
+         str.Format(L"M%u",period_size);
+         break;
+
+      case SMTPeriod::HISTORY_PERIOD_TYPE_HOUR:
+         if(period_size==24)
+            str.Assign(L"Daily");
+         else
+            str.Format(L"H%u",period_size);
+         break;
+
+      case SMTPeriod::HISTORY_PERIOD_TYPE_WEEK:
+         if(period_size==1)
+            str.Assign(L"Weekly");
+         else
+            str.Format(L"W%u",period_size);
+         break;
+
+      case SMTPeriod::HISTORY_PERIOD_TYPE_MONTH:
+         if(period_size==1)
+            str.Assign(L"Monthly");
+         else
+            str.Format(L"MON%u",period_size);
+         break;
+     }
+//--- result
+   return(str.Str());
+  }
+//+------------------------------------------------------------------+
 //|                                                                  |
 //+------------------------------------------------------------------+
-inline LPCWSTR SMTFormat::FormatDouble(CMTStr &str,UINT64 val,UINT digits)
+inline LPCWSTR SMTFormat::FormatDouble(CMTStr &str,uint64_t val,uint32_t digits)
   {
    static const wchar_t cd[]={ L'0',L'1',L'2',L'3',L'4',L'5',L'6',L'7',L'8',L'9',0 };
-   wchar_t tmp[256]=L"",*cp,*dst;
-   UINT    i,len;
-//--- 
-   str.Clear();
-   cp=tmp;
 //--- check
-   if(digits>8) return(str.Str());
+   str.Clear();
+   if(digits>10)
+      return(str.Str());
 //--- 
+   wchar_t  tmp[256]=L"";
+   wchar_t *cp=tmp,*dst;
+   uint32_t i;
+
    if(digits>0)
      {
       for(i=0;i<digits;i++)
@@ -876,12 +915,18 @@ inline LPCWSTR SMTFormat::FormatDouble(CMTStr &str,UINT64 val,UINT digits)
       *cp++=cd[val%10];
    *cp=0;
 //--- check size
-   len=UINT(cp-tmp);
-   if(len>=str.Max()-1) return(str.Str());
+   uint32_t len=uint32_t(cp-tmp);
+
+   if(len>=str.Max()-1)
+      return(str.Str());
 //--- string reverse 
-   dst=str.Buffer(); cp=tmp+len-1;
-   while(cp>=tmp) *dst++=*cp--;
+   dst=str.Buffer();
+   cp=tmp+len-1;
+
+   while(cp>=tmp)
+      *dst++=*cp--;
    *dst=0;
+
    str.Refresh();
 //---
    return(str.Str());
@@ -889,17 +934,18 @@ inline LPCWSTR SMTFormat::FormatDouble(CMTStr &str,UINT64 val,UINT digits)
 //+------------------------------------------------------------------+
 //|                                                                  |
 //+------------------------------------------------------------------+
-inline LPCWSTR SMTFormat::FormatMoney(CMTStr &str,UINT64 val,UINT digits)
+inline LPCWSTR SMTFormat::FormatMoney(CMTStr &str,uint64_t val,uint32_t digits)
   {
    static const wchar_t cd[]={ L'0',L'1',L'2',L'3',L'4',L'5',L'6',L'7',L'8',L'9',0 };
-   wchar_t tmp[256]=L"",*cp,*dst;
-   UINT    i,len;
-//--- 
-   str.Clear();
-   cp=tmp;
 //--- checks
-   if(digits>8) return(str.Str());
+   str.Clear();
+   if(digits>8)
+      return(str.Str());
 //---
+   wchar_t  tmp[256]=L"";
+   wchar_t *cp=tmp,*dst;
+   uint32_t i;
+
    if(digits>0)
      {
       for(i=0;i<digits;i++)
@@ -918,12 +964,18 @@ inline LPCWSTR SMTFormat::FormatMoney(CMTStr &str,UINT64 val,UINT digits)
      }
    *cp=0;
 //--- check size
-   len=UINT(cp-tmp);
-   if(len>=str.Max()-1) return(str.Str());
+   uint32_t len=uint32_t(cp-tmp);
+
+   if(len>=str.Max()-1)
+      return(str.Str());
 //--- reverse string
-   dst=str.Buffer(); cp=tmp+len-1;
-   while(cp>=tmp) *dst++=*cp--;
+   dst=str.Buffer();
+   cp=tmp+len-1;
+
+   while(cp>=tmp)
+      *dst++=*cp--;
    *dst=0;
+
    str.Refresh();
 //---
    return(str.Str());
@@ -931,13 +983,19 @@ inline LPCWSTR SMTFormat::FormatMoney(CMTStr &str,UINT64 val,UINT digits)
 //+------------------------------------------------------------------+
 //|                                                                  |
 //+------------------------------------------------------------------+
-inline void SMTFormat::TrimZeros(CMTStr &str,UINT extra_digits)
+inline void SMTFormat::TrimZeros(CMTStr &str,uint32_t extra_digits)
   {
-   UINT len=str.Len(),digits=0;
+   uint32_t len=str.Len(),digits=0;
 //--- remove zero
-   while(len>0 && str[len-1]==L'0' && digits<extra_digits) { len--; digits++; }
+   while(len>0 && str[len-1]==L'0' && digits<extra_digits)
+     {
+      len--;
+      digits++;
+     }
+
    str.Trim(len);
 //--- remove points
-   if(len>0 && str[len-1]==L'.') str.Trim(len-1);
+   if(len>0 && str[len-1]==L'.')
+      str.Trim(len-1);
   }
 //+------------------------------------------------------------------+

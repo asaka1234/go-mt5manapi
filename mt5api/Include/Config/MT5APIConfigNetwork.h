@@ -1,6 +1,6 @@
-//+------------------------------------------------------------------+
+﻿//+------------------------------------------------------------------+
 //|                                                 MetaTrader 5 API |
-//|                             Copyright 2000-2024, MetaQuotes Ltd. |
+//|                             Copyright 2000-2026, MetaQuotes Ltd. |
 //|                                               www.metaquotes.net |
 //+------------------------------------------------------------------+
 #pragma once
@@ -15,14 +15,14 @@ public:
    virtual MTAPIRES  Assign(const IMTConServerRange* param)=0;
    virtual MTAPIRES  Clear(void)=0;
    //--- from
-   virtual UINT64    From(void) const=0;
-   virtual MTAPIRES  From(const UINT64 from)=0;
+   virtual uint64_t  From(void) const=0;
+   virtual MTAPIRES  From(const uint64_t from)=0;
    //--- to
-   virtual UINT64    To(void) const=0;
-   virtual MTAPIRES  To(const UINT64 to)=0;
+   virtual uint64_t  To(void) const=0;
+   virtual MTAPIRES  To(const uint64_t to)=0;
    //--- used range
-   virtual UINT64    UsedFrom(void) const=0;
-   virtual UINT64    UsedTo(void) const=0;
+   virtual uint64_t  UsedFrom(void) const=0;
+   virtual uint64_t  UsedTo(void) const=0;
    //--- explicit destructor is prohibited
 protected:
                     ~IMTConServerRange(void) {}
@@ -58,19 +58,19 @@ public:
    virtual MTAPIRES  Assign(const IMTConClusterState* state)=0;
    virtual MTAPIRES  Clear(void)=0;
    //--- server id
-   virtual UINT64    Id(void) const=0;
+   virtual uint64_t  Id(void) const=0;
    //--- connection state
    virtual bool      Connected(void) const=0;
    virtual LPCWSTR   ConnectedAddress(void) const=0;
-   virtual INT64     ConnectedTime(void) const=0;
+   virtual int64_t   ConnectedTime(void) const=0;
    //--- connection stats
-   virtual INT64     StatsDay(void) const=0;
-   virtual UINT      StatsPing(void) const=0;
-   virtual UINT      StatsPingMin(void) const=0;
-   virtual UINT      StatsPingMax(void) const=0;
-   virtual UINT      StatsSpeed(void) const=0;
-   virtual UINT      StatsSpeedMin(void) const=0;
-   virtual UINT      StatsSpeedMax(void) const=0;
+   virtual int64_t   StatsDay(void) const=0;
+   virtual uint32_t  StatsPing(void) const=0;
+   virtual uint32_t  StatsPingMin(void) const=0;
+   virtual uint32_t  StatsPingMax(void) const=0;
+   virtual uint32_t  StatsSpeed(void) const=0;
+   virtual uint32_t  StatsSpeedMin(void) const=0;
+   virtual uint32_t  StatsSpeedMax(void) const=0;
    //--- explicit destructor is prohibited
 protected:
                     ~IMTConClusterState(void) {}
@@ -103,8 +103,8 @@ public:
    virtual LPCWSTR   Filter(void) const=0;
    virtual MTAPIRES  Filter(LPCWSTR filter)=0;
    //--- flags
-   virtual UINT      Flags(void) const=0;
-   virtual MTAPIRES  Flags(const UINT flags)=0;
+   virtual uint32_t  Flags(void) const=0;
+   virtual MTAPIRES  Flags(const uint32_t flags)=0;
    //--- explicit destructor is prohibited
 protected:
                     ~IMTConBackupFolder(void) {}
@@ -174,59 +174,59 @@ public:
    virtual MTAPIRES  Assign(const IMTConServerTrade* param)=0;
    virtual MTAPIRES  Clear(void)=0;
    //--- demo accounts mode EnDemoMode
-   virtual UINT      DemoMode(void) const=0;
-   virtual MTAPIRES  DemoMode(const UINT mode)=0;
+   virtual uint32_t  DemoMode(void) const=0;
+   virtual MTAPIRES  DemoMode(const uint32_t mode)=0;
    //--- demo accounts period
-   virtual UINT      DemoPeriod(void) const=0;
-   virtual MTAPIRES  DemoPeriod(const UINT period)=0;
+   virtual uint32_t  DemoPeriod(void) const=0;
+   virtual MTAPIRES  DemoPeriod(const uint32_t period)=0;
    //--- overnight mode
-   virtual UINT      OvernightMode(void) const=0;
-   virtual MTAPIRES  OvernightMode(const UINT mode)=0;
+   virtual uint32_t  OvernightMode(void) const=0;
+   virtual MTAPIRES  OvernightMode(const uint32_t mode)=0;
    //--- overnight time (in minutes)
-   virtual UINT      OvernightTime(void) const=0;
-   virtual MTAPIRES  OvernightTime(const UINT time)=0;
-   virtual INT64     OvernightTimeLast(void) const=0;
-   virtual INT64     OvernightTimePrev(void) const=0;
+   virtual uint32_t  OvernightTime(void) const=0;
+   virtual MTAPIRES  OvernightTime(const uint32_t time)=0;
+   virtual int64_t   OvernightTimeLast(void) const=0;
+   virtual int64_t   OvernightTimePrev(void) const=0;
    //--- overnight mode
-   virtual UINT      OvermonthMode(void) const=0;
-   virtual MTAPIRES  OvermonthMode(const UINT mode)=0;
+   virtual uint32_t  OvermonthMode(void) const=0;
+   virtual MTAPIRES  OvermonthMode(const uint32_t mode)=0;
    //--- overmonth time (in minutes)
-   virtual INT64     OvermonthTimeLast(void) const=0;
-   virtual INT64     OvermonthTimePrev(void) const=0;
+   virtual int64_t   OvermonthTimeLast(void) const=0;
+   virtual int64_t   OvermonthTimePrev(void) const=0;
    //--- client logins ranges for this trade server
    virtual MTAPIRES  LoginsRangeAdd(IMTConServerRange* range)=0;
-   virtual MTAPIRES  LoginsRangeUpdate(const UINT pos,const IMTConServerRange* range)=0;
-   virtual MTAPIRES  LoginsRangeDelete(const UINT pos)=0;
+   virtual MTAPIRES  LoginsRangeUpdate(const uint32_t pos,const IMTConServerRange* range)=0;
+   virtual MTAPIRES  LoginsRangeDelete(const uint32_t pos)=0;
    virtual MTAPIRES  LoginsRangeClear(void)=0;
-   virtual MTAPIRES  LoginsRangeShift(const UINT pos,const int shift)=0;
-   virtual UINT      LoginsRangeTotal(void) const=0;
-   virtual MTAPIRES  LoginsRangeNext(const UINT pos,IMTConServerRange* range) const=0;
+   virtual MTAPIRES  LoginsRangeShift(const uint32_t pos,const int32_t shift)=0;
+   virtual uint32_t  LoginsRangeTotal(void) const=0;
+   virtual MTAPIRES  LoginsRangeNext(const uint32_t pos,IMTConServerRange* range) const=0;
    //--- orders tickets ranges for this trade server
    virtual MTAPIRES  OrdersRangeAdd(IMTConServerRange* range)=0;
-   virtual MTAPIRES  OrdersRangeUpdate(const UINT pos,const IMTConServerRange* range)=0;
-   virtual MTAPIRES  OrdersRangeDelete(const UINT pos)=0;
+   virtual MTAPIRES  OrdersRangeUpdate(const uint32_t pos,const IMTConServerRange* range)=0;
+   virtual MTAPIRES  OrdersRangeDelete(const uint32_t pos)=0;
    virtual MTAPIRES  OrdersRangeClear(void)=0;
-   virtual MTAPIRES  OrdersRangeShift(const UINT pos,const int shift)=0;
-   virtual UINT      OrdersRangeTotal(void) const=0;
-   virtual MTAPIRES  OrdersRangeNext(const UINT pos,IMTConServerRange* range) const=0;
+   virtual MTAPIRES  OrdersRangeShift(const uint32_t pos,const int32_t shift)=0;
+   virtual uint32_t  OrdersRangeTotal(void) const=0;
+   virtual MTAPIRES  OrdersRangeNext(const uint32_t pos,IMTConServerRange* range) const=0;
    //--- deals tickets ranges for this trade server
    virtual MTAPIRES  DealsRangeAdd(IMTConServerRange* range)=0;
-   virtual MTAPIRES  DealsRangeUpdate(const UINT pos,const IMTConServerRange* range)=0;
-   virtual MTAPIRES  DealsRangeDelete(const UINT pos)=0;
+   virtual MTAPIRES  DealsRangeUpdate(const uint32_t pos,const IMTConServerRange* range)=0;
+   virtual MTAPIRES  DealsRangeDelete(const uint32_t pos)=0;
    virtual MTAPIRES  DealsRangeClear(void)=0;
-   virtual MTAPIRES  DealsRangeShift(const UINT pos,const int shift)=0;
-   virtual UINT      DealsRangeTotal(void) const=0;
-   virtual MTAPIRES  DealsRangeNext(const UINT pos,IMTConServerRange* range) const=0;
+   virtual MTAPIRES  DealsRangeShift(const uint32_t pos,const int32_t shift)=0;
+   virtual uint32_t  DealsRangeTotal(void) const=0;
+   virtual MTAPIRES  DealsRangeNext(const uint32_t pos,IMTConServerRange* range) const=0;
    //--- trade totals
-   virtual UINT      TotalUsers(void) const=0;
-   virtual UINT      TotalUsersReal(void) const=0;
-   virtual UINT      TotalDeals(void) const=0;
-   virtual UINT      TotalOrders(void) const=0;
-   virtual UINT      TotalOrdersHistory(void) const=0;
-   virtual UINT      TotalPositions(void) const=0;
+   virtual uint32_t  TotalUsers(void) const=0;
+   virtual uint32_t  TotalUsersReal(void) const=0;
+   virtual uint32_t  TotalDeals(void) const=0;
+   virtual uint32_t  TotalOrders(void) const=0;
+   virtual uint32_t  TotalOrdersHistory(void) const=0;
+   virtual uint32_t  TotalPositions(void) const=0;
    //--- overnight days EnOvernightDays
-   virtual UINT      OvernightDays(void) const=0;
-   virtual MTAPIRES  OvernightDays(const UINT days)=0;
+   virtual uint32_t  OvernightDays(void) const=0;
+   virtual MTAPIRES  OvernightDays(const uint32_t days)=0;
    //--- explicit destructor is prohibited
 protected:
                     ~IMTConServerTrade(void) {}
@@ -242,11 +242,11 @@ public:
    virtual MTAPIRES  Assign(const IMTConServerHistory* param)=0;
    virtual MTAPIRES  Clear(void)=0;
    //--- datafeeds switch timeout
-   virtual UINT      DatafeedsTimeout(void) const=0;
-   virtual MTAPIRES  DatafeedsTimeout(const UINT timeout)=0;
+   virtual uint32_t  DatafeedsTimeout(void) const=0;
+   virtual MTAPIRES  DatafeedsTimeout(const uint32_t timeout)=0;
    //--- max news buffer
-   virtual UINT      NewsMax(void) const=0;
-   virtual MTAPIRES  NewsMax(const UINT news_max)=0;
+   virtual uint32_t  NewsMax(void) const=0;
+   virtual MTAPIRES  NewsMax(const uint32_t news_max)=0;
    //--- explicit destructor is prohibited
 protected:
                     ~IMTConServerHistory(void) {}
@@ -296,7 +296,7 @@ public:
      {
       SQL_MODE_NONE      =0,
       SQL_MODE_MSSQL     =1,
-      SQL_MODE_FIREBIRD  =2,
+      SQL_MODE_OBSOLETE  =2,
       SQL_MODE_MYSQL     =3,
       SQL_MODE_ORACLE    =4,
       SQL_MODE_POSTGRESQL=5,
@@ -318,32 +318,32 @@ public:
    virtual MTAPIRES  Assign(const IMTConServerBackup* param)=0;
    virtual MTAPIRES  Clear(void)=0;
    //--- master server
-   virtual UINT64    MasterServer(void) const=0;
-   virtual MTAPIRES  MasterServer(const UINT64 id)=0;
+   virtual uint64_t  MasterServer(void) const=0;
+   virtual MTAPIRES  MasterServer(const uint64_t id)=0;
    //--- backup path
    virtual LPCWSTR   BackupPath(void) const=0;
    virtual MTAPIRES  BackupPath(LPCWSTR path)=0;
    //--- full backup time (minutes)
-   virtual UINT      BackupFullTime(void) const=0;
-   virtual MTAPIRES  BackupFullTime(const UINT time)=0;
+   virtual uint32_t  BackupFullTime(void) const=0;
+   virtual MTAPIRES  BackupFullTime(const uint32_t time)=0;
    //--- backup period - EnBackupPeriod
-   virtual UINT      BackupPeriod(void) const=0;
-   virtual MTAPIRES  BackupPeriod(const UINT period)=0;
+   virtual uint32_t  BackupPeriod(void) const=0;
+   virtual MTAPIRES  BackupPeriod(const uint32_t period)=0;
    //--- backup copy TTL - EnBackupTTL
-   virtual UINT      BackupTTL(void) const=0;
-   virtual MTAPIRES  BackupTTL(const UINT period)=0;
+   virtual uint32_t  BackupTTL(void) const=0;
+   virtual MTAPIRES  BackupTTL(const uint32_t period)=0;
    //--- backup flags - EnBackupFlags
-   virtual UINT64    BackupFlags(void) const=0;
-   virtual MTAPIRES  BackupFlags(const UINT64 flags)=0;
+   virtual uint64_t  BackupFlags(void) const=0;
+   virtual MTAPIRES  BackupFlags(const uint64_t flags)=0;
    //--- sql export mode
-   virtual UINT      SQLExportMode(void) const=0;
-   virtual MTAPIRES  SQLExportMode(const UINT mode)=0;
+   virtual uint32_t  SQLExportMode(void) const=0;
+   virtual MTAPIRES  SQLExportMode(const uint32_t mode)=0;
    //--- sql export flags
-   virtual UINT64    SQLExportFlags(void) const=0;
-   virtual MTAPIRES  SQLExportFlags(const UINT64 flags)=0;
+   virtual uint64_t  SQLExportFlags(void) const=0;
+   virtual MTAPIRES  SQLExportFlags(const uint64_t flags)=0;
    //--- sql export open trades refresh period in minutes
-   virtual UINT      SQLExportPeriod(void) const=0;
-   virtual MTAPIRES  SQLExportPeriod(const UINT period)=0;
+   virtual uint32_t  SQLExportPeriod(void) const=0;
+   virtual MTAPIRES  SQLExportPeriod(const uint32_t period)=0;
    //--- sql export server
    virtual LPCWSTR   SQLExportServer(void) const=0;
    virtual MTAPIRES  SQLExportServer(LPCWSTR server)=0;
@@ -357,21 +357,21 @@ public:
    virtual LPCWSTR   SQLExportFolder(void) const=0;
    virtual MTAPIRES  SQLExportFolder(LPCWSTR folder)=0;
    //--- last synchronization with master server
-   virtual INT64     BackupLastSync(void) const=0;
+   virtual int64_t   BackupLastSync(void) const=0;
    //--- deals tickets ranges for this trade server
    virtual MTAPIRES  FoldersAdd(IMTConBackupFolder* folder)=0;
-   virtual MTAPIRES  FoldersUpdate(const UINT pos,const IMTConBackupFolder* folder)=0;
-   virtual MTAPIRES  FoldersDelete(const UINT pos)=0;
+   virtual MTAPIRES  FoldersUpdate(const uint32_t pos,const IMTConBackupFolder* folder)=0;
+   virtual MTAPIRES  FoldersDelete(const uint32_t pos)=0;
    virtual MTAPIRES  FoldersClear(void)=0;
-   virtual MTAPIRES  FoldersShift(const UINT pos,const int shift)=0;
-   virtual UINT      FoldersTotal(void) const=0;
-   virtual MTAPIRES  FoldersNext(const UINT pos,IMTConBackupFolder* folder) const=0;
+   virtual MTAPIRES  FoldersShift(const uint32_t pos,const int32_t shift)=0;
+   virtual uint32_t  FoldersTotal(void) const=0;
+   virtual MTAPIRES  FoldersNext(const uint32_t pos,IMTConBackupFolder* folder) const=0;
    //--- last synchronization with SQL
-   virtual INT64     SQLExportLastSync(void) const=0;
+   virtual int64_t   SQLExportLastSync(void) const=0;
    //---  last server startup, last full & archive backup
-   virtual INT64     BackupLastStartup(void) const=0;
-   virtual INT64     BackupLastFull(void) const=0;
-   virtual INT64     BackupLastArchive(void) const=0;
+   virtual int64_t   BackupLastStartup(void) const=0;
+   virtual int64_t   BackupLastFull(void) const=0;
+   virtual int64_t   BackupLastArchive(void) const=0;
    //--- explicit destructor is prohibited
 
 protected:
@@ -386,23 +386,27 @@ public:
    //--- access mask
    enum EnAccessMask
      {
-      ACCESS_ALLOW_CLIENT     =1,
-      ACCESS_ALLOW_MANAGER    =2,
-      ACCESS_ALLOW_ADMIN      =4,
-      ACCESS_ALLOW_RESERVED   =8,
-      ACCESS_ALLOW_MANAGER_API=16,
-      ACCESS_ALLOW_WEB_API    =32,
+      ACCESS_ALLOW_CLIENT     =0x00000001,
+      ACCESS_ALLOW_MANAGER    =0x00000002,
+      ACCESS_ALLOW_ADMIN      =0x00000004,
+      ACCESS_ALLOW_RESERVED   =0x00000008,
+      ACCESS_ALLOW_MANAGER_API=0x00000010,
+      ACCESS_ALLOW_WEB_API    =0x00000020,
+      ACCESS_ALLOW_VPS        =0x00000040,
+      ACCESS_ALLOW_ULTENCY    =0x00000080,
+      ACCESS_ALLOW_WEB_TERMINAL=0x00000100,
       //--- enumeration borders
-      ACCESS_ALLOW_NONE       =0,
-      ACCESS_ALLOW_ALL        =ACCESS_ALLOW_CLIENT|ACCESS_ALLOW_MANAGER|ACCESS_ALLOW_ADMIN|ACCESS_ALLOW_RESERVED|ACCESS_ALLOW_MANAGER_API|ACCESS_ALLOW_WEB_API
+      ACCESS_ALLOW_NONE       =0x00000000,
+      ACCESS_ALLOW_ALL        =ACCESS_ALLOW_CLIENT|ACCESS_ALLOW_MANAGER|ACCESS_ALLOW_ADMIN|ACCESS_ALLOW_RESERVED|ACCESS_ALLOW_MANAGER_API|ACCESS_ALLOW_WEB_API|ACCESS_ALLOW_VPS|ACCESS_ALLOW_ULTENCY|ACCESS_ALLOW_WEB_TERMINAL
      };
    //--- access flags
    enum EnAccessFlags
      {
-      ACCESS_FLAGS_INVISIBLE  =1,
+      ACCESS_FLAGS_INVISIBLE  =0x00000001,
+      ACCESS_FLAGS_HIDELOGIN  =0x00000002,
       //--- enumeration borders
       ACCESS_FLAGS_NONE       =0,
-      ACCESS_FLAGS_ALL        =ACCESS_FLAGS_INVISIBLE
+      ACCESS_FLAGS_ALL        =ACCESS_FLAGS_INVISIBLE|ACCESS_FLAGS_HIDELOGIN
      };
    //--- EnServerPriority
    enum EnServerPriority
@@ -419,51 +423,51 @@ public:
    virtual MTAPIRES  Assign(const IMTConServerAccess* param)=0;
    virtual MTAPIRES  Clear(void)=0;
    //--- priority
-   virtual UINT      Priority(void) const=0;
-   virtual MTAPIRES  Priority(const UINT priority)=0;
-   virtual UINT      PriorityCurrent(void) const=0;
+   virtual uint32_t  Priority(void) const=0;
+   virtual MTAPIRES  Priority(const uint32_t priority)=0;
+   virtual uint32_t  PriorityCurrent(void) const=0;
    //--- access flags EnAccessMask
-   virtual UINT      AccessMask(void) const=0;
-   virtual MTAPIRES  AccessMask(const UINT mask)=0;
+   virtual uint32_t  AccessMask(void) const=0;
+   virtual MTAPIRES  AccessMask(const uint32_t mask)=0;
    //--- max news buffer
-   virtual UINT      NewsMax(void) const=0;
-   virtual MTAPIRES  NewsMax(const UINT news_max)=0;
+   virtual uint32_t  NewsMax(void) const=0;
+   virtual MTAPIRES  NewsMax(const uint32_t news_max)=0;
    //--- antiflood
-   virtual UINT      AntifloodEnabled(void) const=0;
-   virtual MTAPIRES  AntifloodEnabled(const UINT enabled)=0;
+   virtual uint32_t  AntifloodEnabled(void) const=0;
+   virtual MTAPIRES  AntifloodEnabled(const uint32_t enabled)=0;
    //--- antiflood connects criterion
-   virtual UINT      AntifloodConnects(void) const=0;
-   virtual MTAPIRES  AntifloodConnects(const UINT connects)=0;
+   virtual uint32_t  AntifloodConnects(void) const=0;
+   virtual MTAPIRES  AntifloodConnects(const uint32_t connects)=0;
    //--- antiflood connects criterion
-   virtual UINT      AntifloodErrors(void) const=0;
-   virtual MTAPIRES  AntifloodErrors(const UINT errors)=0;
+   virtual uint32_t  AntifloodErrors(void) const=0;
+   virtual MTAPIRES  AntifloodErrors(const uint32_t errors)=0;
    //--- list of public addresses (address:port) available for terminals
    virtual MTAPIRES  PointsAdd(LPCWSTR path)=0;
-   virtual MTAPIRES  PointsUpdate(const UINT pos,LPCWSTR address)=0;
-   virtual MTAPIRES  PointsDelete(const UINT pos)=0;
+   virtual MTAPIRES  PointsUpdate(const uint32_t pos,LPCWSTR address)=0;
+   virtual MTAPIRES  PointsDelete(const uint32_t pos)=0;
    virtual MTAPIRES  PointsClear(void)=0;
-   virtual MTAPIRES  PointsShift(const UINT pos,const int shift)=0;
-   virtual UINT      PointsTotal(void) const=0;
-   virtual LPCWSTR   PointsNext(const UINT pos) const=0;
+   virtual MTAPIRES  PointsShift(const uint32_t pos,const int32_t shift)=0;
+   virtual uint32_t  PointsTotal(void) const=0;
+   virtual LPCWSTR   PointsNext(const uint32_t pos) const=0;
    //--- list of internal addresses (address:port) for server listening
    virtual MTAPIRES  BindingsAdd(LPCWSTR path)=0;
-   virtual MTAPIRES  BindingsUpdate(const UINT pos,LPCWSTR address)=0;
-   virtual MTAPIRES  BindingsDelete(const UINT pos)=0;
+   virtual MTAPIRES  BindingsUpdate(const uint32_t pos,LPCWSTR address)=0;
+   virtual MTAPIRES  BindingsDelete(const uint32_t pos)=0;
    virtual MTAPIRES  BindingsClear(void)=0;
-   virtual MTAPIRES  BindingsShift(const UINT pos,const int shift)=0;
-   virtual UINT      BindingsTotal(void) const=0;
-   virtual LPCWSTR   BindingsNext(const UINT pos) const=0;
+   virtual MTAPIRES  BindingsShift(const uint32_t pos,const int32_t shift)=0;
+   virtual uint32_t  BindingsTotal(void) const=0;
+   virtual LPCWSTR   BindingsNext(const uint32_t pos) const=0;
    //--- list of trade attended trade servers
-   virtual MTAPIRES  ServersAdd(const UINT64 server_id)=0;
-   virtual MTAPIRES  ServersUpdate(const UINT pos,UINT64 server_id)=0;
-   virtual MTAPIRES  ServersDelete(const UINT pos)=0;
+   virtual MTAPIRES  ServersAdd(const uint64_t server_id)=0;
+   virtual MTAPIRES  ServersUpdate(const uint32_t pos,uint64_t server_id)=0;
+   virtual MTAPIRES  ServersDelete(const uint32_t pos)=0;
    virtual MTAPIRES  ServersClear(void)=0;
-   virtual MTAPIRES  ServersShift(const UINT pos,const int shift)=0;
-   virtual UINT      ServersTotal(void) const=0;
-   virtual UINT64    ServersNext(const UINT pos) const=0;
+   virtual MTAPIRES  ServersShift(const uint32_t pos,const int32_t shift)=0;
+   virtual uint32_t  ServersTotal(void) const=0;
+   virtual uint64_t  ServersNext(const uint32_t pos) const=0;
    //--- access flags EnAccessFlags
-   virtual UINT      AccessFlags(void) const=0;
-   virtual MTAPIRES  AccessFlags(const UINT flags)=0;
+   virtual uint32_t  AccessFlags(void) const=0;
+   virtual MTAPIRES  AccessFlags(const uint32_t flags)=0;
    //--- explicit destructor is prohibited
 protected:
                     ~IMTConServerAccess(void) {}
@@ -477,15 +481,18 @@ public:
    //--- access mask
    enum EnAccessMask
      {
-      ACCESS_ALLOW_CLIENT     =1,
-      ACCESS_ALLOW_MANAGER    =2,
-      ACCESS_ALLOW_ADMIN      =4,
-      ACCESS_ALLOW_CLIENT_API =8,
-      ACCESS_ALLOW_MANAGER_API=16,
-      ACCESS_ALLOW_WEB_API    =32,
-      //--- enumeration borders
-      ACCESS_ALLOW_NONE       =0,
-      ACCESS_ALLOW_ALL        =ACCESS_ALLOW_CLIENT|ACCESS_ALLOW_MANAGER|ACCESS_ALLOW_ADMIN|ACCESS_ALLOW_CLIENT_API|ACCESS_ALLOW_MANAGER_API|ACCESS_ALLOW_WEB_API
+      ACCESS_ALLOW_CLIENT      =0x00000001,
+      ACCESS_ALLOW_MANAGER     =0x00000002,
+      ACCESS_ALLOW_ADMIN       =0x00000004,
+      ACCESS_ALLOW_RESERVED    =0x00000008,
+      ACCESS_ALLOW_MANAGER_API =0x00000010,
+      ACCESS_ALLOW_WEB_API     =0x00000020,
+      ACCESS_ALLOW_VPS         =0x00000040,
+      ACCESS_ALLOW_ULTENCY     =0x00000080,
+      ACCESS_ALLOW_WEB_TERMINAL=0x00000100,
+      //---
+      ACCESS_ALLOW_NONE        =0x00000000,
+      ACCESS_ALLOW_ALL         =ACCESS_ALLOW_CLIENT|ACCESS_ALLOW_MANAGER|ACCESS_ALLOW_ADMIN|ACCESS_ALLOW_RESERVED|ACCESS_ALLOW_MANAGER_API|ACCESS_ALLOW_WEB_API|ACCESS_ALLOW_VPS|ACCESS_ALLOW_ULTENCY|ACCESS_ALLOW_WEB_TERMINAL
      };
    //--- EnServerPriority
    enum EnServerPriority
@@ -502,34 +509,34 @@ public:
    virtual MTAPIRES  Assign(const IMTConServerAntiDDoS* param)=0;
    virtual MTAPIRES  Clear(void)=0;
    //--- priority
-   virtual UINT      Priority(void) const=0;
-   virtual MTAPIRES  Priority(const UINT priority)=0;
+   virtual uint32_t  Priority(void) const=0;
+   virtual MTAPIRES  Priority(const uint32_t priority)=0;
    //--- access flags EnAccessMask
-   virtual UINT      AccessMask(void) const=0;
-   virtual MTAPIRES  AccessMask(const UINT mask)=0;
+   virtual uint32_t  AccessMask(void) const=0;
+   virtual MTAPIRES  AccessMask(const uint32_t mask)=0;
    //--- list of public addresses (address:port) available for terminals
    virtual MTAPIRES  PointsAdd(LPCWSTR path)=0;
-   virtual MTAPIRES  PointsUpdate(const UINT pos,LPCWSTR address)=0;
-   virtual MTAPIRES  PointsDelete(const UINT pos)=0;
+   virtual MTAPIRES  PointsUpdate(const uint32_t pos,LPCWSTR address)=0;
+   virtual MTAPIRES  PointsDelete(const uint32_t pos)=0;
    virtual MTAPIRES  PointsClear(void)=0;
-   virtual MTAPIRES  PointsShift(const UINT pos,const int shift)=0;
-   virtual UINT      PointsTotal(void) const=0;
-   virtual LPCWSTR   PointsNext(const UINT pos) const=0;
+   virtual MTAPIRES  PointsShift(const uint32_t pos,const int32_t shift)=0;
+   virtual uint32_t  PointsTotal(void) const=0;
+   virtual LPCWSTR   PointsNext(const uint32_t pos) const=0;
    //--- list of trade attended trade servers
-   virtual MTAPIRES  ServersAdd(const UINT64 server_id)=0;
-   virtual MTAPIRES  ServersUpdate(const UINT pos,UINT64 server_id)=0;
-   virtual MTAPIRES  ServersDelete(const UINT pos)=0;
+   virtual MTAPIRES  ServersAdd(const uint64_t server_id)=0;
+   virtual MTAPIRES  ServersUpdate(const uint32_t pos,uint64_t server_id)=0;
+   virtual MTAPIRES  ServersDelete(const uint32_t pos)=0;
    virtual MTAPIRES  ServersClear(void)=0;
-   virtual MTAPIRES  ServersShift(const UINT pos,const int shift)=0;
-   virtual UINT      ServersTotal(void) const=0;
-   virtual UINT64    ServersNext(const UINT pos) const=0;
+   virtual MTAPIRES  ServersShift(const uint32_t pos,const int32_t shift)=0;
+   virtual uint32_t  ServersTotal(void) const=0;
+   virtual uint64_t  ServersNext(const uint32_t pos) const=0;
    //--- list of source addresses
    virtual MTAPIRES  SourcesAdd(IMTConAddressRange* range)=0;
-   virtual MTAPIRES  SourcesUpdate(const UINT pos,const IMTConAddressRange* range)=0;
-   virtual MTAPIRES  SourcesDelete(const UINT pos)=0;
-   virtual MTAPIRES  SourcesShift(const UINT pos,const int shift)=0;
-   virtual UINT      SourcesTotal(void) const=0;
-   virtual MTAPIRES  SourcesNext(const UINT pos,IMTConAddressRange* access) const=0;
+   virtual MTAPIRES  SourcesUpdate(const uint32_t pos,const IMTConAddressRange* range)=0;
+   virtual MTAPIRES  SourcesDelete(const uint32_t pos)=0;
+   virtual MTAPIRES  SourcesShift(const uint32_t pos,const int32_t shift)=0;
+   virtual uint32_t  SourcesTotal(void) const=0;
+   virtual MTAPIRES  SourcesNext(const uint32_t pos,IMTConAddressRange* access) const=0;
 protected:
                     ~IMTConServerAntiDDoS(void) {}
   };
@@ -550,9 +557,10 @@ public:
       NET_OBSOLETE_SERVER_1   =5,
       NET_OBSOLETE_SERVER_2   =6,
       NET_ANTIDDOS_SERVER     =7,
+      NET_MATCHING_SERVER     =8,
       //--- enumeration borders
       NET_SERVER_FIRST        =NET_MAIN_TRADE_SERVER,
-      NET_SERVER_LAST         =NET_ANTIDDOS_SERVER
+      NET_SERVER_LAST         =NET_MATCHING_SERVER
      };
    //--- failover mode
    enum EnFailoverModes
@@ -564,13 +572,22 @@ public:
       FAILOVER_MODE_FIRST     =FAILOVER_MODE_DISABLED,
       FAILOVER_MODE_LAST      =FAILOVER_MODE_BY_ALL
      };
+   //--- failover mode
+   enum EnFailoverWitnessModes
+     {
+      FAILOVER_WITNESS_DISABLED=0,
+      FAILOVER_WITNESS_ENABLED =1,
+      //--- enumeration borders
+      FAILOVER_WITNESS_FIRST   =FAILOVER_WITNESS_DISABLED,
+      FAILOVER_WITNESS_LAST    =FAILOVER_WITNESS_ENABLED
+     };
    //--- common methods
    virtual void      Release(void)=0;
    virtual MTAPIRES  Assign(const IMTConServer* param)=0;
    virtual MTAPIRES  Clear(void)=0;
    //--- server type
-   virtual UINT      Type(void) const=0;
-   virtual MTAPIRES  Type(const UINT type)=0;
+   virtual uint32_t  Type(void) const=0;
+   virtual MTAPIRES  Type(const uint32_t type)=0;
    //--- server name
    virtual LPCWSTR   Name(void) const=0;
    virtual MTAPIRES  Name(LPCWSTR name)=0;
@@ -578,55 +595,55 @@ public:
    virtual LPCWSTR   Address(void) const=0;
    virtual MTAPIRES  Address(LPCWSTR name)=0;
    //--- server id
-   virtual UINT64    Id(void) const=0;
-   virtual MTAPIRES  Id(const UINT64 id)=0;
+   virtual uint64_t  Id(void) const=0;
+   virtual MTAPIRES  Id(const uint64_t id)=0;
    //--- password
    virtual MTAPIRES  Password(LPCWSTR password)=0;
    virtual MTAPIRES  PasswordCheck(LPCWSTR password) const=0;
    //--- service time in minutes
-   virtual UINT      ServiceTime(void) const=0;
-   virtual MTAPIRES  ServiceTime(const UINT stime)=0;
+   virtual uint32_t  ServiceTime(void) const=0;
+   virtual MTAPIRES  ServiceTime(const uint32_t stime)=0;
    //--- list of network adapters
    virtual LPCWSTR   AdaptersCurrent(void) const=0;
    virtual MTAPIRES  AdaptersCurrent(LPCWSTR current)=0;
-   virtual UINT      AdaptersTotal(void) const=0;
-   virtual LPCWSTR   AdaptersNext(const UINT pos) const=0;
+   virtual uint32_t  AdaptersTotal(void) const=0;
+   virtual LPCWSTR   AdaptersNext(const uint32_t pos) const=0;
    //--- list of available ips
-   virtual UINT      AddressTotal(void) const=0;
-   virtual UINT      AddressNext(const UINT pos) const=0;
+   virtual uint32_t  AddressTotal(void) const=0;
+   virtual uint32_t  AddressNext(const uint32_t pos) const=0;
    //--- server info
-   virtual UINT      Version(void) const=0;
-   virtual UINT      Build(void) const=0;
+   virtual uint32_t  Version(void) const=0;
+   virtual uint32_t  Build(void) const=0;
    virtual LPCWSTR   BuildDate(void) const=0;
-   virtual INT64     LastBootTime(void) const=0;
+   virtual int64_t     LastBootTime(void) const=0;
    virtual bool      Connected(void) const=0;
    virtual LPCWSTR   OS(void) const=0;
    //--- cpu info
    virtual LPCWSTR   CPU(void) const=0;
-   virtual UINT      CPUTotal(void) const=0;
-   virtual UINT      CPUUsageMax(void) const=0;
-   virtual UINT      CPUUsageCritical(void) const=0;
+   virtual uint32_t  CPUTotal(void) const=0;
+   virtual uint32_t  CPUUsageMax(void) const=0;
+   virtual uint32_t  CPUUsageCritical(void) const=0;
    //--- memory info (in MB)
-   virtual UINT      MemoryTotal(void) const=0;
-   virtual UINT      MemoryFree(void) const=0;
-   virtual UINT      MemoryFreeMin(void) const=0;
-   virtual UINT      MemoryFreeCritical(void) const=0;
+   virtual uint32_t  MemoryTotal(void) const=0;
+   virtual uint32_t  MemoryFree(void) const=0;
+   virtual uint32_t  MemoryFreeMin(void) const=0;
+   virtual uint32_t  MemoryFreeCritical(void) const=0;
    //--- hdd info (in MB)
-   virtual UINT      HDDTotal(void) const=0;
-   virtual UINT      HDDFree(void) const=0;
-   virtual UINT      HDDFreeCritical(void) const=0;
-   virtual UINT      HDDFragments(void) const=0;
-   virtual UINT      HDDFragmentsCritical(void) const=0;
-   virtual UINT      HDDSpeedRead(void) const=0;
-   virtual UINT      HDDSpeedReadCritical(void) const=0;
-   virtual UINT      HDDSpeedWrite(void) const=0;
-   virtual UINT      HDDSpeedWriteCritical(void) const=0;
+   virtual uint32_t  HDDTotal(void) const=0;
+   virtual uint32_t  HDDFree(void) const=0;
+   virtual uint32_t  HDDFreeCritical(void) const=0;
+   virtual uint32_t  HDDFragments(void) const=0;
+   virtual uint32_t  HDDFragmentsCritical(void) const=0;
+   virtual uint32_t  HDDSpeedRead(void) const=0;
+   virtual uint32_t  HDDSpeedReadCritical(void) const=0;
+   virtual uint32_t  HDDSpeedWrite(void) const=0;
+   virtual uint32_t  HDDSpeedWriteCritical(void) const=0;
    //--- connections info
-   virtual UINT      ConnectsMax(void) const=0;
-   virtual UINT      ConnectsCritical(void) const=0;
+   virtual uint32_t  ConnectsMax(void) const=0;
+   virtual uint32_t  ConnectsCritical(void) const=0;
    //--- network info (Kbyte/s)
-   virtual UINT      NetworkMax(void) const=0;
-   virtual UINT      NetworkCritical(void) const=0;
+   virtual uint32_t  NetworkMax(void) const=0;
+   virtual uint32_t  NetworkCritical(void) const=0;
    //--- specific server interfaces
    virtual IMTConServerTrade* TradeServer(void)=0;
    virtual IMTConServerHistory* HistoryServer(void)=0;
@@ -639,36 +656,39 @@ public:
    virtual void*     ReservedServer4(void)=0;
    //--- list of external addresses (address:port) for connections to server
    virtual MTAPIRES  PointsAdd(LPCWSTR path)=0;
-   virtual MTAPIRES  PointsUpdate(const UINT pos,LPCWSTR address)=0;
-   virtual MTAPIRES  PointsDelete(const UINT pos)=0;
+   virtual MTAPIRES  PointsUpdate(const uint32_t pos,LPCWSTR address)=0;
+   virtual MTAPIRES  PointsDelete(const uint32_t pos)=0;
    virtual MTAPIRES  PointsClear(void)=0;
-   virtual MTAPIRES  PointsShift(const UINT pos,const int shift)=0;
-   virtual UINT      PointsTotal(void) const=0;
-   virtual LPCWSTR   PointsNext(const UINT pos) const=0;
+   virtual MTAPIRES  PointsShift(const uint32_t pos,const int32_t shift)=0;
+   virtual uint32_t  PointsTotal(void) const=0;
+   virtual LPCWSTR   PointsNext(const uint32_t pos) const=0;
    //--- list of internal addresses (address:port) for server listening
    virtual MTAPIRES  BindingsAdd(LPCWSTR path)=0;
-   virtual MTAPIRES  BindingsUpdate(const UINT pos,LPCWSTR address)=0;
-   virtual MTAPIRES  BindingsDelete(const UINT pos)=0;
+   virtual MTAPIRES  BindingsUpdate(const uint32_t pos,LPCWSTR address)=0;
+   virtual MTAPIRES  BindingsDelete(const uint32_t pos)=0;
    virtual MTAPIRES  BindingsClear(void)=0;
-   virtual MTAPIRES  BindingsShift(const UINT pos,const int shift)=0;
-   virtual UINT      BindingsTotal(void) const=0;
-   virtual LPCWSTR   BindingsNext(const UINT pos) const=0;
+   virtual MTAPIRES  BindingsShift(const uint32_t pos,const int32_t shift)=0;
+   virtual uint32_t  BindingsTotal(void) const=0;
+   virtual LPCWSTR   BindingsNext(const uint32_t pos) const=0;
    //--- failover mode
-   virtual UINT      FailoverMode(void) const=0;
-   virtual MTAPIRES  FailoverMode(const UINT mode)=0;
+   virtual uint32_t  FailoverMode(void) const=0;
+   virtual MTAPIRES  FailoverMode(const uint32_t mode)=0;
    //--- failover timeout
-   virtual UINT      FailoverTimeout(void) const=0;
-   virtual MTAPIRES  FailoverTimeout(const UINT timeout)=0;
+   virtual uint32_t  FailoverTimeout(void) const=0;
+   virtual MTAPIRES  FailoverTimeout(const uint32_t timeout)=0;
    //--- cluster servers state
-   virtual UINT      ClusterStateTotal(void) const=0;
-   virtual MTAPIRES  ClusterStateNext(const UINT pos,IMTConClusterState* state) const=0;
-   virtual MTAPIRES  ClusterStateGet(const UINT64 id,IMTConClusterState* state) const=0;
+   virtual uint32_t  ClusterStateTotal(void) const=0;
+   virtual MTAPIRES  ClusterStateNext(const uint32_t pos,IMTConClusterState* state) const=0;
+   virtual MTAPIRES  ClusterStateGet(const uint64_t id,IMTConClusterState* state) const=0;
    //--- address
    virtual LPCWSTR   AddressIPv6(void) const=0;
    virtual MTAPIRES  AddressIPv6(LPCWSTR name)=0;
    //--- list of available ips
-   virtual UINT      AddressIPv6Total(void) const=0;
-   virtual MTAPIRES  AddressIPv6Next(const UINT pos,MTAPISTR& address) const=0;
+   virtual uint32_t  AddressIPv6Total(void) const=0;
+   virtual MTAPIRES  AddressIPv6Next(const uint32_t pos,MTAPISTR& address) const=0;
+   //--- failover witness
+   virtual uint32_t  FailoverWitnessMode(void) const=0;
+   virtual MTAPIRES  FailoverWitnessMode(const uint32_t mode)=0;
 
 protected:
                     ~IMTConServer(void) {}

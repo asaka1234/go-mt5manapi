@@ -1,6 +1,6 @@
-//+------------------------------------------------------------------+
+﻿//+------------------------------------------------------------------+
 //|                                                 MetaTrader 5 API |
-//|                             Copyright 2000-2024, MetaQuotes Ltd. |
+//|                             Copyright 2000-2026, MetaQuotes Ltd. |
 //|                                               www.metaquotes.net |
 //+------------------------------------------------------------------+
 #pragma once
@@ -24,14 +24,14 @@ public:
    virtual MTAPIRES  Clear(void)=0;
    virtual LPCWSTR   Print(MTAPISTR& string) const=0;
    //--- request id
-   virtual UINT      ID(void) const=0;
-   virtual MTAPIRES  ID(const UINT id)=0;
+   virtual uint32_t  ID(void) const=0;
+   virtual MTAPIRES  ID(const uint32_t id)=0;
    //--- confirmation retcode
    virtual MTAPIRES  Retcode(void) const=0;
    virtual MTAPIRES  Retcode(const MTAPIRES retcode)=0;
    //--- confirmed volume
-   virtual UINT64    Volume(void) const=0;
-   virtual MTAPIRES  Volume(const UINT64 volume)=0;
+   virtual uint64_t  Volume(void) const=0;
+   virtual MTAPIRES  Volume(const uint64_t volume)=0;
    //--- confirmed price
    virtual double    Price(void) const=0;
    virtual MTAPIRES  Price(const double price)=0;
@@ -48,8 +48,8 @@ public:
    virtual LPCWSTR   Comment(void) const=0;
    virtual MTAPIRES  Comment(LPCWSTR comment)=0;
    //--- flags
-   virtual UINT      Flags(void) const=0;
-   virtual MTAPIRES  Flags(const UINT flags)=0;
+   virtual uint32_t  Flags(void) const=0;
+   virtual MTAPIRES  Flags(const uint32_t flags)=0;
    //--- linked deal id in external system
    virtual LPCWSTR   DealID(void) const=0;
    virtual MTAPIRES  DealID(LPCWSTR deal_id)=0;
@@ -63,11 +63,17 @@ public:
    virtual LPCWSTR   PositionExternalID(void) const=0;
    virtual MTAPIRES  PositionExternalID(LPCWSTR id)=0;
    //--- external trade system return code
-   virtual int       ExternalRetcode(void) const=0;
-   virtual MTAPIRES  ExternalRetcode(const int retcode)=0;
+   virtual int32_t   ExternalRetcode(void) const=0;
+   virtual MTAPIRES  ExternalRetcode(const int32_t retcode)=0;
    //--- confirmed volume with extended accuracy
-   virtual UINT64    VolumeExt(void) const=0;
-   virtual MTAPIRES  VolumeExt(const UINT64 volume)=0;
+   virtual uint64_t  VolumeExt(void) const=0;
+   virtual MTAPIRES  VolumeExt(const uint64_t volume)=0;
+   //--- confirmed gateway volume with extended accuracy
+   virtual uint64_t  VolumeGatewayExt(void) const=0;
+   virtual MTAPIRES  VolumeGatewayExt(const uint64_t volume)=0;
+   //--- confirmed gateway deal type
+   virtual uint32_t  ActionGateway(void) const=0;
+   virtual MTAPIRES  ActionGateway(const uint32_t action)=0;
    //--- explicit destructor is prohibited
 protected:
                     ~IMTConfirm(void) {}

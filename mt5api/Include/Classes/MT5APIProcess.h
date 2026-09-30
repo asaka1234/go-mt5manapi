@@ -1,6 +1,6 @@
-//+------------------------------------------------------------------+
+﻿//+------------------------------------------------------------------+
 //|                                                     MetaTrader 5 |
-//|                             Copyright 2000-2024, MetaQuotes Ltd. |
+//|                             Copyright 2000-2026, MetaQuotes Ltd. |
 //|                                               www.metaquotes.net |
 //+------------------------------------------------------------------+
 #pragma once
@@ -20,7 +20,7 @@ private:
    DWORD             m_thread_id;
 
 public:
-   CMTProcess(void) : m_process(INVALID_HANDLE_VALUE),m_thread(INVALID_HANDLE_VALUE),m_std_write(INVALID_HANDLE_VALUE),m_std_read(INVALID_HANDLE_VALUE),m_process_id(0),m_thread_id(0)
+   CMTProcess(void) : m_process(INVALID_HANDLE_VALUE),m_thread(NULL),m_std_write(INVALID_HANDLE_VALUE),m_std_read(INVALID_HANDLE_VALUE),m_process_id(0),m_thread_id(0)
      {
      };
 
@@ -38,6 +38,7 @@ public:
       PROCESS_INFORMATION  pi={};
       SECURITY_ATTRIBUTES  sa={ sizeof(sa),NULL,TRUE };
 
+      si.cb=sizeof(si);
       if(flags & CREATE_NEW_CONSOLE)
         {
          HANDLE read_handle=INVALID_HANDLE_VALUE;
@@ -55,7 +56,6 @@ public:
               }
             ::CloseHandle(read_handle);
             //--- fill structure
-            si.cb         =sizeof(si);
             si.dwFlags    =STARTF_USESTDHANDLES|STARTF_USESHOWWINDOW;
             si.hStdOutput =m_std_write;
             si.hStdInput  =NULL;
@@ -102,10 +102,10 @@ public:
          m_process_id=0;
         }
       //--- close process thread handle
-      if(m_thread!=INVALID_HANDLE_VALUE)
+      if(m_thread)
         {
          CloseHandle(m_thread);
-         m_thread=INVALID_HANDLE_VALUE;
+         m_thread=NULL;
          m_thread_id=0;
         }
      }

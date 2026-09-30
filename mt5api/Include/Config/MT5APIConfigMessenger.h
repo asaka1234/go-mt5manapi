@@ -1,6 +1,6 @@
-//+------------------------------------------------------------------+
+﻿//+------------------------------------------------------------------+
 //|                                                 MetaTrader 5 API |
-//|                             Copyright 2000-2024, MetaQuotes Ltd. |
+//|                             Copyright 2000-2026, MetaQuotes Ltd. |
 //|                                               www.metaquotes.net |
 //+------------------------------------------------------------------+
 #pragma once
@@ -36,6 +36,38 @@ public:
    virtual MTAPIRES  Group(LPCWSTR group)=0;
   };
 //+------------------------------------------------------------------+
+//| Messenger template config                                        |
+//+------------------------------------------------------------------+
+class IMTConMessengerTemplate
+  {
+public:
+   //--- template types
+   enum EnMessengerTemplateTypes
+     {
+      TEMPLATE_TYPE_PHONE_CONFIRMATION  =0,
+      TEMPLATE_TYPE_DEPOSIT_COMPLETED   =1,
+      TEMPLATE_TYPE_DEPOSIT_FAILED      =2,
+      TEMPLATE_TYPE_DEPOSIT_PROCESSEED  =3,
+      TEMPLATE_TYPE_WITHDRAWAL_COMPLETED=4,
+      TEMPLATE_TYPE_WITHDRAWAL_CONFIRMED=5,
+      TEMPLATE_TYPE_WITHDRAWAL_FAILED   =6,
+      TEMPLATE_TYPE_WITHDRAWAL_VERIFIED =7,
+      //--- enumeration borders
+      TEMPLATE_TYPE_FIRST               =TEMPLATE_TYPE_PHONE_CONFIRMATION,
+      TEMPLATE_TYPE_LAST                =TEMPLATE_TYPE_WITHDRAWAL_VERIFIED
+     };
+   //--- common methods
+   virtual void      Release(void)=0;
+   virtual MTAPIRES  Assign(const IMTConMessengerTemplate* tpl)=0;
+   virtual MTAPIRES  Clear(void)=0;
+   //--- template type
+   virtual uint32_t  Type(void) const=0;
+   virtual MTAPIRES  Type(const uint32_t type)=0;
+   //--- template id
+   virtual LPCWSTR   Id(void) const=0;
+   virtual MTAPIRES  Id(LPCWSTR id)=0;
+  };
+//+------------------------------------------------------------------+
 //| Messenger config                                                 |
 //+------------------------------------------------------------------+
 class IMTConMessenger
@@ -56,7 +88,7 @@ public:
    //--- providers
    enum EnProviderType
      {
-      //---- SMS
+      //--- SMS
       PROVIDER_SMS_BULKSMS       =0,
       PROVIDER_SMS_CLICKATELL    =1,
       PROVIDER_SMS_WEBSMS        =2,
@@ -65,17 +97,19 @@ public:
       PROVIDER_SMS_VONAGE        =5,
       PROVIDER_SMS_INFOBIP       =6,
       PROVIDER_SMS_FONIVA        =7,
+      PROVIDER_SMS_SURFMAN       =8,
+      PROVIDER_SMS_VOISO         =9,
       //--- SMS ranges
       PROVIDER_SMS_FIRST         =PROVIDER_SMS_BULKSMS,
       PROVIDER_SMS_LAST          =99,
-      //---- Instant Messengers
+      //--- Instant Messengers
       PROVIDER_IM_TELEGRAM       =100,
       PROVIDER_IM_SLACK          =101,
       PROVIDER_IM_MICROSOFT_TEAMS=102,
       //--- Instant Messengers ranges
       PROVIDER_IM_FIRST          =PROVIDER_IM_TELEGRAM,
       PROVIDER_IM_LAST           =199,
-      //---- Push Services
+      //--- Push Services
       PROVIDER_PUSH_METAQUOTES   =200,
       PROVIDER_PUSH_UNIVERSAL    =201,
       //--- Push Services ranges
@@ -93,8 +127,8 @@ public:
    virtual LPCWSTR   Sender(void) const=0;
    virtual MTAPIRES  Sender(LPCWSTR sender)=0;
    //--- provider type
-   virtual UINT      ProviderType(void) const=0;
-   virtual MTAPIRES  ProviderType(const UINT provider)=0;
+   virtual uint32_t  ProviderType(void) const=0;
+   virtual MTAPIRES  ProviderType(const uint32_t provider)=0;
    //--- provider address
    virtual LPCWSTR   ProviderAddress(void) const=0;
    virtual MTAPIRES  ProviderAddress(LPCWSTR address)=0;
@@ -117,27 +151,35 @@ public:
    virtual double    ProviderCurrencyRate(void) const=0;
    virtual MTAPIRES  ProviderCurrencyRate(const double rate)=0;
    //--- EnFlags
-   virtual UINT64    Flags(void) const=0;
-   virtual MTAPIRES  Flags(const UINT64 flags)=0;
+   virtual uint64_t    Flags(void) const=0;
+   virtual MTAPIRES  Flags(const uint64_t flags)=0;
    //--- message template
    virtual LPCWSTR   MessageTemplate(void) const=0;
    virtual MTAPIRES  MessageTemplate(LPCWSTR msg_template)=0;
    //--- country settings
    virtual MTAPIRES  CountryAdd(IMTConMessengerCountry* country)=0;
-   virtual MTAPIRES  CountryUpdate(const UINT pos,const IMTConMessengerCountry* country)=0;
-   virtual MTAPIRES  CountryDelete(const UINT pos)=0;
+   virtual MTAPIRES  CountryUpdate(const uint32_t pos,const IMTConMessengerCountry* country)=0;
+   virtual MTAPIRES  CountryDelete(const uint32_t pos)=0;
    virtual MTAPIRES  CountryClear(void)=0;
-   virtual MTAPIRES  CountryShift(const UINT pos,const int shift)=0;
-   virtual UINT      CountryTotal(void) const=0;
-   virtual MTAPIRES  CountryNext(const UINT pos,IMTConMessengerCountry* country) const=0;
+   virtual MTAPIRES  CountryShift(const uint32_t pos,const int32_t shift)=0;
+   virtual uint32_t  CountryTotal(void) const=0;
+   virtual MTAPIRES  CountryNext(const uint32_t pos,IMTConMessengerCountry* country) const=0;
    //--- group settings
    virtual MTAPIRES  GroupAdd(IMTConMessengerGroup* group)=0;
-   virtual MTAPIRES  GroupUpdate(const UINT pos,const IMTConMessengerGroup* group)=0;
-   virtual MTAPIRES  GroupDelete(const UINT pos)=0;
+   virtual MTAPIRES  GroupUpdate(const uint32_t pos,const IMTConMessengerGroup* group)=0;
+   virtual MTAPIRES  GroupDelete(const uint32_t pos)=0;
    virtual MTAPIRES  GroupClear(void)=0;
-   virtual MTAPIRES  GroupShift(const UINT pos,const int shift)=0;
-   virtual UINT      GroupTotal(void) const=0;
-   virtual MTAPIRES  GroupNext(const UINT pos,IMTConMessengerGroup* group) const=0;
+   virtual MTAPIRES  GroupShift(const uint32_t pos,const int32_t shift)=0;
+   virtual uint32_t  GroupTotal(void) const=0;
+   virtual MTAPIRES  GroupNext(const uint32_t pos,IMTConMessengerGroup* group) const=0;
+   //--- template settings
+   virtual MTAPIRES  TemplateAdd(IMTConMessengerTemplate* tpl)=0;
+   virtual MTAPIRES  TemplateUpdate(const uint32_t pos,const IMTConMessengerTemplate* tpl)=0;
+   virtual MTAPIRES  TemplateDelete(const uint32_t pos)=0;
+   virtual MTAPIRES  TemplateClear(void)=0;
+   virtual MTAPIRES  TemplateShift(const uint32_t pos,const int32_t shift)=0;
+   virtual uint32_t  TemplateTotal(void) const=0;
+   virtual MTAPIRES  TemplateNext(const uint32_t pos,IMTConMessengerTemplate* tpl) const=0;
    //--- explicit destructor is prohibited
 protected:
                     ~IMTConMessenger(void) {}

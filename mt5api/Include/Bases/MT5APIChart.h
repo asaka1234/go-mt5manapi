@@ -1,6 +1,6 @@
-//+------------------------------------------------------------------+
+﻿//+------------------------------------------------------------------+
 //|                                                 MetaTrader 5 API |
-//|                             Copyright 2000-2024, MetaQuotes Ltd. |
+//|                             Copyright 2000-2026, MetaQuotes Ltd. |
 //|                                               www.metaquotes.net |
 //+------------------------------------------------------------------+
 #pragma once
@@ -22,16 +22,16 @@ enum EnSplitRounding
 #pragma pack(push,1)
 struct MTChartBar
   {
-   INT64             datetime;          // datetime
+   int64_t           datetime;          // datetime
    //--- prices
    double            open;              // open price
    double            high;              // high price
    double            low;               // low price
    double            close;             // close price
    //--- volumes
-   UINT64            tick_volume;       // tick volume
-   INT32             spread;            // spread
-   UINT64            volume;            // volume
+   uint64_t          tick_volume;       // tick volume
+   int32_t           spread;            // spread
+   uint64_t          volume;            // volume
   };
 #pragma pack(pop)
 //+------------------------------------------------------------------+
@@ -41,8 +41,8 @@ class IMTChartSink
   {
 public:
    //--- split
-   virtual void      OnChartSplit(LPCWSTR symbol,const double new_shares,const double old_shares,const UINT rounding_rule,const INT64 datetime_from,const INT64 datetime_to)   {}
-   virtual MTAPIRES  HookChartSplit(LPCWSTR symbol,const double new_shares,const double old_shares,const UINT rounding_rule,const INT64 datetime_from,const INT64 datetime_to) { return(MT_RET_OK); }
+   virtual void      OnChartSplit(LPCWSTR symbol,const double new_shares,const double old_shares,const uint32_t rounding_rule,const int64_t datetime_from,const int64_t datetime_to)   {}
+   virtual MTAPIRES  HookChartSplit(LPCWSTR symbol,const double new_shares,const double old_shares,const uint32_t rounding_rule,const int64_t datetime_from,const int64_t datetime_to) { return(MT_RET_OK); }
   };
 //+------------------------------------------------------------------+
 

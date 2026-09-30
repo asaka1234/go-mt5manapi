@@ -1,6 +1,6 @@
-//+------------------------------------------------------------------+
+﻿//+------------------------------------------------------------------+
 //|                                         MetaTrader 5 API Server  |
-//|                             Copyright 2000-2024, MetaQuotes Ltd. |
+//|                             Copyright 2000-2026, MetaQuotes Ltd. |
 //|                                               www.metaquotes.net |
 //+------------------------------------------------------------------+
 #pragma once
@@ -29,7 +29,7 @@ public:
    virtual MTAPIRES  Assign(const IMTNews* news)=0;
    virtual MTAPIRES  Clear(void)=0;
    //--- news ID
-   virtual UINT64    ID(void) const=0;
+   virtual uint64_t  ID(void) const=0;
    //--- subject
    virtual LPCWSTR   Subject(void) const=0;
    virtual MTAPIRES  Subject(LPCWSTR subject)=0;
@@ -37,18 +37,18 @@ public:
    virtual LPCWSTR   Category(void) const=0;
    virtual MTAPIRES  Category(LPCWSTR category)=0;
    //--- time
-   virtual INT64     Time(void) const=0;
-   virtual MTAPIRES  Time(const INT64 datetime)=0;
+   virtual int64_t   Time(void) const=0;
+   virtual MTAPIRES  Time(const int64_t datetime)=0;
    //--- language
-   virtual UINT      Language(void) const=0;
-   virtual MTAPIRES  Language(const UINT language)=0;
+   virtual uint32_t  Language(void) const=0;
+   virtual MTAPIRES  Language(const uint32_t language)=0;
    //--- language
-   virtual UINT      Flags(void) const=0;
-   virtual MTAPIRES  Flags(const UINT flags)=0;
+   virtual uint32_t  Flags(void) const=0;
+   virtual MTAPIRES  Flags(const uint32_t flags)=0;
    //--- body
    virtual LPCVOID   Body(void) const=0;
-   virtual UINT      BodySize(void) const=0;
-   virtual MTAPIRES  Body(LPCVOID body,const UINT body_size)=0;
+   virtual uint32_t  BodySize(void) const=0;
+   virtual MTAPIRES  Body(LPCVOID body,const uint32_t body_size)=0;
    //--- explicit destructor is prohibited
 protected:
                     ~IMTNews(void) {}
@@ -60,7 +60,7 @@ class IMTNewsSink
   {
 public:
    virtual void      OnNews(const IMTNews* /*news*/)                  {                    };
-   virtual MTAPIRES  HookNews(const int /*feeder*/,IMTNews* /*news*/) { return(MT_RET_OK); }
+   virtual MTAPIRES  HookNews(const int32_t /*feeder*/,IMTNews* /*news*/) { return(MT_RET_OK); }
   };
 //+------------------------------------------------------------------+
 

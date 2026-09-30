@@ -1,6 +1,6 @@
-//+------------------------------------------------------------------+
+п»ї//+------------------------------------------------------------------+
 //|                                                 MetaTrader 5 API |
-//|                             Copyright 2000-2024, MetaQuotes Ltd. |
+//|                             Copyright 2000-2026, MetaQuotes Ltd. |
 //|                                               www.metaquotes.net |
 //+------------------------------------------------------------------+
 #pragma once
@@ -112,7 +112,7 @@ public:
       INDUSTRY_TRANSPORT                  =15,           // transport
       INDUSTRY_OTHER                      =16,           // other
       //--- enumeration borders
-      INDUSTRY_FIRST                      =INDUSTRY_AGRICULTURE,
+      INDUSTRY_FIRST                      =INDUSTRY_NONE,
       INDUSTRY_LAST                       =INDUSTRY_OTHER
      };
    //--- education levels
@@ -157,7 +157,7 @@ public:
       KYC_STATUS_UNDEFINED                =0,            // undefined
       KYC_STATUS_APPROVED                 =1,            // approved
       KYC_STATUS_DECLINED                 =2,            // declined
-      //--- границы диапазона
+      //--- enumeration borders
       KYC_STATUS_FIRST                    =KYC_STATUS_UNDEFINED,
       KYC_STATUS_LAST                     =KYC_STATUS_DECLINED
      };
@@ -166,29 +166,29 @@ public:
    virtual MTAPIRES  Assign(const IMTClient* client)=0;
    virtual MTAPIRES  Clear(void)=0;
    //--- record id
-   virtual UINT64    RecordID(void) const=0;
-   virtual MTAPIRES  RecordID(const UINT64 record_id)=0;
+   virtual uint64_t  RecordID(void) const=0;
+   virtual MTAPIRES  RecordID(const uint64_t record_id)=0;
    //--- client type
-   virtual UINT      ClientType(void) const=0;
-   virtual MTAPIRES  ClientType(const UINT type)=0;
+   virtual uint32_t  ClientType(void) const=0;
+   virtual MTAPIRES  ClientType(const uint32_t type)=0;
    //--- client status
-   virtual UINT      ClientStatus(void) const=0;
-   virtual MTAPIRES  ClientStatus(const UINT status)=0;
+   virtual uint32_t  ClientStatus(void) const=0;
+   virtual MTAPIRES  ClientStatus(const uint32_t status)=0;
    //--- assigned manager
-   virtual UINT64    AssignedManager(void) const=0;
-   virtual MTAPIRES  AssignedManager(const UINT64 manager)=0;
+   virtual uint64_t  AssignedManager(void) const=0;
+   virtual MTAPIRES  AssignedManager(const uint64_t manager)=0;
    //--- compliance approved by
-   virtual UINT64    ComplianceApprovedBy(void) const=0;
-   virtual MTAPIRES  ComplianceApprovedBy(const UINT64 manager)=0;
+   virtual uint64_t  ComplianceApprovedBy(void) const=0;
+   virtual MTAPIRES  ComplianceApprovedBy(const uint64_t manager)=0;
    //--- compliance client category
    virtual LPCWSTR   ComplianceClientCategory(void) const=0;
    virtual MTAPIRES  ComplianceClientCategory(LPCWSTR category)=0;
    //--- compliance date approval
-   virtual INT64     ComplianceDateApproval(void) const=0;
-   virtual MTAPIRES  ComplianceDateApproval(const INT64 date)=0;
+   virtual int64_t   ComplianceDateApproval(void) const=0;
+   virtual MTAPIRES  ComplianceDateApproval(const int64_t date)=0;
    //--- compliance date termination
-   virtual INT64     ComplianceDateTermination(void) const=0;
-   virtual MTAPIRES  ComplianceDateTermination(const INT64 date)=0;
+   virtual int64_t   ComplianceDateTermination(void) const=0;
+   virtual MTAPIRES  ComplianceDateTermination(const int64_t date)=0;
    //--- lead campaign
    virtual LPCWSTR   LeadCampaign(void) const=0;
    virtual MTAPIRES  LeadCampaign(LPCWSTR campaign)=0;
@@ -211,14 +211,14 @@ public:
    virtual LPCWSTR   PersonLastName(void) const=0;
    virtual MTAPIRES  PersonLastName(LPCWSTR last_name)=0;
    //--- person birth date
-   virtual INT64     PersonBirthDate(void) const=0;
-   virtual MTAPIRES  PersonBirthDate(const INT64 date)=0;
+   virtual int64_t   PersonBirthDate(void) const=0;
+   virtual MTAPIRES  PersonBirthDate(const int64_t date)=0;
    //--- person citizenship
    virtual LPCWSTR   PersonCitizenship(void) const=0;
    virtual MTAPIRES  PersonCitizenship(LPCWSTR citizenship)=0;
    //--- person gender
-   virtual UINT      PersonGender(void) const=0;
-   virtual MTAPIRES  PersonGender(const UINT gender)=0;
+   virtual uint32_t  PersonGender(void) const=0;
+   virtual MTAPIRES  PersonGender(const uint32_t gender)=0;
    //--- person taxid
    virtual LPCWSTR   PersonTaxID(void) const=0;
    virtual MTAPIRES  PersonTaxID(LPCWSTR taxid)=0;
@@ -229,23 +229,23 @@ public:
    virtual LPCWSTR   PersonDocumentNumber(void) const=0;
    virtual MTAPIRES  PersonDocumentNumber(LPCWSTR number)=0;
    //--- person document date
-   virtual INT64     PersonDocumentDate(void) const=0;
-   virtual MTAPIRES  PersonDocumentDate(const INT64 date)=0;
+   virtual int64_t   PersonDocumentDate(void) const=0;
+   virtual MTAPIRES  PersonDocumentDate(const int64_t date)=0;
    //--- person document extra
    virtual LPCWSTR   PersonDocumentExtra(void) const=0;
    virtual MTAPIRES  PersonDocumentExtra(LPCWSTR extra)=0;
    //--- person employment
-   virtual UINT      PersonEmployment(void) const=0;
-   virtual MTAPIRES  PersonEmployment(const UINT employment)=0;
+   virtual uint32_t  PersonEmployment(void) const=0;
+   virtual MTAPIRES  PersonEmployment(const uint32_t employment)=0;
    //--- person industry
-   virtual UINT      PersonIndustry(void) const=0;
-   virtual MTAPIRES  PersonIndustry(const UINT industry)=0;
+   virtual uint32_t  PersonIndustry(void) const=0;
+   virtual MTAPIRES  PersonIndustry(const uint32_t industry)=0;
    //--- person education
-   virtual UINT      PersonEducation(void) const=0;
-   virtual MTAPIRES  PersonEducation(const UINT education)=0;
+   virtual uint32_t  PersonEducation(void) const=0;
+   virtual MTAPIRES  PersonEducation(const uint32_t education)=0;
    //--- person wealth source
-   virtual UINT      PersonWealthSource(void) const=0;
-   virtual MTAPIRES  PersonWealthSource(const UINT source)=0;
+   virtual uint32_t  PersonWealthSource(void) const=0;
+   virtual MTAPIRES  PersonWealthSource(const uint32_t source)=0;
    //--- person annual income
    virtual double    PersonAnnualIncome(void) const=0;
    virtual MTAPIRES  PersonAnnualIncome(const double income)=0;
@@ -262,8 +262,8 @@ public:
    virtual LPCWSTR   CompanyRegNumber(void) const=0;
    virtual MTAPIRES  CompanyRegNumber(LPCWSTR number)=0;
    //--- company registration date
-   virtual INT64     CompanyRegDate(void) const=0;
-   virtual MTAPIRES  CompanyRegDate(const INT64 date)=0;
+   virtual int64_t   CompanyRegDate(void) const=0;
+   virtual MTAPIRES  CompanyRegDate(const int64_t date)=0;
    //--- company registration authority
    virtual LPCWSTR   CompanyRegAuthority(void) const=0;
    virtual MTAPIRES  CompanyRegAuthority(LPCWSTR authority)=0;
@@ -289,8 +289,8 @@ public:
    virtual LPCWSTR   CompanyWebsite(void) const=0;
    virtual MTAPIRES  CompanyWebsite(LPCWSTR website)=0;
    //--- contact preferred
-   virtual UINT      ContactPreferred(void) const=0;
-   virtual MTAPIRES  ContactPreferred(const UINT preferred)=0;
+   virtual uint32_t  ContactPreferred(void) const=0;
+   virtual MTAPIRES  ContactPreferred(const uint32_t preferred)=0;
    //--- contact language
    virtual LPCWSTR   ContactLanguage(void) const=0;
    virtual MTAPIRES  ContactLanguage(LPCWSTR language)=0;
@@ -306,9 +306,9 @@ public:
    //--- contact social networks
    virtual LPCWSTR   ContactSocialNetworks(void) const=0;
    virtual MTAPIRES  ContactSocialNetworks(LPCWSTR social_networks)=0;
-   //--- сontact last date
-   virtual INT64     ContactLastDate(void) const=0;
-   virtual MTAPIRES  ContactLastDate(const INT64 date)=0;
+   //--- contact last date
+   virtual int64_t   ContactLastDate(void) const=0;
+   virtual MTAPIRES  ContactLastDate(const int64_t date)=0;
    //--- address country
    virtual LPCWSTR   AddressCountry(void) const=0;
    virtual MTAPIRES  AddressCountry(LPCWSTR country)=0;
@@ -325,41 +325,41 @@ public:
    virtual LPCWSTR   AddressCity(void) const=0;
    virtual MTAPIRES  AddressCity(LPCWSTR city)=0;
    //--- experience of FX
-   virtual UINT      ExperienceFX(void) const=0;
-   virtual MTAPIRES  ExperienceFX(const UINT experience)=0;
+   virtual uint32_t  ExperienceFX(void) const=0;
+   virtual MTAPIRES  ExperienceFX(const uint32_t experience)=0;
    //--- experience of CFD
-   virtual UINT      ExperienceCFD(void) const=0;
-   virtual MTAPIRES  ExperienceCFD(const UINT experience)=0;
+   virtual uint32_t  ExperienceCFD(void) const=0;
+   virtual MTAPIRES  ExperienceCFD(const uint32_t experience)=0;
    //--- experience of Futures
-   virtual UINT      ExperienceFutures(void) const=0;
-   virtual MTAPIRES  ExperienceFutures(const UINT experience)=0;
+   virtual uint32_t  ExperienceFutures(void) const=0;
+   virtual MTAPIRES  ExperienceFutures(const uint32_t experience)=0;
    //--- experience of Stocks
-   virtual UINT      ExperienceStocks(void) const=0;
-   virtual MTAPIRES  ExperienceStocks(const UINT experience)=0;
+   virtual uint32_t  ExperienceStocks(void) const=0;
+   virtual MTAPIRES  ExperienceStocks(const uint32_t experience)=0;
    //--- trading group
    virtual LPCWSTR   TradingGroup(void) const=0;
    virtual MTAPIRES  TradingGroup(LPCWSTR group)=0;
    //--- client origin
-   virtual UINT      ClientOrigin(void) const=0;
-   virtual MTAPIRES  ClientOrigin(const UINT origin)=0;
+   virtual uint32_t  ClientOrigin(void) const=0;
+   virtual MTAPIRES  ClientOrigin(const uint32_t origin)=0;
    //--- client origin login
-   virtual UINT64    ClientOriginLogin(void) const=0;
-   virtual MTAPIRES  ClientOriginLogin(const UINT64 login)=0;
+   virtual uint64_t  ClientOriginLogin(void) const=0;
+   virtual MTAPIRES  ClientOriginLogin(const uint64_t login)=0;
    //--- external ID
    virtual LPCWSTR   ClientExternalID(void) const=0;
    virtual MTAPIRES  ClientExternalID(LPCWSTR external_id)=0;
    //--- person document expiration date
-   virtual INT64     PersonDocumentExpiration(void) const=0;
-   virtual MTAPIRES  PersonDocumentExpiration(const INT64 date)=0;
+   virtual int64_t   PersonDocumentExpiration(void) const=0;
+   virtual MTAPIRES  PersonDocumentExpiration(const int64_t date)=0;
    //--- KYC status
-   virtual UINT      KYCStatus(void) const=0;
-   virtual MTAPIRES  KYCStatus(const UINT kyc_status)=0;
+   virtual uint32_t  KYCStatus(void) const=0;
+   virtual MTAPIRES  KYCStatus(const uint32_t kyc_status)=0;
    //--- record creation date
-   virtual INT64     DateCreated(void) const=0;
-   virtual MTAPIRES  DateCreated(const INT64 date)=0;
+   virtual int64_t   DateCreated(void) const=0;
+   virtual MTAPIRES  DateCreated(const int64_t date)=0;
    //--- record modification date
-   virtual INT64     DateModified(void) const=0;
-   virtual MTAPIRES  DateModified(const INT64 date)=0;
+   virtual int64_t   DateModified(void) const=0;
+   virtual MTAPIRES  DateModified(const int64_t date)=0;
    //--- explicit destructor is prohibited
 protected:
                     ~IMTClient(void) {}
@@ -380,24 +380,24 @@ public:
    virtual MTAPIRES  Add(IMTClientArray* array)=0;
    virtual MTAPIRES  AddCopy(const IMTClientArray* array)=0;
    //--- delete & detach
-   virtual MTAPIRES  Delete(const UINT pos)=0;
-   virtual IMTClient *Detach(const UINT pos)=0;
+   virtual MTAPIRES  Delete(const uint32_t pos)=0;
+   virtual IMTClient *Detach(const uint32_t pos)=0;
    //--- update
-   virtual MTAPIRES  Update(const UINT pos,IMTClient* client)=0;
-   virtual MTAPIRES  UpdateCopy(const UINT pos,const IMTClient* client)=0;
-   virtual MTAPIRES  Shift(const UINT pos,const int shift)=0;
+   virtual MTAPIRES  Update(const uint32_t pos,IMTClient* client)=0;
+   virtual MTAPIRES  UpdateCopy(const uint32_t pos,const IMTClient* client)=0;
+   virtual MTAPIRES  Shift(const uint32_t pos,const int32_t shift)=0;
    //--- data access
-   virtual UINT      Total(void) const=0;
-   virtual IMTClient*Next(const UINT index) const=0;
+   virtual uint32_t  Total(void) const=0;
+   virtual IMTClient*Next(const uint32_t index) const=0;
    //--- sorting and search
    virtual MTAPIRES  Sort(MTSortFunctionPtr sort_function)=0;
-   virtual int       Search(const void *key,MTSortFunctionPtr sort_function) const=0;
-   virtual int       SearchGreatOrEq(const void *key,MTSortFunctionPtr sort_function) const=0;
-   virtual int       SearchGreater(const void *key,MTSortFunctionPtr sort_function) const=0;
-   virtual int       SearchLessOrEq(const void *key,MTSortFunctionPtr sort_function) const=0;
-   virtual int       SearchLess(const void *key,MTSortFunctionPtr sort_function) const=0;
-   virtual int       SearchLeft(const void *key,MTSortFunctionPtr sort_function) const=0;
-   virtual int       SearchRight(const void *key,MTSortFunctionPtr sort_function) const=0;
+   virtual int32_t   Search(const void *key,MTSortFunctionPtr sort_function) const=0;
+   virtual int32_t   SearchGreatOrEq(const void *key,MTSortFunctionPtr sort_function) const=0;
+   virtual int32_t   SearchGreater(const void *key,MTSortFunctionPtr sort_function) const=0;
+   virtual int32_t   SearchLessOrEq(const void *key,MTSortFunctionPtr sort_function) const=0;
+   virtual int32_t   SearchLess(const void *key,MTSortFunctionPtr sort_function) const=0;
+   virtual int32_t   SearchLeft(const void *key,MTSortFunctionPtr sort_function) const=0;
+   virtual int32_t   SearchRight(const void *key,MTSortFunctionPtr sort_function) const=0;
    //--- explicit destructor is prohibited
 protected:
                     ~IMTClientArray(void) {}

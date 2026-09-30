@@ -102,6 +102,10 @@ typedef long long __time32_t;
 
 %include "windows.i"
 
+// SWIG 解析时忽略对齐修饰；C++ 编译仍使用原始头文件中的 alignas。
+#define alignas(...)
+
+
 %include "Include\\MT5APIManager.h"
 %include "Include\\MT5APIConstants.h"
 %include "Include\\MT5APILogger.h"

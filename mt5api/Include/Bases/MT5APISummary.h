@@ -1,6 +1,6 @@
-//+------------------------------------------------------------------+
+﻿//+------------------------------------------------------------------+
 //|                                                 MetaTrader 5 API |
-//|                             Copyright 2000-2024, MetaQuotes Ltd. |
+//|                             Copyright 2000-2026, MetaQuotes Ltd. |
 //|                                               www.metaquotes.net |
 //+------------------------------------------------------------------+
 #pragma once
@@ -16,15 +16,15 @@ public:
    virtual MTAPIRES  Clear(void)=0;
    //--- summary symbol
    virtual LPCWSTR   Symbol(void) const=0;
-   virtual UINT      Digits(void) const=0;
+   virtual uint32_t  Digits(void) const=0;
    //--- total positions
-   virtual UINT      PositionClients(void) const=0;
-   virtual UINT      PositionCoverage(void) const=0;
+   virtual uint32_t  PositionClients(void) const=0;
+   virtual uint32_t  PositionCoverage(void) const=0;
    //--- volumes
-   virtual UINT64    VolumeBuyClients(void) const=0;
-   virtual UINT64    VolumeBuyCoverage(void) const=0;
-   virtual UINT64    VolumeSellClients(void) const=0;
-   virtual UINT64    VolumeSellCoverage(void) const=0;
+   virtual uint64_t  VolumeBuyClients(void) const=0;
+   virtual uint64_t  VolumeBuyCoverage(void) const=0;
+   virtual uint64_t  VolumeSellClients(void) const=0;
+   virtual uint64_t  VolumeSellCoverage(void) const=0;
    virtual double    VolumeNet(void) const=0;
    //--- average prices
    virtual double    PriceBuyClients(void) const=0;
@@ -39,10 +39,10 @@ public:
    virtual double    ProfitUncovered(void) const=0;
    virtual double    ProfitUncoveredFull(void) const=0;
    //--- volumes with extended accuracy
-   virtual UINT64    VolumeBuyClientsExt(void) const=0;
-   virtual UINT64    VolumeBuyCoverageExt(void) const=0;
-   virtual UINT64    VolumeSellClientsExt(void) const=0;
-   virtual UINT64    VolumeSellCoverageExt(void) const=0;
+   virtual uint64_t  VolumeBuyClientsExt(void) const=0;
+   virtual uint64_t  VolumeBuyCoverageExt(void) const=0;
+   virtual uint64_t  VolumeSellClientsExt(void) const=0;
+   virtual uint64_t  VolumeSellCoverageExt(void) const=0;
    //--- explicit destructor is prohibited
 protected:
                     ~IMTSummary(void) {}
@@ -63,24 +63,24 @@ public:
    virtual MTAPIRES  Add(IMTSummaryArray* array)=0;
    virtual MTAPIRES  AddCopy(const IMTSummaryArray* array)=0;
    //--- delete & detach
-   virtual MTAPIRES  Delete(const UINT pos)=0;
-   virtual IMTSummary* Detach(const UINT pos)=0;
+   virtual MTAPIRES  Delete(const uint32_t pos)=0;
+   virtual IMTSummary* Detach(const uint32_t pos)=0;
    //--- update
-   virtual MTAPIRES  Update(const UINT pos,IMTSummary* summary)=0;
-   virtual MTAPIRES  UpdateCopy(const UINT pos,const IMTSummary* summary)=0;
-   virtual MTAPIRES  Shift(const UINT pos,const int shift)=0;
+   virtual MTAPIRES  Update(const uint32_t pos,IMTSummary* summary)=0;
+   virtual MTAPIRES  UpdateCopy(const uint32_t pos,const IMTSummary* summary)=0;
+   virtual MTAPIRES  Shift(const uint32_t pos,const int32_t shift)=0;
    //--- data access
-   virtual UINT      Total(void) const=0;
-   virtual IMTSummary* Next(const UINT index) const=0;
+   virtual uint32_t  Total(void) const=0;
+   virtual IMTSummary* Next(const uint32_t index) const=0;
    //--- sorting and search
    virtual MTAPIRES  Sort(MTSortFunctionPtr sort_function)=0;
-   virtual int       Search(const void *key,MTSortFunctionPtr sort_function) const=0;
-   virtual int       SearchGreatOrEq(const void *key,MTSortFunctionPtr sort_function) const=0;
-   virtual int       SearchGreater(const void *key,MTSortFunctionPtr sort_function) const=0;
-   virtual int       SearchLessOrEq(const void *key,MTSortFunctionPtr sort_function) const=0;
-   virtual int       SearchLess(const void *key,MTSortFunctionPtr sort_function) const=0;
-   virtual int       SearchLeft(const void *key,MTSortFunctionPtr sort_function) const=0;
-   virtual int       SearchRight(const void *key,MTSortFunctionPtr sort_function) const=0;
+   virtual int32_t   Search(const void *key,MTSortFunctionPtr sort_function) const=0;
+   virtual int32_t   SearchGreatOrEq(const void *key,MTSortFunctionPtr sort_function) const=0;
+   virtual int32_t   SearchGreater(const void *key,MTSortFunctionPtr sort_function) const=0;
+   virtual int32_t   SearchLessOrEq(const void *key,MTSortFunctionPtr sort_function) const=0;
+   virtual int32_t   SearchLess(const void *key,MTSortFunctionPtr sort_function) const=0;
+   virtual int32_t   SearchLeft(const void *key,MTSortFunctionPtr sort_function) const=0;
+   virtual int32_t   SearchRight(const void *key,MTSortFunctionPtr sort_function) const=0;
    //--- explicit destructor is prohibited
 protected:
                     ~IMTSummaryArray(void) {}

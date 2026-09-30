@@ -1,6 +1,6 @@
-//+------------------------------------------------------------------+
+﻿//+------------------------------------------------------------------+
 //|                                                 MetaTrader 5 API |
-//|                             Copyright 2000-2024, MetaQuotes Ltd. |
+//|                             Copyright 2000-2026, MetaQuotes Ltd. |
 //|                                               www.metaquotes.net |
 //+------------------------------------------------------------------+
 #pragma once
@@ -46,11 +46,11 @@ public:
    virtual LPCWSTR   Symbol(void) const=0;
    virtual MTAPIRES  Symbol(LPCWSTR symbols)=0;
    //--- ticks level
-   virtual UINT      Level(void) const=0;
-   virtual MTAPIRES  Level(const UINT level)=0;
+   virtual uint32_t  Level(void) const=0;
+   virtual MTAPIRES  Level(const uint32_t level)=0;
    //--- ticks history mode
-   virtual UINT      TickHistory(void) const=0;
-   virtual MTAPIRES  TickHistory(const UINT mode)=0;
+   virtual uint32_t  TickHistory(void) const=0;
+   virtual MTAPIRES  TickHistory(const uint32_t mode)=0;
    //--- explicit destructor is prohibited
 protected:
                     ~IMTConSubscriptionSymbol(void) {}
@@ -69,8 +69,8 @@ public:
    virtual LPCWSTR   Category(void) const=0;
    virtual MTAPIRES  Category(LPCWSTR category)=0;
    //--- language
-   virtual UINT      Language(void) const=0;
-   virtual MTAPIRES  Language(const UINT language)=0;
+   virtual uint32_t  Language(void) const=0;
+   virtual MTAPIRES  Language(const uint32_t language)=0;
    //--- explicit destructor is prohibited
 protected:
                     ~IMTConSubscriptionNews(void) {}
@@ -302,20 +302,20 @@ public:
    virtual MTAPIRES  Assign(const IMTConSubscription* iface)=0;
    virtual MTAPIRES  Clear(void)=0;
    //--- uniq ids
-   virtual UINT64    ID(void) const=0;
-   virtual UINT64    ParentID(void) const=0;
+   virtual uint64_t    ID(void) const=0;
+   virtual uint64_t    ParentID(void) const=0;
    //--- id of the subscription that the current one depends on
-   virtual UINT64    DependsID(void) const=0;
-   virtual MTAPIRES  DependsID(const UINT64 depends_id)=0;
+   virtual uint64_t    DependsID(void) const=0;
+   virtual MTAPIRES  DependsID(const uint64_t depends_id)=0;
    //--- name
    virtual LPCWSTR   Name(void) const=0;
    virtual MTAPIRES  Name(LPCWSTR name)=0;
    //--- type
-   virtual UINT      Type(void) const=0;
-   virtual MTAPIRES  Type(const UINT type)=0;
+   virtual uint32_t  Type(void) const=0;
+   virtual MTAPIRES  Type(const uint32_t type)=0;
    //--- image
-   virtual UINT      Image(void) const=0;
-   virtual MTAPIRES  Image(const UINT image)=0;
+   virtual uint32_t  Image(void) const=0;
+   virtual MTAPIRES  Image(const uint32_t image)=0;
    //--- description
    virtual LPCWSTR   Description(void) const=0;
    virtual MTAPIRES  Description(LPCWSTR description)=0;
@@ -326,23 +326,23 @@ public:
    virtual LPCWSTR   URLAgreement(void) const=0;
    virtual MTAPIRES  URLAgreement(const LPCWSTR url)=0;
    //--- control mode
-   virtual UINT      ControlMode(void) const=0;
-   virtual MTAPIRES  ControlMode(const UINT mode)=0;
+   virtual uint32_t  ControlMode(void) const=0;
+   virtual MTAPIRES  ControlMode(const uint32_t mode)=0;
    //--- period mode
-   virtual UINT      PeriodMode(void) const=0;
-   virtual MTAPIRES  PeriodMode(const UINT mode)=0;
+   virtual uint32_t  PeriodMode(void) const=0;
+   virtual MTAPIRES  PeriodMode(const uint32_t mode)=0;
    //--- custom period in days
-   virtual UINT      PeriodCustom(void) const=0;
-   virtual MTAPIRES  PeriodCustom(const UINT days)=0;
+   virtual uint32_t  PeriodCustom(void) const=0;
+   virtual MTAPIRES  PeriodCustom(const uint32_t days)=0;
    //--- free period mode
-   virtual UINT      PeriodFreeMode(void) const=0;
-   virtual MTAPIRES  PeriodFreeMode(const UINT mode)=0;
+   virtual uint32_t  PeriodFreeMode(void) const=0;
+   virtual MTAPIRES  PeriodFreeMode(const uint32_t mode)=0;
    //--- free custom period in days
-   virtual UINT      PeriodFreeCustom(void) const=0;
-   virtual MTAPIRES  PeriodFreeCustom(const UINT days)=0;
+   virtual uint32_t  PeriodFreeCustom(void) const=0;
+   virtual MTAPIRES  PeriodFreeCustom(const uint32_t days)=0;
    //--- flags
-   virtual UINT      Flags(void) const=0;
-   virtual MTAPIRES  Flags(const UINT flags)=0;
+   virtual uint32_t  Flags(void) const=0;
+   virtual MTAPIRES  Flags(const uint32_t flags)=0;
    //--- price
    virtual double    Price(void) const=0;
    virtual MTAPIRES  Price(const double price)=0;
@@ -357,36 +357,36 @@ public:
    virtual MTAPIRES  PriceCurrency(LPCWSTR currency)=0;
    //--- allowed country list
    virtual MTAPIRES  CountryAdd(LPCWSTR path)=0;
-   virtual MTAPIRES  CountryUpdate(const UINT pos,LPCWSTR path)=0;
-   virtual MTAPIRES  CountryShift(const UINT pos,const int shift)=0;
-   virtual MTAPIRES  CountryDelete(const UINT pos)=0;
+   virtual MTAPIRES  CountryUpdate(const uint32_t pos,LPCWSTR path)=0;
+   virtual MTAPIRES  CountryShift(const uint32_t pos,const int32_t shift)=0;
+   virtual MTAPIRES  CountryDelete(const uint32_t pos)=0;
    virtual MTAPIRES  CountryClear(void)=0;
-   virtual UINT      CountryTotal(void) const=0;
-   virtual LPCWSTR   CountryNext(const UINT pos) const=0;
+   virtual uint32_t  CountryTotal(void) const=0;
+   virtual LPCWSTR   CountryNext(const uint32_t pos) const=0;
    //--- allowed groups list
    virtual MTAPIRES  GroupAdd(LPCWSTR path)=0;
-   virtual MTAPIRES  GroupUpdate(const UINT pos,LPCWSTR path)=0;
-   virtual MTAPIRES  GroupDelete(const UINT pos)=0;
+   virtual MTAPIRES  GroupUpdate(const uint32_t pos,LPCWSTR path)=0;
+   virtual MTAPIRES  GroupDelete(const uint32_t pos)=0;
    virtual MTAPIRES  GroupClear(void)=0;
-   virtual MTAPIRES  GroupShift(const UINT pos,const int shift)=0;
-   virtual UINT      GroupTotal(void) const=0;
-   virtual LPCWSTR   GroupNext(const UINT pos) const=0;
+   virtual MTAPIRES  GroupShift(const uint32_t pos,const int32_t shift)=0;
+   virtual uint32_t  GroupTotal(void) const=0;
+   virtual LPCWSTR   GroupNext(const uint32_t pos) const=0;
    //--- symbols settings
    virtual MTAPIRES  SymbolAdd(IMTConSubscriptionSymbol* symbol)=0;
-   virtual MTAPIRES  SymbolUpdate(const UINT pos,const IMTConSubscriptionSymbol* symbol)=0;
-   virtual MTAPIRES  SymbolDelete(const UINT pos)=0;
+   virtual MTAPIRES  SymbolUpdate(const uint32_t pos,const IMTConSubscriptionSymbol* symbol)=0;
+   virtual MTAPIRES  SymbolDelete(const uint32_t pos)=0;
    virtual MTAPIRES  SymbolClear(void)=0;
-   virtual MTAPIRES  SymbolShift(const UINT pos,const int shift)=0;
-   virtual UINT      SymbolTotal(void) const=0;
-   virtual MTAPIRES  SymbolNext(const UINT pos,IMTConSubscriptionSymbol* symbol) const=0;
+   virtual MTAPIRES  SymbolShift(const uint32_t pos,const int32_t shift)=0;
+   virtual uint32_t  SymbolTotal(void) const=0;
+   virtual MTAPIRES  SymbolNext(const uint32_t pos,IMTConSubscriptionSymbol* symbol) const=0;
    //--- symbols settings
    virtual MTAPIRES  NewsAdd(IMTConSubscriptionNews* news)=0;
-   virtual MTAPIRES  NewsUpdate(const UINT pos,const IMTConSubscriptionNews* news)=0;
-   virtual MTAPIRES  NewsDelete(const UINT pos)=0;
+   virtual MTAPIRES  NewsUpdate(const uint32_t pos,const IMTConSubscriptionNews* news)=0;
+   virtual MTAPIRES  NewsDelete(const uint32_t pos)=0;
    virtual MTAPIRES  NewsClear(void)=0;
-   virtual MTAPIRES  NewsShift(const UINT pos,const int shift)=0;
-   virtual UINT      NewsTotal(void) const=0;
-   virtual MTAPIRES  NewsNext(const UINT pos,IMTConSubscriptionNews* news) const=0;
+   virtual MTAPIRES  NewsShift(const uint32_t pos,const int32_t shift)=0;
+   virtual uint32_t  NewsTotal(void) const=0;
+   virtual MTAPIRES  NewsNext(const uint32_t pos,IMTConSubscriptionNews* news) const=0;
    //--- explicit destructor is prohibited
 protected:
                     ~IMTConSubscription(void) {}

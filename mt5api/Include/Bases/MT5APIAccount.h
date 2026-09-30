@@ -1,6 +1,6 @@
-//+------------------------------------------------------------------+
+﻿//+------------------------------------------------------------------+
 //|                                         MetaTrader 5 API Server  |
-//|                             Copyright 2000-2024, MetaQuotes Ltd. |
+//|                             Copyright 2000-2026, MetaQuotes Ltd. |
 //|                                               www.metaquotes.net |
 //+------------------------------------------------------------------+
 #pragma once
@@ -26,11 +26,11 @@ public:
    virtual MTAPIRES  Assign(const IMTAccount* user)=0;
    virtual MTAPIRES  Clear(void)=0;
    //--- login
-   virtual UINT64    Login(void) const=0;
-   virtual MTAPIRES  Login(const UINT64 login)=0;
+   virtual uint64_t  Login(void) const=0;
+   virtual MTAPIRES  Login(const uint64_t login)=0;
    //--- currency digits
-   virtual UINT      CurrencyDigits(void) const=0;
-   virtual MTAPIRES  CurrencyDigits(const UINT digits)=0;
+   virtual uint32_t  CurrencyDigits(void) const=0;
+   virtual MTAPIRES  CurrencyDigits(const uint32_t digits)=0;
    //--- balance
    virtual double    Balance(void) const=0;
    virtual MTAPIRES  Balance(const double balance)=0;
@@ -47,8 +47,8 @@ public:
    virtual double    MarginLevel(void) const=0;
    virtual MTAPIRES  MarginLevel(const double margin_level)=0;
    //--- margin leverage
-   virtual UINT      MarginLeverage(void) const=0;
-   virtual MTAPIRES  MarginLeverage(const UINT leverage)=0;
+   virtual uint32_t  MarginLeverage(void) const=0;
+   virtual MTAPIRES  MarginLeverage(const uint32_t leverage)=0;
    //--- floating profit
    virtual double    Profit(void) const=0;
    virtual MTAPIRES  Profit(const double profit)=0;
@@ -65,11 +65,11 @@ public:
    virtual double    Equity(void) const=0;
    virtual MTAPIRES  Equity(const double equity)=0;
    //--- stop-out activation mode
-   virtual UINT      SOActivation(void) const=0;
-   virtual MTAPIRES  SOActivation(const UINT activation)=0;
+   virtual uint32_t  SOActivation(void) const=0;
+   virtual MTAPIRES  SOActivation(const uint32_t activation)=0;
    //--- stop-out activation time
-   virtual INT64     SOTime(void) const=0;
-   virtual MTAPIRES  SOTime(const INT64 datetime)=0;
+   virtual int64_t   SOTime(void) const=0;
+   virtual MTAPIRES  SOTime(const int64_t datetime)=0;
    //--- margin level on stop-out 
    virtual double    SOLevel(void) const=0;
    virtual MTAPIRES  SOLevel(const double level)=0;
@@ -117,24 +117,24 @@ public:
    virtual MTAPIRES  Add(IMTAccountArray* array)=0;
    virtual MTAPIRES  AddCopy(const IMTAccountArray* array)=0;
    //--- delete & detach
-   virtual MTAPIRES  Delete(const UINT pos)=0;
-   virtual IMTAccount* Detach(const UINT pos)=0;
+   virtual MTAPIRES  Delete(const uint32_t pos)=0;
+   virtual IMTAccount* Detach(const uint32_t pos)=0;
    //--- update
-   virtual MTAPIRES  Update(const UINT pos,IMTAccount* account)=0;
-   virtual MTAPIRES  UpdateCopy(const UINT pos,const IMTAccount* account)=0;
-   virtual MTAPIRES  Shift(const UINT pos,const int shift)=0;
+   virtual MTAPIRES  Update(const uint32_t pos,IMTAccount* account)=0;
+   virtual MTAPIRES  UpdateCopy(const uint32_t pos,const IMTAccount* account)=0;
+   virtual MTAPIRES  Shift(const uint32_t pos,const int32_t shift)=0;
    //--- data access
-   virtual UINT      Total(void) const=0;
-   virtual IMTAccount* Next(const UINT index) const=0;
+   virtual uint32_t  Total(void) const=0;
+   virtual IMTAccount* Next(const uint32_t index) const=0;
    //--- sorting and search
    virtual MTAPIRES  Sort(MTSortFunctionPtr sort_function)=0;
-   virtual int       Search(const void *key,MTSortFunctionPtr sort_function) const=0;
-   virtual int       SearchGreatOrEq(const void *key,MTSortFunctionPtr sort_function) const=0;
-   virtual int       SearchGreater(const void *key,MTSortFunctionPtr sort_function) const=0;
-   virtual int       SearchLessOrEq(const void *key,MTSortFunctionPtr sort_function) const=0;
-   virtual int       SearchLess(const void *key,MTSortFunctionPtr sort_function) const=0;
-   virtual int       SearchLeft(const void *key,MTSortFunctionPtr sort_function) const=0;
-   virtual int       SearchRight(const void *key,MTSortFunctionPtr sort_function) const=0;
+   virtual int32_t   Search(const void *key,MTSortFunctionPtr sort_function) const=0;
+   virtual int32_t   SearchGreatOrEq(const void *key,MTSortFunctionPtr sort_function) const=0;
+   virtual int32_t   SearchGreater(const void *key,MTSortFunctionPtr sort_function) const=0;
+   virtual int32_t   SearchLessOrEq(const void *key,MTSortFunctionPtr sort_function) const=0;
+   virtual int32_t   SearchLess(const void *key,MTSortFunctionPtr sort_function) const=0;
+   virtual int32_t   SearchLeft(const void *key,MTSortFunctionPtr sort_function) const=0;
+   virtual int32_t   SearchRight(const void *key,MTSortFunctionPtr sort_function) const=0;
    //--- explicit destructor is prohibited
 protected:
                     ~IMTAccountArray(void) {}

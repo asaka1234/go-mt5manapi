@@ -21,10 +21,10 @@ class SwigDirector_IMTManagerSink : public IMTManagerSink
     IMTManagerSink::OnDisconnect();
   }
   virtual void OnDisconnect();
-  void _swig_upcall_OnTradeAccountSet(MTAPIRES const arg0,INT64 const arg1,IMTUser const *arg2,IMTAccount const *arg3,IMTOrderArray const *arg4,IMTPositionArray const *arg5) {
+  void _swig_upcall_OnTradeAccountSet(MTAPIRES const arg0,int64_t const arg1,IMTUser const *arg2,IMTAccount const *arg3,IMTOrderArray const *arg4,IMTPositionArray const *arg5) {
     IMTManagerSink::OnTradeAccountSet(arg0,arg1,arg2,arg3,arg4,arg5);
   }
-  virtual void OnTradeAccountSet(MTAPIRES const arg0,INT64 const arg1,IMTUser const *arg2,IMTAccount const *arg3,IMTOrderArray const *arg4,IMTPositionArray const *arg5);
+  virtual void OnTradeAccountSet(MTAPIRES const arg0,int64_t const arg1,IMTUser const *arg2,IMTAccount const *arg3,IMTOrderArray const *arg4,IMTPositionArray const *arg5);
   void _swig_upcall_OnConnect() {
     IMTManagerSink::OnConnect();
   }
@@ -71,18 +71,18 @@ class SwigDirector_IMTConGroupSink : public IMTConGroupSink
     IMTConGroupSink::OnGroupSync();
   }
   virtual void OnGroupSync();
-  MTAPIRES _swig_upcall_HookGroupAdd(UINT64 const arg0,IMTConGroup *arg1) {
+  MTAPIRES _swig_upcall_HookGroupAdd(uint64_t const arg0,IMTConGroup *arg1) {
     return IMTConGroupSink::HookGroupAdd(arg0,arg1);
   }
-  virtual MTAPIRES HookGroupAdd(UINT64 const arg0,IMTConGroup *arg1);
-  MTAPIRES _swig_upcall_HookGroupUpdate(UINT64 const arg0,IMTConGroup const *arg1,IMTConGroup *arg2) {
+  virtual MTAPIRES HookGroupAdd(uint64_t const arg0,IMTConGroup *arg1);
+  MTAPIRES _swig_upcall_HookGroupUpdate(uint64_t const arg0,IMTConGroup const *arg1,IMTConGroup *arg2) {
     return IMTConGroupSink::HookGroupUpdate(arg0,arg1,arg2);
   }
-  virtual MTAPIRES HookGroupUpdate(UINT64 const arg0,IMTConGroup const *arg1,IMTConGroup *arg2);
-  MTAPIRES _swig_upcall_HookGroupDelete(UINT64 const arg0,IMTConGroup const *arg1) {
+  virtual MTAPIRES HookGroupUpdate(uint64_t const arg0,IMTConGroup const *arg1,IMTConGroup *arg2);
+  MTAPIRES _swig_upcall_HookGroupDelete(uint64_t const arg0,IMTConGroup const *arg1) {
     return IMTConGroupSink::HookGroupDelete(arg0,arg1);
   }
-  virtual MTAPIRES HookGroupDelete(UINT64 const arg0,IMTConGroup const *arg1);
+  virtual MTAPIRES HookGroupDelete(uint64_t const arg0,IMTConGroup const *arg1);
  private:
   intgo go_val;
   Swig_memory *swig_mem;
@@ -133,18 +133,18 @@ class SwigDirector_IMTConSymbolSink : public IMTConSymbolSink
     IMTConSymbolSink::OnSymbolSync();
   }
   virtual void OnSymbolSync();
-  MTAPIRES _swig_upcall_HookSymbolAdd(UINT64 const arg0,IMTConSymbol *arg1) {
+  MTAPIRES _swig_upcall_HookSymbolAdd(uint64_t const arg0,IMTConSymbol *arg1) {
     return IMTConSymbolSink::HookSymbolAdd(arg0,arg1);
   }
-  virtual MTAPIRES HookSymbolAdd(UINT64 const arg0,IMTConSymbol *arg1);
-  MTAPIRES _swig_upcall_HookSymbolUpdate(UINT64 const arg0,IMTConSymbol const *arg1,IMTConSymbol *arg2) {
+  virtual MTAPIRES HookSymbolAdd(uint64_t const arg0,IMTConSymbol *arg1);
+  MTAPIRES _swig_upcall_HookSymbolUpdate(uint64_t const arg0,IMTConSymbol const *arg1,IMTConSymbol *arg2) {
     return IMTConSymbolSink::HookSymbolUpdate(arg0,arg1,arg2);
   }
-  virtual MTAPIRES HookSymbolUpdate(UINT64 const arg0,IMTConSymbol const *arg1,IMTConSymbol *arg2);
-  MTAPIRES _swig_upcall_HookSymbolDelete(UINT64 const arg0,IMTConSymbol const *arg1) {
+  virtual MTAPIRES HookSymbolUpdate(uint64_t const arg0,IMTConSymbol const *arg1,IMTConSymbol *arg2);
+  MTAPIRES _swig_upcall_HookSymbolDelete(uint64_t const arg0,IMTConSymbol const *arg1) {
     return IMTConSymbolSink::HookSymbolDelete(arg0,arg1);
   }
-  virtual MTAPIRES HookSymbolDelete(UINT64 const arg0,IMTConSymbol const *arg1);
+  virtual MTAPIRES HookSymbolDelete(uint64_t const arg0,IMTConSymbol const *arg1);
  private:
   intgo go_val;
   Swig_memory *swig_mem;
@@ -162,22 +162,22 @@ class SwigDirector_IMTTickSink : public IMTTickSink
     IMTTickSink::OnTickStat(arg0);
   }
   virtual void OnTickStat(MTTickStat const &arg0);
-  MTAPIRES _swig_upcall_HookTick(int const arg0,MTTick &arg1) {
+  MTAPIRES _swig_upcall_HookTick(int32_t const arg0,MTTick &arg1) {
     return IMTTickSink::HookTick(arg0,arg1);
   }
-  virtual MTAPIRES HookTick(int const arg0,MTTick &arg1);
-  MTAPIRES _swig_upcall_HookTickStat(int const arg0,MTTickStat &arg1) {
+  virtual MTAPIRES HookTick(int32_t const arg0,MTTick &arg1);
+  MTAPIRES _swig_upcall_HookTickStat(int32_t const arg0,MTTickStat &arg1) {
     return IMTTickSink::HookTickStat(arg0,arg1);
   }
-  virtual MTAPIRES HookTickStat(int const arg0,MTTickStat &arg1);
-  void _swig_upcall_OnTickServer(int const arg0,MTTick const &arg1) {
+  virtual MTAPIRES HookTickStat(int32_t const arg0,MTTickStat &arg1);
+  void _swig_upcall_OnTick(int32_t const arg0,MTTick const &arg1) {
     IMTTickSink::OnTick(arg0,arg1);
   }
-  virtual void OnTick(int const arg0,MTTick const &arg1);
-  void _swig_upcall_OnTickStatServer(int const arg0,MTTickStat const &arg1) {
+  virtual void OnTick(int32_t const arg0,MTTick const &arg1);
+  void _swig_upcall_OnTickStat(int32_t const arg0,MTTickStat const &arg1) {
     IMTTickSink::OnTickStat(arg0,arg1);
   }
-  virtual void OnTickStat(int const arg0,MTTickStat const &arg1);
+  virtual void OnTickStat(int32_t const arg0,MTTickStat const &arg1);
  private:
   intgo go_val;
   Swig_memory *swig_mem;
@@ -199,10 +199,10 @@ class SwigDirector_IMTPositionSink : public IMTPositionSink
     IMTPositionSink::OnPositionDelete(arg0);
   }
   virtual void OnPositionDelete(IMTPosition const *arg0);
-  void _swig_upcall_OnPositionClean(UINT64 const arg0) {
+  void _swig_upcall_OnPositionClean(uint64_t const arg0) {
     IMTPositionSink::OnPositionClean(arg0);
   }
-  virtual void OnPositionClean(UINT64 const arg0);
+  virtual void OnPositionClean(uint64_t const arg0);
   void _swig_upcall_OnPositionSync() {
     IMTPositionSink::OnPositionSync();
   }
@@ -245,10 +245,10 @@ class SwigDirector_IMTDealSink : public IMTDealSink
     IMTDealSink::OnDealDelete(arg0);
   }
   virtual void OnDealDelete(IMTDeal const *arg0);
-  void _swig_upcall_OnDealClean(UINT64 const arg0) {
+  void _swig_upcall_OnDealClean(uint64_t const arg0) {
     IMTDealSink::OnDealClean(arg0);
   }
-  virtual void OnDealClean(UINT64 const arg0);
+  virtual void OnDealClean(uint64_t const arg0);
   void _swig_upcall_OnDealSync() {
     IMTDealSink::OnDealSync();
   }
@@ -282,14 +282,14 @@ class SwigDirector_IMTUserSink : public IMTUserSink
     IMTUserSink::OnUserDelete(arg0);
   }
   virtual void OnUserDelete(IMTUser const *arg0);
-  void _swig_upcall_OnUserClean(UINT64 const arg0) {
+  void _swig_upcall_OnUserClean(uint64_t const arg0) {
     IMTUserSink::OnUserClean(arg0);
   }
-  virtual void OnUserClean(UINT64 const arg0);
-  void _swig_upcall_OnUserLogin(LPCWSTR arg0,IMTUser const *arg1,UINT const arg2) {
+  virtual void OnUserClean(uint64_t const arg0);
+  void _swig_upcall_OnUserLogin(LPCWSTR arg0,IMTUser const *arg1,uint32_t const arg2) {
     IMTUserSink::OnUserLogin(arg0,arg1,arg2);
   }
-  virtual void OnUserLogin(LPCWSTR arg0,IMTUser const *arg1,UINT const arg2);
+  virtual void OnUserLogin(LPCWSTR arg0,IMTUser const *arg1,uint32_t const arg2);
   void _swig_upcall_OnUserSync() {
     IMTUserSink::OnUserSync();
   }
@@ -306,14 +306,14 @@ class SwigDirector_IMTUserSink : public IMTUserSink
     return IMTUserSink::HookUserDelete(arg0);
   }
   virtual MTAPIRES HookUserDelete(IMTUser const *arg0);
-  MTAPIRES _swig_upcall_HookUserLogin(LPCWSTR arg0,IMTUser const *arg1,UINT const arg2) {
+  MTAPIRES _swig_upcall_HookUserLogin(LPCWSTR arg0,IMTUser const *arg1,uint32_t const arg2) {
     return IMTUserSink::HookUserLogin(arg0,arg1,arg2);
   }
-  virtual MTAPIRES HookUserLogin(LPCWSTR arg0,IMTUser const *arg1,UINT const arg2);
-  void _swig_upcall_OnUserLogout(LPCWSTR arg0,IMTUser const *arg1,UINT const arg2) {
+  virtual MTAPIRES HookUserLogin(LPCWSTR arg0,IMTUser const *arg1,uint32_t const arg2);
+  void _swig_upcall_OnUserLogout(LPCWSTR arg0,IMTUser const *arg1,uint32_t const arg2) {
     IMTUserSink::OnUserLogout(arg0,arg1,arg2);
   }
-  virtual void OnUserLogout(LPCWSTR arg0,IMTUser const *arg1,UINT const arg2);
+  virtual void OnUserLogout(LPCWSTR arg0,IMTUser const *arg1,uint32_t const arg2);
   void _swig_upcall_OnUserArchive(IMTUser const *arg0) {
     IMTUserSink::OnUserArchive(arg0);
   }
@@ -342,18 +342,18 @@ class SwigDirector_IMTUserSink : public IMTUserSink
     IMTUserSink::OnUserAddExt(arg0,arg1,arg2);
   }
   virtual void OnUserAddExt(IMTUser const *arg0,LPCWSTR arg1,LPCWSTR arg2);
-  void _swig_upcall_OnUserChangePassword(IMTUser const *arg0,UINT const arg1,LPCWSTR arg2) {
+  void _swig_upcall_OnUserChangePassword(IMTUser const *arg0,uint32_t const arg1,LPCWSTR arg2) {
     IMTUserSink::OnUserChangePassword(arg0,arg1,arg2);
   }
-  virtual void OnUserChangePassword(IMTUser const *arg0,UINT const arg1,LPCWSTR arg2);
+  virtual void OnUserChangePassword(IMTUser const *arg0,uint32_t const arg1,LPCWSTR arg2);
   MTAPIRES _swig_upcall_HookUserAddExt(IMTUser *arg0,LPCWSTR arg1,LPCWSTR arg2) {
     return IMTUserSink::HookUserAddExt(arg0,arg1,arg2);
   }
   virtual MTAPIRES HookUserAddExt(IMTUser *arg0,LPCWSTR arg1,LPCWSTR arg2);
-  MTAPIRES _swig_upcall_HookUserChangePassword(IMTUser const *arg0,UINT const arg1,LPCWSTR arg2) {
+  MTAPIRES _swig_upcall_HookUserChangePassword(IMTUser const *arg0,uint32_t const arg1,LPCWSTR arg2) {
     return IMTUserSink::HookUserChangePassword(arg0,arg1,arg2);
   }
-  virtual MTAPIRES HookUserChangePassword(IMTUser const *arg0,UINT const arg1,LPCWSTR arg2);
+  virtual MTAPIRES HookUserChangePassword(IMTUser const *arg0,uint32_t const arg1,LPCWSTR arg2);
  private:
   intgo go_val;
   Swig_memory *swig_mem;
@@ -375,10 +375,10 @@ class SwigDirector_IMTOrderSink : public IMTOrderSink
     IMTOrderSink::OnOrderDelete(arg0);
   }
   virtual void OnOrderDelete(IMTOrder const *arg0);
-  void _swig_upcall_OnOrderClean(UINT64 const arg0) {
+  void _swig_upcall_OnOrderClean(uint64_t const arg0) {
     IMTOrderSink::OnOrderClean(arg0);
   }
-  virtual void OnOrderClean(UINT64 const arg0);
+  virtual void OnOrderClean(uint64_t const arg0);
   void _swig_upcall_OnOrderSync() {
     IMTOrderSink::OnOrderSync();
   }

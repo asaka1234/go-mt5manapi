@@ -1,6 +1,6 @@
-//+------------------------------------------------------------------+
+﻿//+------------------------------------------------------------------+
 //|                                         MetaTrader 5 API Server  |
-//|                             Copyright 2000-2024, MetaQuotes Ltd. |
+//|                             Copyright 2000-2026, MetaQuotes Ltd. |
 //|                                               www.metaquotes.net |
 //+------------------------------------------------------------------+
 #pragma once
@@ -64,39 +64,39 @@ public:
    virtual LPCWSTR   Server(void) const=0;
    virtual MTAPIRES  Server(LPCWSTR server)=0;
    //--- server type
-   virtual UINT      ServerType(void) const=0;
-   virtual MTAPIRES  ServerType(const UINT type)=0;
+   virtual uint32_t  ServerType(void) const=0;
+   virtual MTAPIRES  ServerType(const uint32_t type)=0;
    //--- mode
-   virtual UINT      Mode(void) const=0;
-   virtual MTAPIRES  Mode(const UINT mode)=0;
+   virtual uint32_t  Mode(void) const=0;
+   virtual MTAPIRES  Mode(const uint32_t mode)=0;
    //--- synchronization mode
-   virtual UINT      ModeSync(void) const=0;
-   virtual MTAPIRES  ModeSync(const UINT type)=0;
+   virtual uint32_t  ModeSync(void) const=0;
+   virtual MTAPIRES  ModeSync(const uint32_t type)=0;
    //--- time correction in minutes, 0 - autodetect
-   virtual int       TimeCorrection(void) const=0;
-   virtual MTAPIRES  TimeCorrection(const int correction)=0;
+   virtual int32_t   TimeCorrection(void) const=0;
+   virtual MTAPIRES  TimeCorrection(const int32_t correction)=0;
    //--- synchronized history start
-   virtual INT64     From(void) const=0;
-   virtual MTAPIRES  From(const INT64 from)=0;
+   virtual int64_t     From(void) const=0;
+   virtual MTAPIRES  From(const int64_t from)=0;
    //--- synchronized history finish
-   virtual INT64     To(void) const=0;
-   virtual MTAPIRES  To(const INT64 to)=0;
+   virtual int64_t     To(void) const=0;
+   virtual MTAPIRES  To(const int64_t to)=0;
    //--- synchronized symbols list
    virtual MTAPIRES  SymbolAdd(LPCWSTR path)=0;
-   virtual MTAPIRES  SymbolUpdate(const UINT pos,LPCWSTR path)=0;
-   virtual MTAPIRES  SymbolShift(const UINT pos,const int shift)=0;
-   virtual MTAPIRES  SymbolDelete(const UINT pos)=0;
-   virtual UINT      SymbolTotal(void) const=0;
-   virtual LPCWSTR   SymbolNext(const UINT pos) const=0;
+   virtual MTAPIRES  SymbolUpdate(const uint32_t pos,LPCWSTR path)=0;
+   virtual MTAPIRES  SymbolShift(const uint32_t pos,const int32_t shift)=0;
+   virtual MTAPIRES  SymbolDelete(const uint32_t pos)=0;
+   virtual uint32_t  SymbolTotal(void) const=0;
+   virtual LPCWSTR   SymbolNext(const uint32_t pos) const=0;
    //--- synchronization flags
-   virtual UINT64    Flags(void) const=0;
-   virtual MTAPIRES  Flags(const UINT64 flags)=0;
+   virtual uint64_t    Flags(void) const=0;
+   virtual MTAPIRES  Flags(const uint64_t flags)=0;
    //--- synchronization data
-   virtual UINT      HistoryData(void) const=0;
-   virtual MTAPIRES  HistoryData(const UINT data)=0;
+   virtual uint32_t  HistoryData(void) const=0;
+   virtual MTAPIRES  HistoryData(const uint32_t data)=0;
    //--- login for MetaTrader 5 server
-   virtual UINT64    Login(void) const=0;
-   virtual MTAPIRES  Login(const UINT64 login)=0;
+   virtual uint64_t    Login(void) const=0;
+   virtual MTAPIRES  Login(const uint64_t login)=0;
    //--- password for MetaTrader 5 server
    virtual LPCWSTR   Password(void) const=0;
    virtual MTAPIRES  Password(LPCWSTR password)=0;

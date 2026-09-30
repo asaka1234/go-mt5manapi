@@ -1,6 +1,6 @@
-//+------------------------------------------------------------------+
+﻿//+------------------------------------------------------------------+
 //|                                                 MetaTrader 5 API |
-//|                             Copyright 2000-2024, MetaQuotes Ltd. |
+//|                             Copyright 2000-2026, MetaQuotes Ltd. |
 //|                                               www.metaquotes.net |
 //+------------------------------------------------------------------+
 #pragma once
@@ -10,7 +10,7 @@
 class IMTSubscription
   {
 public:
-   //---- subscription status
+   //--- subscription status
    enum EnStatus
      {
       STATUS_ACTIVE            =0,          // subscription is active
@@ -20,7 +20,7 @@ public:
       STATUS_FIRST             =STATUS_ACTIVE,
       STATUS_LAST              =STATUS_CANCELED
      };
-   //---- subscription flags
+   //--- subscription flags
    enum EnFlags
      {
       FLAG_FREE_PERIOD         =0x01,        // subscription is activated with free period
@@ -34,28 +34,28 @@ public:
    virtual MTAPIRES  Assign(const IMTSubscription* obj)=0;
    virtual MTAPIRES  Clear(void)=0;
    //--- id
-   virtual UINT64    ID(void) const=0;
+   virtual uint64_t    ID(void) const=0;
    //--- client login
-   virtual UINT64    Login(void) const=0;
-   virtual MTAPIRES  Login(const UINT64 login)=0;
+   virtual uint64_t    Login(void) const=0;
+   virtual MTAPIRES  Login(const uint64_t login)=0;
    //--- subscription id
-   virtual UINT64    Subscription(void) const=0;
-   virtual MTAPIRES  Subscription(const UINT64 subscription_id)=0;
+   virtual uint64_t    Subscription(void) const=0;
+   virtual MTAPIRES  Subscription(const uint64_t subscription_id)=0;
    //--- EnStatus
-   virtual UINT      Status(void) const=0;
-   virtual MTAPIRES  Status(const UINT status)=0;
+   virtual uint32_t  Status(void) const=0;
+   virtual MTAPIRES  Status(const uint32_t status)=0;
    //--- subscribe time
-   virtual INT64     TimeSubscribe(void) const=0;
-   virtual MTAPIRES  TimeSubscribe(const INT64 time)=0;
+   virtual int64_t     TimeSubscribe(void) const=0;
+   virtual MTAPIRES  TimeSubscribe(const int64_t time)=0;
    //--- last renewal time
-   virtual INT64     TimeRenewal(void) const=0;
-   virtual MTAPIRES  TimeRenewal(const INT64 time)=0;
+   virtual int64_t     TimeRenewal(void) const=0;
+   virtual MTAPIRES  TimeRenewal(const int64_t time)=0;
    //--- expire time
-   virtual INT64     TimeExpire(void) const=0;
-   virtual MTAPIRES  TimeExpire(const INT64 time)=0;
+   virtual int64_t     TimeExpire(void) const=0;
+   virtual MTAPIRES  TimeExpire(const int64_t time)=0;
    //--- flags
-   virtual UINT      Flags(void) const=0;
-   virtual MTAPIRES  Flags(const UINT flags)=0;
+   virtual uint32_t  Flags(void) const=0;
+   virtual MTAPIRES  Flags(const uint32_t flags)=0;
    //--- explicit destructor is prohibited
 protected:
                     ~IMTSubscription(void) {}
@@ -76,24 +76,24 @@ public:
    virtual MTAPIRES  Add(IMTSubscriptionArray* array)=0;
    virtual MTAPIRES  AddCopy(const IMTSubscriptionArray* array)=0;
    //--- delete & detach
-   virtual MTAPIRES  Delete(const UINT pos)=0;
-   virtual IMTSubscription* Detach(const UINT pos)=0;
+   virtual MTAPIRES  Delete(const uint32_t pos)=0;
+   virtual IMTSubscription* Detach(const uint32_t pos)=0;
    //--- update
-   virtual MTAPIRES  Update(const UINT pos,IMTSubscription* record)=0;
-   virtual MTAPIRES  UpdateCopy(const UINT pos,const IMTSubscription* record)=0;
-   virtual MTAPIRES  Shift(const UINT pos,const int shift)=0;
+   virtual MTAPIRES  Update(const uint32_t pos,IMTSubscription* record)=0;
+   virtual MTAPIRES  UpdateCopy(const uint32_t pos,const IMTSubscription* record)=0;
+   virtual MTAPIRES  Shift(const uint32_t pos,const int32_t shift)=0;
    //--- data access
-   virtual UINT      Total(void) const=0;
-   virtual IMTSubscription*  Next(const UINT index) const=0;
+   virtual uint32_t  Total(void) const=0;
+   virtual IMTSubscription*  Next(const uint32_t index) const=0;
    //--- sorting and search
    virtual MTAPIRES  Sort(MTSortFunctionPtr sort_function)=0;
-   virtual int       Search(const void *key,MTSortFunctionPtr sort_function) const=0;
-   virtual int       SearchGreatOrEq(const void *key,MTSortFunctionPtr sort_function) const=0;
-   virtual int       SearchGreater(const void *key,MTSortFunctionPtr sort_function) const=0;
-   virtual int       SearchLessOrEq(const void *key,MTSortFunctionPtr sort_function) const=0;
-   virtual int       SearchLess(const void *key,MTSortFunctionPtr sort_function) const=0;
-   virtual int       SearchLeft(const void *key,MTSortFunctionPtr sort_function) const=0;
-   virtual int       SearchRight(const void *key,MTSortFunctionPtr sort_function) const=0;
+   virtual int32_t   Search(const void *key,MTSortFunctionPtr sort_function) const=0;
+   virtual int32_t   SearchGreatOrEq(const void *key,MTSortFunctionPtr sort_function) const=0;
+   virtual int32_t   SearchGreater(const void *key,MTSortFunctionPtr sort_function) const=0;
+   virtual int32_t   SearchLessOrEq(const void *key,MTSortFunctionPtr sort_function) const=0;
+   virtual int32_t   SearchLess(const void *key,MTSortFunctionPtr sort_function) const=0;
+   virtual int32_t   SearchLeft(const void *key,MTSortFunctionPtr sort_function) const=0;
+   virtual int32_t   SearchRight(const void *key,MTSortFunctionPtr sort_function) const=0;
    //--- explicit destructor is prohibited
 protected:
                     ~IMTSubscriptionArray(void) {}
@@ -104,7 +104,7 @@ protected:
 class IMTSubscriptionHistory
   {
 public:
-   //---- actions
+   //--- actions
    enum EnAction
      {
       ACTION_SUBSCRIBE         =0,          // subscription
@@ -121,31 +121,31 @@ public:
    virtual MTAPIRES  Assign(const IMTSubscriptionHistory* obj)=0;
    virtual MTAPIRES  Clear(void)=0;
    //--- id
-   virtual UINT64    ID(void) const=0;
+   virtual uint64_t    ID(void) const=0;
    //--- client login
-   virtual UINT64    Login(void) const=0;
-   virtual MTAPIRES  Login(const UINT64 login)=0;
+   virtual uint64_t    Login(void) const=0;
+   virtual MTAPIRES  Login(const uint64_t login)=0;
    //--- subscription config id
-   virtual UINT64    Subscription(void) const=0;
-   virtual MTAPIRES  Subscription(const UINT64 subscription_id)=0;
+   virtual uint64_t    Subscription(void) const=0;
+   virtual MTAPIRES  Subscription(const uint64_t subscription_id)=0;
    //--- subscription record id
-   virtual UINT64    Record(void) const=0;
-   virtual MTAPIRES  Record(const UINT64 record_id)=0;
+   virtual uint64_t    Record(void) const=0;
+   virtual MTAPIRES  Record(const uint64_t record_id)=0;
    //--- EnStatus
-   virtual UINT      Action(void) const=0;
-   virtual MTAPIRES  Action(const UINT status)=0;
+   virtual uint32_t  Action(void) const=0;
+   virtual MTAPIRES  Action(const uint32_t status)=0;
    //--- subscribe time
-   virtual INT64     Time(void) const=0;
-   virtual MTAPIRES  Time(const INT64 time)=0;
+   virtual int64_t     Time(void) const=0;
+   virtual MTAPIRES  Time(const int64_t time)=0;
    //--- ammount
    virtual double    Amount(void) const=0;
    virtual MTAPIRES  Amount(const double ammount)=0;
    //--- digits
-   virtual UINT      AmountDigits(void) const=0;
-   virtual MTAPIRES  AmountDigits(const UINT digits)=0;
+   virtual uint32_t  AmountDigits(void) const=0;
+   virtual MTAPIRES  AmountDigits(const uint32_t digits)=0;
    //--- ammount deal
-   virtual UINT64    AmountDeal(void) const=0;
-   virtual MTAPIRES  AmountDeal(const UINT64 deal)=0;
+   virtual uint64_t    AmountDeal(void) const=0;
+   virtual MTAPIRES  AmountDeal(const uint64_t deal)=0;
    //--- explicit destructor is prohibited
 protected:
                     ~IMTSubscriptionHistory(void) {}
@@ -166,24 +166,24 @@ public:
    virtual MTAPIRES  Add(IMTSubscriptionHistoryArray* array)=0;
    virtual MTAPIRES  AddCopy(const IMTSubscriptionHistoryArray* array)=0;
    //--- delete & detach
-   virtual MTAPIRES  Delete(const UINT pos)=0;
-   virtual IMTSubscriptionHistory* Detach(const UINT pos)=0;
+   virtual MTAPIRES  Delete(const uint32_t pos)=0;
+   virtual IMTSubscriptionHistory* Detach(const uint32_t pos)=0;
    //--- update
-   virtual MTAPIRES  Update(const UINT pos,IMTSubscriptionHistory* record)=0;
-   virtual MTAPIRES  UpdateCopy(const UINT pos,const IMTSubscriptionHistory* record)=0;
-   virtual MTAPIRES  Shift(const UINT pos,const int shift)=0;
+   virtual MTAPIRES  Update(const uint32_t pos,IMTSubscriptionHistory* record)=0;
+   virtual MTAPIRES  UpdateCopy(const uint32_t pos,const IMTSubscriptionHistory* record)=0;
+   virtual MTAPIRES  Shift(const uint32_t pos,const int32_t shift)=0;
    //--- data access
-   virtual UINT      Total(void) const=0;
-   virtual IMTSubscriptionHistory*  Next(const UINT index) const=0;
+   virtual uint32_t  Total(void) const=0;
+   virtual IMTSubscriptionHistory*  Next(const uint32_t index) const=0;
    //--- sorting and search
    virtual MTAPIRES  Sort(MTSortFunctionPtr sort_function)=0;
-   virtual int       Search(const void *key,MTSortFunctionPtr sort_function) const=0;
-   virtual int       SearchGreatOrEq(const void *key,MTSortFunctionPtr sort_function) const=0;
-   virtual int       SearchGreater(const void *key,MTSortFunctionPtr sort_function) const=0;
-   virtual int       SearchLessOrEq(const void *key,MTSortFunctionPtr sort_function) const=0;
-   virtual int       SearchLess(const void *key,MTSortFunctionPtr sort_function) const=0;
-   virtual int       SearchLeft(const void *key,MTSortFunctionPtr sort_function) const=0;
-   virtual int       SearchRight(const void *key,MTSortFunctionPtr sort_function) const=0;
+   virtual int32_t   Search(const void *key,MTSortFunctionPtr sort_function) const=0;
+   virtual int32_t   SearchGreatOrEq(const void *key,MTSortFunctionPtr sort_function) const=0;
+   virtual int32_t   SearchGreater(const void *key,MTSortFunctionPtr sort_function) const=0;
+   virtual int32_t   SearchLessOrEq(const void *key,MTSortFunctionPtr sort_function) const=0;
+   virtual int32_t   SearchLess(const void *key,MTSortFunctionPtr sort_function) const=0;
+   virtual int32_t   SearchLeft(const void *key,MTSortFunctionPtr sort_function) const=0;
+   virtual int32_t   SearchRight(const void *key,MTSortFunctionPtr sort_function) const=0;
    //--- explicit destructor is prohibited
 protected:
                     ~IMTSubscriptionHistoryArray(void) {}
@@ -198,8 +198,8 @@ public:
    virtual void      OnSubscriptionAdd(const IMTSubscription*    /*subscription*/) {  }
    virtual void      OnSubscriptionUpdate(const IMTSubscription* /*subscription*/) {  }
    virtual void      OnSubscriptionDelete(const IMTSubscription* /*subscription*/) {  }
-   virtual void      OnSubscriptionJoin(const UINT64 /*manager*/,const UINT64 /*login*/,const IMTConSubscription* /*config*/,IMTSubscription* /*record*/,IMTSubscriptionHistory* /*history*/) { }
-   virtual void      OnSubscriptionCancel(const UINT64 /*manager*/,const UINT64 /*login*/,const IMTConSubscription* /*config*/,IMTSubscription* /*record*/,IMTSubscriptionHistory* /*history*/) { }
+   virtual void      OnSubscriptionJoin(const uint64_t /*manager*/,const uint64_t /*login*/,const IMTConSubscription* /*config*/,IMTSubscription* /*record*/,IMTSubscriptionHistory* /*history*/) { }
+   virtual void      OnSubscriptionCancel(const uint64_t /*manager*/,const uint64_t /*login*/,const IMTConSubscription* /*config*/,IMTSubscription* /*record*/,IMTSubscriptionHistory* /*history*/) { }
   };
 //+------------------------------------------------------------------+
 //| Subscription history events notification interface               |

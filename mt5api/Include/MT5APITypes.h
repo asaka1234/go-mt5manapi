@@ -1,6 +1,6 @@
-//+------------------------------------------------------------------+
+﻿//+------------------------------------------------------------------+
 //|                                                 MetaTrader 5 API |
-//|                             Copyright 2000-2024, MetaQuotes Ltd. |
+//|                             Copyright 2000-2026, MetaQuotes Ltd. |
 //|                                               www.metaquotes.net |
 //+------------------------------------------------------------------+
 #pragma once
@@ -11,7 +11,7 @@
 //+------------------------------------------------------------------+
 //| MetaTrader 5 API return type                                     |
 //+------------------------------------------------------------------+
-typedef UINT MTAPIRES;
+typedef uint32_t MTAPIRES;
 //+------------------------------------------------------------------+
 //| MetaTrader 5 API string type                                     |
 //+------------------------------------------------------------------+
@@ -19,7 +19,7 @@ typedef wchar_t MTAPISTR[260];
 //+------------------------------------------------------------------+
 //| MetaTrader 5 API sort function pointer type                      |
 //+------------------------------------------------------------------+
-typedef int (__cdecl *MTSortFunctionPtr)(const void *left, const void *right);
+typedef int32_t (__cdecl *MTSortFunctionPtr)(const void *left, const void *right);
 //+------------------------------------------------------------------+
 //| License check block                                              |
 //+------------------------------------------------------------------+
@@ -28,17 +28,21 @@ struct MTLicenseCheck
   {
    //--- license data - filled by API client before LicenseCheck call
    wchar_t           name[128];            // license name
-   int               data_reserved[128];   // additional license data
+   int32_t           data_reserved[128];   // additional license data
    //--- random sequence - filled by API client before LicenseCheck call
    char              random[256];          // random sequence for sign verification
-   UINT              random_size;          // random sequence size
+   uint32_t          random_size;          // random sequence size
    //--- check result - filled API client after LicenseCheck call
    MTAPIRES          retcode;              // license check result
-   int               result_reserved[128]; // license check additional info
+   int32_t           result_reserved[128]; // license check additional info
    //--- license block sign - filled API client after LicenseCheck call
    char              sign[1024];           // license check sign
-   UINT              sign_size;            // license check sign size
-   int               sign_reserved[64];    // reserved
+   uint32_t          sign_size;            // license check sign size
+   int32_t           sign_reserved[64];    // reserved
   };
 #pragma pack(pop)
+//+------------------------------------------------------------------+
+//| MetaTrader 5 API period type                                     |
+//+------------------------------------------------------------------+
+typedef uint16_t MTPERIOD;
 //+------------------------------------------------------------------+

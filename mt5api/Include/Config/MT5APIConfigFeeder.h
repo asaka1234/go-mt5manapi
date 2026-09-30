@@ -1,6 +1,6 @@
-//+------------------------------------------------------------------+
+﻿//+------------------------------------------------------------------+
 //|                                                 MetaTrader 5 API |
-//|                             Copyright 2000-2024, MetaQuotes Ltd. |
+//|                             Copyright 2000-2026, MetaQuotes Ltd. |
 //|                                               www.metaquotes.net |
 //+------------------------------------------------------------------+
 #pragma once
@@ -41,14 +41,14 @@ public:
    //--- default feed server password
    virtual LPCWSTR   FeedPassword(void) const=0;
    //--- datafeed version
-   virtual UINT      Version(void) const=0;
+   virtual uint32_t  Version(void) const=0;
    //--- datafeed available modes (IMTConFeeder::EnFeedersFlags)
-   virtual UINT      Modes(void) const=0;
+   virtual uint32_t  Modes(void) const=0;
    //--- changeable EnFeedersFieldFlags
-   virtual UINT      Fields(void) const=0;
+   virtual uint32_t  Fields(void) const=0;
    //--- default datafeed parameters
-   virtual UINT      ParameterTotal(void) const=0;
-   virtual MTAPIRES  ParameterNext(const UINT pos,IMTConParam* param) const=0;
+   virtual uint32_t  ParameterTotal(void) const=0;
+   virtual MTAPIRES  ParameterNext(const uint32_t pos,IMTConParam* param) const=0;
    virtual MTAPIRES  ParameterGet(LPCWSTR name,IMTConParam* param) const=0;
    //--- explicit destructor is prohibited
 protected:
@@ -77,7 +77,7 @@ public:
    virtual INT       AskMarkup(void) const=0;
    virtual MTAPIRES  AskMarkup(const INT markup)=0;
    //--- digits
-   virtual UINT      Digits(void) const=0;
+   virtual uint32_t  Digits(void) const=0;
    //--- explicit destructor is prohibited
 protected:
                     ~IMTConFeederTranslate(void) {}
@@ -130,11 +130,11 @@ public:
    virtual LPCWSTR   FeedPassword(void) const=0;
    virtual MTAPIRES  FeedPassword(LPCWSTR password)=0;
    //--- EnFeedersMode
-   virtual UINT      Mode(void) const=0;
-   virtual MTAPIRES  Mode(const UINT mode)=0;
+   virtual uint32_t  Mode(void) const=0;
+   virtual MTAPIRES  Mode(const uint32_t mode)=0;
    //--- EnFeedersFlags
-   virtual UINT      Flags(void) const=0;
-   virtual MTAPIRES  Flags(const UINT flags)=0;
+   virtual uint32_t  Flags(void) const=0;
+   virtual MTAPIRES  Flags(const uint32_t flags)=0;
    //--- comma separated news keywords
    virtual LPCWSTR   Keywords(void) const=0;
    virtual MTAPIRES  Keywords(LPCWSTR keywords)=0;
@@ -142,59 +142,59 @@ public:
    virtual LPCWSTR   Categories(void) const=0;
    virtual MTAPIRES  Categories(LPCWSTR categories)=0;
    //--- obsolete value
-   virtual UINT      ObsoleteValue(void) const=0;
-   virtual MTAPIRES  ObsoleteValue(const UINT value)=0;
+   virtual uint32_t  ObsoleteValue(void) const=0;
+   virtual MTAPIRES  ObsoleteValue(const uint32_t value)=0;
    //--- datafeed reconnect timeout
-   virtual UINT      TimeoutReconnect(void) const=0;
-   virtual MTAPIRES  TimeoutReconnect(const UINT timeout)=0;
+   virtual uint32_t  TimeoutReconnect(void) const=0;
+   virtual MTAPIRES  TimeoutReconnect(const uint32_t timeout)=0;
    //--- datafeed sleep timeout
-   virtual UINT      TimeoutSleep(void) const=0;
-   virtual MTAPIRES  TimeoutSleep(const UINT timeout)=0;
+   virtual uint32_t  TimeoutSleep(void) const=0;
+   virtual MTAPIRES  TimeoutSleep(const uint32_t timeout)=0;
    //--- reconnect attempts before timeout
-   virtual UINT      TimeoutAttempts(void) const=0;
-   virtual MTAPIRES  TimeoutAttempts(const UINT attempts)=0;
+   virtual uint32_t  TimeoutAttempts(void) const=0;
+   virtual MTAPIRES  TimeoutAttempts(const uint32_t attempts)=0;
    //--- datafeed additional parameters access
    virtual MTAPIRES  ParameterAdd(IMTConParam* param)=0;
-   virtual MTAPIRES  ParameterUpdate(const UINT pos,const IMTConParam* param)=0;
-   virtual MTAPIRES  ParameterDelete(const UINT pos)=0;
+   virtual MTAPIRES  ParameterUpdate(const uint32_t pos,const IMTConParam* param)=0;
+   virtual MTAPIRES  ParameterDelete(const uint32_t pos)=0;
    virtual MTAPIRES  ParameterClear(void)=0;
-   virtual MTAPIRES  ParameterShift(const UINT pos,const int shift)=0;
-   virtual UINT      ParameterTotal(void) const=0;
-   virtual MTAPIRES  ParameterNext(const UINT pos,IMTConParam* param) const=0;
+   virtual MTAPIRES  ParameterShift(const uint32_t pos,const int32_t shift)=0;
+   virtual uint32_t  ParameterTotal(void) const=0;
+   virtual MTAPIRES  ParameterNext(const uint32_t pos,IMTConParam* param) const=0;
    virtual MTAPIRES  ParameterGet(LPCWSTR name,IMTConParam* param) const=0;
    //--- list of symbols for translating quotes
    virtual MTAPIRES  SymbolAdd(LPCWSTR path)=0;
-   virtual MTAPIRES  SymbolUpdate(const UINT pos,LPCWSTR path)=0;
-   virtual MTAPIRES  SymbolDelete(const UINT pos)=0;
+   virtual MTAPIRES  SymbolUpdate(const uint32_t pos,LPCWSTR path)=0;
+   virtual MTAPIRES  SymbolDelete(const uint32_t pos)=0;
    virtual MTAPIRES  SymbolClear(void)=0;
-   virtual MTAPIRES  SymbolShift(const UINT pos,const int shift)=0;
-   virtual UINT      SymbolTotal(void) const=0;
-   virtual LPCWSTR   SymbolNext(const UINT pos) const=0;
+   virtual MTAPIRES  SymbolShift(const uint32_t pos,const int32_t shift)=0;
+   virtual uint32_t  SymbolTotal(void) const=0;
+   virtual LPCWSTR   SymbolNext(const uint32_t pos) const=0;
    //--- list of symbols translations
    virtual MTAPIRES  TranslateAdd(IMTConFeederTranslate* param)=0;
-   virtual MTAPIRES  TranslateUpdate(const UINT pos,const IMTConFeederTranslate* param)=0;
-   virtual MTAPIRES  TranslateDelete(const UINT pos)=0;
+   virtual MTAPIRES  TranslateUpdate(const uint32_t pos,const IMTConFeederTranslate* param)=0;
+   virtual MTAPIRES  TranslateDelete(const uint32_t pos)=0;
    virtual MTAPIRES  TranslateClear(void)=0;
-   virtual MTAPIRES  TranslateShift(const UINT pos,const int shift)=0;
-   virtual UINT      TranslateTotal(void) const=0;
-   virtual MTAPIRES  TranslateNext(const UINT pos,IMTConFeederTranslate* param) const=0;
+   virtual MTAPIRES  TranslateShift(const uint32_t pos,const int32_t shift)=0;
+   virtual uint32_t  TranslateTotal(void) const=0;
+   virtual MTAPIRES  TranslateNext(const uint32_t pos,IMTConFeederTranslate* param) const=0;
    virtual MTAPIRES  TranslateGet(LPCWSTR symbol,IMTConFeederTranslate* param) const=0;
    //--- gateway server address
    virtual LPCWSTR   GatewayServer(void) const=0;
    virtual MTAPIRES  GatewayServer(LPCWSTR server)=0;
    //--- gateway server login
-   virtual UINT64    GatewayLogin(void) const=0;
-   virtual MTAPIRES  GatewayLogin(UINT64 login)=0;
+   virtual uint64_t    GatewayLogin(void) const=0;
+   virtual MTAPIRES  GatewayLogin(uint64_t login)=0;
    //--- gateway server password
    virtual LPCWSTR   GatewayPassword(void) const=0;
    virtual MTAPIRES  GatewayPassword(LPCWSTR password)=0;
    //--- feeder state information
    virtual bool      StateConnected(void) const=0;
-   virtual UINT      StateReceivedTicks(void) const=0;
-   virtual UINT      StateReceivedBooks(void) const=0;
-   virtual UINT      StateReceivedNews(void) const=0;
-   virtual UINT      StateTrafficIn(void) const=0;
-   virtual UINT      StateTrafficOut(void) const=0;
+   virtual uint32_t  StateReceivedTicks(void) const=0;
+   virtual uint32_t  StateReceivedBooks(void) const=0;
+   virtual uint32_t  StateReceivedNews(void) const=0;
+   virtual uint32_t  StateTrafficIn(void) const=0;
+   virtual uint32_t  StateTrafficOut(void) const=0;
    //--- explicit destructor is prohibited
 protected:
                     ~IMTConFeeder(void) {}

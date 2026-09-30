@@ -1,6 +1,6 @@
-//+------------------------------------------------------------------+
+﻿//+------------------------------------------------------------------+
 //|                                                 MetaTrader 5 API |
-//|                             Copyright 2000-2024, MetaQuotes Ltd. |
+//|                             Copyright 2000-2026, MetaQuotes Ltd. |
 //|                                               www.metaquotes.net |
 //+------------------------------------------------------------------+
 #pragma once
@@ -9,11 +9,11 @@
 //+------------------------------------------------------------------+
 //| Seconds macro                                                    |
 //+------------------------------------------------------------------+
-#define SECONDS_IN_MINUTE    INT64(60)
-#define SECONDS_IN_HOUR      INT64(60*SECONDS_IN_MINUTE)
-#define SECONDS_IN_DAY       INT64(24*SECONDS_IN_HOUR)
-#define SECONDS_IN_WEEK      INT64(7*SECONDS_IN_DAY)
-#define SECONDS_IN_MONTH     INT64(30*SECONDS_IN_DAY)
+#define SECONDS_IN_MINUTE    int64_t(60)
+#define SECONDS_IN_HOUR      int64_t(60*SECONDS_IN_MINUTE)
+#define SECONDS_IN_DAY       int64_t(24*SECONDS_IN_HOUR)
+#define SECONDS_IN_WEEK      int64_t(7*SECONDS_IN_DAY)
+#define SECONDS_IN_MONTH     int64_t(30*SECONDS_IN_DAY)
 //+------------------------------------------------------------------+
 //| Minutes macro                                                    |
 //+------------------------------------------------------------------+
@@ -26,35 +26,35 @@
 class SMTTime
   {
 private:
-   static const INT64 s_max_time64_t;
+   static const int64_t s_max_time64_t;
    static const LPCWSTR s_months_names[13];
    static const LPCWSTR s_months_short_names[13];
 
 public:
    //--- time functions
-   static bool       ParseTime(const INT64 ctm,tm *ttm);
-   static INT64      MakeTime(tm *ttm);
-   static LPCWSTR    MonthName(const UCHAR month);
-   static LPCWSTR    MonthNameShort(const UCHAR month);
-   static INT64      WeekBegin(const INT64 ctm);
-   static INT64      DayBegin(const INT64 ctm);
-   static INT64      MonthBegin(const INT64 ctm);
-   static INT64      YearBegin(const INT64 ctm);
+   static bool       ParseTime(const int64_t ctm,tm *ttm);
+   static int64_t    MakeTime(tm *ttm);
+   static LPCWSTR    MonthName(const uint8_t month);
+   static LPCWSTR    MonthNameShort(const uint8_t month);
+   static int64_t    WeekBegin(const int64_t ctm);
+   static int64_t    DayBegin(const int64_t ctm);
+   static int64_t    MonthBegin(const int64_t ctm);
+   static int64_t    YearBegin(const int64_t ctm);
    //---  SYSTEMTIME
-   static INT64      STToTime(const SYSTEMTIME &st);
-   static SYSTEMTIME& TimeToST(INT64 ctm,SYSTEMTIME& st);
+   static int64_t    STToTime(const SYSTEMTIME &st);
+   static SYSTEMTIME& TimeToST(int64_t ctm,SYSTEMTIME& st);
    //--- year, month & time hour
-   static UINT       Year(const INT64 ctm);
-   static UINT       Month(const INT64 ctm);
-   static UINT       Day(const INT64 ctm);
-   static UINT       Hour(const INT64 ctm);
-   static UINT       Min(const INT64 ctm);
-   static UINT       Sec(const INT64 ctm);
+   static uint32_t   Year(const int64_t ctm);
+   static uint32_t   Month(const int64_t ctm);
+   static uint32_t   Day(const int64_t ctm);
+   static uint32_t   Hour(const int64_t ctm);
+   static uint32_t   Min(const int64_t ctm);
+   static uint32_t   Sec(const int64_t ctm);
   };
 //+------------------------------------------------------------------+
 //|                                                                  |
 //+------------------------------------------------------------------+
-const __declspec(selectany) INT64   SMTTime::s_max_time64_t=(long long)0x793406fff;
+const __declspec(selectany) int64_t   SMTTime::s_max_time64_t=0x793406fffLL;
 //+------------------------------------------------------------------+
 //|                                                                  |
 //+------------------------------------------------------------------+
@@ -66,7 +66,7 @@ const __declspec(selectany)LPCWSTR  SMTTime::s_months_short_names[13]={ L"Jan",L
 //+------------------------------------------------------------------+
 //| Time parsing                                                     |
 //+------------------------------------------------------------------+
-inline bool SMTTime::ParseTime(const INT64 ctm,tm *ttm)
+inline bool SMTTime::ParseTime(const int64_t ctm,tm *ttm)
   {
 //--- check
    if(!ttm) return(false);
@@ -82,7 +82,7 @@ inline bool SMTTime::ParseTime(const INT64 ctm,tm *ttm)
 //+------------------------------------------------------------------+
 //| Time conversion                                                  |
 //+------------------------------------------------------------------+
-inline INT64 SMTTime::MakeTime(tm *ttm)
+inline int64_t SMTTime::MakeTime(tm *ttm)
   {
 //--- check
    if(!ttm) return(0);
@@ -92,7 +92,7 @@ inline INT64 SMTTime::MakeTime(tm *ttm)
 //+------------------------------------------------------------------+
 //| Month full name                                                  |
 //+------------------------------------------------------------------+
-inline LPCWSTR SMTTime::MonthName(const UCHAR month)
+inline LPCWSTR SMTTime::MonthName(const uint8_t month)
   {
    if(month>11) return s_months_names[12];
    else         return s_months_names[month];
@@ -100,7 +100,7 @@ inline LPCWSTR SMTTime::MonthName(const UCHAR month)
 //+------------------------------------------------------------------+
 //| Month short name                                                 |
 //+------------------------------------------------------------------+
-inline LPCWSTR SMTTime::MonthNameShort(const UCHAR month)
+inline LPCWSTR SMTTime::MonthNameShort(const uint8_t month)
   {
    if(month>11) return s_months_short_names[12];
    else         return s_months_short_names[month];
@@ -108,24 +108,24 @@ inline LPCWSTR SMTTime::MonthNameShort(const UCHAR month)
 //+------------------------------------------------------------------+
 //| Week begin calculation (Sunday)                                  |
 //+------------------------------------------------------------------+
-inline INT64 SMTTime::WeekBegin(const INT64 ctm)
+inline int64_t SMTTime::WeekBegin(const int64_t ctm)
   {
    if(ctm<345600) return(0);
-   INT64 wday=(ctm%604800);
+   int64_t wday=(ctm%604800);
    wday+=(wday>=259200)?(-259200):(345600);
    return(ctm-wday);
   }
 //+------------------------------------------------------------------+
 //| Day begin calculation                                            |
 //+------------------------------------------------------------------+
-inline INT64 SMTTime::DayBegin(const INT64 ctm)
+inline int64_t SMTTime::DayBegin(const int64_t ctm)
   {
    return((ctm/SECONDS_IN_DAY)*SECONDS_IN_DAY);
   }
 //+------------------------------------------------------------------+
 //| Month begin calculation                                          |
 //+------------------------------------------------------------------+
-inline INT64 SMTTime::MonthBegin(const INT64 ctm)
+inline int64_t SMTTime::MonthBegin(const int64_t ctm)
   {
    tm ttm;
 //--- parse datetime
@@ -139,7 +139,7 @@ inline INT64 SMTTime::MonthBegin(const INT64 ctm)
 //+------------------------------------------------------------------+
 //| Year begin calculation                                           |
 //+------------------------------------------------------------------+
-inline INT64 SMTTime::YearBegin(const INT64 ctm)
+inline int64_t SMTTime::YearBegin(const int64_t ctm)
   {
    tm ttm;
 //--- parse datetime
@@ -154,7 +154,7 @@ inline INT64 SMTTime::YearBegin(const INT64 ctm)
 //+------------------------------------------------------------------+
 //| UNIX time to SYSTEMTIME conversion                               |
 //+------------------------------------------------------------------+
-inline SYSTEMTIME& SMTTime::TimeToST(INT64 ctm,SYSTEMTIME& st)
+inline SYSTEMTIME& SMTTime::TimeToST(int64_t ctm,SYSTEMTIME& st)
   {
    tm ttm={};
 //--- clean
@@ -176,9 +176,9 @@ inline SYSTEMTIME& SMTTime::TimeToST(INT64 ctm,SYSTEMTIME& st)
 //+------------------------------------------------------------------+
 //| SYSTEMTIME to UNIX time conversion                               |
 //+------------------------------------------------------------------+
-inline INT64 SMTTime::STToTime(const SYSTEMTIME &st)
+inline int64_t SMTTime::STToTime(const SYSTEMTIME &st)
   {
-   INT64 ctm;
+   int64_t ctm;
    tm    ttm={};
 //---
    ttm.tm_year=st.wYear-1900;
@@ -196,25 +196,25 @@ inline INT64 SMTTime::STToTime(const SYSTEMTIME &st)
 //+------------------------------------------------------------------+
 //| Year by datetime                                                 |
 //+------------------------------------------------------------------+
-inline UINT SMTTime::Year(const INT64 ctm) { tm ttm; ParseTime(ctm,&ttm); return(UINT(ttm.tm_year+1900)); }
+inline uint32_t SMTTime::Year(const int64_t ctm) { tm ttm; ParseTime(ctm,&ttm); return(uint32_t(ttm.tm_year+1900)); }
 //+------------------------------------------------------------------+
 //| Month by datetime                                                |
 //+------------------------------------------------------------------+
-inline UINT SMTTime::Month(const INT64 ctm){ tm ttm; ParseTime(ctm,&ttm); return(UINT(ttm.tm_mon+1));     }
+inline uint32_t SMTTime::Month(const int64_t ctm){ tm ttm; ParseTime(ctm,&ttm); return(uint32_t(ttm.tm_mon+1));     }
 //+------------------------------------------------------------------+
 //| Day by datetime                                                  |
 //+------------------------------------------------------------------+
-inline UINT SMTTime::Day(const INT64 ctm)  { tm ttm; ParseTime(ctm,&ttm); return(UINT(ttm.tm_mday));      }
+inline uint32_t SMTTime::Day(const int64_t ctm)  { tm ttm; ParseTime(ctm,&ttm); return(uint32_t(ttm.tm_mday));      }
 //+------------------------------------------------------------------+
 //| Hour by datetime                                                 |
 //+------------------------------------------------------------------+
-inline UINT SMTTime::Hour(const INT64 ctm) { tm ttm; ParseTime(ctm,&ttm); return(UINT(ttm.tm_hour));      }
+inline uint32_t SMTTime::Hour(const int64_t ctm) { tm ttm; ParseTime(ctm,&ttm); return(uint32_t(ttm.tm_hour));      }
 //+------------------------------------------------------------------+
 //| Minute by datetime                                               |
 //+------------------------------------------------------------------+
-inline UINT SMTTime::Min(const INT64 ctm)  { tm ttm; ParseTime(ctm,&ttm); return(UINT(ttm.tm_min));       }
+inline uint32_t SMTTime::Min(const int64_t ctm)  { tm ttm; ParseTime(ctm,&ttm); return(uint32_t(ttm.tm_min));       }
 //+------------------------------------------------------------------+
 //| Second by datetime                                               |
 //+------------------------------------------------------------------+
-inline UINT SMTTime::Sec(const INT64 ctm)  { tm ttm; ParseTime(ctm,&ttm); return(UINT(ttm.tm_sec));       }
+inline uint32_t SMTTime::Sec(const int64_t ctm)  { tm ttm; ParseTime(ctm,&ttm); return(uint32_t(ttm.tm_sec));       }
 //+------------------------------------------------------------------+

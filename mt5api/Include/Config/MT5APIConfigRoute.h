@@ -1,6 +1,6 @@
-//+------------------------------------------------------------------+
+﻿//+------------------------------------------------------------------+
 //|                                                 MetaTrader 5 API |
-//|                             Copyright 2000-2024, MetaQuotes Ltd. |
+//|                             Copyright 2000-2026, MetaQuotes Ltd. |
 //|                                               www.metaquotes.net |
 //+------------------------------------------------------------------+
 #pragma once
@@ -29,6 +29,12 @@ public:
       CONDITION_GAP                 =12,      // symbol in gap mode
       CONDITION_PRICE               =13,      // price in request
       CONDITION_VALUE               =14,      // request value
+      CONDITION_REASON              =15,      // request reason
+      CONDITION_REQUEST_DATE        =16,      // request date
+      CONDITION_DATETIME_DATETIME   =17,      // current date and time
+      CONDITION_DATETIME_DATE       =18,      // current date
+      CONDITION_DATETIME_TIME       =19,      // current time (in minutes from 00:00)
+      CONDITION_DATETIME_WEEKDAY    =20,      // current day of week 0 - sunday
       //--- client data
       CONDITION_LOGIN               =1000,    // login
       CONDITION_GROUP               =1001,    // group
@@ -39,6 +45,21 @@ public:
       CONDITION_COMMENT_CLIENT      =1006,    // client record comment
       CONDITION_ZIPCODE             =1007,    // ZIP code
       CONDITION_STATUS              =1008,    // Status
+      CONDITION_CLIENT_ID           =1009,    // Client ID
+      CONDITION_PARTY_ID            =1010,    // Party ID
+      CONDITION_ACCOUNT_LANGUAGE    =1011,    // language
+      CONDITION_ACCOUNT_PHONE       =1012,    // phone
+      CONDITION_ACCOUNT_EMAIL       =1013,    // email
+      CONDITION_ACCOUNT_REGISTRATION=1014,    // registration date and time
+      CONDITION_ACCOUNT_REGISTRATION_ELAPSED=1015, // elapsed time since registration
+      CONDITION_ACCOUNT_LASTTIME    =1016,    // last login date and time
+      CONDITION_ACCOUNT_LASTTIME_ELAPSED=1017,// elapsed time since last login
+      CONDITION_ACCOUNT_LEAD_SOURCE =1018,    // lead source
+      CONDITION_ACCOUNT_LEAD_CAMPAIGN=1019,   // lead campaign
+      CONDITION_ACCOUNT_AGENT       =1020,    // agent account
+      CONDITION_ACCOUNT_COMPANY     =1021,    // company
+      CONDITION_ACCOUNT_BANK_ACCOUNT=1022,    // bank account
+      CONDITION_ACCOUNT_STATE       =1023,    // state or region
       //--- client trade account
       CONDITION_MARGIN              =2000,    // margin
       CONDITION_MARGIN_LEVEL        =2001,    // margin level
@@ -46,6 +67,21 @@ public:
       CONDITION_EQUITY              =2003,    // equity
       CONDITION_BALANCE             =2004,    // balance
       CONDITION_PROFIT              =2005,    // profit
+      CONDITION_ACCOUNT_CREDIT      =2006,    // credit
+      CONDITION_ACCOUNT_CURRENCY    =2007,    // currency
+      CONDITION_ACCOUNT_ONLINE      =2008,    // online
+      CONDITION_ACCOUNT_ACTIVITY_TRADE_ELAPSED=2009, // elapsed days since last trade
+      CONDITION_ACCOUNT_ENABLED     =2010,    // account enabled
+      CONDITION_ACCOUNT_TRADING_ENABLED=2011, // trading enabled
+      CONDITION_ACCOUNT_EXPERT_ENABLED=2012,  // automated trading enabled
+      CONDITION_ACCOUNT_OWN_FUNDS_PERCENT=2013, // own funds percent
+      CONDITION_ACCOUNT_OWN_FUNDS_VOLUME=2014, // own funds volume
+      CONDITION_ACCOUNT_VOLUME_TOTAL=2015,    // total positions volume
+      CONDITION_ACCOUNT_VOLUME_NET  =2016,    // net positions volume
+      CONDITION_ACCOUNT_VOLUME_BY_SYMBOL=2017, // positions volume by request symbol
+      CONDITION_ACCOUNT_VOLUME_NET_BY_SYMBOL=2018, // net positions volume by request symbol
+      CONDITION_ACCOUNT_VOLUME_BUY_BY_SYMBOL=2019, // buy positions volume by request symbol
+      CONDITION_ACCOUNT_VOLUME_SELL_BY_SYMBOL=2020, // sell positions volume by request symbol
       //--- trading statistic
       CONDITION_DAILY_DEALS         =3000,    // deals count
       CONDITION_DAILY_DEALS_PERIOD  =3001,    // average period between deals
@@ -67,6 +103,41 @@ public:
       CONDITION_ORDER_ENTRY_IN       =4013,   // order entry in
       CONDITION_ORDER_ENTRY_OUT      =4014,   // order entry out
       CONDITION_POSITION_VALUE       =4015,   // position value
+      CONDITION_POSITION_TICKET      =4016,   // position ticket
+      CONDITION_POSITION_TYPE        =4017,   // position type
+      CONDITION_POSITION_PRICE_OPEN  =4018,   // position open price
+      CONDITION_POSITION_PRICE_CURRENT=4019,  // position current price
+      CONDITION_POSITION_REASON      =4020,   // position reason
+      CONDITION_POSITION_TIME_CREATE =4021,   // position creation time
+      CONDITION_POSITION_TIME_UPDATE =4022,   // position update time
+      CONDITION_POSITION_COMMENT     =4023,   // position comment
+      CONDITION_POSITION_SYMBOL      =4024,   // position symbol
+      CONDITION_POSITION_DEALER_LOGIN=4025,   // position dealer login
+      CONDITION_POSITION_LOGIN       =4026,   // position account login
+      CONDITION_ORDER_TICKET         =4027,   // order ticket
+      CONDITION_ORDER_ORDER_ID       =4028,   // order external ID
+      CONDITION_ORDER_TIME_SETUP     =4029,   // order setup time
+      CONDITION_ORDER_TIME_SETUP_ELAPSED=4030,// elapsed time since order setup
+      CONDITION_ORDER_TIME_EXPIRATION=4031,   // order expiration time
+      CONDITION_ORDER_TYPE           =4032,   // order type
+      CONDITION_ORDER_PRICE_ORDER    =4033,   // order price
+      CONDITION_ORDER_PRICE_TRIGGER  =4034,   // order trigger price
+      CONDITION_ORDER_PRICE_CURRENT  =4035,   // order current price
+      CONDITION_ORDER_PRICE_SL       =4036,   // order stop loss
+      CONDITION_ORDER_PRICE_TP       =4037,   // order take profit
+      CONDITION_ORDER_VOLUME_INITIAL =4038,   // order initial volume
+      CONDITION_ORDER_VOLUME_CURRENT =4039,   // order remaining volume
+      CONDITION_ORDER_VOLUME_EXECUTED=4040,   // order executed volume
+      CONDITION_ORDER_STATE          =4041,   // order state
+      CONDITION_ORDER_POSITION_ID    =4042,   // order position ID
+      CONDITION_ORDER_COMMENT        =4043,   // order comment
+      CONDITION_ORDER_CONTRACT_SIZE  =4044,   // order contract size
+      CONDITION_ORDER_SYMBOL         =4045,   // order symbol
+      CONDITION_ORDER_LOGIN          =4046,   // order account login
+      CONDITION_ORDER_DEALER_LOGIN   =4047,   // order dealer login
+      CONDITION_ORDER_PARTY_ID       =4048,   // order Party ID
+      CONDITION_ORDER_FILLING_TYPE   =4049,   // order filling type
+      CONDITION_ORDER_REASON         =4050,   // order reason
       //--- trade symbol parameters
       CONDITION_SYMBOL_SPREAD        =5000,   // symbol current spread
       //--- enumeration borders
@@ -102,28 +173,41 @@ public:
       TYPE_BOOL                     =10,      // boolean
       TYPE_TIME                     =11,      // time
       TYPE_WEEKDAY                  =12,      // weekday
+      TYPE_REASON                   =13,      // reason
+      TYPE_POSITION                 =14,      // position type
+      TYPE_PERCENT                  =15,      // percent
+      TYPE_ORDER                    =16,      // order type
+      TYPE_ORDER_STATE              =17,      // order state
+      TYPE_LOGIN                    =18,      // account login
+      TYPE_DURATION                 =19,      // duration
+      TYPE_GROUP                    =20,      // group
+      TYPE_SYMBOL                   =21,      // symbol
+      TYPE_LANGUAGE                 =22,      // language
+      TYPE_DATE                     =23,      // date
+      TYPE_VOLUME_SIGNED            =24,      // signed volume
+      TYPE_FILLING                  =25,      // order filling type
       //--- enumeration borders
       TYPE_FIRST                    =TYPE_NONE,
-      TYPE_LAST                     =TYPE_WEEKDAY
+      TYPE_LAST                     =TYPE_FILLING
      };
    //--- common methods
    virtual void      Release(void)=0;
    virtual MTAPIRES  Assign(const IMTConCondition* config)=0;
    virtual MTAPIRES  Clear(void)=0;
    //--- condition
-   virtual UINT      Condition(void) const=0;
-   virtual MTAPIRES  Condition(const UINT condition)=0;
+   virtual uint32_t  Condition(void) const=0;
+   virtual MTAPIRES  Condition(const uint32_t condition)=0;
    //--- rule
-   virtual UINT      Rule(void) const=0;
-   virtual MTAPIRES  Rule(const UINT rule)=0;
+   virtual uint32_t  Rule(void) const=0;
+   virtual MTAPIRES  Rule(const uint32_t rule)=0;
    //--- type
-   virtual UINT      ValueType(void) const=0;
+   virtual uint32_t  ValueType(void) const=0;
    //--- value int
-   virtual INT64     ValueInt(void) const=0;
-   virtual MTAPIRES  ValueInt(const INT64 value)=0;
+   virtual int64_t   ValueInt(void) const=0;
+   virtual MTAPIRES  ValueInt(const int64_t value)=0;
    //--- value uint
-   virtual UINT64    ValueUInt(void) const=0;
-   virtual MTAPIRES  ValueUInt(const UINT64 value)=0;
+   virtual uint64_t  ValueUInt(void) const=0;
+   virtual MTAPIRES  ValueUInt(const uint64_t value)=0;
    //--- value double
    virtual double    ValueDouble(void) const=0;
    virtual MTAPIRES  ValueDouble(const double value)=0;
@@ -137,26 +221,26 @@ public:
    virtual double    ValueMoney(void) const=0;
    virtual MTAPIRES  ValueMoney(const double value)=0;
    //--- value volume
-   virtual UINT64    ValueVolume(void) const=0;
-   virtual MTAPIRES  ValueVolume(const UINT64 value)=0;
+   virtual uint64_t  ValueVolume(void) const=0;
+   virtual MTAPIRES  ValueVolume(const uint64_t value)=0;
    //--- value datetime
-   virtual INT64     ValueDatetime(void) const=0;
-   virtual MTAPIRES  ValueDatetime(const INT64 value)=0;
+   virtual int64_t   ValueDatetime(void) const=0;
+   virtual MTAPIRES  ValueDatetime(const int64_t value)=0;
    //--- value leverage
-   virtual INT64     ValueLeverage(void) const=0;
-   virtual MTAPIRES  ValueLeverage(const INT64 value)=0;
+   virtual int64_t   ValueLeverage(void) const=0;
+   virtual MTAPIRES  ValueLeverage(const int64_t value)=0;
    //--- value bool
    virtual bool      ValueBool(void) const=0;
    virtual MTAPIRES  ValueBool(const bool value)=0;
    //--- value time
-   virtual UINT      ValueTime(void) const=0;
-   virtual MTAPIRES  ValueTime(const UINT value)=0;
+   virtual uint32_t  ValueTime(void) const=0;
+   virtual MTAPIRES  ValueTime(const uint32_t value)=0;
    //--- value weekday
-   virtual UINT      ValueWeekDay(void) const=0;
-   virtual MTAPIRES  ValueWeekDay(const UINT value)=0;
+   virtual uint32_t  ValueWeekDay(void) const=0;
+   virtual MTAPIRES  ValueWeekDay(const uint32_t value)=0;
    //--- value volume with extended accuracy
-   virtual UINT64    ValueVolumeExt(void) const=0;
-   virtual MTAPIRES  ValueVolumeExt(const UINT64 value)=0;
+   virtual uint64_t  ValueVolumeExt(void) const=0;
+   virtual MTAPIRES  ValueVolumeExt(const uint64_t value)=0;
    //--- explicit destructor is prohibited
 protected:
                     ~IMTConCondition(void) {}
@@ -172,8 +256,8 @@ public:
    virtual MTAPIRES  Assign(const IMTConRouteDealer* config)=0;
    virtual MTAPIRES  Clear(void)=0;
    //--- login
-   virtual UINT64    Login(void) const=0;
-   virtual MTAPIRES  Login(const UINT64 login)=0;
+   virtual uint64_t  Login(void) const=0;
+   virtual MTAPIRES  Login(const uint64_t login)=0;
    //--- name
    virtual LPCWSTR   Name(void) const=0;
    //--- explicit destructor is prohibited
@@ -275,9 +359,10 @@ public:
       ACTION_CONFIRM_CLIENT         =1005,    // confirm using client price
       ACTION_CONFIRM_MARKET         =1006,    // confirm using market price
       ACTION_CANCEL_ORDER           =1007,    // reject request and cancel order
+      ACTION_DEALER_ULTENCY         =1008,    // route request to Ultency
       //--- enumeration borders
       ACTION_FIRST                  =ACTION_DELAY_TIME,
-      ACTION_LAST                   =ACTION_CANCEL_ORDER
+      ACTION_LAST                   =ACTION_DEALER_ULTENCY
      };
    //--- common methods
    virtual void      Release(void)=0;
@@ -287,25 +372,25 @@ public:
    virtual LPCWSTR   Name(void) const=0;
    virtual MTAPIRES  Name(LPCWSTR name)=0;
    //--- request EnRouteMode
-   virtual UINT      Mode(void) const=0;
-   virtual MTAPIRES  Mode(const UINT mode)=0;
+   virtual uint32_t  Mode(void) const=0;
+   virtual MTAPIRES  Mode(const uint32_t mode)=0;
    //--- request EnRouteFlags
-   virtual UINT      Request(void) const=0;
-   virtual MTAPIRES  Request(const UINT request)=0;
+   virtual uint32_t  Request(void) const=0;
+   virtual MTAPIRES  Request(const uint32_t request)=0;
    //--- order-posiion type EnRouteType
-   virtual UINT      Type(void) const=0;
-   virtual MTAPIRES  Type(const UINT type)=0;
+   virtual uint32_t  Type(void) const=0;
+   virtual MTAPIRES  Type(const uint32_t type)=0;
    //--- action for request EnRouteAction
-   virtual UINT      Action(void) const=0;
-   virtual MTAPIRES  Action(const UINT action)=0;
+   virtual uint32_t  Action(void) const=0;
+   virtual MTAPIRES  Action(const uint32_t action)=0;
    //--- action value type IMTConRouteCondition::EnConditionType
-   virtual UINT      ParamType(void) const=0;
+   virtual uint32_t  ParamType(void) const=0;
    //--- value int
-   virtual INT64     ParamInt(void) const=0;
-   virtual MTAPIRES  ParamInt(const INT64 value)=0;
+   virtual int64_t   ParamInt(void) const=0;
+   virtual MTAPIRES  ParamInt(const int64_t value)=0;
    //--- value uind
-   virtual UINT64    ParamUInt(void) const=0;
-   virtual MTAPIRES  ParamUInt(const UINT64 value)=0;
+   virtual uint64_t  ParamUInt(void) const=0;
+   virtual MTAPIRES  ParamUInt(const uint64_t value)=0;
    //--- value double
    virtual double    ParamDouble(void) const=0;
    virtual MTAPIRES  ParamDouble(const double value)=0;
@@ -319,40 +404,40 @@ public:
    virtual double    ParamMoney(void) const=0;
    virtual MTAPIRES  ParamMoney(const double value)=0;
    //--- value volume
-   virtual UINT64    ParamVolume(void) const=0;
-   virtual MTAPIRES  ParamVolume(const UINT64 value)=0;
+   virtual uint64_t  ParamVolume(void) const=0;
+   virtual MTAPIRES  ParamVolume(const uint64_t value)=0;
    //--- value datetime
-   virtual INT64     ParamDatetime(void) const=0;
-   virtual MTAPIRES  ParamDatetime(const INT64 value)=0;
+   virtual int64_t   ParamDatetime(void) const=0;
+   virtual MTAPIRES  ParamDatetime(const int64_t value)=0;
    //--- value leverage
-   virtual INT64     ParamLeverage(void) const=0;
-   virtual MTAPIRES  ParamLeverage(const INT64 value)=0;
+   virtual int64_t   ParamLeverage(void) const=0;
+   virtual MTAPIRES  ParamLeverage(const int64_t value)=0;
    //--- value bool
    virtual bool      ParamBool(void) const=0;
    virtual MTAPIRES  ParamBool(const bool value)=0;
    //--- value time
-   virtual UINT      ParamTime(void) const=0;
-   virtual MTAPIRES  ParamTime(const UINT value)=0;
+   virtual uint32_t  ParamTime(void) const=0;
+   virtual MTAPIRES  ParamTime(const uint32_t value)=0;
    //--- conditions
    virtual MTAPIRES  ConditionAdd(IMTConCondition* condition)=0;
-   virtual MTAPIRES  ConditionUpdate(const UINT pos,const IMTConCondition* condition)=0;
-   virtual MTAPIRES  ConditionDelete(const UINT pos)=0;
+   virtual MTAPIRES  ConditionUpdate(const uint32_t pos,const IMTConCondition* condition)=0;
+   virtual MTAPIRES  ConditionDelete(const uint32_t pos)=0;
    virtual MTAPIRES  ConditionClear(void)=0;
-   virtual MTAPIRES  ConditionShift(const UINT pos,const int shift)=0;
-   virtual UINT      ConditionTotal(void) const=0;
-   virtual MTAPIRES  ConditionNext(const UINT pos,IMTConCondition* condition) const=0;
+   virtual MTAPIRES  ConditionShift(const uint32_t pos,const int32_t shift)=0;
+   virtual uint32_t  ConditionTotal(void) const=0;
+   virtual MTAPIRES  ConditionNext(const uint32_t pos,IMTConCondition* condition) const=0;
    //--- dealers
    virtual MTAPIRES  DealerAdd(IMTConRouteDealer* dealer)=0;
-   virtual MTAPIRES  DealerUpdate(const UINT pos,const IMTConRouteDealer* dealer)=0;
-   virtual MTAPIRES  DealerDelete(const UINT pos)=0;
+   virtual MTAPIRES  DealerUpdate(const uint32_t pos,const IMTConRouteDealer* dealer)=0;
+   virtual MTAPIRES  DealerDelete(const uint32_t pos)=0;
    virtual MTAPIRES  DealerClear(void)=0;
-   virtual MTAPIRES  DealerShift(const UINT pos,const int shift)=0;
-   virtual UINT      DealerTotal(void) const=0;
-   virtual MTAPIRES  DealerNext(const UINT pos,IMTConRouteDealer* dealer) const=0;
-   virtual MTAPIRES  DealerGet(const UINT64 login,IMTConRouteDealer* dealer) const=0;
+   virtual MTAPIRES  DealerShift(const uint32_t pos,const int32_t shift)=0;
+   virtual uint32_t  DealerTotal(void) const=0;
+   virtual MTAPIRES  DealerNext(const uint32_t pos,IMTConRouteDealer* dealer) const=0;
+   virtual MTAPIRES  DealerGet(const uint64_t login,IMTConRouteDealer* dealer) const=0;
    //--- value volume with extended accuracy
-   virtual UINT64    ParamVolumeExt(void) const=0;
-   virtual MTAPIRES  ParamVolumeExt(const UINT64 value)=0;
+   virtual uint64_t  ParamVolumeExt(void) const=0;
+   virtual MTAPIRES  ParamVolumeExt(const uint64_t value)=0;
    //--- explicit destructor is prohibited
 protected:
                     ~IMTConRoute(void) {}
@@ -369,4 +454,3 @@ public:
    virtual void      OnRouteSync(void)                            {  }
   };
 //+------------------------------------------------------------------+
-  

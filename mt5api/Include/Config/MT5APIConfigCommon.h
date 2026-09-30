@@ -1,6 +1,6 @@
-//+------------------------------------------------------------------+
+﻿//+------------------------------------------------------------------+
 //|                                                 MetaTrader 5 API |
-//|                             Copyright 2000-2024, MetaQuotes Ltd. |
+//|                             Copyright 2000-2026, MetaQuotes Ltd. |
 //|                                               www.metaquotes.net |
 //+------------------------------------------------------------------+
 #pragma once
@@ -40,8 +40,8 @@ public:
    virtual MTAPIRES  Assign(const IMTConAccountAgreement* param)=0;
    virtual MTAPIRES  Clear(void)=0;
    //--- EnCaptionType
-   virtual UINT      CaptionType(void) const=0;
-   virtual MTAPIRES  CaptionType(const UINT type)=0;
+   virtual uint32_t  CaptionType(void) const=0;
+   virtual MTAPIRES  CaptionType(const uint32_t type)=0;
    //--- Custom Caption Text
    virtual LPCWSTR   CaptionCustomText(void) const=0;
    virtual MTAPIRES  CaptionCustomText(LPCWSTR text)=0;
@@ -49,8 +49,8 @@ public:
    virtual LPCWSTR   URL(void) const=0;
    virtual MTAPIRES  URL(LPCWSTR url)=0;
    //--- flags
-   virtual UINT      Flags(void) const=0;
-   virtual MTAPIRES  Flags(const UINT flags)=0;
+   virtual uint32_t  Flags(void) const=0;
+   virtual MTAPIRES  Flags(const uint32_t flags)=0;
    //--- explicit destructor is prohibited
 protected:
                     ~IMTConAccountAgreement(void) {}
@@ -85,8 +85,8 @@ public:
    virtual LPCWSTR   Description(void) const=0;
    virtual MTAPIRES  Description(LPCWSTR description)=0;
    //--- flags
-   virtual UINT      Flags(void) const=0;
-   virtual MTAPIRES  Flags(const UINT flags)=0;
+   virtual uint32_t  Flags(void) const=0;
+   virtual MTAPIRES  Flags(const uint32_t flags)=0;
    //--- leverages
    virtual LPCWSTR   Leverages(void) const=0;
    virtual MTAPIRES  Leverages(LPCWSTR leverages)=0;
@@ -98,12 +98,12 @@ public:
    virtual MTAPIRES  ConfirmationEmail(LPCWSTR email)=0;
    //--- Account Allocations
    virtual MTAPIRES  AccountAgreementAdd(IMTConAccountAgreement* cfg)=0;
-   virtual MTAPIRES  AccountAgreementUpdate(const UINT pos,const IMTConAccountAgreement* cfg)=0;
-   virtual MTAPIRES  AccountAgreementDelete(const UINT pos)=0;
+   virtual MTAPIRES  AccountAgreementUpdate(const uint32_t pos,const IMTConAccountAgreement* cfg)=0;
+   virtual MTAPIRES  AccountAgreementDelete(const uint32_t pos)=0;
    virtual MTAPIRES  AccountAgreementClear(void)=0;
-   virtual MTAPIRES  AccountAgreementShift(const UINT pos,const int shift)=0;
-   virtual UINT      AccountAgreementTotal(void) const=0;
-   virtual MTAPIRES  AccountAgreementNext(const UINT pos,IMTConAccountAgreement* cfg) const=0;
+   virtual MTAPIRES  AccountAgreementShift(const uint32_t pos,const int32_t shift)=0;
+   virtual uint32_t  AccountAgreementTotal(void) const=0;
+   virtual MTAPIRES  AccountAgreementNext(const uint32_t pos,IMTConAccountAgreement* cfg) const=0;
    //--- explicit destructor is prohibited
 protected:
                     ~IMTConAccountAllocation(void) {}
@@ -144,36 +144,36 @@ public:
    //--- product full name (from license)
    virtual LPCWSTR   Product(void) const=0;
    //--- license expiration date
-   virtual INT64     ExpirationLicense(void) const=0;
+   virtual int64_t     ExpirationLicense(void) const=0;
    //--- license support date
-   virtual INT64     ExpirationSupport(void) const=0;
+   virtual int64_t     ExpirationSupport(void) const=0;
    //--- max. trade servers count (from license)
-   virtual UINT      LimitTradeServers(void) const=0;
+   virtual uint32_t  LimitTradeServers(void) const=0;
    //--- max. web servers count (from license)
-   virtual UINT      LimitWebServers(void) const=0;
+   virtual uint32_t  LimitWebServers(void) const=0;
    //--- max. real accounts count (from license)
-   virtual UINT      LimitAccounts(void) const=0;
+   virtual uint32_t  LimitAccounts(void) const=0;
    //--- max. trade deals count (from license)
-   virtual UINT      LimitDeals(void) const=0;
+   virtual uint32_t  LimitDeals(void) const=0;
    //--- max. client groups count (from license)
-   virtual UINT      LimitGroups(void) const=0;
+   virtual uint32_t  LimitGroups(void) const=0;
    //--- LiveUpdate mode
-   virtual UINT      LiveUpdateMode(void) const=0;
-   virtual MTAPIRES  LiveUpdateMode(const UINT mode)=0;
+   virtual uint32_t  LiveUpdateMode(void) const=0;
+   virtual MTAPIRES  LiveUpdateMode(const uint32_t mode)=0;
    //--- Total users
-   virtual UINT      TotalUsers(void) const=0;
+   virtual uint32_t  TotalUsers(void) const=0;
    //--- Total real users
-   virtual UINT      TotalUsersReal(void) const=0;
+   virtual uint32_t  TotalUsersReal(void) const=0;
    //--- Total deals
-   virtual UINT      TotalDeals(void) const=0;
+   virtual uint32_t  TotalDeals(void) const=0;
    //--- Total orders
-   virtual UINT      TotalOrders(void) const=0;
+   virtual uint32_t  TotalOrders(void) const=0;
    //--- Total history orders
-   virtual UINT      TotalOrdersHistory(void) const=0;
+   virtual uint32_t  TotalOrdersHistory(void) const=0;
    //--- Total positions
-   virtual UINT      TotalPositions(void) const=0;
+   virtual uint32_t  TotalPositions(void) const=0;
    //--- max. symbols count (from license)
-   virtual UINT      LimitSymbols(void) const=0;
+   virtual uint32_t  LimitSymbols(void) const=0;
    //--- Account Allocation URL
    virtual LPCWSTR   AccountURL(void) const=0;
    virtual MTAPIRES  AccountURL(LPCWSTR url)=0;
@@ -185,12 +185,12 @@ public:
    virtual MTAPIRES  AccountWithdrawalURL(LPCWSTR url)=0;
    //--- Account Allocations
    virtual MTAPIRES  AccountAllocationAdd(IMTConAccountAllocation* cfg)=0;
-   virtual MTAPIRES  AccountAllocationUpdate(const UINT pos,const IMTConAccountAllocation* cfg)=0;
-   virtual MTAPIRES  AccountAllocationDelete(const UINT pos)=0;
+   virtual MTAPIRES  AccountAllocationUpdate(const uint32_t pos,const IMTConAccountAllocation* cfg)=0;
+   virtual MTAPIRES  AccountAllocationDelete(const uint32_t pos)=0;
    virtual MTAPIRES  AccountAllocationClear(void)=0;
-   virtual MTAPIRES  AccountAllocationShift(const UINT pos,const int shift)=0;
-   virtual UINT      AccountAllocationTotal(void) const=0;
-   virtual MTAPIRES  AccountAllocationNext(const UINT pos,IMTConAccountAllocation* cfg) const=0;
+   virtual MTAPIRES  AccountAllocationShift(const uint32_t pos,const int32_t shift)=0;
+   virtual uint32_t  AccountAllocationTotal(void) const=0;
+   virtual MTAPIRES  AccountAllocationNext(const uint32_t pos,IMTConAccountAllocation* cfg) const=0;
    //--- explicit destructor is prohibited
 protected:
                     ~IMTConCommon(void) {}

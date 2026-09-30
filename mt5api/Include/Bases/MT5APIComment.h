@@ -1,6 +1,6 @@
-//+------------------------------------------------------------------+
+﻿//+------------------------------------------------------------------+
 //|                                                 MetaTrader 5 API |
-//|                             Copyright 2000-2024, MetaQuotes Ltd. |
+//|                             Copyright 2000-2026, MetaQuotes Ltd. |
 //|                                               www.metaquotes.net |
 //+------------------------------------------------------------------+
 #pragma once
@@ -48,17 +48,17 @@ public:
    virtual MTAPIRES  Assign(const IMTComment* comment)=0;
    virtual MTAPIRES  Clear(void)=0;
    //--- record id
-   virtual UINT64    RecordID(void) const=0;
-   virtual MTAPIRES  RecordID(const UINT64 record_id)=0;
+   virtual uint64_t  RecordID(void) const=0;
+   virtual MTAPIRES  RecordID(const uint64_t record_id)=0;
    //--- related client
-   virtual UINT64    RelatedClient(void) const=0;
-   virtual MTAPIRES  RelatedClient(const UINT64 record_id)=0;
+   virtual uint64_t  RelatedClient(void) const=0;
+   virtual MTAPIRES  RelatedClient(const uint64_t record_id)=0;
    //--- related document
-   virtual UINT64    RelatedDocument(void) const=0;
-   virtual MTAPIRES  RelatedDocument(const UINT64 record_id)=0;
+   virtual uint64_t  RelatedDocument(void) const=0;
+   virtual MTAPIRES  RelatedDocument(const uint64_t record_id)=0;
    //--- flags
-   virtual UINT      Flags(void) const=0;
-   virtual MTAPIRES  Flags(const UINT flags)=0;
+   virtual uint32_t  Flags(void) const=0;
+   virtual MTAPIRES  Flags(const uint32_t flags)=0;
    //--- extra
    virtual LPCWSTR   Extra(void) const=0;
    virtual MTAPIRES  Extra(LPCWSTR extra)=0;
@@ -66,16 +66,16 @@ public:
    virtual LPCWSTR   Text(void) const=0;
    virtual MTAPIRES  Text(LPCWSTR text)=0;
    //--- comment type
-   virtual UINT      CommentType(void) const=0;
-   virtual MTAPIRES  CommentType(const UINT type)=0;
+   virtual uint32_t  CommentType(void) const=0;
+   virtual MTAPIRES  CommentType(const uint32_t type)=0;
    //--- comment result
-   virtual UINT      CommentResult(void) const=0;
-   virtual MTAPIRES  CommentResult(const UINT result)=0;
+   virtual uint32_t  CommentResult(void) const=0;
+   virtual MTAPIRES  CommentResult(const uint32_t result)=0;
    //--- attachments
    virtual MTAPIRES  AttachmentsAdd(const IMTAttachment *attachment)=0;
    virtual MTAPIRES  AttachmentsClear(void)=0;
-   virtual UINT      AttachmentsTotal(void) const=0;
-   virtual MTAPIRES  AttachmentsNext(const UINT pos,UINT64& attachment_id,MTAPISTR& attachment_name,UINT& attachment_size) const=0;
+   virtual uint32_t  AttachmentsTotal(void) const=0;
+   virtual MTAPIRES  AttachmentsNext(const uint32_t pos,uint64_t& attachment_id,MTAPISTR& attachment_name,uint32_t& attachment_size) const=0;
    //--- explicit destructor is prohibited
 protected:
                     ~IMTComment(void) {}
@@ -96,24 +96,24 @@ public:
    virtual MTAPIRES  Add(IMTCommentArray* array)=0;
    virtual MTAPIRES  AddCopy(const IMTCommentArray* array)=0;
    //--- delete & detach
-   virtual MTAPIRES  Delete(const UINT pos)=0;
-   virtual IMTComment *Detach(const UINT pos)=0;
+   virtual MTAPIRES  Delete(const uint32_t pos)=0;
+   virtual IMTComment *Detach(const uint32_t pos)=0;
    //--- update
-   virtual MTAPIRES  Update(const UINT pos,IMTComment* comment)=0;
-   virtual MTAPIRES  UpdateCopy(const UINT pos,const IMTComment* comment)=0;
-   virtual MTAPIRES  Shift(const UINT pos,const int shift)=0;
+   virtual MTAPIRES  Update(const uint32_t pos,IMTComment* comment)=0;
+   virtual MTAPIRES  UpdateCopy(const uint32_t pos,const IMTComment* comment)=0;
+   virtual MTAPIRES  Shift(const uint32_t pos,const int32_t shift)=0;
    //--- data access
-   virtual UINT      Total(void) const=0;
-   virtual IMTComment*Next(const UINT index) const=0;
+   virtual uint32_t  Total(void) const=0;
+   virtual IMTComment*Next(const uint32_t index) const=0;
    //--- sorting and search
    virtual MTAPIRES  Sort(MTSortFunctionPtr sort_function)=0;
-   virtual int       Search(const void *key,MTSortFunctionPtr sort_function) const=0;
-   virtual int       SearchGreatOrEq(const void *key,MTSortFunctionPtr sort_function) const=0;
-   virtual int       SearchGreater(const void *key,MTSortFunctionPtr sort_function) const=0;
-   virtual int       SearchLessOrEq(const void *key,MTSortFunctionPtr sort_function) const=0;
-   virtual int       SearchLess(const void *key,MTSortFunctionPtr sort_function) const=0;
-   virtual int       SearchLeft(const void *key,MTSortFunctionPtr sort_function) const=0;
-   virtual int       SearchRight(const void *key,MTSortFunctionPtr sort_function) const=0;
+   virtual int32_t   Search(const void *key,MTSortFunctionPtr sort_function) const=0;
+   virtual int32_t   SearchGreatOrEq(const void *key,MTSortFunctionPtr sort_function) const=0;
+   virtual int32_t   SearchGreater(const void *key,MTSortFunctionPtr sort_function) const=0;
+   virtual int32_t   SearchLessOrEq(const void *key,MTSortFunctionPtr sort_function) const=0;
+   virtual int32_t   SearchLess(const void *key,MTSortFunctionPtr sort_function) const=0;
+   virtual int32_t   SearchLeft(const void *key,MTSortFunctionPtr sort_function) const=0;
+   virtual int32_t   SearchRight(const void *key,MTSortFunctionPtr sort_function) const=0;
    //--- explicit destructor is prohibited
 protected:
                     ~IMTCommentArray(void) {}

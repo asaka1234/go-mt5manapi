@@ -1,6 +1,6 @@
-//+------------------------------------------------------------------+
+﻿//+------------------------------------------------------------------+
 //|                                                 MetaTrader 5 API |
-//|                             Copyright 2000-2024, MetaQuotes Ltd. |
+//|                             Copyright 2000-2026, MetaQuotes Ltd. |
 //|                                               www.metaquotes.net |
 //+------------------------------------------------------------------+
 #pragma once
@@ -17,113 +17,113 @@ class CMTStr
   {
 protected:
    wchar_t          *m_str;                 // string body
-   UINT              m_str_len;             // string length
-   const UINT        m_str_max;             // string buffer max size
+   uint32_t          m_str_len;             // string length
+   const uint32_t    m_str_max;             // string buffer max size
 
 public:
-                     CMTStr(wchar_t *buf,const UINT size):m_str(buf),m_str_len(0),m_str_max(size) { if(m_str) m_str[0]=0; }
+                     CMTStr(wchar_t *buf,const uint32_t size):m_str(buf),m_str_len(0),m_str_max(size) { if(m_str) m_str[0]=0; }
    virtual          ~CMTStr()                   { m_str=NULL; m_str_len=0;                   }
    //--- base functionality
    void              Clear()                    { m_str_len=0; if(m_str) m_str[0]=0;         }
-   bool              Empty() const              { return(m_str_len<1 || m_str==NULL || m_str[0]==0); }
-   UINT              Len()   const              { return(m_str_len);                         }
-   static UINT       Len(LPCWSTR str)           { return(str ? (UINT)wcslen(str):0);         }
-   UINT              Max()   const              { return(m_str_max);                         }
+   bool              Empty(void) const          { return(m_str_len<1 || !m_str || m_str[0]==0); }
+   uint32_t          Len()   const              { return(m_str_len);                         }
+   static uint32_t   Len(LPCWSTR str)           { return(str ? (uint32_t)wcslen(str):0);     }
+   uint32_t          Max()   const              { return(m_str_max);                         }
    const wchar_t*    Str()   const              { return(m_str);                             }
    wchar_t*          Buffer()                   { return(m_str);                             }
-   void              Refresh()                  { m_str_len=(m_str ? (UINT)wcsnlen(m_str,m_str_max):0);  }
-   const wchar_t     operator[](UINT ind) const { return((ind<m_str_len && m_str) ? m_str[ind] : L'\0'); }
-   bool              operator!() const          { return(m_str_len==0);                                  }
-   CMTStr&           operator= (const CMTStr& src) { if(this!=&src) Assign(src); return(*this);          }
+   void              Refresh()                  { m_str_len=(m_str ? (uint32_t)wcsnlen(m_str,m_str_max):0);  }
+   wchar_t           operator[](uint32_t ind) const { return((ind<m_str_len && m_str) ? m_str[ind] : L'\0'); }
+   bool              operator!(void) const          { return(m_str_len==0);                                  }
+   CMTStr&           operator= (const CMTStr& src)  { if(this!=&src) Assign(src); return(*this);             }
    //--- assign
    void              Assign(const CMTStr &from);
    void              Assign(LPCWSTR from);
-   void              Assign(LPCWSTR from,const UINT from_len);
+   void              Assign(LPCWSTR from,const uint32_t from_len);
    void              Assign(LPCSTR from);
-   void              Assign(LPCSTR from,const UINT from_len);
+   void              Assign(LPCSTR from,const uint32_t from_len);
    //--- operations
-   int               Format(LPCWSTR fmt,...);
-   void              ToLower();
-   void              ToUpper();
-   void              Trim(UINT len);
-   void              TrimSpaces();
+   int32_t           Format(LPCWSTR fmt,...);
+   void              ToLower(void);
+   void              ToUpper(void);
+   void              Trim(uint32_t len);
+   void              TrimSpaces(void);
    static void       TrimSpaces(LPWSTR str);
    void              ReplaceChar(wchar_t findchar,wchar_t repchar);
-   void              Replace(wchar_t *findstr,const wchar_t *repstr);
-   void              Delete(UINT pos,UINT len);
-   template <UINT dstsize>
-   static void       Delete(wchar_t (&dst)[dstsize],UINT pos,UINT len) { Delete(dst,dstsize,pos,len); }
-   static void       Delete(LPWSTR dst,UINT dstsize,UINT pos,UINT len);
-   static void       ToLower(LPWSTR str,UINT size);
-   static void       ToUpper(LPWSTR str,UINT size);
-   template <UINT size>
+   void              Replace(const wchar_t *findstr,const wchar_t *repstr);
+   void              Delete(uint32_t pos,uint32_t len);
+   template <uint32_t dstsize>
+   static void       Delete(wchar_t (&dst)[dstsize],uint32_t pos,uint32_t len) { Delete(dst,dstsize,pos,len); }
+   static void       Delete(LPWSTR dst,uint32_t dstsize,uint32_t pos,uint32_t len);
+   static void       ToLower(LPWSTR str,uint32_t size);
+   static void       ToUpper(LPWSTR str,uint32_t size);
+   template <uint32_t size>
    static void       ToLower(wchar_t (&str)[size]) { ToLower(str,size); }
-   template <UINT size>
+   template <uint32_t size>
    static void       ToUpper(wchar_t (&str)[size]) { ToUpper(str,size); }
-   template <UINT strsize>
-   static int        FormatStr(wchar_t (&str)[strsize],LPCWSTR fmt,...);
-   static int        FormatStr(LPWSTR str,UINT size,LPCWSTR fmt,...);
-   template <UINT strsize>
+   template <uint32_t strsize>
+   static int32_t    FormatStr(wchar_t (&str)[strsize],LPCWSTR fmt,...);
+   static int32_t    FormatStr(LPWSTR str,uint32_t size,LPCWSTR fmt,...);
+   template <uint32_t strsize>
    static void       Terminate(wchar_t (&str)[strsize]) { str[strsize-1]=L'\0'; }
    //--- append
    void              Append(LPCWSTR appstring);
    void              Append(const CMTStr &appstring);
    void              Append(wchar_t appchar);
-   template <UINT dstsize>
+   template <uint32_t dstsize>
    static void       Append(wchar_t (&dst)[dstsize],LPCWSTR src) { Append(dst,dstsize,src); }
-   static void       Append(LPWSTR dst,UINT dstsize,LPCWSTR src);
+   static void       Append(LPWSTR dst,uint32_t dstsize,LPCWSTR src);
    //--- insert
-   void              Insert(UINT pos,LPCWSTR insstring);
-   void              Insert(UINT pos,const CMTStr &insstring);
-   void              Insert(UINT pos,wchar_t inschar);
+   void              Insert(uint32_t pos,LPCWSTR insstring);
+   void              Insert(uint32_t pos,const CMTStr &insstring);
+   void              Insert(uint32_t pos,wchar_t inschar);
    //--- copy
-   void              Copy(LPWSTR string,UINT maxlen) const;
-   void              Copy(LPSTR string,UINT maxlen) const;
-   template <UINT dstsize>
+   void              Copy(LPWSTR string,uint32_t maxlen) const;
+   void              Copy(LPSTR string,uint32_t maxlen) const;
+   template <uint32_t dstsize>
    static void       Copy(wchar_t (&dst)[dstsize],LPCWSTR src)               { Copy(dst,dstsize,src);          }
-   template <UINT dstsize>
-   static void       Copy(wchar_t (&dst)[dstsize],LPCWSTR src,UINT srccount) { Copy(dst,dstsize,src,srccount); }
-   static void       Copy(LPWSTR dst,UINT dstsize,LPCWSTR src);
-   static void       Copy(LPWSTR dst,UINT dstsize,LPCWSTR src,UINT srccount);
-   template <UINT dstsize>
+   template <uint32_t dstsize>
+   static void       Copy(wchar_t (&dst)[dstsize],LPCWSTR src,uint32_t srccount) { Copy(dst,dstsize,src,srccount); }
+   static void       Copy(LPWSTR dst,uint32_t dstsize,LPCWSTR src);
+   static void       Copy(LPWSTR dst,uint32_t dstsize,LPCWSTR src,uint32_t srccount);
+   template <uint32_t dstsize>
    static void       Copy(char (&dst)[dstsize],LPCWSTR src)    { Copy(dst,dstsize,src); }
-   static void       Copy(LPSTR dst,UINT dstsize,LPCWSTR src);
-   static void       Copy(LPWSTR dst,UINT dstsize,LPCSTR src);
-   static void       CopyCodePage(LPWSTR dst,UINT dstsize,LPCSTR src,UINT codepage);
+   static void       Copy(LPSTR dst,uint32_t dstsize,LPCWSTR src);
+   static void       Copy(LPWSTR dst,uint32_t dstsize,LPCSTR src);
+   static void       CopyCodePage(LPWSTR dst,uint32_t dstsize,LPCSTR src,uint32_t codepage);
    //--- compare
-   int               Compare(LPCWSTR str) const;
-   int               Compare(LPCWSTR str,UINT count) const;
-   int               Compare(const CMTStr& str) const;
-   static int        Compare(LPCWSTR str1,LPCWSTR str2);
-   static int        Compare(LPCWSTR str1,LPCWSTR str2,UINT count);
+   int32_t           Compare(LPCWSTR str) const;
+   int32_t           Compare(LPCWSTR str,uint32_t count) const;
+   int32_t           Compare(const CMTStr& str) const;
+   static int32_t    Compare(LPCWSTR str1,LPCWSTR str2);
+   static int32_t    Compare(LPCWSTR str1,LPCWSTR str2,uint32_t count);
    //--- compare no case
-   int               CompareNoCase(LPCWSTR str) const;
-   int               CompareNoCase(LPCWSTR str,UINT count) const;
-   int               CompareNoCase(const CMTStr& str) const;
-   static int        CompareNoCase(LPCWSTR str1,LPCWSTR str2);
-   static int        CompareNoCase(LPCWSTR str1,LPCWSTR str2,UINT count);
+   int32_t           CompareNoCase(LPCWSTR str) const;
+   int32_t           CompareNoCase(LPCWSTR str,uint32_t count) const;
+   int32_t           CompareNoCase(const CMTStr& str) const;
+   static int32_t    CompareNoCase(LPCWSTR str1,LPCWSTR str2);
+   static int32_t    CompareNoCase(LPCWSTR str1,LPCWSTR str2,uint32_t count);
    //--- check groups mask
    static bool       CheckGroupMask(LPCWSTR groupsmask,LPCWSTR group);
    //--- find symbol & substring
-   int               Find(LPCWSTR substring,UINT startpos) const;
-   int               Find(LPCWSTR substring) const;
-   int               FindNoCase(LPCWSTR substring,UINT startpos) const;
-   int               FindNoCase(LPCWSTR substring) const { return FindNoCase(substring,(UINT)0); }
-   int               FindR(LPCWSTR substring) const;
-   int               FindChar(const wchar_t character) const;
-   int               FindRChar(const wchar_t character) const;
-   static int        Find(LPCWSTR str,LPCWSTR substr);
-   static int        FindNoCase(LPCWSTR str,LPCWSTR substr);
-   static int        FindR(LPCWSTR str,LPCWSTR substr);
-   static int        FindChar(LPCWSTR str,wchar_t character);
-   static int        FindRChar(LPCWSTR str,wchar_t character);
+   int32_t           Find(LPCWSTR substring,uint32_t startpos) const;
+   int32_t           Find(LPCWSTR substring) const;
+   int32_t           FindNoCase(LPCWSTR substring,uint32_t startpos) const;
+   int32_t           FindNoCase(LPCWSTR substring) const { return FindNoCase(substring,(uint32_t)0); }
+   int32_t           FindR(LPCWSTR substring) const;
+   int32_t           FindChar(const wchar_t character) const;
+   int32_t           FindRChar(const wchar_t character) const;
+   static int32_t    Find(LPCWSTR str,LPCWSTR substr);
+   static int32_t    FindNoCase(LPCWSTR str,LPCWSTR substr);
+   static int32_t    FindR(LPCWSTR str,LPCWSTR substr);
+   static int32_t    FindChar(LPCWSTR str,wchar_t character);
+   static int32_t    FindRChar(LPCWSTR str,wchar_t character);
    //--- error description method
    LPCWSTR           ErrorMsg(const DWORD error);
 
 protected:
                      CMTStr();
                      CMTStr(const CMTStr &from);
-   CMTStr(LPWSTR buf,const UINT size,LPCWSTR from):m_str(buf),m_str_len(0),m_str_max(size)
+   CMTStr(LPWSTR buf,const uint32_t size,LPCWSTR from):m_str(buf),m_str_len(0),m_str_max(size)
      {
       if(m_str) m_str[0]=0;
       Assign(from);
@@ -134,7 +134,7 @@ private:
 //+------------------------------------------------------------------+
 //| Stack string template                                            |
 //+------------------------------------------------------------------+
-template <UINT buflen> class TMTStrStatic : public CMTStr
+template <uint32_t buflen> class TMTStrStatic : public CMTStr
   {
    wchar_t           m_buffer[buflen];
 public:
@@ -164,7 +164,7 @@ inline void CMTStr::Assign(const CMTStr &from)
 //--- check
    if(m_str)
      {
-      UINT newlen=from.Len();
+      uint32_t newlen=from.Len();
       //--- calc new length
       if(newlen>=m_str_max) newlen=m_str_max-1;
       memcpy(m_str,from.Str(),newlen*sizeof(wchar_t));
@@ -186,7 +186,7 @@ inline void CMTStr::Assign(LPCWSTR from)
       if(!from) m_str_len=0;
       else
         {
-         UINT newlen=(UINT)wcsnlen(from,m_str_max);
+         uint32_t newlen=(uint32_t)wcsnlen(from,m_str_max);
          //--- calculate new length and copy
          if(newlen>=m_str_max) newlen=m_str_max-1;
          memcpy(m_str,from,newlen*sizeof(wchar_t));
@@ -199,7 +199,7 @@ inline void CMTStr::Assign(LPCWSTR from)
 //+------------------------------------------------------------------+
 //| Assign from ptr with len                                         |
 //+------------------------------------------------------------------+
-inline void CMTStr::Assign(LPCWSTR from,const UINT from_len)
+inline void CMTStr::Assign(LPCWSTR from,const uint32_t from_len)
   {
 //--- check
    if(m_str)
@@ -208,7 +208,7 @@ inline void CMTStr::Assign(LPCWSTR from,const UINT from_len)
       if(!from) m_str_len=0;
       else
         {
-         UINT newlen=(UINT)wcsnlen(from,(from_len<m_str_max)?(from_len):(m_str_max));
+         uint32_t newlen=(uint32_t)wcsnlen(from,(from_len<m_str_max)?(from_len):(m_str_max));
          //--- calculate new length and copy
          if(newlen>=m_str_max) newlen=m_str_max-1;
          memcpy(m_str,from,newlen*sizeof(wchar_t));
@@ -231,7 +231,7 @@ inline void CMTStr::Assign(LPCSTR from)
       else
         {
          //--- copy string
-         int len=::MultiByteToWideChar(CP_ACP,0,from,-1,m_str,int(m_str_max-1));
+         int32_t len=::MultiByteToWideChar(CP_ACP,0,from,-1,m_str,int(m_str_max-1));
          //--- check result
          if(len==0 && GetLastError()==ERROR_INSUFFICIENT_BUFFER) m_str[m_str_max-1]=0;
          else
@@ -251,7 +251,7 @@ inline void CMTStr::Assign(LPCSTR from)
 //+------------------------------------------------------------------+
 //| Assign from one-byte string with length                          |
 //+------------------------------------------------------------------+
-inline void CMTStr::Assign(LPCSTR from,const UINT from_len)
+inline void CMTStr::Assign(LPCSTR from,const uint32_t from_len)
   {
 //--- check
    if(m_str)
@@ -261,7 +261,7 @@ inline void CMTStr::Assign(LPCSTR from,const UINT from_len)
       else
         {
          //--- copy string
-         int len=::MultiByteToWideChar(CP_ACP,0,from,int(from_len),m_str,int(m_str_max-1));
+         int32_t len=::MultiByteToWideChar(CP_ACP,0,from,int(from_len),m_str,int(m_str_max-1));
          //--- check result
          if(len==0 && GetLastError()==ERROR_INSUFFICIENT_BUFFER) m_str[m_str_max-1]=0;
          else
@@ -281,14 +281,14 @@ inline void CMTStr::Assign(LPCSTR from,const UINT from_len)
 //+------------------------------------------------------------------+
 //| Copy from ptr with len                                           |
 //+------------------------------------------------------------------+
-inline void CMTStr::Copy(LPWSTR string,UINT maxlen) const
+inline void CMTStr::Copy(LPWSTR string,uint32_t maxlen) const
   {
    if(string && maxlen>0 && m_str) wcsncpy_s(string,maxlen,m_str,_TRUNCATE);
   }
 //+------------------------------------------------------------------+
 //| Copy from one-byte string with len                               |
 //+------------------------------------------------------------------+
-inline void CMTStr::Copy(LPSTR string,UINT maxlen) const
+inline void CMTStr::Copy(LPSTR string,uint32_t maxlen) const
   {
    if(string && maxlen>0 && m_str)
       ::WideCharToMultiByte(CP_ACP,0,m_str,-1,string,int(maxlen),NULL,NULL);
@@ -296,7 +296,7 @@ inline void CMTStr::Copy(LPSTR string,UINT maxlen) const
 //+------------------------------------------------------------------+
 //| Static copy from string with len                                 |
 //+------------------------------------------------------------------+
-inline void CMTStr::Copy(LPWSTR dst,UINT dstsize,LPCWSTR src)
+inline void CMTStr::Copy(LPWSTR dst,uint32_t dstsize,LPCWSTR src)
   {
    if(dst && src && dstsize>0)
      {
@@ -304,14 +304,14 @@ inline void CMTStr::Copy(LPWSTR dst,UINT dstsize,LPCWSTR src)
       wcsncpy_s(dst,dstsize,src,_TRUNCATE);
       //--- remove trash symbols from CRT in Debug
       #ifdef _DEBUG
-      for(UINT pos=Len(dst)+1;pos<dstsize;pos++) dst[pos]=(wchar_t)0;
+      for(uint32_t pos=Len(dst)+1;pos<dstsize;pos++) dst[pos]=(wchar_t)0;
       #endif
      }
   }
 //+------------------------------------------------------------------+
 //| Static copy from string with len                                 |
 //+------------------------------------------------------------------+
-inline void CMTStr::Copy(LPWSTR dst,UINT dstsize,LPCWSTR src,UINT srccount)
+inline void CMTStr::Copy(LPWSTR dst,uint32_t dstsize,LPCWSTR src,uint32_t srccount)
   {
    if(dst && src && dstsize>0 && srccount>0)
      {
@@ -319,14 +319,14 @@ inline void CMTStr::Copy(LPWSTR dst,UINT dstsize,LPCWSTR src,UINT srccount)
       wcsncpy_s(dst,dstsize,src,dstsize>srccount ? srccount:_TRUNCATE);
       //--- remove trash symbols from CRT in Debug
       #ifdef _DEBUG
-      for(UINT pos=Len(dst)+1;pos<dstsize;pos++) dst[pos]=(wchar_t)0;
+      for(uint32_t pos=Len(dst)+1;pos<dstsize;pos++) dst[pos]=(wchar_t)0;
       #endif
      }
   }
 //+------------------------------------------------------------------+
 //| Copy from one-byte to unicode string                             |
 //+------------------------------------------------------------------+
-inline void CMTStr::Copy(LPSTR dst,UINT dstsize,LPCWSTR src)
+inline void CMTStr::Copy(LPSTR dst,uint32_t dstsize,LPCWSTR src)
   {
    if(dst && src && dstsize>0)
       ::WideCharToMultiByte(CP_ACP,0,src,-1,dst,int(dstsize),NULL,NULL);
@@ -334,7 +334,7 @@ inline void CMTStr::Copy(LPSTR dst,UINT dstsize,LPCWSTR src)
 //+------------------------------------------------------------------+
 //| Copy from unicode to one-byte string                             |
 //+------------------------------------------------------------------+
-inline void CMTStr::Copy(LPWSTR dst,UINT dstsize,LPCSTR src)
+inline void CMTStr::Copy(LPWSTR dst,uint32_t dstsize,LPCSTR src)
   {
    if(dst && src)
       ::MultiByteToWideChar(CP_ACP,0,src,-1,dst,int(dstsize));
@@ -342,7 +342,7 @@ inline void CMTStr::Copy(LPWSTR dst,UINT dstsize,LPCSTR src)
 //+------------------------------------------------------------------+
 //| Copy from unicode to one-byte string with codepage               |
 //+------------------------------------------------------------------+
-inline void CMTStr::CopyCodePage(LPWSTR dst,UINT dstsize,LPCSTR src,UINT codepage)
+inline void CMTStr::CopyCodePage(LPWSTR dst,uint32_t dstsize,LPCSTR src,uint32_t codepage)
   {
    if(dst && src)
       ::MultiByteToWideChar(codepage,0,src,-1,dst,int(dstsize));
@@ -350,9 +350,9 @@ inline void CMTStr::CopyCodePage(LPWSTR dst,UINT dstsize,LPCSTR src,UINT codepag
 //+------------------------------------------------------------------+
 //| String format                                                    |
 //+------------------------------------------------------------------+
-inline int CMTStr::Format(LPCWSTR fmt,...)
+inline int32_t CMTStr::Format(LPCWSTR fmt,...)
   {
-   int len=-1;
+   int32_t len=-1;
 //---
    if(fmt && m_str)
      {
@@ -362,8 +362,8 @@ inline int CMTStr::Format(LPCWSTR fmt,...)
       len=_vsnwprintf_s(m_str,m_str_max,_TRUNCATE,fmt,marker);
       va_end(marker);
       //--- check result
-      if(len>=0) m_str_len=UINT(len);
-      else       m_str_len=(UINT)wcsnlen(m_str,m_str_max);
+      if(len>=0) m_str_len=uint32_t(len);
+      else       m_str_len=(uint32_t)wcsnlen(m_str,m_str_max);
      }
 //---
    return(len);
@@ -371,21 +371,21 @@ inline int CMTStr::Format(LPCWSTR fmt,...)
 //+------------------------------------------------------------------+
 //| Convert to lower case                                            |
 //+------------------------------------------------------------------+
-inline void CMTStr::ToLower()
+inline void CMTStr::ToLower(void)
   {
    if(m_str) _wcslwr_s(m_str,m_str_max);
   }
 //+------------------------------------------------------------------+
 //| Convert to upper case                                            |
 //+------------------------------------------------------------------+
-inline void CMTStr::ToUpper()
+inline void CMTStr::ToUpper(void)
   {
    if(m_str) _wcsupr_s(m_str,m_str_max);
   }
 //+------------------------------------------------------------------+
 //| Trim symbols from right                                          |
 //+------------------------------------------------------------------+
-inline void CMTStr::Trim(UINT len)
+inline void CMTStr::Trim(uint32_t len)
   {
    if(m_str && len<m_str_len)
      {
@@ -396,9 +396,9 @@ inline void CMTStr::Trim(UINT len)
 //+------------------------------------------------------------------+
 //| Trim spaces                                                      |
 //+------------------------------------------------------------------+
-inline void CMTStr::TrimSpaces()
+inline void CMTStr::TrimSpaces(void)
   {
-   UINT pos;
+   uint32_t pos;
 //--- check
    if(m_str_len==0 || !m_str) return;
 //--- remove lead spaces
@@ -443,15 +443,17 @@ inline void CMTStr::TrimSpaces(LPWSTR str)
 inline void CMTStr::ReplaceChar(wchar_t findchar,wchar_t repchar)
   {
 //--- check
-   if(m_str_len==0 || !m_str) return;
+   if(m_str_len==0 || !m_str)
+      return;
 //--- replace
-   for(UINT pos=0;pos<m_str_len;pos++)
-      if(m_str[pos]==findchar) m_str[pos]=repchar;
+   for(uint32_t pos=0;pos<m_str_len;pos++)
+      if(m_str[pos]==findchar)
+         m_str[pos]=repchar;
   }
 //+------------------------------------------------------------------+
 //| Replace substring                                                |
 //+------------------------------------------------------------------+
-inline void CMTStr::Replace(wchar_t *findstr,const wchar_t *repstr)
+inline void CMTStr::Replace(const wchar_t *findstr,const wchar_t *repstr)
   {
 //--- check
    if(findstr && repstr && m_str)
@@ -469,12 +471,15 @@ inline void CMTStr::Replace(wchar_t *findstr,const wchar_t *repstr)
             newsize=m_str_max;
             newstr =new(std::nothrow) wchar_t[newsize];
             //--- fail
-            if(newstr==NULL) break;
+            if(newstr==NULL)
+               break;
            }
          *cp=0;
          m_str_len=_snwprintf_s(newstr,newsize,_TRUNCATE,L"%s%s%s",m_str,repstr,cp+findstr_len);
          //--- copy
-         if(m_str_len>=m_str_max) m_str_len=m_str_max-1;
+         if(m_str_len>=m_str_max)
+            m_str_len=m_str_max-1;
+
          memcpy(m_str,newstr,m_str_len*sizeof(wchar_t));
          m_str[m_str_len]=0;
          //--- next position
@@ -491,24 +496,28 @@ inline void CMTStr::Replace(wchar_t *findstr,const wchar_t *repstr)
 //+------------------------------------------------------------------+
 //| Delete len symbols from pos position                             |
 //+------------------------------------------------------------------+
-inline void CMTStr::Delete(UINT pos,UINT len)
+inline void CMTStr::Delete(uint32_t pos,uint32_t len)
   {
 //--- check
-   if(pos>=m_str_len || len==0 || !m_str) return;
+   if(pos>=m_str_len || len==0 || !m_str)
+      return;
 //--- remove
-   if(pos+len>m_str_len) len=m_str_len-pos;
+   if(pos+len>m_str_len)
+      len=m_str_len-pos;
+
    if(pos+len<m_str_len)
-      for(UINT i=pos;i<m_str_len-len;i++)
+      for(uint32_t i=pos;i<m_str_len-len;i++)
          m_str[i]=m_str[i+len];
+
    m_str_len-=len;
    m_str[m_str_len]=L'\0';
   }
 //+------------------------------------------------------------------+
 //| Delete len symbols from pos position                             |
 //+------------------------------------------------------------------+
-inline void CMTStr::Delete(LPWSTR dst,UINT dstsize,UINT pos,UINT len)
+inline void CMTStr::Delete(LPWSTR dst,uint32_t dstsize,uint32_t pos,uint32_t len)
   {
-   UINT dstlen;
+   uint32_t dstlen;
 //--- check
    if(!dst || dstsize==0) return;
    dstlen=Len(dst);
@@ -516,31 +525,31 @@ inline void CMTStr::Delete(LPWSTR dst,UINT dstsize,UINT pos,UINT len)
 //--- remove
    if(pos+len>dstlen) len=dstlen-pos;
    if(pos+len<dstlen)
-      for(UINT i=pos;i<dstlen-len;i++)
+      for(uint32_t i=pos;i<dstlen-len;i++)
          dst[i]=dst[i+len];
    dst[dstlen-len]=L'\0';
   }
 //+------------------------------------------------------------------+
 //| Convert to lower case                                            |
 //+------------------------------------------------------------------+
-inline void CMTStr::ToLower(LPWSTR str,UINT size)
+inline void CMTStr::ToLower(LPWSTR str,uint32_t size)
   {
    if(str && size>0) _wcslwr_s(str,size);
   }
 //+------------------------------------------------------------------+
 //| Convert to upper case                                            |
 //+------------------------------------------------------------------+
-inline void CMTStr::ToUpper(LPWSTR str,UINT size)
+inline void CMTStr::ToUpper(LPWSTR str,uint32_t size)
   {
    if(str && size>0) _wcsupr_s(str,size);
   }
 //+------------------------------------------------------------------+
 //| Static string format                                             |
 //+------------------------------------------------------------------+
-template<UINT strsize>
-inline int CMTStr::FormatStr(wchar_t (&str)[strsize],LPCWSTR fmt,...)
+template<uint32_t strsize>
+inline int32_t CMTStr::FormatStr(wchar_t (&str)[strsize],LPCWSTR fmt,...)
   {
-   int len=-1;
+   int32_t len=-1;
 //---
    if(str && strsize>1 && fmt)
      {
@@ -558,9 +567,9 @@ inline int CMTStr::FormatStr(wchar_t (&str)[strsize],LPCWSTR fmt,...)
 //+------------------------------------------------------------------+
 //| Static string format                                             |
 //+------------------------------------------------------------------+
-inline int CMTStr::FormatStr(LPWSTR str,UINT size,LPCWSTR fmt,...)
+inline int32_t CMTStr::FormatStr(LPWSTR str,uint32_t size,LPCWSTR fmt,...)
   {
-   int len=-1;
+   int32_t len=-1;
 //---
    if(str && size>1 && fmt)
      {
@@ -580,9 +589,9 @@ inline int CMTStr::FormatStr(LPWSTR str,UINT size,LPCWSTR fmt,...)
 //+------------------------------------------------------------------+
 inline void CMTStr::Append(LPCWSTR appstring)
   {
-   UINT len;
+   uint32_t len;
 //--- check appstring
-   if(m_str && appstring && (len=(UINT)wcslen(appstring))>0 && (len+m_str_len)<m_str_max)
+   if(m_str && appstring && (len=(uint32_t)wcslen(appstring))>0 && (len+m_str_len)<m_str_max)
      {
       memcpy(&m_str[m_str_len],appstring,len*sizeof(m_str[0]));
       m_str_len+=len;
@@ -617,7 +626,7 @@ inline void CMTStr::Append(wchar_t appchar)
 //+------------------------------------------------------------------+
 //| Append to end                                                    |
 //+------------------------------------------------------------------+
-inline void CMTStr::Append(LPWSTR dst,UINT dstsize,LPCWSTR src)
+inline void CMTStr::Append(LPWSTR dst,uint32_t dstsize,LPCWSTR src)
   {
    if(dst && src)
      {
@@ -646,11 +655,11 @@ inline void CMTStr::Append(LPWSTR dst,UINT dstsize,LPCWSTR src)
 //+------------------------------------------------------------------+
 //| Substring insert                                                 |
 //+------------------------------------------------------------------+
-inline void CMTStr::Insert(UINT pos,LPCWSTR insstring)
+inline void CMTStr::Insert(uint32_t pos,LPCWSTR insstring)
   {
-   UINT len;
+   uint32_t len;
 //--- check insstring
-   if(m_str && insstring && (len=(UINT)wcslen(insstring))>0 && (len+m_str_len)<m_str_max)
+   if(m_str && insstring && (len=(uint32_t)wcslen(insstring))>0 && (len+m_str_len)<m_str_max)
      {
       memmove(&m_str[pos+len],&m_str[pos],(m_str_len-pos)*sizeof(m_str[0]));
       memcpy(&m_str[pos],insstring,len*sizeof(m_str[0]));
@@ -661,7 +670,7 @@ inline void CMTStr::Insert(UINT pos,LPCWSTR insstring)
 //+------------------------------------------------------------------+
 //| Substring insert                                                 |
 //+------------------------------------------------------------------+
-inline void CMTStr::Insert(UINT pos,const CMTStr &insstring)
+inline void CMTStr::Insert(uint32_t pos,const CMTStr &insstring)
   {
 //--- check insstring
    if(m_str && insstring.Len()>0 && (insstring.Len()+m_str_len)<m_str_max)
@@ -675,7 +684,7 @@ inline void CMTStr::Insert(UINT pos,const CMTStr &insstring)
 //+------------------------------------------------------------------+
 //| Symbol insert                                                    |
 //+------------------------------------------------------------------+
-inline void CMTStr::Insert(UINT pos,wchar_t inschar)
+inline void CMTStr::Insert(uint32_t pos,wchar_t inschar)
   {
 //--- check inschar
    if(m_str && inschar!=L'\0' && (m_str_len+1)<m_str_max)
@@ -688,7 +697,7 @@ inline void CMTStr::Insert(UINT pos,wchar_t inschar)
 //+------------------------------------------------------------------+
 //| Compare                                                          |
 //+------------------------------------------------------------------+
-inline int CMTStr::Compare(LPCWSTR str) const
+inline int32_t CMTStr::Compare(LPCWSTR str) const
   {
    if(m_str && str) return wcscmp(m_str,str);
    return(m_str_len<1 ? 0 : 1);
@@ -696,7 +705,7 @@ inline int CMTStr::Compare(LPCWSTR str) const
 //+------------------------------------------------------------------+
 //| Compare                                                          |
 //+------------------------------------------------------------------+
-inline int CMTStr::Compare(LPCWSTR str,UINT count) const
+inline int32_t CMTStr::Compare(LPCWSTR str,uint32_t count) const
   {
    if(m_str && str) return wcsncmp(m_str,str,count);
    return(m_str_len<1 ? 0 : 1);
@@ -704,28 +713,28 @@ inline int CMTStr::Compare(LPCWSTR str,UINT count) const
 //+------------------------------------------------------------------+
 //| Compare                                                          |
 //+------------------------------------------------------------------+
-inline int CMTStr::Compare(const CMTStr& str) const
+inline int32_t CMTStr::Compare(const CMTStr& str) const
   {
    return(m_str ? wcscmp(m_str,str.Str()) : -1);
   }
 //+------------------------------------------------------------------+
 //| Compare                                                          |
 //+------------------------------------------------------------------+
-inline int CMTStr::Compare(LPCWSTR str1,LPCWSTR str2)
+inline int32_t CMTStr::Compare(LPCWSTR str1,LPCWSTR str2)
   {
    return wcscmp(str1,str2);
   }
 //+------------------------------------------------------------------+
 //| Compare                                                          |
 //+------------------------------------------------------------------+
-inline int CMTStr::Compare(LPCWSTR str1,LPCWSTR str2,UINT count)
+inline int32_t CMTStr::Compare(LPCWSTR str1,LPCWSTR str2,uint32_t count)
   {
    return wcsncmp(str1,str2,count);
   }
 //+------------------------------------------------------------------+
 //| Compare no case                                                  |
 //+------------------------------------------------------------------+
-inline int CMTStr::CompareNoCase(LPCWSTR str) const
+inline int32_t CMTStr::CompareNoCase(LPCWSTR str) const
   {
    if(m_str && str) return _wcsicmp(m_str,str);
    return(m_str_len<1 ? 0 : 1);
@@ -733,7 +742,7 @@ inline int CMTStr::CompareNoCase(LPCWSTR str) const
 //+------------------------------------------------------------------+
 //| Compare no case                                                  |
 //+------------------------------------------------------------------+
-inline int CMTStr::CompareNoCase(LPCWSTR str,UINT count) const
+inline int32_t CMTStr::CompareNoCase(LPCWSTR str,uint32_t count) const
   {
    if(m_str && str) return _wcsnicmp(m_str,str,count);
    return(m_str_len<1 ? 0 : 1);
@@ -741,7 +750,7 @@ inline int CMTStr::CompareNoCase(LPCWSTR str,UINT count) const
 //+------------------------------------------------------------------+
 //| Compare no case                                                  |
 //+------------------------------------------------------------------+
-inline int CMTStr::CompareNoCase(const CMTStr& str) const
+inline int32_t CMTStr::CompareNoCase(const CMTStr& str) const
   {
    if(m_str && str.m_str) return _wcsicmp(m_str,str.m_str);
    return(m_str_len<1 ? 0 : 1);
@@ -749,14 +758,14 @@ inline int CMTStr::CompareNoCase(const CMTStr& str) const
 //+------------------------------------------------------------------+
 //| Compare no case                                                  |
 //+------------------------------------------------------------------+
-inline int CMTStr::CompareNoCase(LPCWSTR str1,LPCWSTR str2)
+inline int32_t CMTStr::CompareNoCase(LPCWSTR str1,LPCWSTR str2)
   {
    return _wcsicmp(str1,str2);
   }
 //+------------------------------------------------------------------+
 //| Compare no case                                                  |
 //+------------------------------------------------------------------+
-inline int CMTStr::CompareNoCase(LPCWSTR str1,LPCWSTR str2,UINT count)
+inline int32_t CMTStr::CompareNoCase(LPCWSTR str1,LPCWSTR str2,uint32_t count)
   {
    return _wcsnicmp(str1,str2,count);
   }
@@ -768,7 +777,7 @@ inline bool CMTStr::CheckGroupMask(LPCWSTR groupsmask,LPCWSTR group)
    const wchar_t *tok_start;
    wchar_t        mask[256]={0};
    bool           found=false;
-   int            pos;
+   int32_t            pos;
 //--- check
    if(!groupsmask || !group)
       return(false);
@@ -801,7 +810,7 @@ inline bool CMTStr::CheckGroupMask(LPCWSTR groupsmask,LPCWSTR group)
 //+------------------------------------------------------------------+
 //| Find substring                                                   |
 //+------------------------------------------------------------------+
-inline int CMTStr::Find(LPCWSTR substring,UINT startpos) const
+inline int32_t CMTStr::Find(LPCWSTR substring,uint32_t startpos) const
   {
    if(substring && m_str && m_str_len>0)
       if(startpos<m_str_len)
@@ -814,7 +823,7 @@ inline int CMTStr::Find(LPCWSTR substring,UINT startpos) const
 //+------------------------------------------------------------------+
 //| Find substring                                                   |
 //+------------------------------------------------------------------+
-inline int CMTStr::Find(LPCWSTR substring) const
+inline int32_t CMTStr::Find(LPCWSTR substring) const
   {
    if(substring && m_str && m_str_len>0)
      {
@@ -829,13 +838,13 @@ inline int CMTStr::Find(LPCWSTR substring) const
 //+------------------------------------------------------------------+
 //| Find substring no case                                           |
 //+------------------------------------------------------------------+
-inline int CMTStr::FindNoCase(LPCWSTR substring,UINT startpos) const
+inline int32_t CMTStr::FindNoCase(LPCWSTR substring,uint32_t startpos) const
   {
-   UINT sublen=0;
+   uint32_t sublen=0;
 //---
-   if(substring && (sublen=(UINT)wcslen(substring))>0 && m_str && m_str_len>0)
+   if(substring && (sublen=(uint32_t)wcslen(substring))>0 && m_str && m_str_len>0)
       if(startpos<m_str_len)
-         for(UINT pos=startpos;m_str_len-pos>=sublen;pos++)
+         for(uint32_t pos=startpos;m_str_len-pos>=sublen;pos++)
             if(_wcsnicmp(m_str+pos,substring,sublen)==0)
                return int(pos);
    return(-1);
@@ -843,9 +852,9 @@ inline int CMTStr::FindNoCase(LPCWSTR substring,UINT startpos) const
 //+------------------------------------------------------------------+
 //| Find substring reverse                                           |
 //+------------------------------------------------------------------+
-inline int CMTStr::FindR(LPCWSTR substring) const
+inline int32_t CMTStr::FindR(LPCWSTR substring) const
   {
-   int pos=0,end=0,beg=-1;
+   int32_t pos=0,end=0,beg=-1;
 //--- check
    if(substring && m_str && m_str_len>0 && Len(substring)>0)
      {
@@ -862,7 +871,7 @@ inline int CMTStr::FindR(LPCWSTR substring) const
 //+------------------------------------------------------------------+
 //| Find symbol                                                      |
 //+------------------------------------------------------------------+
-inline int CMTStr::FindChar(const wchar_t character) const
+inline int32_t CMTStr::FindChar(const wchar_t character) const
   {
    if(m_str && m_str_len>0)
      {
@@ -874,7 +883,7 @@ inline int CMTStr::FindChar(const wchar_t character) const
 //+------------------------------------------------------------------+
 //| Find symbol reverse                                              |
 //+------------------------------------------------------------------+
-inline int CMTStr::FindRChar(const wchar_t character) const
+inline int32_t CMTStr::FindRChar(const wchar_t character) const
   {
    if(m_str && m_str_len>0)
      {
@@ -886,7 +895,7 @@ inline int CMTStr::FindRChar(const wchar_t character) const
 //+------------------------------------------------------------------+
 //| Find substring                                                   |
 //+------------------------------------------------------------------+
-inline int CMTStr::Find(LPCWSTR str,LPCWSTR substr)
+inline int32_t CMTStr::Find(LPCWSTR str,LPCWSTR substr)
   {
    if(str && substr && substr[0]!=L'\0')
      {
@@ -898,12 +907,12 @@ inline int CMTStr::Find(LPCWSTR str,LPCWSTR substr)
 //+------------------------------------------------------------------+
 //| Find substring no case                                           |
 //+------------------------------------------------------------------+
-inline int CMTStr::FindNoCase(LPCWSTR str,LPCWSTR substr)
+inline int32_t CMTStr::FindNoCase(LPCWSTR str,LPCWSTR substr)
   {
-   UINT len=0,sublen=0;
+   uint32_t len=0,sublen=0;
 //---
-   if(str && substr && (len=(UINT)wcslen(str))>0 && (sublen=(UINT)wcslen(substr))>0)
-      for(UINT pos=0;len>=pos+sublen;pos++)
+   if(str && substr && (len=(uint32_t)wcslen(str))>0 && (sublen=(uint32_t)wcslen(substr))>0)
+      for(uint32_t pos=0;len>=pos+sublen;pos++)
          if(_wcsnicmp(str+pos,substr,sublen)==0)
             return int(pos);
    return(-1);
@@ -911,9 +920,9 @@ inline int CMTStr::FindNoCase(LPCWSTR str,LPCWSTR substr)
 //+------------------------------------------------------------------+
 //| Find substring reverse                                           |
 //+------------------------------------------------------------------+
-inline int CMTStr::FindR(LPCWSTR str,LPCWSTR substr)
+inline int32_t CMTStr::FindR(LPCWSTR str,LPCWSTR substr)
   {
-   int pos=0,end=0,beg=-1;
+   int32_t pos=0,end=0,beg=-1;
 //--- check
    if(str && substr && Len(str)>0 && Len(substr)>0)
      {
@@ -930,7 +939,7 @@ inline int CMTStr::FindR(LPCWSTR str,LPCWSTR substr)
 //+------------------------------------------------------------------+
 //| Find char                                                        |
 //+------------------------------------------------------------------+
-inline int CMTStr::FindChar(LPCWSTR str,wchar_t character)
+inline int32_t CMTStr::FindChar(LPCWSTR str,wchar_t character)
   {
    if(str)
      {
@@ -942,7 +951,7 @@ inline int CMTStr::FindChar(LPCWSTR str,wchar_t character)
 //+------------------------------------------------------------------+
 //| Find symbol reverse                                              |
 //+------------------------------------------------------------------+
-inline int CMTStr::FindRChar(LPCWSTR str,wchar_t character)
+inline int32_t CMTStr::FindRChar(LPCWSTR str,wchar_t character)
   {
    if(str)
      {

@@ -1,6 +1,6 @@
-//+------------------------------------------------------------------+
+﻿//+------------------------------------------------------------------+
 //|                                                 MetaTrader 5 API |
-//|                             Copyright 2000-2024, MetaQuotes Ltd. |
+//|                             Copyright 2000-2026, MetaQuotes Ltd. |
 //|                                               www.metaquotes.net |
 //+------------------------------------------------------------------+
 #pragma once
@@ -55,6 +55,7 @@ public:
       CONDITION_ACCOUNT_OWN_FUNDS_PERCENT     =1032,
       CONDITION_ACCOUNT_OWN_FUNDS_VOLUME      =1033,
       CONDITION_ACCOUNT_STATUS                =1034,
+      CONDITION_ACCOUNT_CLIENT_ID             =1035,
       //--- trade account conditions
       CONDITION_ACCOUNT_FIRST                 =1001,
       CONDITION_ACCOUNT_LAST                  =2000,
@@ -102,19 +103,19 @@ public:
    virtual MTAPIRES  Assign(const IMTConVPSCondition* param)=0;
    virtual MTAPIRES  Clear(void)=0;
    //--- condition
-   virtual UINT      Condition(void) const=0;
-   virtual MTAPIRES  Condition(const UINT condition)=0;
+   virtual uint32_t  Condition(void) const=0;
+   virtual MTAPIRES  Condition(const uint32_t condition)=0;
    //--- condition rule
-   virtual UINT      Rule(void) const=0;
-   virtual MTAPIRES  Rule(const UINT rule)=0;
+   virtual uint32_t  Rule(void) const=0;
+   virtual MTAPIRES  Rule(const uint32_t rule)=0;
    //--- type
-   virtual UINT      ValueType(void) const=0;
+   virtual uint32_t  ValueType(void) const=0;
    //--- value int
-   virtual INT64     ValueInt(void) const=0;
-   virtual MTAPIRES  ValueInt(const INT64 value)=0;
+   virtual int64_t     ValueInt(void) const=0;
+   virtual MTAPIRES  ValueInt(const int64_t value)=0;
    //--- value uint
-   virtual UINT64    ValueUInt(void) const=0;
-   virtual MTAPIRES  ValueUInt(const UINT64 value)=0;
+   virtual uint64_t    ValueUInt(void) const=0;
+   virtual MTAPIRES  ValueUInt(const uint64_t value)=0;
    //--- value double
    virtual double    ValueDouble(void) const=0;
    virtual MTAPIRES  ValueDouble(const double value)=0;
@@ -128,26 +129,26 @@ public:
    virtual double    ValueMoney(void) const=0;
    virtual MTAPIRES  ValueMoney(const double value)=0;
    //--- value datetime
-   virtual INT64     ValueDatetime(void) const=0;
-   virtual MTAPIRES  ValueDatetime(const INT64 value)=0;
+   virtual int64_t     ValueDatetime(void) const=0;
+   virtual MTAPIRES  ValueDatetime(const int64_t value)=0;
    //--- value leverage
-   virtual INT64     ValueLeverage(void) const=0;
-   virtual MTAPIRES  ValueLeverage(const INT64 value)=0;
+   virtual int64_t     ValueLeverage(void) const=0;
+   virtual MTAPIRES  ValueLeverage(const int64_t value)=0;
    //--- value bool
    virtual bool      ValueBool(void) const=0;
    virtual MTAPIRES  ValueBool(const bool value)=0;
    //--- value time
-   virtual UINT      ValueTime(void) const=0;
-   virtual MTAPIRES  ValueTime(const UINT value)=0;
+   virtual uint32_t  ValueTime(void) const=0;
+   virtual MTAPIRES  ValueTime(const uint32_t value)=0;
    //--- value date
-   virtual INT64     ValueDate(void) const=0;
-   virtual MTAPIRES  ValueDate(const INT64 value)=0;
+   virtual int64_t     ValueDate(void) const=0;
+   virtual MTAPIRES  ValueDate(const int64_t value)=0;
    //--- value percent
-   virtual UINT      ValuePercent(void) const=0;
-   virtual MTAPIRES  ValuePercent(const UINT value)=0;
+   virtual uint32_t  ValuePercent(void) const=0;
+   virtual MTAPIRES  ValuePercent(const uint32_t value)=0;
    //--- value language
-   virtual UINT      ValueLanguage(void) const=0;
-   virtual MTAPIRES  ValueLanguage(const UINT value)=0;
+   virtual uint32_t  ValueLanguage(void) const=0;
+   virtual MTAPIRES  ValueLanguage(const uint32_t value)=0;
   };
 //+------------------------------------------------------------------+
 //| VPS rule configuration                                           |
@@ -167,12 +168,12 @@ public:
    virtual MTAPIRES  Name(LPCWSTR name)=0;
    //--- conditions
    virtual MTAPIRES  ConditionAdd(IMTConVPSCondition* cfg)=0;
-   virtual MTAPIRES  ConditionUpdate(const UINT pos,const IMTConVPSCondition* cfg)=0;
-   virtual MTAPIRES  ConditionDelete(const UINT pos)=0;
+   virtual MTAPIRES  ConditionUpdate(const uint32_t pos,const IMTConVPSCondition* cfg)=0;
+   virtual MTAPIRES  ConditionDelete(const uint32_t pos)=0;
    virtual MTAPIRES  ConditionClear(void)=0;
-   virtual MTAPIRES  ConditionShift(const UINT pos,const int shift)=0;
-   virtual UINT      ConditionTotal(void) const=0;
-   virtual MTAPIRES  ConditionNext(const UINT pos,IMTConVPSCondition* cfg) const=0;
+   virtual MTAPIRES  ConditionShift(const uint32_t pos,const int32_t shift)=0;
+   virtual uint32_t  ConditionTotal(void) const=0;
+   virtual MTAPIRES  ConditionNext(const uint32_t pos,IMTConVPSCondition* cfg) const=0;
    //--- explicit destructor is prohibited
 protected:
                     ~IMTConVPSRule(void) {}
@@ -194,8 +195,8 @@ public:
    virtual double    MinBalance(void) const=0;
    virtual MTAPIRES  MinBalance(const double balance)=0;
    //--- inactivity days to switch off sponsored VPS
-   virtual UINT      InactiveDays(void) const=0;
-   virtual MTAPIRES  InactiveDays(const UINT days)=0;
+   virtual uint32_t  InactiveDays(void) const=0;
+   virtual MTAPIRES  InactiveDays(const uint32_t days)=0;
    //--- explicit destructor is prohibited
 protected:
                     ~IMTConVPSGroup(void) {}
@@ -217,8 +218,8 @@ public:
    virtual MTAPIRES  Assign(const IMTConVPS* param)=0;
    virtual MTAPIRES  Clear(void)=0;
    //--- flags
-   virtual UINT64    Flags(void) const=0;
-   virtual MTAPIRES  Flags(const UINT64 flags)=0;
+   virtual uint64_t    Flags(void) const=0;
+   virtual MTAPIRES  Flags(const uint64_t flags)=0;
    //--- MQL5 login
    virtual LPCWSTR   MQL5Login(void) const=0;
    virtual MTAPIRES  MQL5Login(LPCWSTR login)=0;
@@ -227,20 +228,20 @@ public:
    virtual MTAPIRES  MQL5Password(LPCWSTR password)=0;
    //--- groups settings (obsolete)
    virtual MTAPIRES  GroupAdd(IMTConVPSGroup* group)=0;
-   virtual MTAPIRES  GroupUpdate(const UINT pos,const IMTConVPSGroup* group)=0;
-   virtual MTAPIRES  GroupDelete(const UINT pos)=0;
+   virtual MTAPIRES  GroupUpdate(const uint32_t pos,const IMTConVPSGroup* group)=0;
+   virtual MTAPIRES  GroupDelete(const uint32_t pos)=0;
    virtual MTAPIRES  GroupClear(void)=0;
-   virtual MTAPIRES  GroupShift(const UINT pos,const int shift)=0;
-   virtual UINT      GroupTotal(void) const=0;
-   virtual MTAPIRES  GroupNext(const UINT pos,IMTConVPSGroup* group) const=0;
+   virtual MTAPIRES  GroupShift(const uint32_t pos,const int32_t shift)=0;
+   virtual uint32_t  GroupTotal(void) const=0;
+   virtual MTAPIRES  GroupNext(const uint32_t pos,IMTConVPSGroup* group) const=0;
    //--- rules
    virtual MTAPIRES  RuleAdd(IMTConVPSRule* rule)=0;
-   virtual MTAPIRES  RuleUpdate(const UINT pos,const IMTConVPSRule* rule)=0;
-   virtual MTAPIRES  RuleDelete(const UINT pos)=0;
+   virtual MTAPIRES  RuleUpdate(const uint32_t pos,const IMTConVPSRule* rule)=0;
+   virtual MTAPIRES  RuleDelete(const uint32_t pos)=0;
    virtual MTAPIRES  RuleClear(void)=0;
-   virtual MTAPIRES  RuleShift(const UINT pos,const int shift)=0;
-   virtual UINT      RuleTotal(void) const=0;
-   virtual MTAPIRES  RuleNext(const UINT pos,IMTConVPSRule* rule) const=0;
+   virtual MTAPIRES  RuleShift(const uint32_t pos,const int32_t shift)=0;
+   virtual uint32_t  RuleTotal(void) const=0;
+   virtual MTAPIRES  RuleNext(const uint32_t pos,IMTConVPSRule* rule) const=0;
    //--- explicit destructor is prohibited
 protected:
                     ~IMTConVPS(void) {}

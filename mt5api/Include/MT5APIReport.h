@@ -1,9 +1,10 @@
-//+------------------------------------------------------------------+
+﻿//+------------------------------------------------------------------+
 //|                                         MetaTrader 5 API Report  |
-//|                             Copyright 2000-2024, MetaQuotes Ltd. |
+//|                             Copyright 2000-2026, MetaQuotes Ltd. |
 //|                                               www.metaquotes.net |
 //+------------------------------------------------------------------+
 #pragma once
+#include <cstdint>
 #include "MT5APIConstants.h"
 #include "MT5APILogger.h"
 #include "MT5APITools.h"
@@ -22,6 +23,13 @@
 #include "Config\MT5APIConfigSubscription.h"
 #include "Config\MT5APIConfigParam.h"
 #include "Config\MT5APIConfigLeverage.h"
+#include "Config\MT5APIConfigUltLiquidity.h"
+#include "Config\MT5APIConfigUltLiquiditySymbol.h"
+#include "Config\MT5APIConfigUltSymbol.h"
+#include "Config\MT5APIConfigUltTranslate.h"
+#include "Config\MT5APIConfigUltRoute.h"
+#include "Config\MT5APIConfigUltSymbolGroup.h"
+#include "Config\MT5APIConfigUltProvider.h"
 #include "Bases\MT5APIUser.h"
 #include "Bases\MT5APIAccount.h"
 #include "Bases\MT5APIDeal.h"
@@ -34,11 +42,14 @@
 #include "Bases\MT5APIClient.h"
 #include "Bases\MT5APISubscription.h"
 #include "Bases\MT5APIGeo.h"
+#include "Bases\MT5APIUltDeal.h"
+#include "Bases\MT5APIUltLiquidityOrder.h"
+#include "Bases\MT5APIUltMatchingOrder.h"
 //+------------------------------------------------------------------+
 //| Report API version                                               |
 //+------------------------------------------------------------------+
-#define MTReportAPIVersion             4540
-#define MTReportAPIDate                L"13 Sep 2024"
+#define MTReportAPIVersion             6230
+#define MTReportAPIDate                L"25 Sep 2026"
 
 //--- PVS Studio helper
 //V_FORMATTED_IO_FUNC, class:IMTReportDashboardHtml, function:Write,     format_arg:1, ellipsis_arg:2, propagate_on_virtual
@@ -82,7 +93,7 @@
 //+------------------------------------------------------------------+
 //| Common colors to draw charts and graphs                          |
 //+------------------------------------------------------------------+
-static UINT ExtChartColors[]= {
+static uint32_t ExtChartColors[]= {
    0x2196F3,
    0x2F4074,
    0xFDD400,
@@ -107,24 +118,30 @@ struct MTReportParam
    //--- parameter types
    enum ParamType
      {
-      TYPE_STRING    =0,                              // string
-      TYPE_INT       =1,                              // integer
-      TYPE_FLOAT     =2,                              // floating
-      TYPE_TIME      =3,                              // time only
-      TYPE_DATE      =4,                              // date only
-      TYPE_DATETIME  =5,                              // date & time
-      TYPE_GROUPS    =6,                              // groups list
-      TYPE_SYMBOLS   =7,                              // symbols list
-      TYPE_BOOL      =8,                              // boolean value
+      TYPE_STRING                  =0,                // string
+      TYPE_INT                     =1,                // integer
+      TYPE_FLOAT                   =2,                // floating
+      TYPE_TIME                    =3,                // time only
+      TYPE_DATE                    =4,                // date only
+      TYPE_DATETIME                =5,                // date & time
+      TYPE_GROUPS                  =6,                // groups list
+      TYPE_SYMBOLS                 =7,                // symbols list
+      TYPE_BOOL                    =8,                // boolean value
+      TYPE_COLOR                   =9,                // color
+      TYPE_GATEWAY                 =10,               // gateway
+      TYPE_ULTENCY_MATCHING_ENGINE =11,               // Ultency matching engine server
+      TYPE_ULTENCY_PROVIDER        =12,               // Ultency liquidity provider
+      TYPE_ULTENCY_SYMBOLS         =13,               // Ultency aggregated symbols list
+      TYPE_PERIOD                  =14,               // period
       //--- enumeration borders
-      TYPE_FIRST     =TYPE_STRING,
-      TYPE_LAST      =TYPE_BOOL
+      TYPE_FIRST                   =TYPE_STRING,
+      TYPE_LAST                    =TYPE_PERIOD
      };
    //---
-   UINT              type;                            // type
+   uint32_t          type;                            // type
    wchar_t           name[64];                        // name
    wchar_t           defvalue[256];                   // default value
-   UINT              reserved[16];                    // reserved
+   uint32_t          reserved[16];                    // reserved
   };
 #pragma pack(pop)
 //+------------------------------------------------------------------+
@@ -170,20 +187,20 @@ struct MTReportInfo
       IE_VERSION_LAST        =IE_VERSION_9,
      };
    //--- information
-   UINT              version;                         // report version
-   UINT              version_api;                     // report API version
-   UINT              version_ie;                      // minimal IE version
+   uint32_t          version;                         // report version
+   uint32_t          version_api;                     // report API version
+   uint32_t          version_ie;                      // minimal IE version
    wchar_t           name[64];                        // report name
    wchar_t           copyright[128];                  // copyright
    wchar_t           description[256];                // description
-   UINT              snapshots;                       // snapshot modes
-   UINT              types;                           // report types
+   uint32_t          snapshots;                       // snapshot modes
+   uint32_t          types;                           // report types
    wchar_t           category[64];                    // report category
    MTReportParam     params[64];                      // request parameters
-   UINT              params_total;                    // request parameters total
+   uint32_t          params_total;                    // request parameters total
    MTReportParam     config[64];                      // config parameters
-   UINT              config_total;                    // config parameters total
-   UINT              reserved[64];                    // reserved
+   uint32_t          config_total;                    // config parameters total
+   uint32_t          reserved[64];                    // reserved
   };
 #pragma pack(pop)
 //+------------------------------------------------------------------+
@@ -194,11 +211,11 @@ struct MTReportServerInfo
   {
    wchar_t           platform_name[64];               // platform name
    wchar_t           platform_owner[128];             // platform owner
-   UINT              server_version;                  // server version
-   UINT              server_build;                    // server build
-   UINT              server_type;                     // server type
-   UINT64            server_id;                       // server id
-   UINT              reserved[32];                    // reserved
+   uint32_t          server_version;                  // server version
+   uint32_t          server_build;                    // server build
+   uint32_t          server_type;                     // server type
+   uint64_t          server_id;                       // server id
+   uint32_t          reserved[32];                    // reserved
   };
 #pragma pack(pop)
 
@@ -240,33 +257,33 @@ public:
    virtual LPCWSTR   Title(void) const=0;
    virtual MTAPIRES  Title(LPCWSTR title)=0;
    //--- type
-   virtual UINT      Type(void) const=0;
-   virtual MTAPIRES  Type(const UINT type)=0;
+   virtual uint32_t  Type(void) const=0;
+   virtual MTAPIRES  Type(uint32_t type)=0;
    //--- flags IMTReportSeries::EnSeriesFlags
-   virtual UINT64    Flags(void) const=0;
-   virtual MTAPIRES  Flags(const UINT64 flags)=0;
+   virtual uint64_t  Flags(void) const=0;
+   virtual MTAPIRES  Flags(uint64_t flags)=0;
    //--- color
-   virtual UINT      Color(void) const=0;
-   virtual MTAPIRES  Color(const UINT color)=0;
+   virtual uint32_t  Color(void) const=0;
+   virtual MTAPIRES  Color(uint32_t color)=0;
    //--- tooltip format
    virtual LPCWSTR   Tooltip(void) const=0;
    virtual MTAPIRES  Tooltip(LPCWSTR tooltip)=0;
    //--- values management
    virtual MTAPIRES  ValueClear(void)=0;
-   virtual UINT      ValueTotal(void) const=0;
+   virtual uint32_t  ValueTotal(void) const=0;
    virtual MTAPIRES  ValueAdd(LPCWSTR value)=0;
-   virtual MTAPIRES  ValueAddInt(const INT64 value)=0;
-   virtual MTAPIRES  ValueAddDouble(const double value)=0;
-   virtual MTAPIRES  ValueUpdate(const UINT pos,LPCWSTR value)=0;
-   virtual MTAPIRES  ValueUpdateInt(const UINT pos,const INT64 value)=0;
-   virtual MTAPIRES  ValueUpdateDouble(const UINT pos,const double value)=0;
-   virtual LPCWSTR   ValueNext(const UINT pos) const=0;
-   virtual MTAPIRES  ValueNextInt(const UINT pos,INT64& value) const=0;
-   virtual MTAPIRES  ValueNextDouble(const UINT pos,double& value) const=0;
-   virtual MTAPIRES  ValueShift(const UINT pos,const int shift)=0;
-   virtual MTAPIRES  ValueDelete(const UINT pos)=0;
-   virtual MTAPIRES  ValueDescription(const UINT pos,LPCWSTR descr)=0;
-   virtual LPCWSTR   ValueDescription(const UINT pos) const=0;
+   virtual MTAPIRES  ValueAddInt(int64_t value)=0;
+   virtual MTAPIRES  ValueAddDouble(double value)=0;
+   virtual MTAPIRES  ValueUpdate(uint32_t pos,LPCWSTR value)=0;
+   virtual MTAPIRES  ValueUpdateInt(uint32_t pos,int64_t value)=0;
+   virtual MTAPIRES  ValueUpdateDouble(uint32_t pos,double value)=0;
+   virtual LPCWSTR   ValueNext(uint32_t pos) const=0;
+   virtual MTAPIRES  ValueNextInt(uint32_t pos,int64_t& value) const=0;
+   virtual MTAPIRES  ValueNextDouble(uint32_t pos,double& value) const=0;
+   virtual MTAPIRES  ValueShift(uint32_t pos,int32_t shift)=0;
+   virtual MTAPIRES  ValueDelete(uint32_t pos)=0;
+   virtual MTAPIRES  ValueDescription(uint32_t pos,LPCWSTR descr)=0;
+   virtual LPCWSTR   ValueDescription(uint32_t pos) const=0;
    //--- explicit destructor is prohibited
 protected:
                     ~IMTReportSeries(void) {}
@@ -312,17 +329,17 @@ public:
    virtual LPCWSTR   Title(void) const=0;
    virtual MTAPIRES  Title(LPCWSTR title)=0;
    //--- type
-   virtual UINT      Type(void) const=0;
-   virtual MTAPIRES  Type(const UINT type)=0;
+   virtual uint32_t  Type(void) const=0;
+   virtual MTAPIRES  Type(uint32_t type)=0;
    //--- digits
-   virtual UINT      Digits(void) const=0;
-   virtual MTAPIRES  Digits(const UINT digits)=0;
+   virtual uint32_t  Digits(void) const=0;
+   virtual MTAPIRES  Digits(uint32_t digits)=0;
    //--- flags
-   virtual UINT64    Flags(void) const=0;
-   virtual MTAPIRES  Flags(const UINT64 flags)=0;
+   virtual uint64_t  Flags(void) const=0;
+   virtual MTAPIRES  Flags(uint64_t flags)=0;
    //--- bar height
-   virtual UINT      BarHeight(void) const=0;
-   virtual MTAPIRES  BarHeight(const UINT height)=0;
+   virtual uint32_t  BarHeight(void) const=0;
+   virtual MTAPIRES  BarHeight(uint32_t height)=0;
    //--- piece tooltip format
    virtual LPCWSTR   PieceTooltip(void)=0;
    virtual MTAPIRES  PieceTooltip(LPCWSTR tooltip)=0;
@@ -333,12 +350,12 @@ public:
    virtual MTAPIRES  SeriesClear(void)=0;
    virtual MTAPIRES  SeriesAdd(IMTReportSeries *series)=0;
    virtual MTAPIRES  SeriesAddCopy(const IMTReportSeries *series)=0;
-   virtual MTAPIRES  SeriesDelete(const UINT pos)=0;
-   virtual IMTReportSeries* SeriesDetach(const UINT pos)=0;
-   virtual MTAPIRES  SeriesUpdate(const UINT pos,IMTReportSeries* series)=0;
-   virtual MTAPIRES  SeriesShift(const UINT pos,const int shift)=0;
-   virtual UINT      SeriesTotal(void) const=0;
-   virtual IMTReportSeries* SeriesNext(const UINT pos)=0;
+   virtual MTAPIRES  SeriesDelete(uint32_t pos)=0;
+   virtual IMTReportSeries* SeriesDetach(uint32_t pos)=0;
+   virtual MTAPIRES  SeriesUpdate(uint32_t pos,IMTReportSeries* series)=0;
+   virtual MTAPIRES  SeriesShift(uint32_t pos,int32_t shift)=0;
+   virtual uint32_t  SeriesTotal(void) const=0;
+   virtual IMTReportSeries* SeriesNext(uint32_t pos)=0;
    //--- explicit destructor is prohibited
 protected:
                     ~IMTReportChart(void) {}
@@ -354,16 +371,16 @@ public:
    virtual MTAPIRES  Clear(void)=0;
    //--- HTML management
    virtual MTAPIRES  Write(LPCWSTR format,...)=0;
-   virtual MTAPIRES  WriteSafe(LPCWSTR html,const UINT flags)=0;
+   virtual MTAPIRES  WriteSafe(LPCWSTR html,uint32_t flags)=0;
    virtual MTAPIRES  WriteChart(const IMTReportChart *chart)=0;
    virtual MTAPIRES  WriteString(LPCWSTR html)=0;
    virtual MTAPIRES  WriteReserved2(void)=0;
    //--- html template processing
    virtual MTAPIRES  TplLoad(LPCWSTR templstr)=0;
    virtual MTAPIRES  TplLoadFile(LPCWSTR templname)=0;
-   virtual MTAPIRES  TplLoadResource(const UINT resid,LPCWSTR restype)=0;
-   virtual MTAPIRES  TplNext(MTAPISTR& tag,UINT *counter)=0;
-   virtual MTAPIRES  TplProcess(const UINT flags)=0;
+   virtual MTAPIRES  TplLoadResource(uint32_t resid,LPCWSTR restype)=0;
+   virtual MTAPIRES  TplNext(MTAPISTR& tag,uint32_t *counter)=0;
+   virtual MTAPIRES  TplProcess(uint32_t flags)=0;
    virtual MTAPIRES  TplReserved1(void)=0;
    virtual MTAPIRES  TplReserved2(void)=0;
   };
@@ -377,31 +394,38 @@ public:
    enum EnWidgetType
      {
       //--- charts
-      WIDGET_TYPE_CHART_BAR   =0,                   // bar chart
-      WIDGET_TYPE_CHART_LINE  =1,                   // line chart
-      WIDGET_TYPE_CHART_AREA  =2,                   // area chart
-      WIDGET_TYPE_CHART_PIE   =3,                   // pie chart
-      WIDGET_TYPE_CHART_SPLINE=4,                   // spline chart
-      WIDGET_TYPE_CHART_AREA_SPLINE=5,              // area spline chart
-      WIDGET_TYPE_CHART_GEO   =6,                   // geo chart
+      WIDGET_TYPE_CHART_BAR    =0,                    // bar chart
+      WIDGET_TYPE_CHART_LINE   =1,                    // line chart
+      WIDGET_TYPE_CHART_AREA   =2,                    // area chart
+      WIDGET_TYPE_CHART_PIE    =3,                    // pie chart
+      WIDGET_TYPE_CHART_SPLINE =4,                    // spline chart
+      WIDGET_TYPE_CHART_AREA_SPLINE=5,                // area spline chart
+      WIDGET_TYPE_CHART_GEO    =6,                    // geo chart
       //--- 
-      WIDGET_TYPE_VALUE       =100,                 // single value
-      WIDGET_TYPE_TABLE       =101,                 // table
-      WIDGET_TYPE_HTML        =102,                 // HTML
+      WIDGET_TYPE_VALUE        =100,                  // single value
+      WIDGET_TYPE_TABLE        =101,                  // table
+      WIDGET_TYPE_HTML         =102,                  // HTML
+      //--- containers
+      WIDGET_TYPE_TABS         =200,                  // tabbed widget container
       //--- enumeration borders
-      WIDGET_TYPE_FIRST       =WIDGET_TYPE_CHART_BAR,
-      WIDGET_TYPE_LAST        =WIDGET_TYPE_HTML
+      WIDGET_TYPE_FIRST        =WIDGET_TYPE_CHART_BAR,
+      WIDGET_TYPE_LAST         =WIDGET_TYPE_TABS
+     };
+   //--- widget limits
+   enum EnWidgetLimits
+     {
+      WIDGET_DEPTH_MAX         =4                      // maximum widget tree depth
      };
    //--- chart stack type
    enum EnChartStackType
      {
-      CHART_STACK_NONE        =0,                     // no stack chart
-      CHART_STACK_SIMPLE      =1,                     // simple stack chart
-      CHART_STACK_ACCUMULATION=2,                     // accumulation stack chart
-      CHART_STACK_NORMALIZED  =3,                     // normalized stack chart
+      CHART_STACK_NONE         =0,                    // no stack chart
+      CHART_STACK_SIMPLE       =1,                    // simple stack chart
+      CHART_STACK_ACCUMULATION =2,                    // accumulation stack chart
+      CHART_STACK_NORMALIZED   =3,                    // normalized stack chart
       //--- enumeration borders
-      CHART_STACK_FIRST       =CHART_STACK_NONE,
-      CHART_STACK_LAST        =CHART_STACK_NORMALIZED
+      CHART_STACK_FIRST        =CHART_STACK_NONE,
+      CHART_STACK_LAST         =CHART_STACK_NORMALIZED
      };
    //--- chart value axis type
    enum EnChartValueAxis
@@ -409,21 +433,42 @@ public:
       CHART_VALUE_AXIS_ABSOLUTE=0,                    // absolute value axis
       CHART_VALUE_AXIS_RELATIVE=1,                    // relative value axis
       //--- enumeration borders
-      CHART_VALUE_AXIS_FIRST  =CHART_VALUE_AXIS_ABSOLUTE,
-      CHART_VALUE_AXIS_LAST   =CHART_VALUE_AXIS_RELATIVE
+      CHART_VALUE_AXIS_FIRST   =CHART_VALUE_AXIS_ABSOLUTE,
+      CHART_VALUE_AXIS_LAST    =CHART_VALUE_AXIS_RELATIVE
+     };
+   //--- chart value axis type
+   enum EnChartCategoryAxis
+     {
+      CHART_CATEGORY_AXIS_LINEAR   =0,                // linear category axis
+      CHART_CATEGORY_AXIS_LOGARITHM=1,                // logarithmic category axis
+      //--- enumeration borders
+      CHART_CATEGORY_AXIS_FIRST    =CHART_CATEGORY_AXIS_LINEAR,
+      CHART_CATEGORY_AXIS_LAST     =CHART_CATEGORY_AXIS_LOGARITHM
      };
    //--- flags
    enum EnWidgetFlags
      {
-      WIDGET_FLAG_NONE        =0x00000000,            // no flags
-      WIDGET_FLAG_AUTO_WIDTH  =0x00000001,            // auto width
-      WIDGET_FLAG_AUTO_HEIGHT =0x00000002,            // auto height
-      WIDGET_FLAG_AUTO_TOP    =0x00000004,            // auto top
-      WIDGET_FLAG_AUTO_LEFT   =0x00000008,            // auto left
-      WIDGET_FLAG_HIDE_ZEROES =0x00000100,            // hide zero values from chart
+      WIDGET_FLAG_NONE         =0x00000000,           // no flags
+      WIDGET_FLAG_AUTO_WIDTH   =0x00000001,           // auto width
+      WIDGET_FLAG_AUTO_HEIGHT  =0x00000002,           // auto height
+      WIDGET_FLAG_AUTO_TOP     =0x00000004,           // auto top
+      WIDGET_FLAG_AUTO_LEFT    =0x00000008,           // auto left
+      WIDGET_FLAG_HIDE_ZEROES  =0x00000100,           // hide zero values from chart
       //--- enumeration borders
-      WIDGET_FLAG_DEFAULT     =WIDGET_FLAG_AUTO_WIDTH|WIDGET_FLAG_AUTO_HEIGHT|WIDGET_FLAG_AUTO_TOP|WIDGET_FLAG_AUTO_LEFT,
-      WIDGET_FLAG_ALL         =WIDGET_FLAG_AUTO_WIDTH|WIDGET_FLAG_AUTO_HEIGHT|WIDGET_FLAG_AUTO_TOP|WIDGET_FLAG_AUTO_LEFT
+      WIDGET_FLAG_DEFAULT      =WIDGET_FLAG_AUTO_WIDTH|WIDGET_FLAG_AUTO_HEIGHT|WIDGET_FLAG_AUTO_TOP|WIDGET_FLAG_AUTO_LEFT,
+      WIDGET_FLAG_ALL          =WIDGET_FLAG_AUTO_WIDTH|WIDGET_FLAG_AUTO_HEIGHT|WIDGET_FLAG_AUTO_TOP|WIDGET_FLAG_AUTO_LEFT
+     };
+   //--- geo chart widget colors
+   enum EnChartGeoColors
+     {
+      CHART_GEO_COLOR_BLUE     =0,                    // blue (default)
+      CHART_GEO_COLOR_ORANGE   =1,                    // orange
+      CHART_GEO_COLOR_RED      =2,                    // red
+      CHART_GEO_COLOR_PURPLE   =3,                    // purple
+      CHART_GEO_COLOR_DARK_BLUE=4,                    // dark blue
+      //--- enumeration borders
+      CHART_GEO_COLOR_FIRST    =CHART_GEO_COLOR_BLUE,
+      CHART_GEO_COLOR_LAST     =CHART_GEO_COLOR_DARK_BLUE
      };
    //--- common methods
    virtual MTAPIRES  Assign(const IMTReportDashboardWidget *widget)=0;
@@ -432,32 +477,32 @@ public:
    virtual LPCWSTR   Title(void) const=0;
    virtual MTAPIRES  Title(LPCWSTR title)=0;
    //--- type
-   virtual UINT      Type(void) const=0;
-   virtual MTAPIRES  Type(const UINT type)=0;
+   virtual uint32_t  Type(void) const=0;
+   virtual MTAPIRES  Type(uint32_t type)=0;
    //--- chart stack type
-   virtual UINT      ChartStackType(void) const=0;
-   virtual MTAPIRES  ChartStackType(const UINT stack_type)=0;
+   virtual uint32_t  ChartStackType(void) const=0;
+   virtual MTAPIRES  ChartStackType(uint32_t stack_type)=0;
    //--- flags
-   virtual UINT64    Flags(void) const=0;
-   virtual MTAPIRES  Flags(const UINT64 flags)=0;
+   virtual uint64_t  Flags(void) const=0;
+   virtual MTAPIRES  Flags(uint64_t flags)=0;
    //--- widget width
-   virtual UINT      Width(void) const=0;
-   virtual MTAPIRES  Width(const UINT width)=0;
+   virtual uint32_t  Width(void) const=0;
+   virtual MTAPIRES  Width(uint32_t width)=0;
    //--- widget height
-   virtual UINT      Height(void) const=0;
-   virtual MTAPIRES  Height(const UINT height)=0;
+   virtual uint32_t  Height(void) const=0;
+   virtual MTAPIRES  Height(uint32_t height)=0;
    //--- widget left edge position
-   virtual UINT      Left(void) const=0;
-   virtual MTAPIRES  Left(const UINT left)=0;
+   virtual uint32_t  Left(void) const=0;
+   virtual MTAPIRES  Left(uint32_t left)=0;
    //--- widget top edge position
-   virtual UINT      Top(void) const=0;
-   virtual MTAPIRES  Top(const UINT top)=0;
+   virtual uint32_t  Top(void) const=0;
+   virtual MTAPIRES  Top(uint32_t top)=0;
    //--- description
    virtual LPCWSTR   Description(void) const=0;
    virtual MTAPIRES  Description(LPCWSTR description)=0;
    //--- chart value axis
-   virtual UINT      ChartValueAxis(void) const=0;
-   virtual MTAPIRES  ChartValueAxis(const UINT value_axis)=0;
+   virtual uint32_t  ChartValueAxis(void) const=0;
+   virtual MTAPIRES  ChartValueAxis(uint32_t value_axis)=0;
    //--- HTML
    virtual IMTReportDashboardHtml* Html(void)=0;
    virtual MTAPIRES  Html(IMTReportDashboardHtml *html)=0;
@@ -465,15 +510,25 @@ public:
    virtual IMTDataset* Data(void)=0;
    virtual MTAPIRES  Data(IMTDataset *data_set)=0;
    //--- title column
-   virtual UINT      DataColumnTitle(void) const=0;
-   virtual MTAPIRES  DataColumnTitle(const UINT column_id)=0;
+   virtual uint32_t  DataColumnTitle(void) const=0;
+   virtual MTAPIRES  DataColumnTitle(uint32_t column_id)=0;
    //--- data set column management
    virtual MTAPIRES  DataColumnClear(void)=0;
-   virtual MTAPIRES  DataColumnAdd(const UINT column_id)=0;
-   virtual MTAPIRES  DataColumnDelete(const UINT pos)=0;
-   virtual MTAPIRES  DataColumnShift(const UINT pos,const int shift)=0;
-   virtual UINT      DataColumnTotal(void) const=0;
-   virtual const UINT* DataColumnNext(const UINT pos) const=0;
+   virtual MTAPIRES  DataColumnAdd(uint32_t column_id)=0;
+   virtual MTAPIRES  DataColumnDelete(uint32_t pos)=0;
+   virtual MTAPIRES  DataColumnShift(uint32_t pos,int32_t shift)=0;
+   virtual uint32_t  DataColumnTotal(void) const=0;
+   virtual const uint32_t* DataColumnNext(uint32_t pos) const=0;
+   //--- chart category axis
+   virtual uint32_t  ChartCategoryAxis(void) const=0;
+   virtual MTAPIRES  ChartCategoryAxis(uint32_t category_axis)=0;
+   //--- child widget management
+   virtual IMTReportDashboardWidget* WidgetAppend(void)=0;
+   virtual MTAPIRES  WidgetClear(void)=0;
+   virtual MTAPIRES  WidgetDelete(uint32_t pos)=0;
+   virtual MTAPIRES  WidgetShift(uint32_t pos,int32_t shift)=0;
+   virtual uint32_t  WidgetTotal(void) const=0;
+   virtual IMTReportDashboardWidget* WidgetNext(uint32_t pos)=0;
    //--- explicit destructor is prohibited
 protected:
                     ~IMTReportDashboardWidget(void) {}
@@ -491,24 +546,24 @@ public:
    //--- swap with keyset
    virtual MTAPIRES  Swap(IMTReportCacheKeySet *keyset)=0;
    //--- total keys in set
-   virtual UINT      Total(void) const=0;
+   virtual uint32_t  Total(void) const=0;
    //--- pointer to keys sorted array
-   virtual const UINT64* Array(void) const=0;
+   virtual const uint64_t* Array(void) const=0;
    //--- iterate sorted keys in array
-   virtual const UINT64* Next(const UINT64 *key) const=0;
+   virtual const uint64_t* Next(const uint64_t *key) const=0;
    //--- search key
-   virtual const UINT64* Search(const UINT64 key) const=0;
+   virtual const uint64_t* Search(uint64_t key) const=0;
    //--- check all keys from passed set present
    virtual MTAPIRES  ContainsSet(const IMTReportCacheKeySet *keyset) const=0;
    //--- reserve memory for keys
-   virtual MTAPIRES  Reserve(const UINT total)=0;
+   virtual MTAPIRES  Reserve(uint32_t total)=0;
    //--- insert keys
-   virtual MTAPIRES  Insert(const UINT64 key)=0;
-   virtual MTAPIRES  InsertArray(const UINT64 *keys,const UINT total)=0;
+   virtual MTAPIRES  Insert(uint64_t key)=0;
+   virtual MTAPIRES  InsertArray(const uint64_t *keys,uint32_t total)=0;
    virtual MTAPIRES  InsertSet(const IMTReportCacheKeySet *keyset)=0;
    //--- remove keys
-   virtual MTAPIRES  Remove(const UINT64 key)=0;
-   virtual MTAPIRES  RemoveArray(const UINT64 *keys,const UINT total)=0;
+   virtual MTAPIRES  Remove(uint64_t key)=0;
+   virtual MTAPIRES  RemoveArray(const uint64_t *keys,uint32_t total)=0;
    virtual MTAPIRES  RemoveSet(const IMTReportCacheKeySet *keyset)=0;
    //--- explicit destructor is prohibited
 protected:
@@ -527,10 +582,10 @@ public:
    //--- release interface
    virtual void      Release(void)=0;
    //--- key
-   virtual UINT64    Key(void) const=0;
+   virtual uint64_t  Key(void) const=0;
    //--- data
    virtual const void* Data(void) const=0;
-   virtual UINT      Size(void) const=0;
+   virtual uint32_t  Size(void) const=0;
    //--- iterate to next value
    virtual MTAPIRES  Next(void)=0;
    //--- explicit destructor is prohibited
@@ -548,43 +603,43 @@ public:
    //--- name
    virtual LPCWSTR   Name(void) const=0;
    //--- last generation time
-   virtual INT64     TimeLastWrite(void) const=0;
+   virtual int64_t   TimeLastWrite(void) const=0;
    //--- create value object
    virtual IMTReportCacheValue* ValueCreate(void) const=0;
    //--- read begin/end
    virtual MTAPIRES  ReadBegin(void)=0;
    virtual MTAPIRES  ReadEnd(void)=0;
    //--- read parameters
-   virtual INT64     ReadParamFrom(void) const=0;
-   virtual INT64     ReadParamTo(void) const=0;
+   virtual int64_t   ReadParamFrom(void) const=0;
+   virtual int64_t   ReadParamTo(void) const=0;
    virtual LPCWSTR   ReadParamString(void) const=0;
-   virtual const void* ReadParamData(UINT &size) const=0;
+   virtual const void* ReadParamData(uint32_t &size) const=0;
    virtual MTAPIRES  ReadParamKeySet(IMTReportCacheKeySet *keys) const=0;
    //--- read value by key
-   virtual MTAPIRES  ReadValue(const UINT64 key,IMTReportCacheValue *value) const=0;
+   virtual MTAPIRES  ReadValue(uint64_t key,IMTReportCacheValue *value) const=0;
    //--- read multiple values by key set
    virtual MTAPIRES  ReadValues(const IMTReportCacheKeySet *keys,IMTReportCacheValue *value) const=0;
    //--- get keys from set that missing in cache
    virtual MTAPIRES  ReadMissingKeys(const IMTReportCacheKeySet *keys,IMTReportCacheKeySet *missing_keys) const=0;
    //--- get string position in dictionary
-   virtual MTAPIRES  ReadDictionaryPos(const UINT dictionary_id,LPCWSTR string,UINT &pos) const=0;
+   virtual MTAPIRES  ReadDictionaryPos(uint32_t dictionary_id,LPCWSTR string,uint32_t &pos) const=0;
    //--- get string from dictionary by position
-   virtual MTAPIRES  ReadDictionaryString(const UINT dictionary_id,const UINT pos,LPCWSTR &string) const=0;
+   virtual MTAPIRES  ReadDictionaryString(uint32_t dictionary_id,uint32_t pos,LPCWSTR &string) const=0;
    //--- write begin/end
    virtual MTAPIRES  WriteBegin(void)=0;
    virtual MTAPIRES  WriteEnd(bool apply)=0;
    //--- write parameters
-   virtual MTAPIRES  WriteParamFrom(const INT64 from)=0;
-   virtual MTAPIRES  WriteParamTo(const INT64 to)=0;
+   virtual MTAPIRES  WriteParamFrom(int64_t from)=0;
+   virtual MTAPIRES  WriteParamTo(int64_t to)=0;
    virtual MTAPIRES  WriteParamString(LPCWSTR param)=0;
-   virtual MTAPIRES  WriteParamData(const void *data,const UINT size)=0;
-   virtual MTAPIRES  WriteParamKeySet(const IMTReportCacheKeySet *keys,const bool merge)=0;
+   virtual MTAPIRES  WriteParamData(const void *data,uint32_t size)=0;
+   virtual MTAPIRES  WriteParamKeySet(const IMTReportCacheKeySet *keys,bool merge)=0;
    //--- write value by key
-   virtual MTAPIRES  WriteValue(const UINT64 key,const void *value,const UINT size)=0;
+   virtual MTAPIRES  WriteValue(uint64_t key,const void *value,uint32_t size)=0;
    //--- write empty value for keys from set that missing in cache
    virtual MTAPIRES  WriteMissingKeys(const IMTReportCacheKeySet *keys)=0;
    //--- write new string to dictionary or get existing string position
-   virtual MTAPIRES  WriteDictionaryString(const UINT dictionary_id,LPCWSTR string,UINT &pos)=0;
+   virtual MTAPIRES  WriteDictionaryString(uint32_t dictionary_id,LPCWSTR string,uint32_t &pos)=0;
    //--- explicit destructor is prohibited
 protected:
                     ~IMTReportCache(void) {}
@@ -618,7 +673,7 @@ public:
    //--- license check
    virtual MTAPIRES  LicenseCheck(LPCWSTR license_name)=0;
    //--- memory management
-   virtual void*     Allocate(const UINT size)=0;
+   virtual void*     Allocate(uint32_t size)=0;
    virtual void      Free(void* ptr)=0;
    //--- clear result
    virtual MTAPIRES  Clear(void)=0;
@@ -637,45 +692,45 @@ public:
    virtual MTAPIRES  IsReserved5(void)=0;
    virtual MTAPIRES  IsReserved6(void)=0;
    //--- server log functions
-   virtual MTAPIRES  LoggerOut(const UINT code,LPCWSTR msg,...)=0;
-   virtual MTAPIRES  LoggerRequest(const UINT mode,const UINT type,const INT64 from,const INT64 to,LPCWSTR filter,MTLogRecord*& records,UINT& records_total)=0;
+   virtual MTAPIRES  LoggerOut(uint32_t code,LPCWSTR msg,...)=0;
+   virtual MTAPIRES  LoggerRequest(uint32_t mode,uint32_t type,int64_t from,int64_t to,LPCWSTR filter,MTLogRecord*& records,uint32_t& records_total)=0;
    virtual void      LoggerFlush(void)=0;
-   virtual MTAPIRES  LoggerOutString(const UINT code,LPCWSTR string)=0;
+   virtual MTAPIRES  LoggerOutString(uint32_t code,LPCWSTR string)=0;
    virtual MTAPIRES  LoggerReserved2(void)=0;
    virtual MTAPIRES  LoggerReserved3(void)=0;
    virtual MTAPIRES  LoggerReserved4(void)=0;
    //--- report parameters
    virtual IMTConParam* ParamCreate(void)=0;
-   virtual UINT      ParamTotal(void)=0;
+   virtual uint32_t  ParamTotal(void)=0;
    virtual MTAPIRES  ParamGet(LPCWSTR name,IMTConParam *param)=0;
-   virtual MTAPIRES  ParamNext(const UINT pos,IMTConParam *param)=0;
+   virtual MTAPIRES  ParamNext(uint32_t pos,IMTConParam *param)=0;
    virtual MTAPIRES  ParamReserved1(void)=0;
    virtual MTAPIRES  ParamReserved2(void)=0;
    virtual MTAPIRES  ParamReserved3(void)=0;
    virtual MTAPIRES  ParamReserved4(void)=0;
    //--- report parameters helpers
-   virtual MTAPIRES  ParamLogins(UINT64*& logins,UINT& total)=0;
-   virtual INT64     ParamFrom(void)=0;
-   virtual INT64     ParamTo(void)=0;
+   virtual MTAPIRES  ParamLogins(uint64_t*& logins,uint32_t& total)=0;
+   virtual int64_t   ParamFrom(void)=0;
+   virtual int64_t   ParamTo(void)=0;
    virtual LPCWSTR   ParamGroups(void)=0;
    virtual LPCWSTR   ParamSymbols(void)=0;
-   virtual UINT      ParamIEVersion(void)=0;
-   virtual UINT      ParamScreenWidth(void)=0;
-   virtual UINT      ParamScreenHeight(void)=0;
+   virtual uint32_t  ParamIEVersion(void)=0;
+   virtual uint32_t  ParamScreenWidth(void)=0;
+   virtual uint32_t  ParamScreenHeight(void)=0;
    virtual MTAPIRES  ParamHelperReserved1(void)=0;
    virtual MTAPIRES  ParamHelperReserved2(void)=0;
    virtual MTAPIRES  ParamHelperReserved3(void)=0;
    virtual MTAPIRES  ParamHelperReserved4(void)=0;
    //--- HTML management
    virtual MTAPIRES  HtmlWrite(LPCWSTR format,...)=0;
-   virtual MTAPIRES  HtmlWriteSafe(LPCWSTR html,const UINT flags)=0;
+   virtual MTAPIRES  HtmlWriteSafe(LPCWSTR html,uint32_t flags)=0;
    virtual MTAPIRES  HtmlWriteString(LPCWSTR html)=0;
    virtual MTAPIRES  HtmlWriteReserved2(void)=0;
    virtual MTAPIRES  HtmlTplLoad(LPCWSTR templstr)=0;
    virtual MTAPIRES  HtmlTplLoadFile(LPCWSTR templname)=0;
-   virtual MTAPIRES  HtmlTplLoadResource(const UINT resid,LPCWSTR restype)=0;
-   virtual MTAPIRES  HtmlTplNext(MTAPISTR& tag,UINT *counter)=0;
-   virtual MTAPIRES  HtmlTplProcess(const UINT flags)=0;
+   virtual MTAPIRES  HtmlTplLoadResource(uint32_t resid,LPCWSTR restype)=0;
+   virtual MTAPIRES  HtmlTplNext(MTAPISTR& tag,uint32_t *counter)=0;
+   virtual MTAPIRES  HtmlTplProcess(uint32_t flags)=0;
    virtual MTAPIRES  HtmlTplReserved1(void)=0;
    virtual MTAPIRES  HtmlTplReserved2(void)=0;
    virtual MTAPIRES  HtmlReserved1(void)=0;
@@ -686,25 +741,25 @@ public:
    virtual IMTDatasetColumn* TableColumnCreate(void)=0;
    virtual MTAPIRES  TableColumnClear(void)=0;
    virtual MTAPIRES  TableColumnAdd(const IMTDatasetColumn *column)=0;
-   virtual MTAPIRES  TableColumnDelete(const UINT pos)=0;
-   virtual UINT      TableColumnTotal(void)=0;
-   virtual UINT      TableColumnSize(void)=0;
-   virtual MTAPIRES  TableColumnNext(const UINT pos,IMTDatasetColumn *column)=0;
+   virtual MTAPIRES  TableColumnDelete(uint32_t pos)=0;
+   virtual uint32_t  TableColumnTotal(void)=0;
+   virtual uint32_t  TableColumnSize(void)=0;
+   virtual MTAPIRES  TableColumnNext(uint32_t pos,IMTDatasetColumn *column)=0;
    virtual MTAPIRES  TableColumnReserved1(void)=0;
    virtual MTAPIRES  TableColumnReserved2(void)=0;
    //--- table row management
    virtual MTAPIRES  TableRowClear(void)=0;
-   virtual MTAPIRES  TableRowWrite(const void *data,const UINT size)=0;
-   virtual UINT      TableRowTotal(void)=0;
+   virtual MTAPIRES  TableRowWrite(const void *data,uint32_t size)=0;
+   virtual uint32_t  TableRowTotal(void)=0;
    virtual MTAPIRES  TableRowReserved1(void)=0;
    virtual MTAPIRES  TableRowReserved2(void)=0;
    //--- table summary management
    virtual IMTDatasetSummary* TableSummaryCreate(void)=0;
    virtual MTAPIRES  TableSummaryClear(void)=0;
    virtual MTAPIRES  TableSummaryAdd(const IMTDatasetSummary *summary)=0;
-   virtual MTAPIRES  TableSummaryDelete(const UINT pos)=0;
-   virtual MTAPIRES  TableSummaryNext(const UINT pos,IMTDatasetSummary *summary)=0;
-   virtual UINT      TableSummaryTotal(void)=0;
+   virtual MTAPIRES  TableSummaryDelete(uint32_t pos)=0;
+   virtual MTAPIRES  TableSummaryNext(uint32_t pos,IMTDatasetSummary *summary)=0;
+   virtual uint32_t  TableSummaryTotal(void)=0;
    virtual MTAPIRES  TableSummaryReserved1(void)=0;
    virtual MTAPIRES  TableSummaryReserved2(void)=0;
    virtual MTAPIRES  TableSummaryReserved3(void)=0;
@@ -740,17 +795,17 @@ public:
    //--- network configuration
    virtual IMTConServer* NetServerCreate(void)=0;
    virtual IMTConServerRange* NetServerRangeCreate(void)=0;
-   virtual UINT      NetServerTotal(void)=0;
-   virtual MTAPIRES  NetServerNext(const UINT pos,IMTConServer *server)=0;
-   virtual MTAPIRES  NetServerGet(const UINT64 id,IMTConServer *server)=0;
+   virtual uint32_t  NetServerTotal(void)=0;
+   virtual MTAPIRES  NetServerNext(uint32_t pos,IMTConServer *server)=0;
+   virtual MTAPIRES  NetServerGet(uint64_t id,IMTConServer *server)=0;
    virtual MTAPIRES  NetServerReserved1(void)=0;
    virtual MTAPIRES  NetServerReserved2(void)=0;
    virtual MTAPIRES  NetServerReserved3(void)=0;
    virtual MTAPIRES  NetServerReserved4(void)=0;
    //--- time configuration
    virtual IMTConTime* TimeCreate(void)=0;
-   virtual INT64     TimeCurrent(void)=0;
-   virtual INT64     TimeGeneration(void)=0;
+   virtual int64_t   TimeCurrent(void)=0;
+   virtual int64_t   TimeGeneration(void)=0;
    virtual MTAPIRES  TimeGet(IMTConTime *time)=0;
    virtual MTAPIRES  TimeReserved1(void)=0;
    virtual MTAPIRES  TimeReserved2(void)=0;
@@ -758,8 +813,8 @@ public:
    virtual MTAPIRES  TimeReserved4(void)=0;
    //--- holiday configuration
    virtual IMTConHoliday* HolidayCreate()=0;
-   virtual UINT      HolidayTotal(void)=0;
-   virtual MTAPIRES  HolidayNext(const UINT pos,IMTConHoliday *holiday)=0;
+   virtual uint32_t  HolidayTotal(void)=0;
+   virtual MTAPIRES  HolidayNext(uint32_t pos,IMTConHoliday *holiday)=0;
    virtual MTAPIRES  HolidayReserved1(void)=0;
    virtual MTAPIRES  HolidayReserved2(void)=0;
    virtual MTAPIRES  HolidayReserved3(void)=0;
@@ -769,8 +824,8 @@ public:
    virtual IMTConGroupSymbol* GroupSymbolCreate(void)=0;
    virtual IMTConCommission* GroupCommissionCreate(void)=0;
    virtual IMTConCommTier* GroupTierCreate(void)=0;
-   virtual UINT      GroupTotal(void)=0;
-   virtual MTAPIRES  GroupNext(const UINT pos,IMTConGroup *group)=0;
+   virtual uint32_t  GroupTotal(void)=0;
+   virtual MTAPIRES  GroupNext(uint32_t pos,IMTConGroup *group)=0;
    virtual MTAPIRES  GroupGet(LPCWSTR name,IMTConGroup *group)=0;
    virtual MTAPIRES  GroupGetLight(LPCWSTR name,IMTConGroup *group)=0;
    virtual MTAPIRES  GroupReserved1(void)=0;
@@ -780,8 +835,8 @@ public:
    //--- symbols configuration
    virtual IMTConSymbol* SymbolCreate(void)=0;
    virtual IMTConSymbolSession* SymbolSessionCreate(void)=0;
-   virtual UINT      SymbolTotal(void)=0;
-   virtual MTAPIRES  SymbolNext(const UINT pos,IMTConSymbol *symbol)=0;
+   virtual uint32_t  SymbolTotal(void)=0;
+   virtual MTAPIRES  SymbolNext(uint32_t pos,IMTConSymbol *symbol)=0;
    virtual MTAPIRES  SymbolGet(LPCWSTR name,IMTConSymbol *symbol)=0;
    virtual MTAPIRES  SymbolGetLight(LPCWSTR name,IMTConSymbol *symbol)=0;
    virtual MTAPIRES  SymbolGet(LPCWSTR name,const IMTConGroup *group,IMTConSymbol *symbol)=0;
@@ -794,9 +849,9 @@ public:
    virtual IMTConManager* ManagerCreate(void)=0;
    virtual IMTConManagerAccess* ManagerAccessCreate(void)=0;
    virtual MTAPIRES  ManagerCurrent(IMTConManager *manager)=0;
-   virtual UINT      ManagerTotal(void)=0;
-   virtual MTAPIRES  ManagerNext(const UINT pos,IMTConManager *manager)=0;
-   virtual MTAPIRES  ManagerGet(const UINT64 login,IMTConManager *manager)=0;
+   virtual uint32_t  ManagerTotal(void)=0;
+   virtual MTAPIRES  ManagerNext(uint32_t pos,IMTConManager *manager)=0;
+   virtual MTAPIRES  ManagerGet(uint64_t login,IMTConManager *manager)=0;
    virtual IMTConManagerReport* ManagerReportCreate(void)=0;
    virtual MTAPIRES  ManagerReserved2(void)=0;
    virtual MTAPIRES  ManagerReserved3(void)=0;
@@ -804,10 +859,10 @@ public:
    //--- clients database
    virtual IMTUser*  UserCreate(void)=0;
    virtual IMTAccount* UserCreateAccount(void)=0;
-   virtual MTAPIRES  UserGet(const UINT64 login,IMTUser *user)=0;
-   virtual MTAPIRES  UserGetLight(const UINT64 login,IMTUser *user)=0;
-   virtual MTAPIRES  UserLogins(LPCWSTR group,UINT64*& logins,UINT &total)=0;
-   virtual MTAPIRES  UserAccountGet(const UINT64 login,IMTAccount *account)=0;
+   virtual MTAPIRES  UserGet(uint64_t login,IMTUser *user)=0;
+   virtual MTAPIRES  UserGetLight(uint64_t login,IMTUser *user)=0;
+   virtual MTAPIRES  UserLogins(LPCWSTR group,uint64_t*& logins,uint32_t &total)=0;
+   virtual MTAPIRES  UserAccountGet(uint64_t login,IMTAccount *account)=0;
    virtual MTAPIRES  UserSelect(const IMTDatasetRequest *request,IMTDataset *dataset)=0;
    virtual MTAPIRES  UserAccountSelect(const IMTDatasetRequest *request,IMTDataset *dataset)=0;
    virtual MTAPIRES  UserReserved3(void)=0;
@@ -815,15 +870,15 @@ public:
    //--- trade orders database
    virtual IMTOrder* OrderCreate(void)=0;
    virtual IMTOrderArray* OrderCreateArray(void)=0;
-   virtual MTAPIRES  OrderGet(const UINT64 ticket,IMTOrder *order)=0;
-   virtual MTAPIRES  OrderGet(const UINT64 login,IMTOrderArray *orders)=0;
+   virtual MTAPIRES  OrderGet(uint64_t ticket,IMTOrder *order)=0;
+   virtual MTAPIRES  OrderGet(uint64_t login,IMTOrderArray *orders)=0;
    virtual MTAPIRES  OrderSelect(const IMTDatasetRequest *request,IMTDataset *dataset)=0;
    virtual MTAPIRES  OrderReserved2(void)=0;
    virtual MTAPIRES  OrderReserved3(void)=0;
    virtual MTAPIRES  OrderReserved4(void)=0;
    //--- trade history orders databases
-   virtual MTAPIRES  HistoryGet(const UINT64 ticket,IMTOrder *order)=0;
-   virtual MTAPIRES  HistoryGet(const UINT64 login,const INT64 from,const INT64 to,IMTOrderArray *orders)=0;
+   virtual MTAPIRES  HistoryGet(uint64_t ticket,IMTOrder *order)=0;
+   virtual MTAPIRES  HistoryGet(uint64_t login,int64_t from,int64_t to,IMTOrderArray *orders)=0;
    virtual MTAPIRES  HistorySelect(const IMTDatasetRequest *request,IMTDataset *dataset)=0;
    virtual MTAPIRES  HistoryReserved2(void)=0;
    virtual MTAPIRES  HistoryReserved3(void)=0;
@@ -831,8 +886,8 @@ public:
    //--- trade deals database
    virtual IMTDeal*  DealCreate(void)=0;
    virtual IMTDealArray* DealCreateArray(void)=0;
-   virtual MTAPIRES  DealGet(const UINT64 ticket,IMTDeal *deal)=0;
-   virtual MTAPIRES  DealGet(const UINT64 login,const INT64 from,const INT64 to,IMTDealArray *deals)=0;
+   virtual MTAPIRES  DealGet(uint64_t ticket,IMTDeal *deal)=0;
+   virtual MTAPIRES  DealGet(uint64_t login,int64_t from,int64_t to,IMTDealArray *deals)=0;
    virtual MTAPIRES  DealSelect(const IMTDatasetRequest *request,IMTDataset *dataset)=0;
    virtual MTAPIRES  DealReserved2(void)=0;
    virtual MTAPIRES  DealReserved3(void)=0;
@@ -840,28 +895,28 @@ public:
    //--- trade positions database
    virtual IMTPosition* PositionCreate(void)=0;
    virtual IMTPositionArray* PositionCreateArray(void)=0;
-   virtual MTAPIRES  PositionGet(const UINT64 login,LPCWSTR symbol,IMTPosition *position)=0;
-   virtual MTAPIRES  PositionGet(const UINT64 login,IMTPositionArray *positions)=0;
-   virtual MTAPIRES  PositionGetByTicket(const UINT64 ticket,IMTPosition *position)=0;
+   virtual MTAPIRES  PositionGet(uint64_t login,LPCWSTR symbol,IMTPosition *position)=0;
+   virtual MTAPIRES  PositionGet(uint64_t login,IMTPositionArray *positions)=0;
+   virtual MTAPIRES  PositionGetByTicket(uint64_t ticket,IMTPosition *position)=0;
    virtual MTAPIRES  PositionSelect(const IMTDatasetRequest *request,IMTDataset *dataset)=0;
    virtual MTAPIRES  PositionReserved2(void)=0;
    virtual MTAPIRES  PositionReserved3(void)=0;
    //--- trade daily database
    virtual IMTDaily* DailyCreate(void)=0;
    virtual IMTDailyArray* DailyCreateArray(void)=0;
-   virtual MTAPIRES  DailyGet(const UINT64 login,const INT64 datetime,IMTDaily *daily)=0;
-   virtual MTAPIRES  DailyGetLight(const UINT64 login,const INT64 datetime,IMTDaily *daily)=0;
-   virtual MTAPIRES  DailyGet(const UINT64 login,const INT64 from,const INT64 to,IMTDailyArray *daily)=0;
-   virtual MTAPIRES  DailyGetLight(const UINT64 login,const INT64 from,const INT64 to,IMTDailyArray *daily)=0;
+   virtual MTAPIRES  DailyGet(uint64_t login,int64_t datetime,IMTDaily *daily)=0;
+   virtual MTAPIRES  DailyGetLight(uint64_t login,int64_t datetime,IMTDaily *daily)=0;
+   virtual MTAPIRES  DailyGet(uint64_t login,int64_t from,int64_t to,IMTDailyArray *daily)=0;
+   virtual MTAPIRES  DailyGetLight(uint64_t login,int64_t from,int64_t to,IMTDailyArray *daily)=0;
    virtual MTAPIRES  DailySelect(const IMTDatasetRequest *request,IMTDataset *dataset)=0;
    virtual MTAPIRES  DailyReserved2(void)=0;
    virtual MTAPIRES  DailyReserved3(void)=0;
    virtual MTAPIRES  DailyReserved4(void)=0;
    //--- trade methods
-   virtual MTAPIRES  TradeProfit(LPCWSTR group,LPCWSTR symbol,const UINT type,const UINT64 volume,const double price_open,const double price_close,double& profit,double& profit_rate)=0;
-   virtual MTAPIRES  TradeRateBuy(LPCWSTR base,LPCWSTR currency,double& rate,LPCWSTR group=NULL,LPCWSTR symbol=NULL,const double price=0)=0;
-   virtual MTAPIRES  TradeRateSell(LPCWSTR base,LPCWSTR currency,double& rate,LPCWSTR group=NULL,LPCWSTR symbol=NULL,const double price=0)=0;
-   virtual MTAPIRES  TradeProfitExt(LPCWSTR group,LPCWSTR symbol,const UINT type,const UINT64 volume,const double price_open,const double price_close,double& profit,double& profit_rate)=0;
+   virtual MTAPIRES  TradeProfit(LPCWSTR group,LPCWSTR symbol,uint32_t type,uint64_t volume,double price_open,double price_close,double& profit,double& profit_rate)=0;
+   virtual MTAPIRES  TradeRateBuy(LPCWSTR base,LPCWSTR currency,double& rate,LPCWSTR group=nullptr,LPCWSTR symbol=nullptr,double price=0)=0;
+   virtual MTAPIRES  TradeRateSell(LPCWSTR base,LPCWSTR currency,double& rate,LPCWSTR group=nullptr,LPCWSTR symbol=nullptr,double price=0)=0;
+   virtual MTAPIRES  TradeProfitExt(LPCWSTR group,LPCWSTR symbol,uint32_t type,uint64_t volume,double price_open,double price_close,double& profit,double& profit_rate)=0;
    virtual MTAPIRES  TradeReserved2(void)=0;
    virtual MTAPIRES  TradeReserved3(void)=0;
    virtual MTAPIRES  TradeReserved4(void)=0;
@@ -869,12 +924,12 @@ public:
    virtual IMTConPlugin* PluginCreate(void)=0;
    virtual IMTConPluginModule* PluginModuleCreate(void)=0;
    virtual IMTConParam* PluginParamCreate(void)=0;
-   virtual UINT      PluginTotal(void)=0;
-   virtual MTAPIRES  PluginNext(const UINT pos,IMTConPlugin *plugin)=0;
-   virtual MTAPIRES  PluginGet(const UINT64 server,LPCWSTR name,IMTConPlugin *plugin)=0;
-   virtual UINT      PluginModuleTotal(void)=0;
-   virtual MTAPIRES  PluginModuleNext(const UINT pos,IMTConPluginModule *module)=0;
-   virtual MTAPIRES  PluginModuleGet(const UINT64 server,LPCWSTR name,IMTConPluginModule *module)=0;
+   virtual uint32_t  PluginTotal(void)=0;
+   virtual MTAPIRES  PluginNext(uint32_t pos,IMTConPlugin *plugin)=0;
+   virtual MTAPIRES  PluginGet(uint64_t server,LPCWSTR name,IMTConPlugin *plugin)=0;
+   virtual uint32_t  PluginModuleTotal(void)=0;
+   virtual MTAPIRES  PluginModuleNext(uint32_t pos,IMTConPluginModule *module)=0;
+   virtual MTAPIRES  PluginModuleGet(uint64_t server,LPCWSTR name,IMTConPluginModule *module)=0;
    virtual MTAPIRES  PluginReserved1(void)=0;
    virtual MTAPIRES  PluginReserved2(void)=0;
    virtual MTAPIRES  PluginReserved3(void)=0;
@@ -884,11 +939,11 @@ public:
    virtual IMTConFeederModule* FeederModuleCreate(void)=0;
    virtual IMTConParam* FeederParamCreate(void)=0;
    virtual IMTConFeederTranslate* FeederTranslateCreate(void)=0;
-   virtual UINT      FeederTotal(void)=0;
-   virtual MTAPIRES  FeederNext(const UINT pos,IMTConFeeder *feeder)=0;
+   virtual uint32_t  FeederTotal(void)=0;
+   virtual MTAPIRES  FeederNext(uint32_t pos,IMTConFeeder *feeder)=0;
    virtual MTAPIRES  FeederGet(LPCWSTR name,IMTConFeeder *feeder)=0;
-   virtual UINT      FeederModuleTotal(void)=0;
-   virtual MTAPIRES  FeederModuleNext(const UINT pos,IMTConFeederModule *module)=0;
+   virtual uint32_t  FeederModuleTotal(void)=0;
+   virtual MTAPIRES  FeederModuleNext(uint32_t pos,IMTConFeederModule *module)=0;
    virtual MTAPIRES  FeederModuleGet(LPCWSTR name,IMTConFeederModule *module)=0;
    virtual MTAPIRES  FeederReserved1(void)=0;
    virtual MTAPIRES  FeederReserved2(void)=0;
@@ -899,41 +954,41 @@ public:
    virtual IMTConGatewayModule* GatewayModuleCreate(void)=0;
    virtual IMTConParam* GatewayParamCreate(void)=0;
    virtual IMTConGatewayTranslate* GatewayTranslateCreate(void)=0;
-   virtual UINT      GatewayTotal(void)=0;
-   virtual MTAPIRES  GatewayNext(const UINT pos,IMTConGateway *gateway)=0;
+   virtual uint32_t  GatewayTotal(void)=0;
+   virtual MTAPIRES  GatewayNext(uint32_t pos,IMTConGateway *gateway)=0;
    virtual MTAPIRES  GatewayGet(LPCWSTR name,IMTConGateway *gateway)=0;
-   virtual UINT      GatewayModuleTotal(void)=0;
-   virtual MTAPIRES  GatewayModuleNext(const UINT pos,IMTConGatewayModule *module)=0;
+   virtual uint32_t  GatewayModuleTotal(void)=0;
+   virtual MTAPIRES  GatewayModuleNext(uint32_t pos,IMTConGatewayModule *module)=0;
    virtual MTAPIRES  GatewayModuleGet(LPCWSTR name,IMTConGatewayModule *module)=0;
    virtual MTAPIRES  GatewayReserved1(void)=0;
    virtual MTAPIRES  GatewayReserved2(void)=0;
    virtual MTAPIRES  GatewayReserved3(void)=0;
    virtual MTAPIRES  GatewayReserved4(void)=0;
    //--- ticks
-   virtual MTAPIRES  TickHistoryGet(LPCWSTR symbol,const INT64 from,const INT64 to,MTTickShort*& ticks,UINT& ticks_total)=0;
-   virtual MTAPIRES  TickHistoryGetRaw(LPCWSTR symbol,const INT64 from,const INT64 to,MTTickShort*& ticks,UINT& ticks_total)=0;
+   virtual MTAPIRES  TickHistoryGet(LPCWSTR symbol,int64_t from,int64_t to,MTTickShort*& ticks,uint32_t& ticks_total)=0;
+   virtual MTAPIRES  TickHistoryGetRaw(LPCWSTR symbol,int64_t from,int64_t to,MTTickShort*& ticks,uint32_t& ticks_total)=0;
    virtual MTAPIRES  TickLast(LPCWSTR symbol,MTTickShort& tick)=0;
    virtual MTAPIRES  TickLast(const IMTConSymbol* symbol,MTTickShort& tick)=0;
    virtual MTAPIRES  TickStat(LPCWSTR symbol,MTTickStat& stat)=0;
    virtual MTAPIRES  TickReserved4(void)=0;
    //--- chart methods
-   virtual MTAPIRES  ChartHistoryGet(LPCWSTR symbol,const INT64 from,const INT64 to,MTChartBar*& bars,UINT& bars_total)=0;
+   virtual MTAPIRES  ChartHistoryGet(LPCWSTR symbol,int64_t from,int64_t to,MTChartBar*& bars,uint32_t& bars_total)=0;
    virtual MTAPIRES  ChartHistoryReserved1(void)=0;
    virtual MTAPIRES  ChartHistoryReserved2(void)=0;
    virtual MTAPIRES  ChartHistoryReserved3(void)=0;
    virtual MTAPIRES  ChartHistoryReserved4(void)=0;
    //--- dashboard width
-   virtual UINT      DashboardWidth(void)=0;
-   virtual MTAPIRES  DashboardWidth(const UINT width)=0;
+   virtual uint32_t  DashboardWidth(void)=0;
+   virtual MTAPIRES  DashboardWidth(uint32_t width)=0;
    //--- dashboard height
-   virtual UINT      DashboardHeight(void)=0;
-   virtual MTAPIRES  DashboardHeight(const UINT height)=0;
+   virtual uint32_t  DashboardHeight(void)=0;
+   virtual MTAPIRES  DashboardHeight(uint32_t height)=0;
    //--- dashboard title
    virtual LPCWSTR   DashboardTitle(void)=0;
    virtual MTAPIRES  DashboardTitle(LPCWSTR title)=0;
    //--- dashboard flags
-   virtual UINT64    DashboardFlags(void)=0;
-   virtual MTAPIRES  DashboardFlags(const UINT64 flags)=0;
+   virtual uint64_t  DashboardFlags(void)=0;
+   virtual MTAPIRES  DashboardFlags(uint64_t flags)=0;
    //--- reserved dashboard properties
    virtual MTAPIRES  DashboardReserved1(void)=0;
    virtual MTAPIRES  DashboardReserved2(void)=0;
@@ -942,9 +997,9 @@ public:
    //--- dataset management
    virtual IMTDataset* DatasetAppend(void)=0;
    virtual MTAPIRES  DatasetClear(void)=0;
-   virtual MTAPIRES  DatasetDelete(const UINT pos)=0;
-   virtual UINT      DatasetTotal(void) const=0;
-   virtual IMTDataset* DatasetNext(const UINT pos)=0;
+   virtual MTAPIRES  DatasetDelete(uint32_t pos)=0;
+   virtual uint32_t  DatasetTotal(void) const=0;
+   virtual IMTDataset* DatasetNext(uint32_t pos)=0;
    virtual IMTDatasetRequest* DatasetRequestCreate(void)=0;
    virtual MTAPIRES  DatasetReserved2(void)=0;
    virtual MTAPIRES  DatasetReserved3(void)=0;
@@ -952,9 +1007,9 @@ public:
    //--- dashboard HTML management
    virtual IMTReportDashboardHtml* DashboardHtmlAppend(void)=0;
    virtual MTAPIRES  DashboardHtmlClear(void)=0;
-   virtual MTAPIRES  DashboardHtmlDelete(const UINT pos)=0;
-   virtual UINT      DashboardHtmlTotal(void) const=0;
-   virtual IMTReportDashboardHtml* DashboardHtmlNext(const UINT pos)=0;
+   virtual MTAPIRES  DashboardHtmlDelete(uint32_t pos)=0;
+   virtual uint32_t  DashboardHtmlTotal(void) const=0;
+   virtual IMTReportDashboardHtml* DashboardHtmlNext(uint32_t pos)=0;
    virtual MTAPIRES  DashboardHtmlReserved1(void)=0;
    virtual MTAPIRES  DashboardHtmlReserved2(void)=0;
    virtual MTAPIRES  DashboardHtmlReserved3(void)=0;
@@ -962,9 +1017,9 @@ public:
    //--- dashboard widget management
    virtual IMTReportDashboardWidget* DashboardWidgetAppend(void)=0;
    virtual MTAPIRES  DashboardWidgetClear(void)=0;
-   virtual MTAPIRES  DashboardWidgetDelete(const UINT pos)=0;
-   virtual UINT      DashboardWidgetTotal(void) const=0;
-   virtual IMTReportDashboardWidget* DashboardWidgetNext(const UINT pos)=0;
+   virtual MTAPIRES  DashboardWidgetDelete(uint32_t pos)=0;
+   virtual uint32_t  DashboardWidgetTotal(void) const=0;
+   virtual IMTReportDashboardWidget* DashboardWidgetNext(uint32_t pos)=0;
    virtual MTAPIRES  DashboardWidgetReserved1(void)=0;
    virtual MTAPIRES  DashboardWidgetReserved2(void)=0;
    virtual MTAPIRES  DashboardWidgetReserved3(void)=0;
@@ -978,8 +1033,8 @@ public:
    virtual MTAPIRES  KeySetReserved4(void)=0;
    //--- report cache management
    virtual IMTReportCache* ReportCacheCreate(void) const=0;
-   virtual MTAPIRES  ReportCacheGet(LPCWSTR name,const UINT version,IMTReportCache *report_cache)=0;
-   virtual MTAPIRES  ReportCacheGetTemporary(LPCWSTR name,const UINT version,const UINT64 key_time_to_live,IMTReportCache *report_cache)=0;
+   virtual MTAPIRES  ReportCacheGet(LPCWSTR name,uint32_t version,IMTReportCache *report_cache)=0;
+   virtual MTAPIRES  ReportCacheGetTemporary(LPCWSTR name,uint32_t version,uint64_t key_time_to_live,IMTReportCache *report_cache)=0;
    virtual MTAPIRES  ReportCacheReserved1(void)=0;
    virtual MTAPIRES  ReportCacheReserved2(void)=0;
    virtual MTAPIRES  ReportCacheReserved3(void)=0;
@@ -988,27 +1043,27 @@ public:
    virtual MTAPIRES  ClientSelect(const IMTDatasetRequest *request,IMTDataset *dataset)=0;
    virtual IMTClient *ClientCreate(void)=0;
    virtual IMTClientArray *ClientCreateArray(void)=0;
-   virtual MTAPIRES  ClientGet(const UINT64 client_id,IMTClient *client)=0;
-   virtual MTAPIRES  ClientGetHistory(const UINT64 client_id,const UINT64 author,const INT64 from,const INT64 to,IMTClientArray *history)=0;
-   virtual MTAPIRES  ClientIdsAll(UINT64*& ids,UINT& ids_total)=0;
-   virtual MTAPIRES  ClientIdsByGroup(const LPCWSTR groups,UINT64*& ids,UINT& ids_total)=0;
-   virtual MTAPIRES  ClientUserLogins(const UINT64 client_id,UINT64*& logins,UINT& logins_total)=0;
+   virtual MTAPIRES  ClientGet(uint64_t client_id,IMTClient *client)=0;
+   virtual MTAPIRES  ClientGetHistory(uint64_t client_id,uint64_t author,int64_t from,int64_t to,IMTClientArray *history)=0;
+   virtual MTAPIRES  ClientIdsAll(uint64_t*& ids,uint32_t& ids_total)=0;
+   virtual MTAPIRES  ClientIdsByGroup(const LPCWSTR groups,uint64_t*& ids,uint32_t& ids_total)=0;
+   virtual MTAPIRES  ClientUserLogins(uint64_t client_id,uint64_t*& logins,uint32_t& logins_total)=0;
    virtual MTAPIRES  ClientReserved8(void)=0;
    virtual MTAPIRES  ClientReserved9(void)=0;
    //--- funds configuration
    virtual IMTConFund* FundCreate(void)=0;
    virtual IMTConFundAccount* FundAccountCreate(void)=0;
    virtual IMTConFundInvestor* FundInvestorCreate(void)=0;
-   virtual UINT      FundTotal(void)=0;
-   virtual MTAPIRES  FundNext(const UINT pos,IMTConFund *fund)=0;
+   virtual uint32_t  FundTotal(void)=0;
+   virtual MTAPIRES  FundNext(uint32_t pos,IMTConFund *fund)=0;
    virtual MTAPIRES  FundGet(LPCWSTR name,IMTConFund *fund)=0;
    virtual MTAPIRES  FundReserved1(void)=0;
    virtual MTAPIRES  FundReserved2(void)=0;
    virtual MTAPIRES  FundReserved3(void)=0;
    virtual MTAPIRES  FundReserved4(void)=0;
    //--- ticks
-   virtual MTAPIRES  TickGet(LPCWSTR symbol,const INT64 from,const INT64 to,MTTickShort*& ticks,UINT& ticks_total)=0;
-   virtual MTAPIRES  TickGet(const IMTConSymbol* symbol,const INT64 from,const INT64 to,MTTickShort*& ticks,UINT& ticks_total)=0;
+   virtual MTAPIRES  TickGet(LPCWSTR symbol,int64_t from,int64_t to,MTTickShort*& ticks,uint32_t& ticks_total)=0;
+   virtual MTAPIRES  TickGet(const IMTConSymbol* symbol,int64_t from,int64_t to,MTTickShort*& ticks,uint32_t& ticks_total)=0;
    virtual MTAPIRES  TickReserved5(void)=0;
    virtual MTAPIRES  TickReserved6(void)=0;
    virtual MTAPIRES  TickReserved7(void)=0;
@@ -1017,10 +1072,10 @@ public:
    virtual IMTConSubscription* SubscriptionCfgCreate()=0;
    virtual IMTConSubscriptionSymbol* SubscriptionCfgSymbolCreate()=0;
    virtual IMTConSubscriptionNews* SubscriptionCfgNewsCreate()=0;
-   virtual UINT      SubscriptionCfgTotal(void)=0;
-   virtual MTAPIRES  SubscriptionCfgNext(const UINT pos,IMTConSubscription* config)=0;
+   virtual uint32_t  SubscriptionCfgTotal(void)=0;
+   virtual MTAPIRES  SubscriptionCfgNext(uint32_t pos,IMTConSubscription* config)=0;
    virtual MTAPIRES  SubscriptionCfgGet(LPCWSTR name,IMTConSubscription* config)=0;
-   virtual MTAPIRES  SubscriptionCfgGetByID(const UINT64 id,IMTConSubscription* config)=0;
+   virtual MTAPIRES  SubscriptionCfgGetByID(uint64_t id,IMTConSubscription* config)=0;
    virtual MTAPIRES  SubscriptionCfgReserved1(void)=0;
    virtual MTAPIRES  SubscriptionCfgReserved2(void)=0;
    virtual MTAPIRES  SubscriptionCfgReserved3(void)=0;
@@ -1028,11 +1083,11 @@ public:
    //--- subscription records
    virtual IMTSubscription* SubscriptionCreate()=0;
    virtual IMTSubscriptionArray* SubscriptionCreateArray(void)=0;
-   virtual bool      SubscriptionExist(const UINT64 login,const UINT64 subscription)=0;
-   virtual MTAPIRES  SubscriptionGet(const UINT64 login,IMTSubscriptionArray* records)=0;
-   virtual MTAPIRES  SubscriptionGetBySubscription(const UINT64 login,const UINT64 subscription,IMTSubscription* record)=0;
-   virtual MTAPIRES  SubscriptionGetByID(const UINT64 id,IMTSubscription* record)=0;
-   virtual MTAPIRES  SubscriptionGetByLogins(const UINT64 *logins,UINT logins_total,IMTSubscriptionArray* records)=0;
+   virtual bool      SubscriptionExist(uint64_t login,uint64_t subscription)=0;
+   virtual MTAPIRES  SubscriptionGet(uint64_t login,IMTSubscriptionArray* records)=0;
+   virtual MTAPIRES  SubscriptionGetBySubscription(uint64_t login,uint64_t subscription,IMTSubscription* record)=0;
+   virtual MTAPIRES  SubscriptionGetByID(uint64_t id,IMTSubscription* record)=0;
+   virtual MTAPIRES  SubscriptionGetByLogins(const uint64_t *logins,uint32_t logins_total,IMTSubscriptionArray* records)=0;
    virtual MTAPIRES  SubscriptionReserved1(void)=0;
    virtual MTAPIRES  SubscriptionReserved2(void)=0;
    virtual MTAPIRES  SubscriptionReserved3(void)=0;
@@ -1040,9 +1095,9 @@ public:
    //--- subscription history records
    virtual IMTSubscriptionHistory* SubscriptionHistoryCreate()=0;
    virtual IMTSubscriptionHistoryArray* SubscriptionHistoryCreateArray(void)=0;
-   virtual MTAPIRES  SubscriptionHistoryGet(const INT64 from,const INT64 to,const UINT64 login,IMTSubscriptionHistoryArray* records)=0;
-   virtual MTAPIRES  SubscriptionHistoryGetByID(const UINT64 id,IMTSubscriptionHistory* record)=0;
-   virtual MTAPIRES  SubscriptionHistoryGetByLogins(const INT64 from,const INT64 to,const UINT64 *logins,UINT logins_total,IMTSubscriptionHistoryArray* records)=0;
+   virtual MTAPIRES  SubscriptionHistoryGet(int64_t from,int64_t to,uint64_t login,IMTSubscriptionHistoryArray* records)=0;
+   virtual MTAPIRES  SubscriptionHistoryGetByID(uint64_t id,IMTSubscriptionHistory* record)=0;
+   virtual MTAPIRES  SubscriptionHistoryGetByLogins(int64_t from,int64_t to,const uint64_t *logins,uint32_t logins_total,IMTSubscriptionHistoryArray* records)=0;
    virtual MTAPIRES  SubscriptionHistoryReserved1(void)=0;
    virtual MTAPIRES  SubscriptionHistoryReserved2(void)=0;
    virtual MTAPIRES  SubscriptionHistoryReserved3(void)=0;
@@ -1051,8 +1106,8 @@ public:
    virtual IMTConLeverage* LeverageCreate(void)=0;
    virtual IMTConLeverageRule* LeverageRuleCreate(void)=0;
    virtual IMTConLeverageTier* LeverageTierCreate(void)=0;
-   virtual UINT      LeverageTotal(void)=0;
-   virtual MTAPIRES  LeverageNext(const UINT pos,IMTConLeverage* cfg)=0;
+   virtual uint32_t  LeverageTotal(void)=0;
+   virtual MTAPIRES  LeverageNext(uint32_t pos,IMTConLeverage* cfg)=0;
    virtual MTAPIRES  LeverageGet(LPCWSTR name,IMTConLeverage* cfg)=0;
    virtual MTAPIRES  LeverageReserved1(void)=0;
    virtual MTAPIRES  LeverageReserved2(void)=0;
@@ -1060,12 +1115,152 @@ public:
    virtual MTAPIRES  LeverageReserved4(void)=0;
    //--- geodata
    virtual IMTGeo*   GeoCreate(void)=0;
-   virtual MTAPIRES  GeoResolve(LPCWSTR address,const UINT flags,IMTGeo* record)=0;
-   virtual MTAPIRES  GeoResolveBatch(LPCWSTR* addresses,const UINT addresses_total,const UINT flags,IMTGeo** records,MTAPIRES* results)=0;
+   virtual MTAPIRES  GeoResolve(LPCWSTR address,uint32_t flags,IMTGeo* record)=0;
+   virtual MTAPIRES  GeoResolveBatch(LPCWSTR* addresses,uint32_t addresses_total,uint32_t flags,IMTGeo** records,MTAPIRES* results)=0;
    virtual MTAPIRES  GeoResolveReserved1(void)=0;
    virtual MTAPIRES  GeoResolveReserved2(void)=0;
    virtual MTAPIRES  GeoResolveReserved3(void)=0;
    virtual MTAPIRES  GeoResolveReserved4(void)=0;
+   //--- ultency liquidity provider configuration
+   virtual IMTConUltLiquidity* UltLiquidityCreate(void)=0;
+   virtual uint32_t  UltLiquidityTotal(void)=0;
+   virtual MTAPIRES  UltLiquidityNext(uint32_t pos,IMTConUltLiquidity *config)=0;
+   virtual MTAPIRES  UltLiquidityGet(uint64_t server,uint32_t id,IMTConUltLiquidity* cfg)=0;
+   virtual MTAPIRES  UltLiquidityReserved1(void)=0;
+   virtual MTAPIRES  UltLiquidityReserved2(void)=0;
+   virtual MTAPIRES  UltLiquidityReserved3(void)=0;
+   virtual MTAPIRES  UltLiquidityReserved4(void)=0;
+   //--- ultency liquidity provider history configuration
+   virtual IMTConUltLiquidityHistory* UltLiqHistoryCreate(void)=0;
+   virtual uint32_t  UltLiqHistoryTotal(void)=0;
+   virtual MTAPIRES  UltLiqHistoryNext(uint32_t pos,IMTConUltLiquidityHistory *config)=0;
+   virtual MTAPIRES  UltLiqHistoryGet(uint64_t server,uint32_t id,IMTConUltLiquidityHistory* cfg)=0;
+   virtual MTAPIRES  UltLiqHistoryReserved1(void)=0;
+   virtual MTAPIRES  UltLiqHistoryReserved2(void)=0;
+   virtual MTAPIRES  UltLiqHistoryReserved3(void)=0;
+   virtual MTAPIRES  UltLiqHistoryReserved4(void)=0;
+   //--- ultency symbol
+   virtual IMTConUltSymbol* UltSymbolCreate(void)=0;
+   virtual IMTConUltSymbolLP* UltSymbolLPCreate(void)=0;
+   virtual IMTConUltSymbolBand* UltSymbolBandCreate(void)=0;
+   virtual uint32_t  UltSymbolTotal(void)=0;
+   virtual MTAPIRES  UltSymbolNext(uint32_t pos,IMTConUltSymbol *config)=0;
+   virtual MTAPIRES  UltSymbolGet(uint64_t server,LPCWSTR name,IMTConUltSymbol* cfg)=0;
+   virtual MTAPIRES  UltSymbolReserved1(void)=0;
+   virtual MTAPIRES  UltSymbolReserved2(void)=0;
+   virtual MTAPIRES  UltSymbolReserved3(void)=0;
+   virtual MTAPIRES  UltSymbolReserved4(void)=0;
+   //--- ultency translate configuration
+   virtual IMTConUltTranslate* UltTranslateCreate(void)=0;
+   virtual uint32_t  UltTranslateTotal(void)=0;
+   virtual MTAPIRES  UltTranslateNext(uint32_t pos,IMTConUltTranslate *config)=0;
+   virtual MTAPIRES  UltTranslateReserved1(void)=0;
+   virtual MTAPIRES  UltTranslateReserved2(void)=0;
+   virtual MTAPIRES  UltTranslateReserved3(void)=0;
+   virtual MTAPIRES  UltTranslateReserved4(void)=0;
+   //--- Ultency deals database
+   virtual IMTUltDeal* UltDealCreate(void)=0;
+   virtual IMTUltDealArray* UltDealCreateArray(void)=0;
+   virtual MTAPIRES  UltDealRequest(uint64_t ultency_server,
+                                    const uint64_t *logins,uint32_t logins_total,
+                                    const uint64_t *tickets,uint32_t tickets_total,
+                                    const uint64_t *tickets_liquidity,uint32_t tickets_liquidity_total,
+                                    const uint64_t *tickets_matching,uint32_t tickets_matching_total,
+                                    int64_t from,int64_t to,
+                                    LPCWSTR symbol,
+                                    IMTUltDealArray* deals)=0;
+   virtual MTAPIRES  UltDealSelect(uint64_t ultency_server, const IMTDatasetRequest* request, IMTDataset* dataset)=0;
+   virtual MTAPIRES  UltDealReserved2(void)=0;
+   virtual MTAPIRES  UltDealReserved3(void)=0;
+   virtual MTAPIRES  UltDealReserved4(void)=0;
+   //--- Ultency Liquidity Orders database
+   virtual IMTUltLiquidityOrder* UltLiquidityOrderCreate(void)=0;
+   virtual IMTUltLiquidityOrderArray* UltLiquidityOrderCreateArray(void)=0;
+   virtual MTAPIRES  UltLiquidityOrderRequest(uint64_t ultency_server,
+                                              const uint64_t *logins,uint32_t logins_total,
+                                              const uint64_t *tickets,uint32_t tickets_total,
+                                              const uint64_t *tickets_matching,uint32_t tickets_matching_total,
+                                              LPCWSTR symbol,
+                                              IMTUltLiquidityOrderArray* orders)=0;
+   virtual MTAPIRES  UltLiquidityOrderSelect(uint64_t ultency_login,const IMTDatasetRequest* request,IMTDataset* dataset)=0;
+   virtual MTAPIRES  UltLiquidityOrderReserved2(void)=0;
+   virtual MTAPIRES  UltLiquidityOrderReserved3(void)=0;
+   virtual MTAPIRES  UltLiquidityOrderReserved4(void)=0;
+   //--- Ultency Liquidity Orders History
+   virtual MTAPIRES  UltLiquidityHistoryRequest(uint64_t ultency_server,
+                                                const uint64_t *logins,uint32_t logins_total,
+                                                const uint64_t *tickets,uint32_t tickets_total,
+                                                const uint64_t *tickets_matching,uint32_t tickets_matching_total,
+                                                int64_t from,int64_t to,
+                                                LPCWSTR symbol,
+                                                IMTUltLiquidityOrderArray* orders)=0;
+   virtual MTAPIRES  UltLiquidityHistorySelect(uint64_t ultency_server,const IMTDatasetRequest* request,IMTDataset* dataset)=0;
+   virtual MTAPIRES  UltLiquidityHistoryReserved2(void)=0;
+   virtual MTAPIRES  UltLiquidityHistoryReserved3(void)=0;
+   virtual MTAPIRES  UltLiquidityHistoryReserved4(void)=0;
+   //--- Ultency Matching Orders database
+   virtual IMTUltMatchingOrder* UltMatchingOrderCreate(void)=0;
+   virtual IMTUltMatchingOrderArray* UltMatchingOrderCreateArray(void)=0;
+   virtual MTAPIRES  UltMatchingOrderRequest(uint64_t ultency_server,
+                                             const uint64_t *logins,uint32_t logins_total,
+                                             const uint64_t *tickets,uint32_t tickets_total,
+                                             const uint64_t *tickets_source,uint32_t tickets_source_total,
+                                             LPCWSTR symbol,
+                                             IMTUltMatchingOrderArray* orders)=0;
+   virtual MTAPIRES  UltMatchingOrderSelect(uint64_t ultency_login,const IMTDatasetRequest* request,IMTDataset* dataset)=0;
+   virtual MTAPIRES  UltMatchingOrderReserved2(void)=0;
+   virtual MTAPIRES  UltMatchingOrderReserved3(void)=0;
+   virtual MTAPIRES  UltMatchingOrderReserved4(void)=0;
+   //--- Ultency Matching Orders History
+   virtual MTAPIRES  UltMatchingHistoryRequest(uint64_t ultency_server,
+                                               const uint64_t *logins,uint32_t logins_total,
+                                               const uint64_t *tickets,uint32_t tickets_total,
+                                               const uint64_t *tickets_source,uint32_t tickets_source_total,
+                                               int64_t from,int64_t to,
+                                               LPCWSTR symbol,
+                                               IMTUltMatchingOrderArray* orders)=0;
+   virtual MTAPIRES  UltMatchingHistorySelect(uint64_t ultency_server,const IMTDatasetRequest* request,IMTDataset* dataset)=0;
+   virtual MTAPIRES  UltMatchingHistoryReserved2(void)=0;
+   virtual MTAPIRES  UltMatchingHistoryReserved3(void)=0;
+   virtual MTAPIRES  UltMatchingHistoryReserved4(void)=0;
+   //--- ultency liquidity provider configuration
+   virtual IMTConUltLiquiditySymbol* UltLiquiditySymbolCreate(void)=0;
+   virtual uint32_t  UltLiquiditySymbolTotal(void)=0;
+   virtual MTAPIRES  UltLiquiditySymbolNext(uint32_t pos,IMTConUltLiquiditySymbol *config)=0;
+   virtual MTAPIRES  UltLiquiditySymbolGet(uint64_t server,uint32_t id,IMTConUltLiquiditySymbol* cfg)=0;
+   virtual MTAPIRES  UltLiquiditySymbolReserved1(void)=0;
+   virtual MTAPIRES  UltLiquiditySymbolReserved2(void)=0;
+   virtual MTAPIRES  UltLiquiditySymbolReserved3(void)=0;
+   virtual MTAPIRES  UltLiquiditySymbolReserved4(void)=0;
+   //--- ultency route configuration
+   virtual IMTConUltRoute* UltRouteCreate(void)=0;
+   virtual IMTConUltRouteCondition* UltRouteConditionCreate(void)=0;
+   virtual uint32_t  UltRouteTotal(void)=0;
+   virtual MTAPIRES  UltRouteNext(uint32_t pos,IMTConUltRoute* config)=0;
+   virtual MTAPIRES  UltRouteGet(uint64_t server,LPCWSTR name,IMTConUltRoute* config)=0;
+   virtual MTAPIRES  UltRouteReserved1(void)=0;
+   virtual MTAPIRES  UltRouteReserved2(void)=0;
+   virtual MTAPIRES  UltRouteReserved3(void)=0;
+   virtual MTAPIRES  UltRouteReserved4(void)=0;
+   //--- ultency symbol group configuration
+   virtual IMTConUltSymbolGroup* UltSymbolGroupCreate(void)=0;
+   virtual uint32_t  UltSymbolGroupTotal(void)=0;
+   virtual MTAPIRES  UltSymbolGroupNext(uint32_t pos,IMTConUltSymbolGroup* config)=0;
+   virtual MTAPIRES  UltSymbolGroupGet(uint64_t server,LPCWSTR name,IMTConUltSymbolGroup* config)=0;
+   virtual MTAPIRES  UltSymbolGroupReserved1(void)=0;
+   virtual MTAPIRES  UltSymbolGroupReserved2(void)=0;
+   virtual MTAPIRES  UltSymbolGroupReserved3(void)=0;
+   virtual MTAPIRES  UltSymbolGroupReserved4(void)=0;
+   //--- ultency provider configuration
+   virtual IMTConUltProvider* UltProviderCreate(void)=0;
+   virtual IMTConUltProviderPoint* UltProviderPointCreate(void)=0;
+   virtual uint32_t  UltProviderTotal(void)=0;
+   virtual MTAPIRES  UltProviderNext(uint32_t pos,IMTConUltProvider* config)=0;
+   virtual MTAPIRES  UltProviderGet(uint64_t server,uint64_t id,IMTConUltProvider* config)=0;
+   virtual MTAPIRES  UltProviderReserved1(void)=0;
+   virtual MTAPIRES  UltProviderReserved2(void)=0;
+   virtual MTAPIRES  UltProviderReserved3(void)=0;
+   virtual MTAPIRES  UltProviderReserved4(void)=0;
   };
 //+------------------------------------------------------------------+
 //| Report context interface                                         |
@@ -1075,7 +1270,7 @@ class IMTReportContext
 public:
    virtual void      Release(void)=0;
    //--- report generation method
-   virtual MTAPIRES  Generate(const UINT type,IMTReportAPI *api)=0;
+   virtual MTAPIRES  Generate(uint32_t type,IMTReportAPI *api)=0;
    //--- explicit destructor is prohibited
 protected:
                     ~IMTReportContext(void) {}
@@ -1083,6 +1278,6 @@ protected:
 //+------------------------------------------------------------------+
 //| Report DLL entry points                                          |
 //+------------------------------------------------------------------+
-MTAPIENTRY MTAPIRES  MTReportAbout(const UINT index,MTReportInfo& info);
-MTAPIENTRY MTAPIRES  MTReportCreate(const UINT index,const UINT apiversion,IMTReportContext **context);
+MTAPIENTRY MTAPIRES  MTReportAbout(uint32_t index,MTReportInfo& info);
+MTAPIENTRY MTAPIRES  MTReportCreate(uint32_t index,uint32_t apiversion,IMTReportContext **context);
 //+------------------------------------------------------------------+

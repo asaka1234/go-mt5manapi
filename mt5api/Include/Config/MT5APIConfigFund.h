@@ -1,6 +1,6 @@
-//+------------------------------------------------------------------+
+﻿//+------------------------------------------------------------------+
 //|                                                 MetaTrader 5 API |
-//|                             Copyright 2000-2024, MetaQuotes Ltd. |
+//|                             Copyright 2000-2026, MetaQuotes Ltd. |
 //|                                               www.metaquotes.net |
 //+------------------------------------------------------------------+
 #pragma once
@@ -15,8 +15,8 @@ public:
    virtual MTAPIRES  Assign(const IMTConFundAccount* account)=0;
    virtual MTAPIRES  Clear(void)=0;
    //--- login
-   virtual UINT64    Login(void) const=0;
-   virtual MTAPIRES  Login(const UINT64 login)=0;
+   virtual uint64_t    Login(void) const=0;
+   virtual MTAPIRES  Login(const uint64_t login)=0;
    //--- name
    virtual LPCWSTR   Name(void) const=0;
    //--- balance
@@ -26,7 +26,7 @@ public:
    //--- currency
    virtual LPCWSTR   Currency(void) const=0;
    //--- currency digits
-   virtual UINT      CurrencyDigits(void) const=0;
+   virtual uint32_t  CurrencyDigits(void) const=0;
    //--- explicit destructor is prohibited
 protected:
                     ~IMTConFundAccount(void) {}
@@ -42,12 +42,12 @@ public:
    virtual MTAPIRES  Assign(const IMTConFundInvestor* investor)=0;
    virtual MTAPIRES  Clear(void)=0;
    //--- login
-   virtual UINT64    Login(void) const=0;
-   virtual MTAPIRES  Login(const UINT64 login)=0;
+   virtual uint64_t    Login(void) const=0;
+   virtual MTAPIRES  Login(const uint64_t login)=0;
    //--- name
    virtual LPCWSTR   Name(void) const=0;
    //--- shares
-   virtual UINT64    SharesVolume(void) const=0;
+   virtual uint64_t    SharesVolume(void) const=0;
    //--- explicit destructor is prohibited
 protected:
                     ~IMTConFundInvestor(void) {}
@@ -161,26 +161,26 @@ public:
    virtual LPCWSTR   SymbolAssets(void) const=0;
    virtual MTAPIRES  SymbolAssets(LPCWSTR symbol)=0;
    //--- Server
-   virtual UINT64    Server(void) const=0;
-   virtual MTAPIRES  Server(const UINT64 manager)=0;
+   virtual uint64_t    Server(void) const=0;
+   virtual MTAPIRES  Server(const uint64_t manager)=0;
    //--- Manager
-   virtual UINT64    Manager(void) const=0;
-   virtual MTAPIRES  Manager(const UINT64 manager)=0;
+   virtual uint64_t    Manager(void) const=0;
+   virtual MTAPIRES  Manager(const uint64_t manager)=0;
    //--- Flags
-   virtual UINT64    Flags(void) const=0;
-   virtual MTAPIRES  Flags(const UINT64 flags)=0;
+   virtual uint64_t    Flags(void) const=0;
+   virtual MTAPIRES  Flags(const uint64_t flags)=0;
    //--- Type
-   virtual UINT      Type(void) const=0;
-   virtual MTAPIRES  Type(const UINT type)=0;
+   virtual uint32_t  Type(void) const=0;
+   virtual MTAPIRES  Type(const uint32_t type)=0;
    //--- Recalculation
-   virtual UINT      Recalculation(void) const=0;
-   virtual MTAPIRES  Recalculation(const UINT recalculation)=0;
+   virtual uint32_t  Recalculation(void) const=0;
+   virtual MTAPIRES  Recalculation(const uint32_t recalculation)=0;
    //--- start period
-   virtual INT64     StartDate(void) const=0;
-   virtual MTAPIRES  StartDate(const INT64 date)=0;
+   virtual int64_t     StartDate(void) const=0;
+   virtual MTAPIRES  StartDate(const int64_t date)=0;
    //--- end period
-   virtual INT64     EndDate(void) const=0;
-   virtual MTAPIRES  EndDate(const INT64 date)=0;
+   virtual int64_t     EndDate(void) const=0;
+   virtual MTAPIRES  EndDate(const int64_t date)=0;
    //--- currency
    virtual LPCWSTR   Currency(void) const=0;
    virtual MTAPIRES  Currency(LPCWSTR currency)=0;
@@ -188,60 +188,60 @@ public:
    virtual double    MaxCapital(void) const=0;
    virtual MTAPIRES  MaxCapital(const double max_capital)=0;
    //--- Max investors
-   virtual UINT      MaxInvestors(void) const=0;
-   virtual MTAPIRES  MaxInvestors(const UINT max_investors)=0;
+   virtual uint32_t  MaxInvestors(void) const=0;
+   virtual MTAPIRES  MaxInvestors(const uint32_t max_investors)=0;
    //--- Fee mode
-   virtual UINT      FeeMode(void) const=0;
-   virtual MTAPIRES  FeeMode(const UINT mode)=0;
+   virtual uint32_t  FeeMode(void) const=0;
+   virtual MTAPIRES  FeeMode(const uint32_t mode)=0;
    //--- Fee period
-   virtual UINT      FeePeriod(void) const=0;
-   virtual MTAPIRES  FeePeriod(const UINT period)=0;
+   virtual uint32_t  FeePeriod(void) const=0;
+   virtual MTAPIRES  FeePeriod(const uint32_t period)=0;
    //--- Fee account
-   virtual UINT64    FeeAccount(void) const=0;
-   virtual MTAPIRES  FeeAccount(const UINT64 fee_account)=0;
+   virtual uint64_t    FeeAccount(void) const=0;
+   virtual MTAPIRES  FeeAccount(const uint64_t fee_account)=0;
    //--- Management fee Type
-   virtual UINT      FeeManagementType(void) const=0;
-   virtual MTAPIRES  FeeManagementType(const UINT fee)=0;
+   virtual uint32_t  FeeManagementType(void) const=0;
+   virtual MTAPIRES  FeeManagementType(const uint32_t fee)=0;
    //--- Management fee value
    virtual double    FeeManagementValue(void) const=0;
    virtual MTAPIRES  FeeManagementValue(const double fee)=0;
    //--- Management assets mode
-   virtual UINT      FeeManagementAssets(void) const=0;
-   virtual MTAPIRES  FeeManagementAssets(const UINT mode)=0;
+   virtual uint32_t  FeeManagementAssets(void) const=0;
+   virtual MTAPIRES  FeeManagementAssets(const uint32_t mode)=0;
    //--- Success fee calculation mode
-   virtual UINT      FeeSuccessCalc(void) const=0;
-   virtual MTAPIRES  FeeSuccessCalc(const UINT mode)=0;
+   virtual uint32_t  FeeSuccessCalc(void) const=0;
+   virtual MTAPIRES  FeeSuccessCalc(const uint32_t mode)=0;
    //--- Success fee apply mode
-   virtual UINT      FeeSuccessMode(void) const=0;
-   virtual MTAPIRES  FeeSuccessMode(const UINT mode)=0;
+   virtual uint32_t  FeeSuccessMode(void) const=0;
+   virtual MTAPIRES  FeeSuccessMode(const uint32_t mode)=0;
    //--- Success fee apply mode
    virtual double    FeeSuccessValue(void) const=0;
    virtual MTAPIRES  FeeSuccessValue(const double value)=0;
    //--- Success fee High Water Mark calculation mode
-   virtual UINT      FeeSuccessHWM(void) const=0;
-   virtual MTAPIRES  FeeSuccessHWM(const UINT mode)=0;
+   virtual uint32_t  FeeSuccessHWM(void) const=0;
+   virtual MTAPIRES  FeeSuccessHWM(const uint32_t mode)=0;
    //--- Success fee hurdle rate
    virtual double    FeeSuccessHurdleRate(void) const=0;
    virtual MTAPIRES  FeeSuccessHurdleRate(const double rate)=0;
    //--- accounts
    virtual MTAPIRES  AccountAdd(IMTConFundAccount* account)=0;
-   virtual MTAPIRES  AccountUpdate(const UINT pos,const IMTConFundAccount* account)=0;
-   virtual MTAPIRES  AccountDelete(const UINT pos)=0;
+   virtual MTAPIRES  AccountUpdate(const uint32_t pos,const IMTConFundAccount* account)=0;
+   virtual MTAPIRES  AccountDelete(const uint32_t pos)=0;
    virtual MTAPIRES  AccountClear(void)=0;
-   virtual MTAPIRES  AccountShift(const UINT pos,const int shift)=0;
-   virtual UINT      AccountTotal(void) const=0;
-   virtual MTAPIRES  AccountNext(const UINT pos,IMTConFundAccount* account) const=0;
+   virtual MTAPIRES  AccountShift(const uint32_t pos,const int32_t shift)=0;
+   virtual uint32_t  AccountTotal(void) const=0;
+   virtual MTAPIRES  AccountNext(const uint32_t pos,IMTConFundAccount* account) const=0;
    //--- investors
    virtual MTAPIRES  InvestorAdd(IMTConFundInvestor* investor)=0;
-   virtual MTAPIRES  InvestorUpdate(const UINT pos,const IMTConFundInvestor* investor)=0;
-   virtual MTAPIRES  InvestorDelete(const UINT pos)=0;
+   virtual MTAPIRES  InvestorUpdate(const uint32_t pos,const IMTConFundInvestor* investor)=0;
+   virtual MTAPIRES  InvestorDelete(const uint32_t pos)=0;
    virtual MTAPIRES  InvestorClear(void)=0;
-   virtual MTAPIRES  InvestorShift(const UINT pos,const int shift)=0;
-   virtual UINT      InvestorTotal(void) const=0;
-   virtual MTAPIRES  InvestorNext(const UINT pos,IMTConFundInvestor* investor) const=0;
+   virtual MTAPIRES  InvestorShift(const uint32_t pos,const int32_t shift)=0;
+   virtual uint32_t  InvestorTotal(void) const=0;
+   virtual MTAPIRES  InvestorNext(const uint32_t pos,IMTConFundInvestor* investor) const=0;
    //--- fund state
    virtual double    StateCurrentCaptital(void) const=0;
-   virtual UINT      StateCurrentInvestors(void) const=0;
+   virtual uint32_t  StateCurrentInvestors(void) const=0;
    //--- explicit destructor is prohibited
 protected:
                     ~IMTConFund(void) {}

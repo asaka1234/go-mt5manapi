@@ -1,6 +1,6 @@
-//+------------------------------------------------------------------+
+﻿//+------------------------------------------------------------------+
 //|                                                 MetaTrader 5 API |
-//|                             Copyright 2000-2024, MetaQuotes Ltd. |
+//|                             Copyright 2000-2026, MetaQuotes Ltd. |
 //|                                               www.metaquotes.net |
 //+------------------------------------------------------------------+
 #pragma once
@@ -51,26 +51,26 @@ public:
    //--- report file name
    virtual LPCWSTR   Module(void) const=0;
    //--- report index in file
-   virtual UINT      Index(void) const=0;
+   virtual uint32_t  Index(void) const=0;
    //--- MT5 server-owner id
-   virtual UINT64    Server(void) const=0;
+   virtual uint64_t    Server(void) const=0;
    //--- plugin version
-   virtual UINT      Version(void) const=0;
+   virtual uint32_t  Version(void) const=0;
    //--- plugin Server API version
-   virtual UINT      VersionAPI(void) const=0;
+   virtual uint32_t  VersionAPI(void) const=0;
    //--- neccessary Internet Explorer version
-   virtual UINT      VersionIE(void) const=0;
+   virtual uint32_t  VersionIE(void) const=0;
    //--- available types
-   virtual UINT      Types(void) const=0;
+   virtual uint32_t  Types(void) const=0;
    //--- neccessary data snapshots
-   virtual UINT      Snapshots(void) const=0;
+   virtual uint32_t  Snapshots(void) const=0;
    //--- report default parameters
-   virtual UINT      ParameterTotal(void) const=0;
-   virtual MTAPIRES  ParameterNext(const UINT pos,IMTConParam* param) const=0;
+   virtual uint32_t  ParameterTotal(void) const=0;
+   virtual MTAPIRES  ParameterNext(const uint32_t pos,IMTConParam* param) const=0;
    virtual MTAPIRES  ParameterGet(LPCWSTR name,IMTConParam* param) const=0;
    //--- report request input params
-   virtual UINT      InputTotal(void) const=0;
-   virtual MTAPIRES  InputNext(const UINT pos,IMTConParam* param) const=0;
+   virtual uint32_t  InputTotal(void) const=0;
+   virtual MTAPIRES  InputNext(const uint32_t pos,IMTConParam* param) const=0;
    virtual MTAPIRES  InputGet(LPCWSTR name,IMTConParam* param) const=0;
    //--- explicit destructor is prohibited
 protected:
@@ -99,22 +99,22 @@ public:
    virtual LPCWSTR   Name(void) const=0;
    virtual MTAPIRES  Name(LPCWSTR name)=0;
    //--- MT5 server ID
-   virtual UINT64    Server(void) const=0;
-   virtual MTAPIRES  Server(const UINT64 server)=0;
+   virtual uint64_t    Server(void) const=0;
+   virtual MTAPIRES  Server(const uint64_t server)=0;
    //--- plugin report name
    virtual LPCWSTR   Module(void) const=0;
    virtual MTAPIRES  Module(LPCWSTR name)=0;
    //--- plugin mode
-   virtual UINT      Mode(void) const=0;
-   virtual MTAPIRES  Mode(const UINT mode)=0;
+   virtual uint32_t  Mode(void) const=0;
+   virtual MTAPIRES  Mode(const uint32_t mode)=0;
    //--- plugin parameters
    virtual MTAPIRES  ParameterAdd(IMTConParam* param)=0;
-   virtual MTAPIRES  ParameterUpdate(const UINT pos,const IMTConParam* param)=0;
-   virtual MTAPIRES  ParameterDelete(const UINT pos)=0;
+   virtual MTAPIRES  ParameterUpdate(const uint32_t pos,const IMTConParam* param)=0;
+   virtual MTAPIRES  ParameterDelete(const uint32_t pos)=0;
    virtual MTAPIRES  ParameterClear(void)=0;
-   virtual MTAPIRES  ParameterShift(const UINT pos,const int shift)=0;
-   virtual UINT      ParameterTotal(void) const=0;
-   virtual MTAPIRES  ParameterNext(const UINT pos,IMTConParam* param) const=0;
+   virtual MTAPIRES  ParameterShift(const uint32_t pos,const int32_t shift)=0;
+   virtual uint32_t  ParameterTotal(void) const=0;
+   virtual MTAPIRES  ParameterNext(const uint32_t pos,IMTConParam* param) const=0;
    virtual MTAPIRES  ParameterGet(LPCWSTR name,IMTConParam* param) const=0;
    //--- explicit destructor is prohibited
 protected:

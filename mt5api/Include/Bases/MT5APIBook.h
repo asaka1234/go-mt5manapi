@@ -1,6 +1,6 @@
-//+------------------------------------------------------------------+
+﻿//+------------------------------------------------------------------+
 //|                                                 MetaTrader 5 API |
-//|                             Copyright 2000-2024, MetaQuotes Ltd. |
+//|                             Copyright 2000-2026, MetaQuotes Ltd. |
 //|                                               www.metaquotes.net |
 //+------------------------------------------------------------------+
 #pragma once
@@ -19,11 +19,11 @@ struct MTBookItem
       ItemSellMarket =3,                                    // sell item by market
       ItemBuyMarket  =4                                     // buy item by market
      };
-   UINT              type;                                  // EnBookItem
+   uint32_t          type;                                  // EnBookItem
    double            price;                                 // deal price
-   INT64             volume;                                // deal volume - only integer values
-   INT64             volume_ext;                            // deal volume with extended accuracy - 8 digits
-   UINT              reserved[6];                           // reserved
+   int64_t           volume;                                // deal volume - only integer values
+   int64_t           volume_ext;                            // deal volume with extended accuracy - 8 digits
+   uint32_t          reserved[6];                           // reserved
   };
 #pragma pack(pop)
 //+------------------------------------------------------------------+
@@ -43,11 +43,11 @@ struct MTBook
      };
    wchar_t           symbol[32];                            // symbol
    MTBookItem        items[32*4];                           // book transactions
-   UINT              items_total;                           // book transactions count
-   UINT64            flags;                                 // flags
-   INT64             datetime;                              // datetime
-   INT64             datetime_msc;                          // datetime
-   UINT              reserved[58];                          // reserved
+   uint32_t          items_total;                           // book transactions count
+   uint64_t          flags;                                 // flags
+   int64_t           datetime;                              // datetime
+   int64_t           datetime_msc;                          // datetime
+   uint32_t          reserved[58];                          // reserved
   };
 #pragma pack(pop)
 //+------------------------------------------------------------------+

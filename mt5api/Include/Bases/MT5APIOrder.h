@@ -1,6 +1,6 @@
-//+------------------------------------------------------------------+
+﻿//+------------------------------------------------------------------+
 //|                                                 MetaTrader 5 API |
-//|                             Copyright 2000-2024, MetaQuotes Ltd. |
+//|                             Copyright 2000-2026, MetaQuotes Ltd. |
 //|                                               www.metaquotes.net |
 //+------------------------------------------------------------------+
 #pragma once
@@ -100,9 +100,11 @@ public:
       ORDER_REASON_WEB         =17,    // order placed manually by web terminal
       ORDER_REASON_SPLIT       =18,    // order placed due to split
       ORDER_REASON_CORPORATE_ACTION=19,// placed due to corporate action
+      ORDER_REASON_ULTENCY     =20,    // order placed due Ultency
+      ORDER_REASON_COVERAGE    =21,    // order placed due coverage actions
       //--- enumeration borders
       ORDER_REASON_FIRST        =ORDER_REASON_CLIENT,
-      ORDER_REASON_LAST         =ORDER_REASON_CORPORATE_ACTION
+      ORDER_REASON_LAST         =ORDER_REASON_COVERAGE
      };
    //--- order activation flags
    enum EnTradeActivationFlags
@@ -141,50 +143,50 @@ public:
    virtual MTAPIRES  Clear(void)=0;
    virtual LPCWSTR   Print(MTAPISTR& string) const=0;
    //--- order ticket
-   virtual UINT64    Order(void) const=0;
+   virtual uint64_t  Order(void) const=0;
    //--- order ticket in external system (exchange, ECN, etc)
    virtual LPCWSTR   ExternalID(void) const=0;
    virtual MTAPIRES  ExternalID(LPCWSTR id)=0;
    //--- client login
-   virtual UINT64    Login(void) const=0;
-   virtual MTAPIRES  Login(const UINT64 order)=0;
+   virtual uint64_t  Login(void) const=0;
+   virtual MTAPIRES  Login(const uint64_t order)=0;
    //--- processed dealer login (0-means auto)
-   virtual UINT64    Dealer(void) const=0;
-   virtual MTAPIRES  Dealer(const UINT64 dealer)=0;
+   virtual uint64_t  Dealer(void) const=0;
+   virtual MTAPIRES  Dealer(const uint64_t dealer)=0;
    //--- order symbol
    virtual LPCWSTR   Symbol(void) const=0;
    virtual MTAPIRES  Symbol(LPCWSTR symbol)=0;
    //--- price digits
-   virtual UINT      Digits(void) const=0;
-   virtual MTAPIRES  Digits(const UINT digits)=0;
+   virtual uint32_t  Digits(void) const=0;
+   virtual MTAPIRES  Digits(const uint32_t digits)=0;
    //--- currency digits
-   virtual UINT      DigitsCurrency(void) const=0;
-   virtual MTAPIRES  DigitsCurrency(const UINT digits)=0;
+   virtual uint32_t  DigitsCurrency(void) const=0;
+   virtual MTAPIRES  DigitsCurrency(const uint32_t digits)=0;
    //--- contract size
    virtual double    ContractSize(void) const=0;
    virtual MTAPIRES  ContractSize(const double contract_size)=0;
    //--- EnOrderState
-   virtual UINT      State(void) const=0;
+   virtual uint32_t  State(void) const=0;
    //--- EnOrderReason
-   virtual UINT      Reason(void) const=0;
+   virtual uint32_t  Reason(void) const=0;
    //--- order setup time
-   virtual INT64     TimeSetup(void) const=0;
-   virtual MTAPIRES  TimeSetup(const INT64 time)=0;
+   virtual int64_t   TimeSetup(void) const=0;
+   virtual MTAPIRES  TimeSetup(const int64_t time)=0;
    //--- order expiration
-   virtual INT64     TimeExpiration(void) const=0;
-   virtual MTAPIRES  TimeExpiration(const INT64 time)=0;
+   virtual int64_t   TimeExpiration(void) const=0;
+   virtual MTAPIRES  TimeExpiration(const int64_t time)=0;
    //--- order filling/cancel time
-   virtual INT64     TimeDone(void) const=0;
-   virtual MTAPIRES  TimeDone(const INT64 time)=0;
+   virtual int64_t   TimeDone(void) const=0;
+   virtual MTAPIRES  TimeDone(const int64_t time)=0;
    //--- EnOrderType
-   virtual UINT      Type(void) const=0;
-   virtual MTAPIRES  Type(const UINT type)=0;
+   virtual uint32_t  Type(void) const=0;
+   virtual MTAPIRES  Type(const uint32_t type)=0;
    //--- EnOrderFilling
-   virtual UINT      TypeFill(void) const=0;
-   virtual MTAPIRES  TypeFill(const UINT type)=0;
+   virtual uint32_t  TypeFill(void) const=0;
+   virtual MTAPIRES  TypeFill(const uint32_t type)=0;
    //--- EnOrderTime
-   virtual UINT      TypeTime(void) const=0;
-   virtual MTAPIRES  TypeTime(const UINT type)=0;
+   virtual uint32_t  TypeTime(void) const=0;
+   virtual MTAPIRES  TypeTime(const uint32_t type)=0;
    //--- order price
    virtual double    PriceOrder(void) const=0;
    virtual MTAPIRES  PriceOrder(const double price)=0;
@@ -201,72 +203,75 @@ public:
    virtual double    PriceTP(void) const=0;
    virtual MTAPIRES  PriceTP(const double price)=0;
    //--- order initial volume
-   virtual UINT64    VolumeInitial(void) const=0;
-   virtual MTAPIRES  VolumeInitial(const UINT64 volume)=0;
+   virtual uint64_t  VolumeInitial(void) const=0;
+   virtual MTAPIRES  VolumeInitial(const uint64_t volume)=0;
    //--- order current volume
-   virtual UINT64    VolumeCurrent(void) const=0;
-   virtual MTAPIRES  VolumeCurrent(const UINT64 volume)=0;
+   virtual uint64_t  VolumeCurrent(void) const=0;
+   virtual MTAPIRES  VolumeCurrent(const uint64_t volume)=0;
    //--- expert id (filled by expert advisor)
-   virtual UINT64    ExpertID(void) const=0;
-   virtual MTAPIRES  ExpertID(const UINT64 id)=0;
+   virtual uint64_t  ExpertID(void) const=0;
+   virtual MTAPIRES  ExpertID(const uint64_t id)=0;
    //--- position id
-   virtual UINT64    PositionID(void) const=0;
-   virtual MTAPIRES  PositionID(const UINT64 id)=0;
+   virtual uint64_t  PositionID(void) const=0;
+   virtual MTAPIRES  PositionID(const uint64_t id)=0;
    //--- order comment
    virtual LPCWSTR   Comment(void) const=0;
    virtual MTAPIRES  Comment(LPCWSTR comment)=0;
    //--- order activation state, time and price
-   virtual UINT      ActivationMode(void) const=0;
-   virtual INT64     ActivationTime(void) const=0;
+   virtual uint32_t  ActivationMode(void) const=0;
+   virtual int64_t   ActivationTime(void) const=0;
    virtual double    ActivationPrice(void) const=0;
-   virtual UINT      ActivationFlags(void) const=0;
+   virtual uint32_t  ActivationFlags(void) const=0;
    //--- order internal data for API usage
-   virtual MTAPIRES  ApiDataSet(const USHORT app_id,const UCHAR id,const INT64 value)=0;
-   virtual MTAPIRES  ApiDataSet(const USHORT app_id,const UCHAR id,const UINT64 value)=0;
-   virtual MTAPIRES  ApiDataSet(const USHORT app_id,const UCHAR id,const double value)=0;
-   virtual MTAPIRES  ApiDataGet(const USHORT app_id,const UCHAR id,INT64& value) const=0;
-   virtual MTAPIRES  ApiDataGet(const USHORT app_id,const UCHAR id,UINT64& value) const=0;
-   virtual MTAPIRES  ApiDataGet(const USHORT app_id,const UCHAR id,double& value) const=0;
-   virtual MTAPIRES  ApiDataClear(const USHORT app_id)=0;
+   virtual MTAPIRES  ApiDataSet(const uint16_t app_id,const uint8_t id,const int64_t value)=0;
+   virtual MTAPIRES  ApiDataSet(const uint16_t app_id,const uint8_t id,const uint64_t value)=0;
+   virtual MTAPIRES  ApiDataSet(const uint16_t app_id,const uint8_t id,const double value)=0;
+   virtual MTAPIRES  ApiDataGet(const uint16_t app_id,const uint8_t id,int64_t& value) const=0;
+   virtual MTAPIRES  ApiDataGet(const uint16_t app_id,const uint8_t id,uint64_t& value) const=0;
+   virtual MTAPIRES  ApiDataGet(const uint16_t app_id,const uint8_t id,double& value) const=0;
+   virtual MTAPIRES  ApiDataClear(const uint16_t app_id)=0;
    virtual MTAPIRES  ApiDataClearAll(void)=0;
-   //--- order setup time in msc since 1970.01.01
-   virtual INT64     TimeSetupMsc(void) const=0;
-   virtual MTAPIRES  TimeSetupMsc(const INT64 time)=0;
-   //--- order setup time in msc since 1970.01.01
-   virtual INT64     TimeDoneMsc(void) const=0;
-   virtual MTAPIRES  TimeDoneMsc(const INT64 time)=0;
+   //--- order setup time in us since 1970.01.01
+   virtual int64_t   TimeSetupMsc(void) const=0;
+   virtual MTAPIRES  TimeSetupMsc(const int64_t time)=0;
+   //--- order setup time in us since 1970.01.01
+   virtual int64_t   TimeDoneMsc(void) const=0;
+   virtual MTAPIRES  TimeDoneMsc(const int64_t time)=0;
    //--- order activation state, time and price
-   virtual MTAPIRES  ActivationMode(const UINT mode)=0;
-   virtual MTAPIRES  ActivationTime(const INT64 atm)=0;
+   virtual MTAPIRES  ActivationMode(const uint32_t mode)=0;
+   virtual MTAPIRES  ActivationTime(const int64_t atm)=0;
    virtual MTAPIRES  ActivationPrice(const double price)=0;
-   virtual MTAPIRES  ActivationFlags(const UINT flags)=0;
+   virtual MTAPIRES  ActivationFlags(const uint32_t flags)=0;
    //--- margin conversion rate (from symbol margin currency to deposit currency)
    virtual double    RateMargin(void) const=0;
    virtual MTAPIRES  RateMargin(const double rate)=0;
    //--- user record internal data for API usage
-   virtual MTAPIRES  ApiDataUpdate(const UINT pos,const USHORT app_id,const UCHAR id,const INT64 value)=0;
-   virtual MTAPIRES  ApiDataUpdate(const UINT pos,const USHORT app_id,const UCHAR id,const UINT64 value)=0;
-   virtual MTAPIRES  ApiDataUpdate(const UINT pos,const USHORT app_id,const UCHAR id,const double value)=0;
-   virtual MTAPIRES  ApiDataNext(const UINT pos,USHORT& app_id,UCHAR& id,INT64& value) const=0;
-   virtual MTAPIRES  ApiDataNext(const UINT pos,USHORT& app_id,UCHAR& id,UINT64& value) const=0;
-   virtual MTAPIRES  ApiDataNext(const UINT pos,USHORT& app_id,UCHAR& id,double& value) const=0;
+   virtual MTAPIRES  ApiDataUpdate(const uint32_t pos,const uint16_t app_id,const uint8_t id,const int64_t value)=0;
+   virtual MTAPIRES  ApiDataUpdate(const uint32_t pos,const uint16_t app_id,const uint8_t id,const uint64_t value)=0;
+   virtual MTAPIRES  ApiDataUpdate(const uint32_t pos,const uint16_t app_id,const uint8_t id,const double value)=0;
+   virtual MTAPIRES  ApiDataNext(const uint32_t pos,uint16_t& app_id,uint8_t& id,int64_t& value) const=0;
+   virtual MTAPIRES  ApiDataNext(const uint32_t pos,uint16_t& app_id,uint8_t& id,uint64_t& value) const=0;
+   virtual MTAPIRES  ApiDataNext(const uint32_t pos,uint16_t& app_id,uint8_t& id,double& value) const=0;
    //--- order ticket
-   virtual MTAPIRES  OrderSet(const UINT64 order)=0;
+   virtual MTAPIRES  OrderSet(const uint64_t order)=0;
    //--- position by id
-   virtual UINT64    PositionByID(void) const=0;
-   virtual MTAPIRES  PositionByID(const UINT64 id)=0;
+   virtual uint64_t  PositionByID(void) const=0;
+   virtual MTAPIRES  PositionByID(const uint64_t id)=0;
    //--- modification flags
-   virtual UINT      ModificationFlags(void) const=0;
+   virtual uint32_t  ModificationFlags(void) const=0;
    //--- EnOrderState
-   virtual MTAPIRES  StateSet(const UINT state)=0;
+   virtual MTAPIRES  StateSet(const uint32_t state)=0;
    //--- EnOrderReason
-   virtual MTAPIRES  ReasonSet(const UINT reason)=0;
+   virtual MTAPIRES  ReasonSet(const uint32_t reason)=0;
    //--- order initial volume with extended accuracy
-   virtual UINT64    VolumeInitialExt(void) const=0;
-   virtual MTAPIRES  VolumeInitialExt(const UINT64 volume)=0;
+   virtual uint64_t  VolumeInitialExt(void) const=0;
+   virtual MTAPIRES  VolumeInitialExt(const uint64_t volume)=0;
    //--- order current volume with extended accuracy
-   virtual UINT64    VolumeCurrentExt(void) const=0;
-   virtual MTAPIRES  VolumeCurrentExt(const UINT64 volume)=0;
+   virtual uint64_t  VolumeCurrentExt(void) const=0;
+   virtual MTAPIRES  VolumeCurrentExt(const uint64_t volume)=0;
+   //--- party id
+   virtual uint64_t  PartyID(void) const=0;
+   virtual MTAPIRES  PartyID(const uint64_t id)=0;
    //--- explicit destructor is prohibited
 protected:
                     ~IMTOrder(void) {}
@@ -287,24 +292,24 @@ public:
    virtual MTAPIRES  Add(IMTOrderArray* array)=0;
    virtual MTAPIRES  AddCopy(const IMTOrderArray* array)=0;
    //--- delete & detach
-   virtual MTAPIRES  Delete(const UINT pos)=0;
-   virtual IMTOrder* Detach(const UINT pos)=0;
+   virtual MTAPIRES  Delete(const uint32_t pos)=0;
+   virtual IMTOrder* Detach(const uint32_t pos)=0;
    //--- update
-   virtual MTAPIRES  Update(const UINT pos,IMTOrder* order)=0;
-   virtual MTAPIRES  UpdateCopy(const UINT pos,const IMTOrder* order)=0;
-   virtual MTAPIRES  Shift(const UINT pos,const int shift)=0;
+   virtual MTAPIRES  Update(const uint32_t pos,IMTOrder* order)=0;
+   virtual MTAPIRES  UpdateCopy(const uint32_t pos,const IMTOrder* order)=0;
+   virtual MTAPIRES  Shift(const uint32_t pos,const int32_t shift)=0;
    //--- data access
-   virtual UINT      Total(void) const=0;
-   virtual IMTOrder* Next(const UINT index) const=0;
+   virtual uint32_t  Total(void) const=0;
+   virtual IMTOrder* Next(const uint32_t index) const=0;
    //--- sorting and search
    virtual MTAPIRES  Sort(MTSortFunctionPtr sort_function)=0;
-   virtual int       Search(const void *key,MTSortFunctionPtr sort_function) const=0;
-   virtual int       SearchGreatOrEq(const void *key,MTSortFunctionPtr sort_function) const=0;
-   virtual int       SearchGreater(const void *key,MTSortFunctionPtr sort_function) const=0;
-   virtual int       SearchLessOrEq(const void *key,MTSortFunctionPtr sort_function) const=0;
-   virtual int       SearchLess(const void *key,MTSortFunctionPtr sort_function) const=0;
-   virtual int       SearchLeft(const void *key,MTSortFunctionPtr sort_function) const=0;
-   virtual int       SearchRight(const void *key,MTSortFunctionPtr sort_function) const=0;
+   virtual int32_t   Search(const void *key,MTSortFunctionPtr sort_function) const=0;
+   virtual int32_t   SearchGreatOrEq(const void *key,MTSortFunctionPtr sort_function) const=0;
+   virtual int32_t   SearchGreater(const void *key,MTSortFunctionPtr sort_function) const=0;
+   virtual int32_t   SearchLessOrEq(const void *key,MTSortFunctionPtr sort_function) const=0;
+   virtual int32_t   SearchLess(const void *key,MTSortFunctionPtr sort_function) const=0;
+   virtual int32_t   SearchLeft(const void *key,MTSortFunctionPtr sort_function) const=0;
+   virtual int32_t   SearchRight(const void *key,MTSortFunctionPtr sort_function) const=0;
    //--- explicit destructor is prohibited
 protected:
                     ~IMTOrderArray(void) {}
@@ -318,7 +323,7 @@ public:
    virtual void      OnOrderAdd(const IMTOrder*    /*order*/)       {  }
    virtual void      OnOrderUpdate(const IMTOrder* /*order*/)       {  }
    virtual void      OnOrderDelete(const IMTOrder* /*order*/)       {  }
-   virtual void      OnOrderClean(const UINT64 /*login*/)           {  }
+   virtual void      OnOrderClean(const uint64_t /*login*/)           {  }
    virtual void      OnOrderSync(void)                              {  }
   };
 //+------------------------------------------------------------------+
@@ -330,7 +335,7 @@ public:
    virtual void      OnHistoryAdd(const IMTOrder*    /*order*/)     {  }
    virtual void      OnHistoryUpdate(const IMTOrder* /*order*/)     {  }
    virtual void      OnHistoryDelete(const IMTOrder* /*order*/)     {  }
-   virtual void      OnHistoryClean(const UINT64 /*login*/)         {  }
+   virtual void      OnHistoryClean(const uint64_t /*login*/)         {  }
    virtual void      OnHistorySync(void)                            {  }
   };
 //+------------------------------------------------------------------+

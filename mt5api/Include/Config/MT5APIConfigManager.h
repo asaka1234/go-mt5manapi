@@ -1,6 +1,6 @@
-//+------------------------------------------------------------------+
+﻿//+------------------------------------------------------------------+
 //|                                         MetaTrader 5 API Server  |
-//|                             Copyright 2000-2024, MetaQuotes Ltd. |
+//|                             Copyright 2000-2026, MetaQuotes Ltd. |
 //|                                               www.metaquotes.net |
 //+------------------------------------------------------------------+
 #pragma once
@@ -17,7 +17,7 @@ public:
       PERMISSION_VIEW  =0x00000001,        // permission to view
       PERMISSION_EXPORT=0x00000002,        // permission to export
       //--- enumeration borders
-      PERMISSION_ALL   =PERMISSION_EXPORT
+      PERMISSION_ALL   =PERMISSION_VIEW|PERMISSION_EXPORT
      };
    //--- common methods
    virtual void      Release(void)=0;
@@ -27,11 +27,11 @@ public:
    virtual LPCWSTR   Report(void) const=0;
    virtual MTAPIRES  Report(LPCWSTR Report)=0;
    //--- permissions flags
-   virtual UINT64    Permissions(void) const=0;
-   virtual MTAPIRES  Permissions(const UINT64 permissions)=0;
+   virtual uint64_t    Permissions(void) const=0;
+   virtual MTAPIRES  Permissions(const uint64_t permissions)=0;
    //--- history limit in days
-   virtual UINT      LimitDays(void) const=0;
-   virtual MTAPIRES  LimitDays(const UINT limit)=0;
+   virtual uint32_t  LimitDays(void) const=0;
+   virtual MTAPIRES  LimitDays(const uint32_t limit)=0;
    //--- explicit destructor is prohibited
 protected:
                     ~IMTConManagerReport(void) {}
@@ -83,7 +83,7 @@ public:
       RIGHT_EMAIL              =23,      // permission to send emails
       RIGHT_ACCOUNTANT         =24,      // permission of accountant (charge/discharge)
       RIGHT_ACC_READ           =25,      // permission to access accounts
-      RIGHT_ACC_DETAILS        =26,      // permission to access account personal details
+      RIGHT_ACC_DETAILS_NAME   =26,      // permission to access account name
       RIGHT_ACC_MANAGER        =27,      // permission to edit accounts
       RIGHT_ACC_ONLINE         =28,      // permission to view currently connected clients
       RIGHT_TRADES_READ        =29,      // permission to access orders and positions
@@ -129,6 +129,21 @@ public:
       RIGHT_ACC_TECHNICAL_MODIFY=71,     // permission to modify "technical account" option
       RIGHT_PAYMENTS_PROCESS   =72,      // permission to process payments
       RIGHT_CFG_CORPORATES     =73,      // permission to configure corporate links
+      RIGHT_CFG_LEVERAGES      =74,      // permission to configure floating leverages
+      RIGHT_CFG_STREAMING      =75,      // permission to configure data streaming
+      RIGHT_ACC_DETAILS_LOCATION    =76, // permission to access account location
+      RIGHT_ACC_DETAILS_ADDRESS     =77, // permission to access account address
+      RIGHT_ACC_DETAILS_ID          =78, // permission to access account ID
+      RIGHT_ACC_DETAILS_EMAIL       =79, // permission to access account email
+      RIGHT_ACC_DETAILS_PHONE       =80, // permission to access account phone
+      RIGHT_ACC_DETAILS_GENERAL     =81, // permission to access account general personal data
+      RIGHT_CLIENTS_DETAILS_NAME    =82, // permission to access client name
+      RIGHT_CLIENTS_DETAILS_LOCATION=83, // permission to access client location
+      RIGHT_CLIENTS_DETAILS_ADDRESS =84, // permission to access client address
+      RIGHT_CLIENTS_DETAILS_ID      =85, // permission to access client ID
+      RIGHT_CLIENTS_DETAILS_EMAIL   =86, // permission to access client email
+      RIGHT_CLIENTS_DETAILS_PHONE   =87, // permission to access client phone
+      RIGHT_CLIENTS_DETAILS_GENERAL =88, // permission to access client general personal data
       RIGHT_CLIENTS_ACCESS     =96,      // permission to access clients
       RIGHT_CLIENTS_CREATE     =97,      // permission to create clients
       RIGHT_CLIENTS_EDIT       =98,      // permission to edit clients
@@ -146,6 +161,10 @@ public:
       RIGHT_PAYMENTS_ACCESS    =110,     // permission to access payments
       RIGHT_PAYMENTS_EDIT      =111,     // permission to edit payments
       RIGHT_PAYMENTS_DELETE    =112,     // permission to delete payments
+      RIGHT_ULTENCY_ACCESS     =113,     // permission to access Ultency
+      RIGHT_ULTENCY_EDIT       =114,     // permission to edit Ultency config
+      RIGHT_ULTENCY_DELETE     =115,     // permission to delete Ultency config
+      RIGHT_ULTENCY_SERVICEDESK=116,     // permission to Ultency ServiceDesk
       //--- enumeration borders
       RIGHT_FIRST              =RIGHT_ADMIN,
       RIGHT_LAST               =128,
@@ -178,43 +197,43 @@ public:
    virtual MTAPIRES  Assign(const IMTConManager* manager)=0;
    virtual MTAPIRES  Clear(void)=0;
    //--- login
-   virtual UINT64    Login(void) const=0;
-   virtual MTAPIRES  Login(const UINT64 login)=0;
+   virtual uint64_t    Login(void) const=0;
+   virtual MTAPIRES  Login(const uint64_t login)=0;
    //--- internal email mailbox name
    virtual LPCWSTR   Mailbox(void) const=0;
    virtual MTAPIRES  Mailbox(LPCWSTR mailbox)=0;
    //--- trade server id
-   virtual UINT64    Server(void) const=0;
+   virtual uint64_t    Server(void) const=0;
    //--- logs access limit EnManagerLimit
-   virtual UINT      LimitLogs(void) const=0;
-   virtual MTAPIRES  LimitLogs(const UINT limit)=0;
+   virtual uint32_t  LimitLogs(void) const=0;
+   virtual MTAPIRES  LimitLogs(const uint32_t limit)=0;
    //--- reports access limit EnManagerLimit
-   virtual UINT      LimitReports(void) const=0;
-   virtual MTAPIRES  LimitReports(const UINT limit)=0;
+   virtual uint32_t  LimitReports(void) const=0;
+   virtual MTAPIRES  LimitReports(const uint32_t limit)=0;
    //--- rights
-   virtual UINT      Right(const UINT right) const=0;
-   virtual MTAPIRES  Right(const UINT right,const UINT flags)=0;
+   virtual uint32_t  Right(const uint32_t right) const=0;
+   virtual MTAPIRES  Right(const uint32_t right,const uint32_t flags)=0;
    //--- allowed groups list
    virtual MTAPIRES  GroupAdd(LPCWSTR path)=0;
-   virtual MTAPIRES  GroupUpdate(const UINT pos,LPCWSTR path)=0;
-   virtual MTAPIRES  GroupShift(const UINT pos,const int shift)=0;
-   virtual MTAPIRES  GroupDelete(const UINT pos)=0;
-   virtual UINT      GroupTotal(void) const=0;
-   virtual LPCWSTR   GroupNext(const UINT pos) const=0;
+   virtual MTAPIRES  GroupUpdate(const uint32_t pos,LPCWSTR path)=0;
+   virtual MTAPIRES  GroupShift(const uint32_t pos,const int32_t shift)=0;
+   virtual MTAPIRES  GroupDelete(const uint32_t pos)=0;
+   virtual uint32_t  GroupTotal(void) const=0;
+   virtual LPCWSTR   GroupNext(const uint32_t pos) const=0;
    //--- allowed addressed list
    virtual MTAPIRES  AccessAdd(IMTConManagerAccess* access)=0;
-   virtual MTAPIRES  AccessUpdate(const UINT pos,const IMTConManagerAccess* access)=0;
-   virtual MTAPIRES  AccessDelete(const UINT pos)=0;
-   virtual MTAPIRES  AccessShift(const UINT pos,const int shift)=0;
-   virtual UINT      AccessTotal(void) const=0;
-   virtual MTAPIRES  AccessNext(const UINT pos,IMTConManagerAccess* access) const=0;
+   virtual MTAPIRES  AccessUpdate(const uint32_t pos,const IMTConManagerAccess* access)=0;
+   virtual MTAPIRES  AccessDelete(const uint32_t pos)=0;
+   virtual MTAPIRES  AccessShift(const uint32_t pos,const int32_t shift)=0;
+   virtual uint32_t  AccessTotal(void) const=0;
+   virtual MTAPIRES  AccessNext(const uint32_t pos,IMTConManagerAccess* access) const=0;
    //--- allowed reports list
    virtual MTAPIRES  ReportAdd(IMTConManagerReport* report)=0;
-   virtual MTAPIRES  ReportUpdate(const UINT pos,const IMTConManagerReport* report)=0;
-   virtual MTAPIRES  ReportDelete(const UINT pos)=0;
-   virtual MTAPIRES  ReportShift(const UINT pos,const int shift)=0;
-   virtual UINT      ReportTotal(void) const=0;
-   virtual MTAPIRES  ReportNext(const UINT pos,IMTConManagerReport* report) const=0;
+   virtual MTAPIRES  ReportUpdate(const uint32_t pos,const IMTConManagerReport* report)=0;
+   virtual MTAPIRES  ReportDelete(const uint32_t pos)=0;
+   virtual MTAPIRES  ReportShift(const uint32_t pos,const int32_t shift)=0;
+   virtual uint32_t  ReportTotal(void) const=0;
+   virtual MTAPIRES  ReportNext(const uint32_t pos,IMTConManagerReport* report) const=0;
    //--- explicit destructor is prohibited
 protected:
                     ~IMTConManager(void) {}
@@ -230,8 +249,8 @@ public:
    virtual void      OnManagerDelete(const IMTConManager* /*config*/) {  }
    virtual void      OnManagerSync(void)                              {  }
    //--- config modification hooks (only for Server API)
-   virtual MTAPIRES  HookManagerAdd(const UINT64 /*login*/,IMTConManager* /*new_cfg*/)                                 { return(MT_RET_OK); }
-   virtual MTAPIRES  HookManagerUpdate(const UINT64 /*login*/,const IMTConManager* /*cfg*/,IMTConManager* /*new_cfg*/) { return(MT_RET_OK); }
-   virtual MTAPIRES  HookManagerDelete(const UINT64 /*login*/,const IMTConManager* /*cfg*/)                            { return(MT_RET_OK); }
+   virtual MTAPIRES  HookManagerAdd(const uint64_t /*login*/,IMTConManager* /*new_cfg*/)                                 { return(MT_RET_OK); }
+   virtual MTAPIRES  HookManagerUpdate(const uint64_t /*login*/,const IMTConManager* /*cfg*/,IMTConManager* /*new_cfg*/) { return(MT_RET_OK); }
+   virtual MTAPIRES  HookManagerDelete(const uint64_t /*login*/,const IMTConManager* /*cfg*/)                            { return(MT_RET_OK); }
   };
 //+------------------------------------------------------------------+

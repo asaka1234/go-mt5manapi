@@ -1,6 +1,6 @@
-//+------------------------------------------------------------------+
+﻿//+------------------------------------------------------------------+
 //|                                                 MetaTrader 5 API |
-//|                             Copyright 2000-2024, MetaQuotes Ltd. |
+//|                             Copyright 2000-2026, MetaQuotes Ltd. |
 //|                                               www.metaquotes.net |
 //+------------------------------------------------------------------+
 #pragma once
@@ -15,17 +15,17 @@ public:
    virtual MTAPIRES  Assign(const IMTConSymbolSession* symbol)=0;
    virtual MTAPIRES  Clear(void)=0;
    //--- session start in minutes (60 = 01:00)
-   virtual UINT      Open(void) const=0;
-   virtual MTAPIRES  Open(const UINT open)=0;
+   virtual uint32_t  Open(void) const=0;
+   virtual MTAPIRES  Open(const uint32_t open)=0;
    //--- session start hours and minutes
-   virtual UINT      OpenHours(void) const=0;
-   virtual UINT      OpenMinutes(void) const=0;
+   virtual uint32_t  OpenHours(void) const=0;
+   virtual uint32_t  OpenMinutes(void) const=0;
    //--- session end in minutes (60 = 01:00)
-   virtual UINT      Close(void) const=0;
-   virtual MTAPIRES  Close(const UINT close)=0;
+   virtual uint32_t  Close(void) const=0;
+   virtual MTAPIRES  Close(const uint32_t close)=0;
    //--- session end hours and minutes
-   virtual UINT      CloseHours(void) const=0;
-   virtual UINT      CloseMinutes(void) const=0;
+   virtual uint32_t  CloseHours(void) const=0;
+   virtual uint32_t  CloseMinutes(void) const=0;
    //--- explicit destructor is prohibited
 protected:
                     ~IMTConSymbolSession(void) {}
@@ -430,6 +430,16 @@ public:
       CHART_MODE_FIRST        =CHART_MODE_BID_PRICE,
       CHART_MODE_LAST         =CHART_MODE_OLD
      };
+   //--- book volume mode
+   enum EnBookVolumeMode
+     {
+      BOOK_VOLUME_MODE_TYPE   =0,
+      BOOK_VOLUME_MODE_SIZE   =1,
+      BOOK_VOLUME_MODE_LOTS   =2,
+      //--- enumeration borders
+      BOOK_VOLUME_MODE_FIRST  =BOOK_VOLUME_MODE_TYPE,
+      BOOK_VOLUME_MODE_LAST   =BOOK_VOLUME_MODE_LOTS
+     };
    //--- margin check modes
    enum EnMarginFlags
      {
@@ -592,15 +602,15 @@ public:
    //--- symbol base currency
    virtual LPCWSTR   CurrencyBase(void) const=0;
    virtual MTAPIRES  CurrencyBase(LPCWSTR currency)=0;
-   virtual UINT      CurrencyBaseDigits(void) const=0;
+   virtual uint32_t  CurrencyBaseDigits(void) const=0;
    //--- symbol profit currency
    virtual LPCWSTR   CurrencyProfit(void) const=0;
    virtual MTAPIRES  CurrencyProfit(LPCWSTR currency)=0;
-   virtual UINT      CurrencyProfitDigits(void) const=0;
+   virtual uint32_t  CurrencyProfitDigits(void) const=0;
    //--- symbol margin currency
    virtual LPCWSTR   CurrencyMargin(void) const=0;
    virtual MTAPIRES  CurrencyMargin(LPCWSTR currency)=0;
-   virtual UINT      CurrencyMarginDigits(void) const=0;
+   virtual uint32_t  CurrencyMarginDigits(void) const=0;
    //--- symbol color
    virtual COLORREF  Color(void) const=0;
    virtual MTAPIRES  Color(const COLORREF color)=0;
@@ -608,59 +618,59 @@ public:
    virtual COLORREF  ColorBackground(void) const=0;
    virtual MTAPIRES  ColorBackground(const COLORREF color)=0;
    //--- symbol digits
-   virtual UINT      Digits(void) const=0;
-   virtual MTAPIRES  Digits(const UINT digits)=0;
+   virtual uint32_t  Digits(void) const=0;
+   virtual MTAPIRES  Digits(const uint32_t digits)=0;
    //--- symbol digits derivation (1/10^digits & 10^digits)
    virtual double    Point(void) const=0;
    virtual double    Multiply(void) const=0;
    //--- EnTickFlags
-   virtual UINT64    TickFlags(void) const=0;
-   virtual MTAPIRES  TickFlags(const UINT64 flags)=0;
+   virtual uint64_t  TickFlags(void) const=0;
+   virtual MTAPIRES  TickFlags(const uint64_t flags)=0;
    //--- Depth of Market depth (both legs)
-   virtual UINT      TickBookDepth(void) const=0;
-   virtual MTAPIRES  TickBookDepth(const UINT depth)=0;
+   virtual uint32_t  TickBookDepth(void) const=0;
+   virtual MTAPIRES  TickBookDepth(const uint32_t depth)=0;
    //--- filtration soft level
-   virtual UINT      FilterSoft(void) const=0;
-   virtual MTAPIRES  FilterSoft(const UINT filter)=0;
+   virtual uint32_t  FilterSoft(void) const=0;
+   virtual MTAPIRES  FilterSoft(const uint32_t filter)=0;
    //--- filtration soft level counter
-   virtual UINT      FilterSoftTicks(void) const=0;
-   virtual MTAPIRES  FilterSoftTicks(const UINT ticks)=0;
+   virtual uint32_t  FilterSoftTicks(void) const=0;
+   virtual MTAPIRES  FilterSoftTicks(const uint32_t ticks)=0;
    //--- filtration hard level
-   virtual UINT      FilterHard(void) const=0;
-   virtual MTAPIRES  FilterHard(const UINT filter)=0;
+   virtual uint32_t  FilterHard(void) const=0;
+   virtual MTAPIRES  FilterHard(const uint32_t filter)=0;
    //--- filtration hard level counter
-   virtual UINT      FilterHardTicks(void) const=0;
-   virtual MTAPIRES  FilterHardTicks(const UINT ticks)=0;
+   virtual uint32_t  FilterHardTicks(void) const=0;
+   virtual MTAPIRES  FilterHardTicks(const uint32_t ticks)=0;
    //--- filtration discard level
-   virtual UINT      FilterDiscard(void) const=0;
-   virtual MTAPIRES  FilterDiscard(const UINT ticks)=0;
+   virtual uint32_t  FilterDiscard(void) const=0;
+   virtual MTAPIRES  FilterDiscard(const uint32_t ticks)=0;
    //--- spread max value
-   virtual UINT      FilterSpreadMax(void) const=0;
-   virtual MTAPIRES  FilterSpreadMax(const UINT spread)=0;
+   virtual uint32_t  FilterSpreadMax(void) const=0;
+   virtual MTAPIRES  FilterSpreadMax(const uint32_t spread)=0;
    //--- spread min value
-   virtual UINT      FilterSpreadMin(void) const=0;
-   virtual MTAPIRES  FilterSpreadMin(const UINT spread)=0;
+   virtual uint32_t  FilterSpreadMin(void) const=0;
+   virtual MTAPIRES  FilterSpreadMin(const uint32_t spread)=0;
    //--- EnTradeMode
-   virtual UINT      TradeMode(void) const=0;
-   virtual MTAPIRES  TradeMode(const UINT mode)=0;
+   virtual uint32_t  TradeMode(void) const=0;
+   virtual MTAPIRES  TradeMode(const uint32_t mode)=0;
    //--- EnCalcMode
-   virtual UINT      CalcMode(void) const=0;
-   virtual MTAPIRES  CalcMode(const UINT mode)=0;
+   virtual uint32_t  CalcMode(void) const=0;
+   virtual MTAPIRES  CalcMode(const uint32_t mode)=0;
    //--- EnExecutionMode
-   virtual UINT      ExecMode(void) const=0;
-   virtual MTAPIRES  ExecMode(const UINT mode)=0;
+   virtual uint32_t  ExecMode(void) const=0;
+   virtual MTAPIRES  ExecMode(const uint32_t mode)=0;
    //--- EnGTCMode
-   virtual UINT      GTCMode(void) const=0;
-   virtual MTAPIRES  GTCMode(const UINT mode)=0;
+   virtual uint32_t  GTCMode(void) const=0;
+   virtual MTAPIRES  GTCMode(const uint32_t mode)=0;
    //--- EnFillingFlags
-   virtual UINT      FillFlags(void) const=0;
-   virtual MTAPIRES  FillFlags(const UINT flags)=0;
+   virtual uint32_t  FillFlags(void) const=0;
+   virtual MTAPIRES  FillFlags(const uint32_t flags)=0;
    //--- EnExpirationFlags
-   virtual UINT      ExpirFlags(void) const=0;
-   virtual MTAPIRES  ExpirFlags(const UINT flags)=0;
+   virtual uint32_t  ExpirFlags(void) const=0;
+   virtual MTAPIRES  ExpirFlags(const uint32_t flags)=0;
    //--- symbol spread (0-floating)
-   virtual UINT      Spread(void) const=0;
-   virtual MTAPIRES  Spread(const UINT spread)=0;
+   virtual uint32_t  Spread(void) const=0;
+   virtual MTAPIRES  Spread(const uint32_t spread)=0;
    //--- spread balance
    virtual INT       SpreadBalance(void) const=0;
    virtual MTAPIRES  SpreadBalance(const INT spread)=0;
@@ -686,23 +696,23 @@ public:
    virtual INT       FreezeLevel(void) const=0;
    virtual MTAPIRES  FreezeLevel(const INT level)=0;
    //--- quotes timeout 
-   virtual UINT      QuotesTimeout(void) const=0;
-   virtual MTAPIRES  QuotesTimeout(const UINT timeout)=0;
+   virtual uint32_t  QuotesTimeout(void) const=0;
+   virtual MTAPIRES  QuotesTimeout(const uint32_t timeout)=0;
    //--- minimal volume
-   virtual UINT64    VolumeMin(void) const=0;
-   virtual MTAPIRES  VolumeMin(const UINT64 volume)=0;
+   virtual uint64_t  VolumeMin(void) const=0;
+   virtual MTAPIRES  VolumeMin(const uint64_t volume)=0;
    //--- maximal volume
-   virtual UINT64    VolumeMax(void) const=0;
-   virtual MTAPIRES  VolumeMax(const UINT64 volume)=0;
+   virtual uint64_t  VolumeMax(void) const=0;
+   virtual MTAPIRES  VolumeMax(const uint64_t volume)=0;
    //--- volume step
-   virtual UINT64    VolumeStep(void) const=0;
-   virtual MTAPIRES  VolumeStep(const UINT64 volume)=0;
+   virtual uint64_t  VolumeStep(void) const=0;
+   virtual MTAPIRES  VolumeStep(const uint64_t volume)=0;
    //--- cumulative positions and orders limit
-   virtual UINT64    VolumeLimit(void) const=0;
-   virtual MTAPIRES  VolumeLimit(const UINT64 volume)=0;
+   virtual uint64_t  VolumeLimit(void) const=0;
+   virtual MTAPIRES  VolumeLimit(const uint64_t volume)=0;
    //--- EnMarginFlags
-   virtual UINT      MarginFlags(void) const=0;
-   virtual MTAPIRES  MarginFlags(const UINT mode)=0;
+   virtual uint32_t  MarginFlags(void) const=0;
+   virtual MTAPIRES  MarginFlags(const uint32_t mode)=0;
    //--- initial margin
    virtual double    MarginInitial(void) const=0;
    virtual MTAPIRES  MarginInitial(const double margin)=0;
@@ -725,8 +735,8 @@ public:
    virtual double    MarginStopLimit(void) const=0;
    virtual MTAPIRES  MarginStopLimit(const double margin)=0;
    //--- EnSwapMode
-   virtual UINT      SwapMode(void) const=0;
-   virtual MTAPIRES  SwapMode(const UINT mode)=0;
+   virtual uint32_t  SwapMode(void) const=0;
+   virtual MTAPIRES  SwapMode(const uint32_t mode)=0;
    //--- long positions swaps rate
    virtual double    SwapLong(void) const=0;
    virtual MTAPIRES  SwapLong(const double swap)=0;
@@ -734,51 +744,51 @@ public:
    virtual double    SwapShort(void) const=0;
    virtual MTAPIRES  SwapShort(const double swap)=0;
    //--- 3 time swaps day, EnSwapDay
-   virtual UINT      Swap3Day(void) const=0;
-   virtual MTAPIRES  Swap3Day(const UINT day)=0;
+   virtual uint32_t  Swap3Day(void) const=0;
+   virtual MTAPIRES  Swap3Day(const uint32_t day)=0;
    //--- trade start date
-   virtual INT64     TimeStart(void) const=0;
-   virtual MTAPIRES  TimeStart(const INT64 start)=0;
+   virtual int64_t   TimeStart(void) const=0;
+   virtual MTAPIRES  TimeStart(const int64_t start)=0;
    //--- trade end date
-   virtual INT64     TimeExpiration(void) const=0;
-   virtual MTAPIRES  TimeExpiration(const INT64 expiration)=0;
+   virtual int64_t   TimeExpiration(void) const=0;
+   virtual MTAPIRES  TimeExpiration(const int64_t expiration)=0;
    //--- quote sessions
-   virtual MTAPIRES  SessionQuoteAdd(const UINT wday,IMTConSymbolSession* symbol)=0;
-   virtual MTAPIRES  SessionQuoteUpdate(const UINT wday,const UINT pos,const IMTConSymbolSession* session)=0;
-   virtual MTAPIRES  SessionQuoteDelete(const UINT wday,const UINT pos)=0;
-   virtual MTAPIRES  SessionQuoteClear(const UINT wday)=0;
-   virtual MTAPIRES  SessionQuoteShift(const UINT wday,const UINT pos,const int shift)=0;
-   virtual UINT      SessionQuoteTotal(const UINT wday) const=0;
-   virtual MTAPIRES  SessionQuoteNext(const UINT wday,const UINT pos,IMTConSymbolSession* session) const=0;
+   virtual MTAPIRES  SessionQuoteAdd(const uint32_t wday,IMTConSymbolSession* symbol)=0;
+   virtual MTAPIRES  SessionQuoteUpdate(const uint32_t wday,const uint32_t pos,const IMTConSymbolSession* session)=0;
+   virtual MTAPIRES  SessionQuoteDelete(const uint32_t wday,const uint32_t pos)=0;
+   virtual MTAPIRES  SessionQuoteClear(const uint32_t wday)=0;
+   virtual MTAPIRES  SessionQuoteShift(const uint32_t wday,const uint32_t pos,const int32_t shift)=0;
+   virtual uint32_t  SessionQuoteTotal(const uint32_t wday) const=0;
+   virtual MTAPIRES  SessionQuoteNext(const uint32_t wday,const uint32_t pos,IMTConSymbolSession* session) const=0;
    //--- trade sessions
-   virtual MTAPIRES  SessionTradeAdd(const UINT wday,IMTConSymbolSession* symbol)=0;
-   virtual MTAPIRES  SessionTradeUpdate(const UINT wday,const UINT pos,const IMTConSymbolSession* session)=0;
-   virtual MTAPIRES  SessionTradeDelete(const UINT wday,const UINT pos)=0;
-   virtual MTAPIRES  SessionTradeClear(const UINT wday)=0;
-   virtual MTAPIRES  SessionTradeShift(const UINT wday,const UINT pos,const int shift)=0;
-   virtual UINT      SessionTradeTotal(const UINT wday) const=0;
-   virtual MTAPIRES  SessionTradeNext(const UINT wday,const UINT pos,IMTConSymbolSession* session) const=0;
+   virtual MTAPIRES  SessionTradeAdd(const uint32_t wday,IMTConSymbolSession* symbol)=0;
+   virtual MTAPIRES  SessionTradeUpdate(const uint32_t wday,const uint32_t pos,const IMTConSymbolSession* session)=0;
+   virtual MTAPIRES  SessionTradeDelete(const uint32_t wday,const uint32_t pos)=0;
+   virtual MTAPIRES  SessionTradeClear(const uint32_t wday)=0;
+   virtual MTAPIRES  SessionTradeShift(const uint32_t wday,const uint32_t pos,const int32_t shift)=0;
+   virtual uint32_t  SessionTradeTotal(const uint32_t wday) const=0;
+   virtual MTAPIRES  SessionTradeNext(const uint32_t wday,const uint32_t pos,IMTConSymbolSession* session) const=0;
    //--- request execution flags
-   virtual UINT      REFlags(void) const=0;
-   virtual MTAPIRES  REFlags(const UINT flags)=0;
+   virtual uint32_t  REFlags(void) const=0;
+   virtual MTAPIRES  REFlags(const uint32_t flags)=0;
    //--- request execution timeout
-   virtual UINT      RETimeout(void) const=0;
-   virtual MTAPIRES  RETimeout(const UINT timeout)=0;
+   virtual uint32_t  RETimeout(void) const=0;
+   virtual MTAPIRES  RETimeout(const uint32_t timeout)=0;
    //--- instant execution check mode 
-   virtual UINT      IECheckMode(void) const=0;
-   virtual MTAPIRES  IECheckMode(const UINT mode)=0;
+   virtual uint32_t  IECheckMode(void) const=0;
+   virtual MTAPIRES  IECheckMode(const uint32_t mode)=0;
    //--- instant execution timeout
-   virtual UINT      IETimeout(void) const=0;
-   virtual MTAPIRES  IETimeout(const UINT timeout)=0;
+   virtual uint32_t  IETimeout(void) const=0;
+   virtual MTAPIRES  IETimeout(const uint32_t timeout)=0;
    //--- instant execution profit slippage
-   virtual UINT      IESlipProfit(void) const=0;
-   virtual MTAPIRES  IESlipProfit(const UINT slippage)=0;
+   virtual uint32_t  IESlipProfit(void) const=0;
+   virtual MTAPIRES  IESlipProfit(const uint32_t slippage)=0;
    //--- instant execution losing slippage
-   virtual UINT      IESlipLosing(void) const=0;
-   virtual MTAPIRES  IESlipLosing(const UINT slippage)=0;
+   virtual uint32_t  IESlipLosing(void) const=0;
+   virtual MTAPIRES  IESlipLosing(const uint32_t slippage)=0;
    //--- instant execution max volume
-   virtual UINT64    IEVolumeMax(void) const=0;
-   virtual MTAPIRES  IEVolumeMax(const UINT64 volume)=0;
+   virtual uint64_t  IEVolumeMax(void) const=0;
+   virtual MTAPIRES  IEVolumeMax(const uint64_t volume)=0;
    //--- settle price (for futures)
    virtual double    PriceSettle(void) const=0;
    virtual MTAPIRES  PriceSettle(const double price)=0;
@@ -789,20 +799,20 @@ public:
    virtual double    PriceLimitMin(void) const=0;
    virtual MTAPIRES  PriceLimitMin(const double price)=0;
    //--- EnTradeFlags
-   virtual UINT64    TradeFlags(void) const=0;
-   virtual MTAPIRES  TradeFlags(const UINT64 flags)=0;
+   virtual uint64_t  TradeFlags(void) const=0;
+   virtual MTAPIRES  TradeFlags(const uint64_t flags)=0;
    //--- EnOrderFlags
-   virtual UINT      OrderFlags(void) const=0;
-   virtual MTAPIRES  OrderFlags(const UINT flags)=0;
+   virtual uint32_t  OrderFlags(void) const=0;
+   virtual MTAPIRES  OrderFlags(const uint32_t flags)=0;
    //--- orders and positions margin rates
-   virtual double    MarginRateInitial(const UINT type) const=0;
-   virtual MTAPIRES  MarginRateInitial(const UINT type,const double margin_rate)=0;
+   virtual double    MarginRateInitial(const uint32_t type) const=0;
+   virtual MTAPIRES  MarginRateInitial(const uint32_t type,const double margin_rate)=0;
    //--- orders and positions margin rates
-   virtual double    MarginRateMaintenance(const UINT type) const=0;
-   virtual MTAPIRES  MarginRateMaintenance(const UINT type,const double margin_rate)=0;
+   virtual double    MarginRateMaintenance(const uint32_t type) const=0;
+   virtual MTAPIRES  MarginRateMaintenance(const uint32_t type,const double margin_rate)=0;
    //--- options mode EnOptionMode
-   virtual UINT      OptionsMode(void) const=0;
-   virtual MTAPIRES  OptionsMode(const UINT mode)=0;
+   virtual uint32_t  OptionsMode(void) const=0;
+   virtual MTAPIRES  OptionsMode(const uint32_t mode)=0;
    //--- option strike price value
    virtual double    PriceStrike(void) const=0;
    virtual MTAPIRES  PriceStrike(const double price)=0;
@@ -816,14 +826,14 @@ public:
    virtual double    AccruedInterest(void) const=0;
    virtual MTAPIRES  AccruedInterest(const double interest)=0;
    //--- futures splice type EnSpliceType
-   virtual UINT      SpliceType(void) const=0;
-   virtual MTAPIRES  SpliceType(const UINT type)=0;
+   virtual uint32_t  SpliceType(void) const=0;
+   virtual MTAPIRES  SpliceType(const uint32_t type)=0;
    //--- futures splice time type EnSpliceType
-   virtual UINT      SpliceTimeType(void) const=0;
-   virtual MTAPIRES  SpliceTimeType(const UINT time_type)=0;
+   virtual uint32_t  SpliceTimeType(void) const=0;
+   virtual MTAPIRES  SpliceTimeType(const uint32_t time_type)=0;
    //--- options splice point in days
-   virtual UINT      SpliceTimeDays(void) const=0;
-   virtual MTAPIRES  SpliceTimeDays(const UINT days)=0;
+   virtual uint32_t  SpliceTimeDays(void) const=0;
+   virtual MTAPIRES  SpliceTimeDays(const uint32_t days)=0;
    //--- hedged positions margin rate
    virtual double    MarginHedged(void) const=0;
    virtual MTAPIRES  MarginHedged(const double margin)=0;
@@ -831,36 +841,36 @@ public:
    virtual double    MarginRateCurrency(void) const=0;
    virtual MTAPIRES  MarginRateCurrency(const double margin_rate)=0;
    //--- gap level
-   virtual UINT      FilterGap(void) const=0;
-   virtual MTAPIRES  FilterGap(const UINT gap)=0;
+   virtual uint32_t  FilterGap(void) const=0;
+   virtual MTAPIRES  FilterGap(const uint32_t gap)=0;
    //--- gap level ticks
-   virtual UINT      FilterGapTicks(void) const=0;
-   virtual MTAPIRES  FilterGapTicks(const UINT ticks)=0;
+   virtual uint32_t  FilterGapTicks(void) const=0;
+   virtual MTAPIRES  FilterGapTicks(const uint32_t ticks)=0;
    //--- chart mode
-   virtual UINT      ChartMode(void) const=0;
-   virtual MTAPIRES  ChartMode(const UINT mode)=0;
+   virtual uint32_t  ChartMode(void) const=0;
+   virtual MTAPIRES  ChartMode(const uint32_t mode)=0;
    //---  currency digits
-   virtual MTAPIRES  CurrencyBaseDigitsSet(const UINT digits)=0;
-   virtual MTAPIRES  CurrencyProfitDigitsSet(const UINT digits)=0;
-   virtual MTAPIRES  CurrencyMarginDigitsSet(const UINT digits)=0;
+   virtual MTAPIRES  CurrencyBaseDigitsSet(const uint32_t digits)=0;
+   virtual MTAPIRES  CurrencyProfitDigitsSet(const uint32_t digits)=0;
+   virtual MTAPIRES  CurrencyMarginDigitsSet(const uint32_t digits)=0;
    //--- instant execution flags with extended accuracy
-   virtual UINT      IEFlags(void) const=0;
-   virtual MTAPIRES  IEFlags(const UINT flags)=0;
+   virtual uint32_t  IEFlags(void) const=0;
+   virtual MTAPIRES  IEFlags(const uint32_t flags)=0;
    //--- minimal volume with extended accuracy
-   virtual UINT64    VolumeMinExt(void) const=0;
-   virtual MTAPIRES  VolumeMinExt(const UINT64 volume)=0;
+   virtual uint64_t  VolumeMinExt(void) const=0;
+   virtual MTAPIRES  VolumeMinExt(const uint64_t volume)=0;
    //--- maximal volume with extended accuracy
-   virtual UINT64    VolumeMaxExt(void) const=0;
-   virtual MTAPIRES  VolumeMaxExt(const UINT64 volume)=0;
+   virtual uint64_t  VolumeMaxExt(void) const=0;
+   virtual MTAPIRES  VolumeMaxExt(const uint64_t volume)=0;
    //--- volume step with extended accuracy
-   virtual UINT64    VolumeStepExt(void) const=0;
-   virtual MTAPIRES  VolumeStepExt(const UINT64 volume)=0;
+   virtual uint64_t  VolumeStepExt(void) const=0;
+   virtual MTAPIRES  VolumeStepExt(const uint64_t volume)=0;
    //--- cumulative positions and orders limit with extended accuracy
-   virtual UINT64    VolumeLimitExt(void) const=0;
-   virtual MTAPIRES  VolumeLimitExt(const UINT64 volume)=0;
+   virtual uint64_t  VolumeLimitExt(void) const=0;
+   virtual MTAPIRES  VolumeLimitExt(const uint64_t volume)=0;
    //--- instant execution max volume with extended accuracy
-   virtual UINT64    IEVolumeMaxExt(void) const=0;
-   virtual MTAPIRES  IEVolumeMaxExt(const UINT64 volume)=0;
+   virtual uint64_t  IEVolumeMaxExt(void) const=0;
+   virtual MTAPIRES  IEVolumeMaxExt(const uint64_t volume)=0;
    //--- category
    virtual LPCWSTR   Category(void) const=0;
    virtual MTAPIRES  Category(LPCWSTR category)=0;
@@ -871,23 +881,23 @@ public:
    virtual LPCWSTR   CFI(void) const=0;
    virtual MTAPIRES  CFI(LPCWSTR cfi)=0;
    //--- Sector
-   virtual UINT      Sector(void) const=0;
-   virtual MTAPIRES  Sector(const UINT sector)=0;
+   virtual uint32_t  Sector(void) const=0;
+   virtual MTAPIRES  Sector(const uint32_t sector)=0;
    //--- Industry
-   virtual UINT      Industry(void) const=0;
-   virtual MTAPIRES  Industry(const UINT industry)=0;
+   virtual uint32_t  Industry(void) const=0;
+   virtual MTAPIRES  Industry(const uint32_t industry)=0;
    //--- Country - ISO 3166-1 alpha-3 code
    virtual LPCWSTR   Country(void) const=0;
    virtual MTAPIRES  Country(LPCWSTR country)=0;
    //--- Delay for subscriptions
-   virtual UINT      SubscriptionsDelay(void) const=0;
-   virtual MTAPIRES  SubscriptionsDelay(const UINT delay)=0;
+   virtual uint32_t  SubscriptionsDelay(void) const=0;
+   virtual MTAPIRES  SubscriptionsDelay(const uint32_t delay)=0;
    //--- Days in year
-   virtual UINT      SwapYearDays(void) const=0;
-   virtual MTAPIRES  SwapYearDays(const UINT days)=0;
+   virtual uint32_t  SwapYearDays(void) const=0;
+   virtual MTAPIRES  SwapYearDays(const uint32_t days)=0;
    //--- swap flags
-   virtual UINT      SwapFlags(void) const=0;
-   virtual MTAPIRES  SwapFlags(const UINT flags)=0;
+   virtual uint32_t  SwapFlags(void) const=0;
+   virtual MTAPIRES  SwapFlags(const uint32_t flags)=0;
    //--- swap rate for Sunday
    virtual double    SwapRateSunday(void) const=0;
    virtual MTAPIRES  SwapRateSunday(const double rate)=0;
@@ -909,6 +919,9 @@ public:
    //--- swap rate for Saturday
    virtual double    SwapRateSaturday(void) const=0;
    virtual MTAPIRES  SwapRateSaturday(const double rate)=0;
+   //--- EnBookVolumeMode
+   virtual uint32_t  BookVolumeMode(void) const=0;
+   virtual MTAPIRES  BookVolumeMode(const uint32_t mode)=0;
    //--- explicit destructor is prohibited
 protected:
                     ~IMTConSymbol(void) {}
@@ -929,24 +942,24 @@ public:
    virtual MTAPIRES  Add(IMTConSymbolArray* array)=0;
    virtual MTAPIRES  AddCopy(const IMTConSymbolArray* array)=0;
    //--- delete & detach
-   virtual MTAPIRES  Delete(const UINT pos)=0;
-   virtual IMTConSymbol* Detach(const UINT pos)=0;
+   virtual MTAPIRES  Delete(const uint32_t pos)=0;
+   virtual IMTConSymbol* Detach(const uint32_t pos)=0;
    //--- update
-   virtual MTAPIRES  Update(const UINT pos,IMTConSymbol* record)=0;
-   virtual MTAPIRES  UpdateCopy(const UINT pos,const IMTConSymbol* record)=0;
-   virtual MTAPIRES  Shift(const UINT pos,const int shift)=0;
+   virtual MTAPIRES  Update(const uint32_t pos,IMTConSymbol* record)=0;
+   virtual MTAPIRES  UpdateCopy(const uint32_t pos,const IMTConSymbol* record)=0;
+   virtual MTAPIRES  Shift(const uint32_t pos,const int32_t shift)=0;
    //--- data access
-   virtual UINT      Total(void) const=0;
-   virtual IMTConSymbol*  Next(const UINT index) const=0;
+   virtual uint32_t  Total(void) const=0;
+   virtual IMTConSymbol*  Next(const uint32_t index) const=0;
    //--- sorting and search
    virtual MTAPIRES  Sort(MTSortFunctionPtr sort_function)=0;
-   virtual int       Search(const void *key,MTSortFunctionPtr sort_function) const=0;
-   virtual int       SearchGreatOrEq(const void *key,MTSortFunctionPtr sort_function) const=0;
-   virtual int       SearchGreater(const void *key,MTSortFunctionPtr sort_function) const=0;
-   virtual int       SearchLessOrEq(const void *key,MTSortFunctionPtr sort_function) const=0;
-   virtual int       SearchLess(const void *key,MTSortFunctionPtr sort_function) const=0;
-   virtual int       SearchLeft(const void *key,MTSortFunctionPtr sort_function) const=0;
-   virtual int       SearchRight(const void *key,MTSortFunctionPtr sort_function) const=0;
+   virtual int32_t   Search(const void *key,MTSortFunctionPtr sort_function) const=0;
+   virtual int32_t   SearchGreatOrEq(const void *key,MTSortFunctionPtr sort_function) const=0;
+   virtual int32_t   SearchGreater(const void *key,MTSortFunctionPtr sort_function) const=0;
+   virtual int32_t   SearchLessOrEq(const void *key,MTSortFunctionPtr sort_function) const=0;
+   virtual int32_t   SearchLess(const void *key,MTSortFunctionPtr sort_function) const=0;
+   virtual int32_t   SearchLeft(const void *key,MTSortFunctionPtr sort_function) const=0;
+   virtual int32_t   SearchRight(const void *key,MTSortFunctionPtr sort_function) const=0;
    //--- explicit destructor is prohibited
 protected:
                     ~IMTConSymbolArray(void) {}
@@ -962,8 +975,8 @@ public:
    virtual void      OnSymbolDelete(const IMTConSymbol* /*config*/) {  }
    virtual void      OnSymbolSync(void)                             {  }
    //--- config modification hooks (only for Server API)
-   virtual MTAPIRES  HookSymbolAdd(const UINT64 /*login*/,IMTConSymbol* /*new_cfg*/)                                { return(MT_RET_OK); }
-   virtual MTAPIRES  HookSymbolUpdate(const UINT64 /*login*/,const IMTConSymbol* /*cfg*/,IMTConSymbol* /*new_cfg*/) { return(MT_RET_OK); }
-   virtual MTAPIRES  HookSymbolDelete(const UINT64 /*login*/,const IMTConSymbol* /*cfg*/)                           { return(MT_RET_OK); }
+   virtual MTAPIRES  HookSymbolAdd(const uint64_t /*login*/,IMTConSymbol* /*new_cfg*/)                                { return(MT_RET_OK); }
+   virtual MTAPIRES  HookSymbolUpdate(const uint64_t /*login*/,const IMTConSymbol* /*cfg*/,IMTConSymbol* /*new_cfg*/) { return(MT_RET_OK); }
+   virtual MTAPIRES  HookSymbolDelete(const uint64_t /*login*/,const IMTConSymbol* /*cfg*/)                           { return(MT_RET_OK); }
   };
 //+------------------------------------------------------------------+
