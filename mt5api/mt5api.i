@@ -101,6 +101,8 @@ typedef long long __time32_t;
 
 
 %include "windows.i"
+// 新版 SDK 使用定宽整数，必须在解析 SDK 头文件前声明其数值类型。
+%include "stdint.i"
 
 // SWIG 解析时忽略对齐修饰；C++ 编译仍使用原始头文件中的 alignas。
 #define alignas(...)
