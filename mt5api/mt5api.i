@@ -14,8 +14,14 @@
 #endif
 
 
+#define _WINSOCKAPI_        // 禁止 winsock.h
+#define WIN32_LEAN_AND_MEAN
+#define NOMINMAX
+
+#include <winsock2.h>       // 必须在 windows.h 前
 #include <windows.h>
 
+#include "Include\MT5APIGateway.h"
 #include "Include\MT5APIManager.h"
 #include "Include\MT5APIConstants.h"
 #include "Include\MT5APILogger.h"
@@ -36,6 +42,9 @@
 #include "Include\Config\MT5APIConfigGroup.h"
 #include "Include\Config\MT5APIConfigHoliday.h"
 #include "Include\Config\MT5APIConfigSymbol.h"
+#include "Include\Config\MT5APIConfigParam.h"
+#include "Include\Config\MT5APIConfigFeeder.h"
+#include "Include\Config\MT5APIConfigGateway.h"
 #include "Include\Bases\MT5APITick.h"
 #include "Include\Bases\MT5APIPosition.h"
 #include "Include\Bases\MT5APIAccount.h"
@@ -47,24 +56,113 @@
 #include "Include\Bases\MT5APIOrder.h"
 #include "Include\Bases\MT5APIChart.h"
 #include "Include\Bases\MT5APIConfirm.h"
+#include "Include\Bases\MT5APIExecution.h"
+#include "Include\Bases\MT5APIBook.h"
 %}
 
 %include <typemaps.i>
 %include "carrays.i"
-
-
 //-------------------------------------
+%include <stdint.i>
+
+%define FIX_PTR_TYPE(T)
+
+%typemap(in) T * {
+    $1 = (T*)$input;
+}
+
+%enddef
+
+FIX_PTR_TYPE(IMTDeal)
+
+
+%inline %{
+#include <vector>
+#include <string>
+
+class WArgv {
+private:
+    wchar_t** argv;
+    int argc;
+
+public:
+    WArgv() : argv(nullptr), argc(0) {}
+
+    ~WArgv() {
+        clear();
+    }
+
+    void clear() {
+        if (argv) {
+            for (int i = 0; i < argc; i++) {
+                delete[] argv[i];
+            }
+            delete[] argv;
+            argv = nullptr;
+            argc = 0;
+        }
+    }
+
+    // 从 Go 的 string 数组构造
+    void fromStringArray(const std::vector<std::string>& args) {
+        clear();
+        argc = (int)args.size();
+        argv = new wchar_t*[argc + 1];
+
+        for (int i = 0; i < argc; i++) {
+            // UTF-8 转 UTF-16
+            std::string utf8 = args[i];
+            int len = MultiByteToWideChar(CP_UTF8, 0, utf8.c_str(), -1, NULL, 0);
+            argv[i] = new wchar_t[len];
+            MultiByteToWideChar(CP_UTF8, 0, utf8.c_str(), -1, argv[i], len);
+        }
+        argv[argc] = nullptr;
+    }
+
+    wchar_t** get() { return argv; }
+    int size() { return argc; }
+};
+%}
+
+// 模板化，让 Go 可以使用
+%include <std_vector.i>
+%include <std_string.i>
+%template(StringVector) std::vector<std::string>;
+//%template(WArgvTemplate) WArgv;
+
+%apply long long { INT64 };
 
 %array_functions(MTChartBar, MTChartBarArray);
+%array_functions(MTBookItem, MTBookItemArray);
+%array_functions(MTBook,MTBookArray);
+%array_functions(MTTick,MTTickArray);
+%array_functions(LPWSTR,LPWSTRArray);
+
+// 在你的 .i 文件中，MTBook 结构体定义之后添加
+%extend MTBook {
+    void SetItem(int index, const MTBookItem& item) {
+        if (index >= 0 && index < 128) {
+            $self->items[index] = item;
+        }
+    }
+
+    MTBookItem GetItem(int index) {
+        if (index >= 0 && index < 128) {
+            return $self->items[index];
+        }
+        MTBookItem empty = {};
+        return empty;
+    }
+}
 
 // 启用 director 功能以支持从 Go 继承 C++ 类
 %feature("director") IMTTickSink;
 
 // 重命名重载函数以避免Go中的命名冲突
 %rename(OnTickShort) IMTTickSink::OnTick(LPCWSTR /*symbol*/,const MTTickShort& /*tick*/);
-%rename(OnTickServer) IMTTickSink::OnTick(const int /*feeder*/,const MTTick& /*tick*/);
+%rename(OnTickServer) IMTTickSink::OnTick(const int32_t /*feeder*/,const MTTick& /*tick*/);
 %rename(OnTickStatShort) IMTTickSink::OnTickStat(const MTTickStat& /*tick*/);
-%rename(OnTickStatServer) IMTTickSink::OnTickStat(const int /*feeder*/,const MTTickStat& /*tstat*/);
+%rename(OnTickStatServer) IMTTickSink::OnTickStat(const int32_t /*feeder*/,const MTTickStat& /*tstat*/);
 
 
 // 启用 director 功能以支持从 Go 继承 C++ 类
@@ -80,6 +178,14 @@
 %feature("director") IMTConTimeSink;
 %feature("director") IMTConSymbolSink;
 %feature("director") IMTConHolidaySink;
+%feature("director") IMTGatewaySink;
+%feature("director") IMTBookSink;
+
+%rename(OnDealerAnswerConfirm)  IMTGatewaySink::OnDealerAnswer(const MTAPIRES      /*retcode*/,const IMTConfirm*   /*confirm*/) ;
+%rename(OnDealerAnswerExecution)  IMTGatewaySink::OnDealerAnswer(const uint64_t        /*login*/,const MTAPIRES      /*retcode*/,const IMTExecution* /*execution*/) ;
+
+%rename(OnGatewayConfig)  IMTGatewaySink::OnGatewayConfig(const uint64_t /*login*/,const IMTConGateway* /*config*/);
+%rename(OnFeedConfig)  IMTGatewaySink::OnGatewayConfig(const uint64_t /*login*/,const IMTConFeeder*  /*config*/);
 
 /*
 %typemap(goin) LPCWSTR "string"
@@ -101,13 +207,11 @@ typedef long long __time32_t;
 
 
 %include "windows.i"
-// 新版 SDK 使用定宽整数，必须在解析 SDK 头文件前声明其数值类型。
-%include "stdint.i"
 
 // SWIG 解析时忽略对齐修饰；C++ 编译仍使用原始头文件中的 alignas。
 #define alignas(...)
 
-
+%include "Include\\MT5APIGateway.h"
 %include "Include\\MT5APIManager.h"
 %include "Include\\MT5APIConstants.h"
 %include "Include\\MT5APILogger.h"
@@ -128,6 +232,9 @@ typedef long long __time32_t;
 %include "Include\\Config\\MT5APIConfigGroup.h"
 %include "Include\\Config\\MT5APIConfigHoliday.h"
 %include "Include\\Config\\MT5APIConfigSymbol.h"
+%include "Include\\Config\\MT5APIConfigParam.h"
+%include "Include\\Config\\MT5APIConfigFeeder.h"
+%include "Include\\Config\\MT5APIConfigGateway.h"
 %include "Include\\Bases\\MT5APITick.h"
 %include "Include\\Bases\\MT5APIPosition.h"
 %include "Include\\Config\\MT5APIConfigTime.h"
@@ -139,3 +246,37 @@ typedef long long __time32_t;
 %include "Include\\Bases\\MT5APIChart.h"
 %include "Include\\Bases\\MT5APIAccount.h"
 %include "Include\\Bases\\MT5APIConfirm.h"
+%include "Include\\Bases\\MT5APIExecution.h"
+%include "Include\\Bases\\MT5APIBook.h"
+
+// 保留旧版手写的 Gateway 工厂桥接函数，避免修改 SDK 原始头文件。
+%inline %{
+IMTGatewayAPI* CreateGatewayHelper(MTGatewayInfo* info, int* retCode) {
+    IMTGatewayAPI* gateway = nullptr;
+
+    // 先创建 factory 对象
+    CMTGatewayAPIFactory factory;
+
+    // 初始化 factory（根据头文件，需要先调用 Initialize）
+    MTAPIRES initRet = factory.Initialize();
+    if (initRet != 0) {
+        if (retCode) *retCode = initRet;
+        return nullptr;
+    }
+
+    // 调用 Create 方法（注意它是 const 成员函数）
+    int ret = factory.Create(*info, &gateway);
+
+    if (retCode) *retCode = ret;
+    return (ret == 0) ? gateway : nullptr;
+}
+
+IMTGatewayAPI* CreateGatewayHelper2(CMTGatewayAPIFactory& factory,
+                                    MTGatewayInfo* info,
+                                    int* retCode) {
+    IMTGatewayAPI* gateway = nullptr;
+    int ret = factory.Create(*info, &gateway);
+    if (retCode) *retCode = ret;
+    return (ret == 0) ? gateway : nullptr;
+}
+%}

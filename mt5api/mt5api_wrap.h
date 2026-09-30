@@ -13,6 +13,91 @@
 
 class Swig_memory;
 
+class SwigDirector_IMTGatewaySink : public IMTGatewaySink
+{
+ public:
+  SwigDirector_IMTGatewaySink(int swig_p);
+  MTAPIRES _swig_upcall_HookServerConnect(LPCWSTR arg0,uint32_t const arg1,uint64_t const arg2) {
+    return IMTGatewaySink::HookServerConnect(arg0,arg1,arg2);
+  }
+  virtual MTAPIRES HookServerConnect(LPCWSTR arg0,uint32_t const arg1,uint64_t const arg2);
+  void _swig_upcall_OnServerDisconnect(LPCWSTR arg0,uint32_t const arg1,uint64_t const arg2) {
+    IMTGatewaySink::OnServerDisconnect(arg0,arg1,arg2);
+  }
+  virtual void OnServerDisconnect(LPCWSTR arg0,uint32_t const arg1,uint64_t const arg2);
+  void _swig_upcall_OnGatewayConfig(uint64_t const arg0,IMTConGateway const *arg1) {
+    IMTGatewaySink::OnGatewayConfig(arg0,arg1);
+  }
+  virtual void OnGatewayConfig(uint64_t const arg0,IMTConGateway const *arg1);
+  void _swig_upcall_OnFeedConfig(uint64_t const arg0,IMTConFeeder const *arg1) {
+    IMTGatewaySink::OnGatewayConfig(arg0,arg1);
+  }
+  virtual void OnGatewayConfig(uint64_t const arg0,IMTConFeeder const *arg1);
+  void _swig_upcall_OnGatewayStart() {
+    IMTGatewaySink::OnGatewayStart();
+  }
+  virtual void OnGatewayStart();
+  void _swig_upcall_OnGatewayStop() {
+    IMTGatewaySink::OnGatewayStop();
+  }
+  virtual void OnGatewayStop();
+  void _swig_upcall_OnGatewayShutdown(uint64_t const arg0) {
+    IMTGatewaySink::OnGatewayShutdown(arg0);
+  }
+  virtual void OnGatewayShutdown(uint64_t const arg0);
+  void _swig_upcall_OnDealerLock(MTAPIRES const arg0,IMTRequest const *arg1,IMTUser const *arg2,IMTAccount const *arg3,IMTOrder const *arg4,IMTPosition const *arg5) {
+    IMTGatewaySink::OnDealerLock(arg0,arg1,arg2,arg3,arg4,arg5);
+  }
+  virtual void OnDealerLock(MTAPIRES const arg0,IMTRequest const *arg1,IMTUser const *arg2,IMTAccount const *arg3,IMTOrder const *arg4,IMTPosition const *arg5);
+  void _swig_upcall_OnDealerAnswerConfirm(MTAPIRES const arg0,IMTConfirm const *arg1) {
+    IMTGatewaySink::OnDealerAnswer(arg0,arg1);
+  }
+  virtual void OnDealerAnswer(MTAPIRES const arg0,IMTConfirm const *arg1);
+  void _swig_upcall_OnDealerAnswerExecution(uint64_t const arg0,MTAPIRES const arg1,IMTExecution const *arg2) {
+    IMTGatewaySink::OnDealerAnswer(arg0,arg1,arg2);
+  }
+  virtual void OnDealerAnswer(uint64_t const arg0,MTAPIRES const arg1,IMTExecution const *arg2);
+  MTAPIRES _swig_upcall_HookGatewayPositionsRequest() {
+    return IMTGatewaySink::HookGatewayPositionsRequest();
+  }
+  virtual MTAPIRES HookGatewayPositionsRequest();
+  MTAPIRES _swig_upcall_HookGatewayPositionsCheck() {
+    return IMTGatewaySink::HookGatewayPositionsCheck();
+  }
+  virtual MTAPIRES HookGatewayPositionsCheck();
+  MTAPIRES _swig_upcall_HookGatewayOrdersRequest() {
+    return IMTGatewaySink::HookGatewayOrdersRequest();
+  }
+  virtual MTAPIRES HookGatewayOrdersRequest();
+  MTAPIRES _swig_upcall_HookGatewayAccountRequest(uint64_t arg0,LPCWSTR arg1) {
+    return IMTGatewaySink::HookGatewayAccountRequest(arg0,arg1);
+  }
+  virtual MTAPIRES HookGatewayAccountRequest(uint64_t arg0,LPCWSTR arg1);
+  void _swig_upcall_OnGatewayAccountAnswer(MTAPIRES const arg0,int64_t const arg1,IMTUser const *arg2,IMTAccount const *arg3,IMTOrderArray const *arg4,IMTPositionArray const *arg5) {
+    IMTGatewaySink::OnGatewayAccountAnswer(arg0,arg1,arg2,arg3,arg4,arg5);
+  }
+  virtual void OnGatewayAccountAnswer(MTAPIRES const arg0,int64_t const arg1,IMTUser const *arg2,IMTAccount const *arg3,IMTOrderArray const *arg4,IMTPositionArray const *arg5);
+  void _swig_upcall_OnGatewayAccountSet(MTAPIRES const arg0,int64_t const arg1,IMTUser const *arg2,IMTAccount const *arg3,IMTOrderArray const *arg4,IMTPositionArray const *arg5) {
+    IMTGatewaySink::OnGatewayAccountSet(arg0,arg1,arg2,arg3,arg4,arg5);
+  }
+  virtual void OnGatewayAccountSet(MTAPIRES const arg0,int64_t const arg1,IMTUser const *arg2,IMTAccount const *arg3,IMTOrderArray const *arg4,IMTPositionArray const *arg5);
+  void _swig_upcall_OnServerSymbolAdd(LPCWSTR arg0) {
+    IMTGatewaySink::OnServerSymbolAdd(arg0);
+  }
+  virtual void OnServerSymbolAdd(LPCWSTR arg0);
+  void _swig_upcall_OnServerSymbolDelete(LPCWSTR arg0) {
+    IMTGatewaySink::OnServerSymbolDelete(arg0);
+  }
+  virtual void OnServerSymbolDelete(LPCWSTR arg0);
+  void _swig_upcall_OnServerSynchronized(LPCWSTR arg0,uint32_t const arg1,uint64_t const arg2) {
+    IMTGatewaySink::OnServerSynchronized(arg0,arg1,arg2);
+  }
+  virtual void OnServerSynchronized(LPCWSTR arg0,uint32_t const arg1,uint64_t const arg2);
+ private:
+  intgo go_val;
+  Swig_memory *swig_mem;
+};
+
 class SwigDirector_IMTManagerSink : public IMTManagerSink
 {
  public:
@@ -170,11 +255,11 @@ class SwigDirector_IMTTickSink : public IMTTickSink
     return IMTTickSink::HookTickStat(arg0,arg1);
   }
   virtual MTAPIRES HookTickStat(int32_t const arg0,MTTickStat &arg1);
-  void _swig_upcall_OnTick(int32_t const arg0,MTTick const &arg1) {
+  void _swig_upcall_OnTickServer(int32_t const arg0,MTTick const &arg1) {
     IMTTickSink::OnTick(arg0,arg1);
   }
   virtual void OnTick(int32_t const arg0,MTTick const &arg1);
-  void _swig_upcall_OnTickStat(int32_t const arg0,MTTickStat const &arg1) {
+  void _swig_upcall_OnTickStatServer(int32_t const arg0,MTTickStat const &arg1) {
     IMTTickSink::OnTickStat(arg0,arg1);
   }
   virtual void OnTickStat(int32_t const arg0,MTTickStat const &arg1);
@@ -408,6 +493,19 @@ class SwigDirector_IMTAccountSink : public IMTAccountSink
     IMTAccountSink::OnAccountStopOutLeave(arg0,arg1);
   }
   virtual void OnAccountStopOutLeave(IMTAccount const *arg0,IMTConGroup const *arg1);
+ private:
+  intgo go_val;
+  Swig_memory *swig_mem;
+};
+
+class SwigDirector_IMTBookSink : public IMTBookSink
+{
+ public:
+  SwigDirector_IMTBookSink(int swig_p);
+  void _swig_upcall_OnBook(MTBook const &arg0) {
+    IMTBookSink::OnBook(arg0);
+  }
+  virtual void OnBook(MTBook const &arg0);
  private:
   intgo go_val;
   Swig_memory *swig_mem;
