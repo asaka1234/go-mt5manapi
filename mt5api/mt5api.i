@@ -45,6 +45,7 @@
 #include "Include\Config\MT5APIConfigParam.h"
 #include "Include\Config\MT5APIConfigFeeder.h"
 #include "Include\Config\MT5APIConfigGateway.h"
+#include "Include\Config\MT5APIConfigLeverage.h"
 #include "Include\Bases\MT5APITick.h"
 #include "Include\Bases\MT5APIPosition.h"
 #include "Include\Bases\MT5APIAccount.h"
@@ -180,6 +181,7 @@ public:
 %feature("director") IMTConHolidaySink;
 %feature("director") IMTGatewaySink;
 %feature("director") IMTBookSink;
+%feature("director") IMTConLeverageSink;
 
 %rename(OnDealerAnswerConfirm)  IMTGatewaySink::OnDealerAnswer(const MTAPIRES      /*retcode*/,const IMTConfirm*   /*confirm*/) ;
 %rename(OnDealerAnswerExecution)  IMTGatewaySink::OnDealerAnswer(const uint64_t        /*login*/,const MTAPIRES      /*retcode*/,const IMTExecution* /*execution*/) ;
@@ -235,6 +237,7 @@ typedef long long __time32_t;
 %include "Include\\Config\\MT5APIConfigParam.h"
 %include "Include\\Config\\MT5APIConfigFeeder.h"
 %include "Include\\Config\\MT5APIConfigGateway.h"
+%include "Include\\Config\\MT5APIConfigLeverage.h"
 %include "Include\\Bases\\MT5APITick.h"
 %include "Include\\Bases\\MT5APIPosition.h"
 %include "Include\\Config\\MT5APIConfigTime.h"
