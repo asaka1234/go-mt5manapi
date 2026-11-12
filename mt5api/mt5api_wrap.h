@@ -235,6 +235,43 @@ class SwigDirector_IMTConSymbolSink : public IMTConSymbolSink
   Swig_memory *swig_mem;
 };
 
+class SwigDirector_IMTConLeverageSink : public IMTConLeverageSink
+{
+ public:
+  SwigDirector_IMTConLeverageSink(int swig_p);
+  void _swig_upcall_OnLeverageAdd(IMTConLeverage const *arg0) {
+    IMTConLeverageSink::OnLeverageAdd(arg0);
+  }
+  virtual void OnLeverageAdd(IMTConLeverage const *arg0);
+  void _swig_upcall_OnLeverageUpdate(IMTConLeverage const *arg0) {
+    IMTConLeverageSink::OnLeverageUpdate(arg0);
+  }
+  virtual void OnLeverageUpdate(IMTConLeverage const *arg0);
+  void _swig_upcall_OnLeverageDelete(IMTConLeverage const *arg0) {
+    IMTConLeverageSink::OnLeverageDelete(arg0);
+  }
+  virtual void OnLeverageDelete(IMTConLeverage const *arg0);
+  void _swig_upcall_OnLeverageSync() {
+    IMTConLeverageSink::OnLeverageSync();
+  }
+  virtual void OnLeverageSync();
+  MTAPIRES _swig_upcall_HookLeverageAdd(UINT64 const arg0,IMTConLeverage *arg1) {
+    return IMTConLeverageSink::HookLeverageAdd(arg0,arg1);
+  }
+  virtual MTAPIRES HookLeverageAdd(UINT64 const arg0,IMTConLeverage *arg1);
+  MTAPIRES _swig_upcall_HookLeverageUpdate(UINT64 const arg0,IMTConLeverage const *arg1,IMTConLeverage *arg2) {
+    return IMTConLeverageSink::HookLeverageUpdate(arg0,arg1,arg2);
+  }
+  virtual MTAPIRES HookLeverageUpdate(UINT64 const arg0,IMTConLeverage const *arg1,IMTConLeverage *arg2);
+  MTAPIRES _swig_upcall_HookLeverageDelete(UINT64 const arg0,IMTConLeverage const *arg1) {
+    return IMTConLeverageSink::HookLeverageDelete(arg0,arg1);
+  }
+  virtual MTAPIRES HookLeverageDelete(UINT64 const arg0,IMTConLeverage const *arg1);
+ private:
+  intgo go_val;
+  Swig_memory *swig_mem;
+};
+
 class SwigDirector_IMTTickSink : public IMTTickSink
 {
  public:
