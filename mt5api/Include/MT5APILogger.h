@@ -1,6 +1,6 @@
-//+------------------------------------------------------------------+
+﻿//+------------------------------------------------------------------+
 //|                                                 MetaTrader 5 API |
-//|                             Copyright 2000-2024, MetaQuotes Ltd. |
+//|                             Copyright 2000-2026, MetaQuotes Ltd. |
 //|                                               www.metaquotes.net |
 //+------------------------------------------------------------------+
 #pragma once
@@ -36,9 +36,11 @@ enum EnMTLogType
 //--- external tools logs
    MTLogTypeLiveUpdate =16,
    MTLogTypeSendMail   =17,
+   MTLogTypeFailover   =18,
+   MTLogTypeSwitch     =19,
 //--- enumeration borders
    MTLogTypeFirst      =MTLogTypeAll,
-   MTLogTypeLast       =MTLogTypeSendMail
+   MTLogTypeLast       =MTLogTypeSwitch
   };
 //+------------------------------------------------------------------+
 //| Logger request modes                                             |
@@ -69,14 +71,14 @@ enum EnMTLogFlags
 #pragma pack(push,1)
 struct MTLogRecord
   {
-   UINT              flags;                     // flags EnMTLogFlags
+   uint32_t          flags;                     // flags EnMTLogFlags
    INT               code;                      // code EnMTLogCode
-   UINT              type;                      // type EnMTLogType
-   INT64             datetime;                  // record time
+   uint32_t          type;                      // type EnMTLogType
+   int64_t           datetime;                  // record time
    wchar_t           source[64];                // record source
    wchar_t           message[512];              // record message
-   INT64             datetime_msc;              // record time in milliseconds since 1970.01.01
-   int               reserved[2];               // reserved
+   int64_t           datetime_msc;              // record time in milliseconds since 1970.01.01
+   int32_t           reserved[2];               // reserved
   };
 #pragma pack(pop)
 //+------------------------------------------------------------------+

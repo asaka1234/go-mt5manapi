@@ -1,6 +1,6 @@
-//+------------------------------------------------------------------+
+﻿//+------------------------------------------------------------------+
 //|                                                 MetaTrader 5 API |
-//|                             Copyright 2000-2024, MetaQuotes Ltd. |
+//|                             Copyright 2000-2026, MetaQuotes Ltd. |
 //|                                               www.metaquotes.net |
 //+------------------------------------------------------------------+
 #pragma once
@@ -16,7 +16,7 @@ public:
    static char*      Insert(void *base,const void *elem,size_t total,const size_t width,SortFunctionPtr compare);
    //--- quick sort
    template <class T>
-   static void       QuickSort(T *base,UINT num,SortFunctionPtr compare);
+   static void       QuickSort(T *base,uint32_t num,SortFunctionPtr compare);
    //---
    static void*      Search(const void *key,void *base,size_t total,const size_t width,SortFunctionPtr compare);
    static void*      SearchGreatOrEq(const void *key,void *base,size_t total,const size_t width,SortFunctionPtr compare);
@@ -32,23 +32,28 @@ private:
    static void       Swap(T *a,T *b);
   };
 //+------------------------------------------------------------------+
-//| Returns 0 if record already exist                                |
+//| Returns 0 if record already exists                               |
 //| Returns inserted record otherwise                                |
 //| Array should contain enough free space for new element           |
 //+------------------------------------------------------------------+
 inline char* SMTSearch::Insert(void *base,const void *elem,size_t total,const size_t width,SortFunctionPtr compare)
   {
 //--- check
-   if(base==NULL || elem==NULL || compare==NULL) return(NULL);
+   if(base==NULL || elem==NULL || !compare)
+      return(NULL);
 //--- first element?
-   if(total<1) { memcpy(base,elem,width); return(char*)(base); }
+   if(total<1)
+     {
+      memcpy(base,elem,width);
+      return(char*)(base);
+     }
 //--- initialize
-   char *lo=(char *)base;
-   char *hi=(char *)base+(total-1)*width,*end=hi;
-   char *mid;
-   size_t         half;
-   int            result;
-//---
+   char   *lo=(char *)base;
+   char   *hi=(char *)base+(total-1)*width,*end=hi;
+   char   *mid;
+   size_t  half;
+   int32_t result;
+
    while(total>0)
      {
       half=total/2;
@@ -91,7 +96,9 @@ inline void SMTSearch::ShortSort (T *lo,T *hi,SortFunctionPtr compare)
       maxval=lo;
       for(p=lo+1; p<=hi; p+=1)
          if(compare(p, maxval) > 0)
-         { maxval=p; }
+           {
+            maxval=p;
+           }
       //---
       Swap(maxval,hi);
       hi-=1;
@@ -111,16 +118,17 @@ inline void SMTSearch::Swap(T *a,T *b)
 //| Quick sort from CRT                                              |
 //+------------------------------------------------------------------+
 template<class T>
-inline void SMTSearch::QuickSort(T *base,UINT num,SortFunctionPtr compare)
+inline void SMTSearch::QuickSort(T *base,uint32_t num,SortFunctionPtr compare)
   {
    T *lo, *hi;              /* ends of sub-array currently sorting */
    T *mid;                  /* points to middle of subarray */
    T *loguy, *higuy;        /* traveling pointers for partition step */
    size_t size;             /* size of the sub-array */
    T *lostk[30], *histk[30];
-   int stkptr;              /* stack for saving sub-array to be processed */
+   int32_t stkptr;              /* stack for saving sub-array to be processed */
 //---
-   if(num < 2) return;
+   if(num < 2)
+      return;
    stkptr=0;                /* initialize stack */
    lo=base;
    hi=base + (num-1);       /* initialize limits */
@@ -128,8 +136,9 @@ inline void SMTSearch::QuickSort(T *base,UINT num,SortFunctionPtr compare)
    recurse:
 //---
    size=(hi - lo) + 1;       /* number of el's to sort */
-//---
-   if(size<=8) ShortSort(lo,hi,compare);
+
+   if(size<=8)
+      ShortSort(lo,hi,compare);
    else
      {
       mid=lo + (size/2);     /* find middle element */
@@ -153,7 +162,8 @@ inline void SMTSearch::QuickSort(T *base,UINT num,SortFunctionPtr compare)
            }
          while(higuy > lo && compare(higuy, lo)>=0);
          //---
-         if(higuy<loguy) break;
+         if(higuy<loguy)
+            break;
          //---
          Swap(loguy, higuy);
         }
@@ -205,13 +215,14 @@ inline void SMTSearch::QuickSort(T *base,UINT num,SortFunctionPtr compare)
 //+------------------------------------------------------------------+
 inline void* SMTSearch::Search(const void *key,void *base,size_t num,const size_t width,SortFunctionPtr compare)
   {
-   char *lo=(char *)base;
-   char *hi=(char *)base + (num - 1) * width;
-   char *mid;
-   size_t half;
-   int result;
+   char   *lo=(char *)base;
+   char   *hi=(char *)base + (num - 1) * width;
+   char   *mid;
+   size_t  half;
+   int32_t result;
 //--- validation section 
-   if(base==NULL || num<1 || width<=0 || compare==NULL) return(NULL);
+   if(base==NULL || num<1 || width<=0 || !compare)
+      return(NULL);
 //---  We allow a NULL key here because it breaks some older code and because we do not dereference
 //---  this ourselves so we can't be sure that it's a problem for the comparison function
    while(lo<=hi)
@@ -248,13 +259,14 @@ inline void* SMTSearch::Search(const void *key,void *base,size_t num,const size_
 inline void* SMTSearch::SearchGreatOrEq(const void *key,void *base,size_t total,const size_t width,SortFunctionPtr compare)
   {
 //--- check
-   if(key==NULL || base==NULL || total<1 || compare==NULL) return(NULL);
+   if(!key || !base || total<1 || !compare)
+      return(NULL);
 //--- 
    char    *lo=(char *)base;
    char    *end=(char *)base+total*width;
    char    *mid;
    size_t   half;
-//---
+
    while(total>0)
      {
       half=total/2;
@@ -265,7 +277,8 @@ inline void* SMTSearch::SearchGreatOrEq(const void *key,void *base,size_t total,
          lo   =mid+width;
          total=total-half-1;
         }
-      else total=half;
+      else
+         total=half;
      }
 //--- is exist?
    return(lo==end)?(NULL):(lo);
@@ -276,13 +289,14 @@ inline void* SMTSearch::SearchGreatOrEq(const void *key,void *base,size_t total,
 inline void* SMTSearch::SearchGreater(const void *key,void *base,size_t total,const size_t width,SortFunctionPtr compare)
   {
 //--- check
-   if(key==NULL || base==NULL || total<1 || compare==NULL) return(NULL);
+   if(!key || !base || total<1 || !compare)
+      return(NULL);
 //--- 
    char    *lo=(char *)base;
    char    *end=(char *)base+total*width;
    char    *mid;
    size_t   half;
-//---
+
    while(total>0)
      {
       half=total/2;
@@ -293,7 +307,8 @@ inline void* SMTSearch::SearchGreater(const void *key,void *base,size_t total,co
          lo   =mid+width;
          total=total-half-1;
         }
-      else total=half;
+      else
+         total=half;
      }
 //--- is exist?
    return(lo==end)?(NULL):(lo);
@@ -304,13 +319,14 @@ inline void* SMTSearch::SearchGreater(const void *key,void *base,size_t total,co
 inline void* SMTSearch::SearchLessOrEq(const void *key,void *base,size_t total,const size_t width,SortFunctionPtr compare)
   {
 //--- check
-   if(key==NULL || base==NULL || total<1 || compare==NULL) return(NULL);
+   if(!key || !base || total<1 || !compare)
+      return(NULL);
 //--- 
    char    *lo=(char *)base;
    char    *beg=(char *)base;
    char    *mid;
    size_t   half;
-//---
+
    while(total>0)
      {
       half=total/2;
@@ -321,7 +337,8 @@ inline void* SMTSearch::SearchLessOrEq(const void *key,void *base,size_t total,c
          lo   =mid+width;
          total=total-half-1;
         }
-      else total=half;
+      else
+         total=half;
      }
 //--- is exist?
    return(lo==beg)?(NULL):(lo-width);
@@ -332,13 +349,14 @@ inline void* SMTSearch::SearchLessOrEq(const void *key,void *base,size_t total,c
 inline void* SMTSearch::SearchLess(const void *key,void *base,size_t total,const size_t width,SortFunctionPtr compare)
   {
 //--- check
-   if(key==NULL || base==NULL || total<1 || compare==NULL) return(NULL);
+   if(!key || !base || total<1 || !compare)
+      return(NULL);
 //--- 
    char    *lo=(char *)base;
    char    *beg=(char *)base;
    char    *mid;
    size_t   half;
-//---
+
    while(total>0)
      {
       half=total/2;
@@ -349,7 +367,8 @@ inline void* SMTSearch::SearchLess(const void *key,void *base,size_t total,const
          lo   =mid+width;
          total=total-half-1;
         }
-      else total=half;
+      else
+         total=half;
      }
 //--- is exist?
    return(lo==beg)?(NULL):(lo-width);
@@ -360,20 +379,24 @@ inline void* SMTSearch::SearchLess(const void *key,void *base,size_t total,const
 inline void* SMTSearch::SearchLeft(const void *key,void *base,size_t total,const size_t width,SortFunctionPtr compare)
   {
 //--- check
-   if(key==NULL || base==NULL || total<1 || compare==NULL) return(NULL);
+   if(!key || !base || total<1 || !compare)
+      return(NULL);
 //--- search left
    char* start=(char*)SearchLess(key,base,total,width,compare);
-//---
+
    if(start!=NULL)
      {
       //--- go to next
       start+=width;
       //--- check array borders
-      if(start>=((char*)base+total*width)) return(NULL);
+      if(start>=((char*)base+total*width))
+         return(NULL);
      }
-   else start=(char*)base;
+   else
+      start=(char*)base;
 //--- is equal?
-   if(!compare(key,start)) return(start);
+   if(!compare(key,start))
+      return(start);
 //--- not found
    return(NULL);
   }
@@ -383,20 +406,24 @@ inline void* SMTSearch::SearchLeft(const void *key,void *base,size_t total,const
 inline void* SMTSearch::SearchRight(const void *key,void *base,size_t total,const size_t width,SortFunctionPtr compare)
   {
 //--- check
-   if(key==NULL || base==NULL || total<1 || compare==NULL) return(NULL);
+   if(!key || !base || total<1 || !compare)
+      return(NULL);
 //--- search right
    char* end=(char*)SearchGreater(key,base,total,width,compare);
-//---
+
    if(end!=NULL)
      {
       //--- go to previous
       end-=width;
       //--- check array borders
-      if(end<(char*)base) return(NULL);
+      if(end<(char*)base)
+         return(NULL);
      }
-   else end=(char*)base+(total-1)*width;
+   else
+      end=(char*)base+(total-1)*width;
 //--- is equal?
-   if(!compare(key,end)) return(end);
+   if(!compare(key,end))
+      return(end);
 //--- not found
    return(NULL);
   }

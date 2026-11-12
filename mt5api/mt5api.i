@@ -151,7 +151,7 @@ public:
         if (index >= 0 && index < 128) {
             return $self->items[index];
         }
-        MTBookItem empty;
+        MTBookItem empty = {};
         return empty;
     }
 }
@@ -161,9 +161,9 @@ public:
 
 // 重命名重载函数以避免Go中的命名冲突
 %rename(OnTickShort) IMTTickSink::OnTick(LPCWSTR /*symbol*/,const MTTickShort& /*tick*/);
-%rename(OnTickServer) IMTTickSink::OnTick(const int /*feeder*/,const MTTick& /*tick*/);
+%rename(OnTickServer) IMTTickSink::OnTick(const int32_t /*feeder*/,const MTTick& /*tick*/);
 %rename(OnTickStatShort) IMTTickSink::OnTickStat(const MTTickStat& /*tick*/);
-%rename(OnTickStatServer) IMTTickSink::OnTickStat(const int /*feeder*/,const MTTickStat& /*tstat*/);
+%rename(OnTickStatServer) IMTTickSink::OnTickStat(const int32_t /*feeder*/,const MTTickStat& /*tstat*/);
 
 
 // 启用 director 功能以支持从 Go 继承 C++ 类
@@ -184,10 +184,10 @@ public:
 %feature("director") IMTConLeverageSink;
 
 %rename(OnDealerAnswerConfirm)  IMTGatewaySink::OnDealerAnswer(const MTAPIRES      /*retcode*/,const IMTConfirm*   /*confirm*/) ;
-%rename(OnDealerAnswerExecution)  IMTGatewaySink::OnDealerAnswer(const UINT64        /*login*/,const MTAPIRES      /*retcode*/,const IMTExecution* /*execution*/) ;
+%rename(OnDealerAnswerExecution)  IMTGatewaySink::OnDealerAnswer(const uint64_t        /*login*/,const MTAPIRES      /*retcode*/,const IMTExecution* /*execution*/) ;
 
-%rename(OnGatewayConfig)  IMTGatewaySink::OnGatewayConfig(const UINT64 /*login*/,const IMTConGateway* /*config*/);
-%rename(OnFeedConfig)  IMTGatewaySink::OnGatewayConfig(const UINT64 /*login*/,const IMTConFeeder*  /*config*/);
+%rename(OnGatewayConfig)  IMTGatewaySink::OnGatewayConfig(const uint64_t /*login*/,const IMTConGateway* /*config*/);
+%rename(OnFeedConfig)  IMTGatewaySink::OnGatewayConfig(const uint64_t /*login*/,const IMTConFeeder*  /*config*/);
 
 /*
 %typemap(goin) LPCWSTR "string"
@@ -209,6 +209,9 @@ typedef long long __time32_t;
 
 
 %include "windows.i"
+
+// SWIG 解析时忽略对齐修饰；C++ 编译仍使用原始头文件中的 alignas。
+#define alignas(...)
 
 %include "Include\\MT5APIGateway.h"
 %include "Include\\MT5APIManager.h"
@@ -248,3 +251,35 @@ typedef long long __time32_t;
 %include "Include\\Bases\\MT5APIConfirm.h"
 %include "Include\\Bases\\MT5APIExecution.h"
 %include "Include\\Bases\\MT5APIBook.h"
+
+// 保留旧版手写的 Gateway 工厂桥接函数，避免修改 SDK 原始头文件。
+%inline %{
+IMTGatewayAPI* CreateGatewayHelper(MTGatewayInfo* info, int* retCode) {
+    IMTGatewayAPI* gateway = nullptr;
+
+    // 先创建 factory 对象
+    CMTGatewayAPIFactory factory;
+
+    // 初始化 factory（根据头文件，需要先调用 Initialize）
+    MTAPIRES initRet = factory.Initialize();
+    if (initRet != 0) {
+        if (retCode) *retCode = initRet;
+        return nullptr;
+    }
+
+    // 调用 Create 方法（注意它是 const 成员函数）
+    int ret = factory.Create(*info, &gateway);
+
+    if (retCode) *retCode = ret;
+    return (ret == 0) ? gateway : nullptr;
+}
+
+IMTGatewayAPI* CreateGatewayHelper2(CMTGatewayAPIFactory& factory,
+                                    MTGatewayInfo* info,
+                                    int* retCode) {
+    IMTGatewayAPI* gateway = nullptr;
+    int ret = factory.Create(*info, &gateway);
+    if (retCode) *retCode = ret;
+    return (ret == 0) ? gateway : nullptr;
+}
+%}

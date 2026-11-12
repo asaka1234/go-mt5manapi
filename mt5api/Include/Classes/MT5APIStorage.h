@@ -1,11 +1,12 @@
-//+------------------------------------------------------------------+
+ï»¿//+------------------------------------------------------------------+
 //|                                                 MetaTrader 5 API |
-//|                             Copyright 2000-2024, MetaQuotes Ltd. |
+//|                             Copyright 2000-2026, MetaQuotes Ltd. |
 //|                                               www.metaquotes.net |
 //+------------------------------------------------------------------+
 #pragma once
 #include <new.h>
 #include <stdlib.h>
+#include <utility>
 #include "MT5APISearch.h"
 //+------------------------------------------------------------------+
 //| Dynamic array base class                                         |
@@ -14,20 +15,20 @@
 class CMTArrayBase
   {
 protected:
-   UCHAR            *m_data;             // array
-   UINT              m_data_total;       // array records total
-   UINT              m_data_max;         // array records max
-   UINT              m_data_width;       // record size in bytes
-   UINT              m_data_step;        // reallocation step
+   uint8_t          *m_data;             // array
+   uint32_t          m_data_total;       // array records total
+   uint32_t          m_data_max;         // array records max
+   uint32_t          m_data_width;       // record size in bytes
+   uint32_t          m_data_step;        // reallocation step
 
 public:
-                     CMTArrayBase(const UINT width,const UINT step);
+                     CMTArrayBase(const uint32_t width,const uint32_t step);
    virtual          ~CMTArrayBase();
    //--- common properties
-   UINT              Total(void) const                        { return(m_data_total);      }
-   UINT              Width(void) const                        { return(m_data_width);      }
-   UINT              Max(void) const                          { return(m_data_max);        }
-   UINT              Step(void) const                         { return(m_data_step);       }
+   uint32_t          Total(void) const                        { return(m_data_total);      }
+   uint32_t          Width(void) const                        { return(m_data_width);      }
+   uint32_t          Max(void) const                          { return(m_data_max);        }
+   uint32_t          Step(void) const                         { return(m_data_step);       }
    bool              Compare(const CMTArrayBase& array) const;
    //--- global management
    void              Clear(void)                              { m_data_total=0;            }
@@ -36,36 +37,36 @@ public:
    void              Compact(void);
    bool              Assign(const CMTArrayBase& array);
    void              Swap(CMTArrayBase &arr);
-   bool              Reserve(const UINT size);
-   bool              Resize(const UINT size);
+   bool              Reserve(const uint32_t size);
+   bool              Resize(const uint32_t size);
    //--- add
    bool              Add(const void *elem)                    { return Add(elem,1);        }
-   bool              Add(const void *elem,const UINT total);
+   bool              Add(const void *elem,const uint32_t total);
    bool              Add(const CMTArrayBase& array);
-   bool              AddRange(const CMTArrayBase& array,const UINT from,const UINT to);
-   bool              AddEmpty(const UINT total);
+   bool              AddRange(const CMTArrayBase& array,const uint32_t from,const uint32_t to);
+   bool              AddEmpty(const uint32_t total);
    void*             Append(void);
-   bool              Insert(const UINT pos,const void *elem)  { return Insert(pos,elem,1); }
-   bool              Insert(const UINT pos,const void *elem,const UINT total);
-   bool              InsertEmpty(const UINT pos,const UINT total);
+   bool              Insert(const uint32_t pos,const void *elem)  { return Insert(pos,elem,1); }
+   bool              Insert(const uint32_t pos,const void *elem,const uint32_t total);
+   bool              InsertEmpty(const uint32_t pos,const uint32_t total);
    void*             Insert(const void *elem,SMTSearch::SortFunctionPtr sort_function);
    //--- delete
-   bool              Delete(const UINT pos);
+   bool              Delete(const uint32_t pos);
    bool              Delete(const void *elem);
-   bool              DeleteRange(const UINT from,const UINT to);
+   bool              DeleteRange(const uint32_t from,const uint32_t to);
    bool              Remove(const void *elem,SMTSearch::SortFunctionPtr sort_function);
    //--- modify
-   bool              Update(const UINT pos,const void *elem);
-   bool              Shift(const UINT pos,const int shift);
-   bool              Trim(const UINT size);
+   bool              Update(const uint32_t pos,const void *elem);
+   bool              Shift(const uint32_t pos,const int32_t shift);
+   bool              Trim(const uint32_t size);
    //--- data access
-   bool              Next(const UINT pos,void *elem) const;
+   bool              Next(const uint32_t pos,void *elem) const;
    void*             Next(const void *elem) const;
    void*             Prev(const void *elem) const;
-   const void*       At(const UINT pos) const;
-   void*             At(const UINT pos);
-   int               Position(const void* ptr) const;
-   bool              Range(const UINT from,const UINT to,void* data) const;
+   const void*       At(const uint32_t pos) const;
+   void*             At(const uint32_t pos);
+   int32_t           Position(const void* ptr) const;
+   bool              Range(const uint32_t from,const uint32_t to,void* data) const;
    //--- sort & search
    void              Sort(SMTSearch::SortFunctionPtr sort_function);
    void*             Search(const void *key,SMTSearch::SortFunctionPtr sort_function) const;
@@ -78,13 +79,12 @@ public:
 
 protected:
                      CMTArrayBase(void):m_data(NULL),m_data_total(0),m_data_max(0),m_data_width(0),m_data_step(0){}
-   bool              Realloc(const UINT total);
+   bool              Realloc(const uint32_t total);
   };
 //+------------------------------------------------------------------+
 //|                                                                  |
 //+------------------------------------------------------------------+
-inline CMTArrayBase::CMTArrayBase(const UINT width,const UINT step) : m_data(NULL),m_data_total(0),
-                                                                  m_data_max(0),m_data_width(width),m_data_step(step)
+inline CMTArrayBase::CMTArrayBase(const uint32_t width,const uint32_t step) : m_data(NULL),m_data_total(0),m_data_max(0),m_data_width(width),m_data_step(step)
   {
   }
 //+------------------------------------------------------------------+
@@ -99,7 +99,8 @@ inline CMTArrayBase::~CMTArrayBase(void)
 //+------------------------------------------------------------------+
 inline bool CMTArrayBase::Zero(void)
   {
-   if(m_data) ZeroMemory(m_data,m_data_width*m_data_max);
+   if(m_data)
+      ZeroMemory(m_data,m_data_width*m_data_max);
    return(true);
   }
 //+------------------------------------------------------------------+
@@ -108,7 +109,11 @@ inline bool CMTArrayBase::Zero(void)
 inline void CMTArrayBase::Shutdown(void)
   {
 //--- clear all
-   if(m_data) { delete[] m_data; m_data=NULL; }
+   if(m_data)
+     {
+      delete[] m_data;
+      m_data=NULL;
+     }
 //--- zero sizes
    m_data_total=m_data_max=0;
   }
@@ -124,38 +129,47 @@ inline bool CMTArrayBase::Compare(const CMTArrayBase& array) const
    if(Total())
      {
       //--- check data
-      if(!m_data || !array.m_data) return(false);
+      if(!m_data || !array.m_data)
+         return(false);
       //--- check record by record
-      for(UINT i=0;i<m_data_total;i++)
-         if(memcmp(At(i),array.At(i),m_data_width)!=0) return(false);
+      for(uint32_t i=0;i<m_data_total;i++)
+         if(memcmp(At(i),array.At(i),m_data_width)!=0)
+            return(false);
      }
 //--- ok
    return(true);
   }
 //+------------------------------------------------------------------+
-//| Memory check and reallocation to store 'total' records          |
+//| Memory check and reallocation to store 'total' records           |
 //+------------------------------------------------------------------+
-inline bool CMTArrayBase::Realloc(const UINT total)
+inline bool CMTArrayBase::Realloc(const uint32_t total)
   {
 //--- check
-   if(total<1 || m_data_step<1)                   return(true);
+   if(total<1 || m_data_step<1)
+      return(true);
 //--- check size
-   if(m_data && (m_data_total+total)<=m_data_max) return(true);
+   if(m_data && (m_data_total+total)<=m_data_max)
+      return(true);
 //--- calculate reallocation
-   UINT add=((total/m_data_step)+1)*m_data_step;
+   const uint64_t capacity=uint64_t(m_data_max)+(uint64_t(total)/m_data_step+1)*m_data_step;
+
+   if(capacity>UINT32_MAX/m_data_width)
+      return(false);
 //--- allocate new buffer
-   UCHAR *buffer=new(std::nothrow) UCHAR[(m_data_max+add)*m_data_width];
-//--- check
-   if(!buffer) return(false);
+   uint8_t *buffer=new(std::nothrow) uint8_t[capacity*m_data_width];
+
+   if(!buffer)
+      return(false);
 //--- previous data?
    if(m_data)
      {
-      if(m_data_total>0) memcpy(buffer,m_data,m_data_width*m_data_total);
+      if(m_data_total>0)
+         memcpy(buffer,m_data,m_data_width*m_data_total);
       delete[] m_data;
      }
 //--- replace
-   m_data     =buffer;
-   m_data_max+=add;
+   m_data    =buffer;
+   m_data_max=uint32_t(capacity);
 //--- ok
    return(true);
   }
@@ -164,14 +178,16 @@ inline bool CMTArrayBase::Realloc(const UINT total)
 //+------------------------------------------------------------------+
 inline void CMTArrayBase::Compact(void)
   {
-   UINT   freespace=m_data_max-m_data_total;
-   UCHAR *newdata;
+   uint32_t freespace=m_data_max-m_data_total;
+   uint8_t *newdata;
 //--- check
-   if(!m_data || freespace<=m_data_step) return;
+   if(!m_data || freespace<=m_data_step)
+      return;
 //--- allocate new block
-   newdata=new(std::nothrow) UCHAR[(m_data_total+m_data_step)*m_data_width];
+   newdata=new(std::nothrow) uint8_t[(m_data_total+m_data_step)*m_data_width];
 //--- check memory
-   if(!newdata) return;
+   if(!newdata)
+      return;
 //--- copy old data
    memcpy(newdata,m_data,m_data_total*m_data_width);
 //--- free old buffer
@@ -186,13 +202,16 @@ inline void CMTArrayBase::Compact(void)
 inline bool CMTArrayBase::Assign(const CMTArrayBase& array)
   {
 //--- check
-   if(this==&array) return(true);
+   if(this==&array)
+      return(true);
 //--- check width
-   if(array.m_data_width!=m_data_width) return(false);
+   if(array.m_data_width!=m_data_width)
+      return(false);
 //--- clear self
    Clear();
 //--- check data
-   if(!array.m_data || array.m_data_total<1) return(true);
+   if(!array.m_data || array.m_data_total<1)
+      return(true);
 //--- add
    return(Add(array.m_data,array.m_data_total));
   }
@@ -201,14 +220,17 @@ inline bool CMTArrayBase::Assign(const CMTArrayBase& array)
 //+------------------------------------------------------------------+
 inline void CMTArrayBase::Swap(CMTArrayBase &arr)
   {
-   UCHAR *data;
-   UINT   data_total;
-   UINT   data_max;
 //--- check
-   if(this==&arr) return;
+   if(this==&arr)
+      return;
 //--- check width
-   if(arr.m_data_width!=m_data_width) return;
+   if(arr.m_data_width!=m_data_width)
+      return;
 //--- swap them
+   uint8_t *data;
+   uint32_t data_total;
+   uint32_t data_max;
+
    data      =m_data;
    data_total=m_data_total;
    data_max  =m_data_max;
@@ -222,37 +244,43 @@ inline void CMTArrayBase::Swap(CMTArrayBase &arr)
 //+------------------------------------------------------------------+
 //| Reserve free space                                               |
 //+------------------------------------------------------------------+
-inline bool CMTArrayBase::Reserve(const UINT size)
+inline bool CMTArrayBase::Reserve(const uint32_t size)
   {
-   if(size<=m_data_max) return(true);
-   else                 return(Realloc(size-m_data_total));
+   if(size<=m_data_max)
+      return(true);
+   else
+      return(Realloc(size-m_data_total));
   }
 //+------------------------------------------------------------------+
 //| Resize array                                                     |
 //+------------------------------------------------------------------+
-inline bool CMTArrayBase::Resize(const UINT size)
+inline bool CMTArrayBase::Resize(const uint32_t size)
   {
-//--- check
-   if(!m_data)            return(false);
-   if(size==m_data_total) return(true);
-//--- resize or realloc
-   if(size<m_data_total) m_data_total=size;
-   else
-      if(size>m_data_total) return(AddEmpty(size-m_data_total));
+   if(size==m_data_total)
+      return(true);
+//--- greater
+   if(size>m_data_total)
+      return(AddEmpty(size-m_data_total));
+//--- less
+   if(size<m_data_total)
+      m_data_total=size;
 //--- ok
    return(true);
   }
 //+------------------------------------------------------------------+
 //| Add total records to tail                                       |
 //+------------------------------------------------------------------+
-inline bool CMTArrayBase::Add(const void *elem,const UINT total)
+inline bool CMTArrayBase::Add(const void *elem,const uint32_t total)
   {
 //--- check ptr
-   if(!elem)            return(false);
+   if(!elem)
+      return(false);
 //--- check total
-   if(total<1)          return(true);
+   if(total<1)
+      return(true);
 //--- check and reallocate memory
-   if(!Realloc(total))  return(false);
+   if(!Realloc(total))
+      return(false);
 //--- add
    memcpy((char*)m_data+(m_data_width*m_data_total),(const char*)elem,m_data_width*total);
    m_data_total+=total;
@@ -265,32 +293,38 @@ inline bool CMTArrayBase::Add(const void *elem,const UINT total)
 inline bool CMTArrayBase::Add(const CMTArrayBase& array)
   {
 //--- check
-   if(this==&array || !array.m_data || array.m_data_total<1) return(true);
+   if(this==&array || !array.m_data || array.m_data_total<1)
+      return(true);
 //--- check width
-   if(array.m_data_width!=m_data_width) return(false);
+   if(array.m_data_width!=m_data_width)
+      return(false);
 //--- add
    return(Add(array.m_data,array.m_data_total));
   }
 //+------------------------------------------------------------------+
 //| Add records [from,to] from array                                 |
 //+------------------------------------------------------------------+
-inline bool CMTArrayBase::AddRange(const CMTArrayBase& array,const UINT from,const UINT to)
+inline bool CMTArrayBase::AddRange(const CMTArrayBase& array,const uint32_t from,const uint32_t to)
   {
 //--- check
-   if(this==&array) return(true);
+   if(this==&array)
+      return(true);
 //--- check width
-   if(array.m_data_width!=m_data_width) return(false);
+   if(array.m_data_width!=m_data_width)
+      return(false);
 //--- check borders
-   if(from>to || to>=array.Total())     return(false);
+   if(from>to || to>=array.Total())
+      return(false);
 //--- add
    return(Add((char*)array.m_data+(from*array.m_data_width),(to-from)+1));
   }
 //+------------------------------------------------------------------+
 //| Add total uninitialized records                                 |
 //+------------------------------------------------------------------+
-inline bool CMTArrayBase::AddEmpty(const UINT total)
+inline bool CMTArrayBase::AddEmpty(const uint32_t total)
   {
-   if(!Realloc(total)) return(false);
+   if(!Realloc(total))
+      return(false);
    m_data_total+=total;
    return(true);
   }
@@ -300,7 +334,8 @@ inline bool CMTArrayBase::AddEmpty(const UINT total)
 inline void* CMTArrayBase::Append(void)
   {
 //--- check free space
-   if(!Realloc(1)) return(NULL);
+   if(!Realloc(1))
+      return(NULL);
 //--- allocate
    if(m_data_total<m_data_max)
      {
@@ -313,12 +348,14 @@ inline void* CMTArrayBase::Append(void)
 //+------------------------------------------------------------------+
 //| Insert total records into pos position                           |
 //+------------------------------------------------------------------+
-inline bool CMTArrayBase::Insert(const UINT pos,const void *elem,const UINT total)
+inline bool CMTArrayBase::Insert(const uint32_t pos,const void *elem,const uint32_t total)
   {
 //--- check
-   if(!elem || pos>m_data_total) return(false);
+   if(!elem || pos>m_data_total)
+      return(false);
 //--- check free space
-   if(!Realloc(total)) return(false);
+   if(!Realloc(total))
+      return(false);
 //--- move it if neccessary
    if(pos<m_data_total)
       memmove((char*)m_data+((pos+total)*m_data_width),(char*)m_data+(pos*m_data_width),(m_data_total-pos)*m_data_width);
@@ -331,12 +368,14 @@ inline bool CMTArrayBase::Insert(const UINT pos,const void *elem,const UINT tota
 //+------------------------------------------------------------------+
 //| Insert total uninitialized records into pos position             |
 //+------------------------------------------------------------------+
-inline bool CMTArrayBase::InsertEmpty(const UINT pos,const UINT total)
+inline bool CMTArrayBase::InsertEmpty(const uint32_t pos,const uint32_t total)
   {
 //--- check
-   if(pos>m_data_total) return(false);
+   if(pos>m_data_total)
+      return(false);
 //--- reallocate
-   if(!Realloc(total)) return(false);
+   if(!Realloc(total))
+      return(false);
 //--- move it
    if(pos<m_data_total)
       memmove((char*)m_data+((pos+total)*m_data_width),(char*)m_data+(pos*m_data_width),(m_data_total-pos)*m_data_width);
@@ -347,14 +386,15 @@ inline bool CMTArrayBase::InsertEmpty(const UINT pos,const UINT total)
   }
 //+------------------------------------------------------------------+
 //| Insert new record into sorted array                              |
-//| Returns NULL if record already exist or reallocation problem     |
+//| Returns NULL if record already exists or reallocation problem    |
 //| Returns inserted record ptr otherwise                            |
 //+------------------------------------------------------------------+
 inline void* CMTArrayBase::Insert(const void *elem,SMTSearch::SortFunctionPtr sort_function)
   {
    void *result=NULL;
 //--- check
-   if(!elem || !sort_function) return(result);
+   if(!elem || !sort_function)
+      return(result);
 //--- reallocate
    if(Realloc(1))
       if((result=SMTSearch::Insert(m_data,elem,m_data_total,m_data_width,sort_function))!=NULL)
@@ -365,10 +405,11 @@ inline void* CMTArrayBase::Insert(const void *elem,SMTSearch::SortFunctionPtr so
 //+------------------------------------------------------------------+
 //| Delete record by position                                        |
 //+------------------------------------------------------------------+
-inline bool CMTArrayBase::Delete(const UINT pos)
+inline bool CMTArrayBase::Delete(const uint32_t pos)
   {
 //--- check
-   if(pos>=m_data_total || !m_data) return(false);
+   if(pos>=m_data_total || !m_data)
+      return(false);
 //--- remove
    if((pos+1)<m_data_total)
       memmove((char*)m_data+(pos*m_data_width),(char*)m_data+((pos+1)*m_data_width),((m_data_total-pos)-1)*m_data_width);
@@ -382,17 +423,19 @@ inline bool CMTArrayBase::Delete(const UINT pos)
 inline bool CMTArrayBase::Delete(const void *elem)
   {
 //--- check
-   if(!elem || !m_data || elem<m_data || elem>=((char*)m_data+m_data_total*m_data_width)) return(false);
+   if(!elem || !m_data || elem<m_data || elem>=((char*)m_data+m_data_total*m_data_width))
+      return(false);
 //--- calculate position and delete
-   return Delete(((UINT)((const char*)elem-(char*)m_data)/m_data_width));
+   return Delete(((uint32_t)((const char*)elem-(char*)m_data)/m_data_width));
   }
 //+------------------------------------------------------------------+
 //| Delete range [from,to]                                           |
 //+------------------------------------------------------------------+
-inline bool CMTArrayBase::DeleteRange(const UINT from,const UINT to)
+inline bool CMTArrayBase::DeleteRange(const uint32_t from,const uint32_t to)
   {
 //--- check
-   if(from>to || to>=m_data_total || !m_data) return(false);
+   if(from>to || to>=m_data_total || !m_data)
+      return(false);
 //--- delete
    if(from+1<m_data_total)
       memmove((char*)m_data+(from*m_data_width),
@@ -407,16 +450,19 @@ inline bool CMTArrayBase::DeleteRange(const UINT from,const UINT to)
 //+------------------------------------------------------------------+
 inline bool CMTArrayBase::Remove(const void *elem,SMTSearch::SortFunctionPtr sort_function)
   {
-   void   *temp;
-   UINT64  i;
+   void    *temp;
+   uint64_t i;
 //--- check
-   if(!elem || !sort_function || !m_data || m_data_total<1 || m_data_width<1) return(false);
+   if(!elem || !sort_function || !m_data || m_data_total<1 || m_data_width<1)
+      return(false);
 //--- search it
-   if((temp=SMTSearch::Search(elem,m_data,m_data_total,m_data_width,sort_function))==NULL) return(false);
+   if((temp=SMTSearch::Search(elem,m_data,m_data_total,m_data_width,sort_function))==NULL)
+      return(false);
 //--- calc position
-   i=((UINT64)((char*)temp-(char*)m_data))/m_data_width;
+   i=((uint64_t)((char*)temp-(char*)m_data))/m_data_width;
 //--- remove it
-   if(i<m_data_total-1) memmove(temp,(char *)temp+m_data_width,(size_t)((m_data_total-i)-1)*m_data_width);
+   if(i<m_data_total-1)
+      memmove(temp,(char *)temp+m_data_width,(size_t)((m_data_total-i)-1)*m_data_width);
    m_data_total--;
 //--- ok
    return(true);
@@ -424,10 +470,11 @@ inline bool CMTArrayBase::Remove(const void *elem,SMTSearch::SortFunctionPtr sor
 //+------------------------------------------------------------------+
 //| Update record                                                    |
 //+------------------------------------------------------------------+
-inline bool CMTArrayBase::Update(const UINT pos,const void *elem)
+inline bool CMTArrayBase::Update(const uint32_t pos,const void *elem)
   {
 //--- check
-   if(!elem || pos>=m_data_total || !m_data) return(false);
+   if(!elem || pos>=m_data_total || !m_data)
+      return(false);
 //--- update
    memcpy((char*)m_data+(pos*m_data_width),(const char*)elem,m_data_width);
 //--- ok
@@ -436,20 +483,24 @@ inline bool CMTArrayBase::Update(const UINT pos,const void *elem)
 //+------------------------------------------------------------------+
 //| Shift record from pos                                            |
 //+------------------------------------------------------------------+
-inline bool CMTArrayBase::Shift(const UINT pos,const int shift)
+inline bool CMTArrayBase::Shift(const uint32_t pos,const int32_t shift)
   {
-   UINT i,newpos=UINT((int)pos+shift);
+   uint32_t i,newpos=uint32_t((int)pos+shift);
 //--- check
-   if(pos>=m_data_total || newpos>=m_data_total || !m_data) return(false);
+   if(pos>=m_data_total || newpos>=m_data_total || !m_data)
+      return(false);
 //--- we need one more record
-   if(!Realloc(1)) return(false);
+   if(!Realloc(1))
+      return(false);
 //--- save current
    memcpy((char*)m_data+(m_data_total*m_data_width),(char*)m_data+(pos*m_data_width),m_data_width);
 //--- shift record by record
    if(newpos>pos)
-      for(i=pos+1;i<=newpos;i++) memcpy((char*)m_data+((i-1)*m_data_width),(char*)m_data+(i*m_data_width),m_data_width);
+      for(i=pos+1;i<=newpos;i++)
+         memcpy((char*)m_data+((i-1)*m_data_width),(char*)m_data+(i*m_data_width),m_data_width);
    else
-      for(i=pos;i>newpos;i--)    memcpy((char*)m_data+(i*m_data_width),(char*)m_data+((i-1)*m_data_width),m_data_width);
+      for(i=pos;i>newpos;i--)
+         memcpy((char*)m_data+(i*m_data_width),(char*)m_data+((i-1)*m_data_width),m_data_width);
 //--- restore current
    memcpy((char*)m_data+(newpos*m_data_width),(char*)m_data+(m_data_total*m_data_width),m_data_width);
 //--- ok
@@ -458,10 +509,11 @@ inline bool CMTArrayBase::Shift(const UINT pos,const int shift)
 //+------------------------------------------------------------------+
 //| Remove size first elements                                       |
 //+------------------------------------------------------------------+
-inline bool CMTArrayBase::Trim(const UINT size)
+inline bool CMTArrayBase::Trim(const uint32_t size)
   {
 //--- check
-   if(!m_data || size>m_data_total) return(false);
+   if(!m_data || size>m_data_total)
+      return(false);
 //--- trim
    m_data_total-=size;
    memmove((char*)m_data,(char*)m_data+size*m_data_width,m_data_width*m_data_total);
@@ -471,10 +523,11 @@ inline bool CMTArrayBase::Trim(const UINT size)
 //+------------------------------------------------------------------+
 //| Next record by position                                          |
 //+------------------------------------------------------------------+
-inline bool CMTArrayBase::Next(const UINT pos,void *elem) const
+inline bool CMTArrayBase::Next(const uint32_t pos,void *elem) const
   {
 //--- check
-   if(pos>=m_data_total || !elem || !m_data) return(false);
+   if(pos>=m_data_total || !elem || !m_data)
+      return(false);
 //--- copy and return
    memcpy((char*)elem,(char*)m_data+(pos*m_data_width),m_data_width);
    return(true);
@@ -485,7 +538,8 @@ inline bool CMTArrayBase::Next(const UINT pos,void *elem) const
 inline void* CMTArrayBase::Next(const void *elem) const
   {
 //--- check
-   if(!elem || !m_data || elem<m_data || elem>=((char*)m_data+(m_data_total-1)*m_data_width)) return(NULL);
+   if(!elem || !m_data || elem<m_data || elem>=((char*)m_data+(m_data_total-1)*m_data_width))
+      return(NULL);
 //--- return next element
    return((char*)elem+m_data_width);
   }
@@ -495,32 +549,33 @@ inline void* CMTArrayBase::Next(const void *elem) const
 inline void* CMTArrayBase::Prev(const void *elem) const
   {
 //--- check
-   if(!elem || !m_data || elem<=m_data || elem>((char*)m_data+(m_data_total-1)*m_data_width)) return(NULL);
+   if(!elem || !m_data || elem<=m_data || elem>((char*)m_data+(m_data_total-1)*m_data_width))
+      return(NULL);
 //--- return next element
    return((char*)elem-m_data_width);
   }
 //+------------------------------------------------------------------+
 //| Ptr by position                                                  |
 //+------------------------------------------------------------------+
-inline const void* CMTArrayBase::At(const UINT pos) const
+inline const void* CMTArrayBase::At(const uint32_t pos) const
   {
    return((const char*)m_data+(pos*m_data_width));
   }
-//lint –restore
 //+------------------------------------------------------------------+
 //| Ptr by position                                                  |
 //+------------------------------------------------------------------+
-inline void* CMTArrayBase::At(const UINT pos)
+inline void* CMTArrayBase::At(const uint32_t pos)
   {
    return((char*)m_data+(pos*m_data_width));
   }
 //+------------------------------------------------------------------+
 //| Position by ptr                                                  |
 //+------------------------------------------------------------------+
-inline int CMTArrayBase::Position(const void* ptr) const
+inline int32_t CMTArrayBase::Position(const void* ptr) const
   {
 //--- check
-   if(!ptr || !m_data || !m_data_width || ptr<m_data || ptr>=(char*)m_data+(m_data_total*m_data_width)) return(-1);
+   if(!ptr || !m_data || !m_data_width || ptr<m_data || ptr>=(char*)m_data+(m_data_total*m_data_width))
+      return(-1);
 //--- calc offset
    ldiv_t res=ldiv((long)((const char*)ptr-(char*)m_data),(long)m_data_width);
 //--- check ptr
@@ -529,7 +584,7 @@ inline int CMTArrayBase::Position(const void* ptr) const
 //+------------------------------------------------------------------+
 //| Receive range                                                    |
 //+------------------------------------------------------------------+
-inline bool CMTArrayBase::Range(const UINT from,const UINT to,void* data) const
+inline bool CMTArrayBase::Range(const uint32_t from,const uint32_t to,void* data) const
   {
 //--- check
    if(from>to || from>=m_data_total || to>=m_data_total || !data || !m_data) return(false);
@@ -626,7 +681,7 @@ inline void* CMTArrayBase::SearchRight(const void *key,SMTSearch::SortFunctionPt
 //| Dynamic array template                                           |
 //| For POD data types only!                                         |
 //+------------------------------------------------------------------+
-template <class T,UINT step=16> class TMTArray : public CMTArrayBase
+template <class T,uint32_t step=16> class TMTArray : public CMTArrayBase
   {
 public:
                      TMTArray() : CMTArrayBase(sizeof(T),step)            {}
@@ -635,27 +690,29 @@ public:
    void              Swap(TMTArray<T,step> &arr)                          { CMTArrayBase::Swap(arr);                     }
    //--- add
    bool              Add(const T *elem)                                   { return CMTArrayBase::Add(elem);              }
-   bool              Add(const T *elem,const UINT total)                  { return CMTArrayBase::Add(elem,total);        }
+   bool              Add(const T *elem,const uint32_t total)              { return CMTArrayBase::Add(elem,total);        }
    bool              Add(const TMTArray<T,step>& arr)                     { return CMTArrayBase::Add(arr);               }
-   bool              AddRange(const TMTArray<T,step>& arr,const UINT from,const UINT to)
+   template <typename... TArgs>
+   T*                AddEmplace(TArgs&&... args);
+   bool              AddRange(const TMTArray<T,step>& arr,const uint32_t from,const uint32_t to)
    { return CMTArrayBase::AddRange(arr,from,to);  }
    T*                Append(void)                                         { return(T*)CMTArrayBase::Append();            }
-   bool              Insert(const UINT pos,const T *elem)                 { return CMTArrayBase::Insert(pos,elem);       }
-   bool              Insert(const UINT pos,const T *elem,const UINT total){ return CMTArrayBase::Insert(pos,elem,total); }
-   T*                Insert(const T *elem,SMTSearch::SortFunctionPtr order) { return(T*)CMTArrayBase::Insert(elem,order);}
+   bool              Insert(const uint32_t pos,const T *elem)             { return CMTArrayBase::Insert(pos,elem);       }
+   bool              Insert(const uint32_t pos,const T *elem,const uint32_t total) { return CMTArrayBase::Insert(pos,elem,total); }
+   T*                Insert(const T *elem,SMTSearch::SortFunctionPtr order)        { return(T*)CMTArrayBase::Insert(elem,order);}
    //--- delete
-   bool              Delete(const UINT pos)                               { return CMTArrayBase::Delete(pos);            }
-   bool              Delete(const T *elem)                                { return CMTArrayBase::Delete(elem);           }
+   bool              Delete(const uint32_t pos)                             { return CMTArrayBase::Delete(pos);            }
+   bool              Delete(const T *elem)                                  { return CMTArrayBase::Delete(elem);           }
    bool              Remove(const T *elem,SMTSearch::SortFunctionPtr order) { return CMTArrayBase::Remove(elem,order);   }
    //--- modify
-   bool              Update(const UINT pos,const T *elem)                 { return CMTArrayBase::Update(pos,elem);       }
+   bool              Update(const uint32_t pos,const T *elem)             { return CMTArrayBase::Update(pos,elem);       }
    //--- data access
-   bool              Next(const UINT pos,T *elem) const                   { return CMTArrayBase::Next(pos,elem);         }
+   bool              Next(const uint32_t pos,T *elem) const               { return CMTArrayBase::Next(pos,elem);         }
    T*                Next(const T* elem) const                            { return(T*)CMTArrayBase::Next(elem);          }
    T*                Prev(const T* elem)                                  { return(T*)CMTArrayBase::Prev(elem);          }
    T*                First(void)                                          { return(T*)CMTArrayBase::At(0);               }
-   int               Position(const T* ptr) const                         { return CMTArrayBase::Position(ptr);          }
-   bool              Range(const UINT from,const UINT to,T* data) const   { return CMTArrayBase::Range(from,to,data);    }
+   int32_t           Position(const T* ptr) const                         { return CMTArrayBase::Position(ptr);          }
+   bool              Range(const uint32_t from,const uint32_t to,T* data) const   { return CMTArrayBase::Range(from,to,data);    }
    //--- search
    T*                Search(const void *key,SMTSearch::SortFunctionPtr sort_function)          const  { return(T*)CMTArrayBase::Search(key,sort_function);          }
    T*                SearchGreatOrEq(const void *key,SMTSearch::SortFunctionPtr sort_function) const  { return(T*)CMTArrayBase::SearchGreatOrEq(key,sort_function); }
@@ -665,11 +722,16 @@ public:
    T*                SearchLeft(const void *key,SMTSearch::SortFunctionPtr sort_function)      const  { return(T*)CMTArrayBase::SearchLeft(key,sort_function);      }
    T*                SearchRight(const void *key,SMTSearch::SortFunctionPtr sort_function)     const  { return(T*)CMTArrayBase::SearchRight(key,sort_function);     }
    //--- operators
-   const T&          operator[](const UINT pos) const                     { return(*(T*)CMTArrayBase::At(pos));          }
-   T&                operator[](const UINT pos)                           { return(*(T*)CMTArrayBase::At(pos));          }
+   const T&          operator[](const uint32_t pos) const                 { return(*(T*)CMTArrayBase::At(pos));          }
+   T&                operator[](const uint32_t pos)                       { return(*(T*)CMTArrayBase::At(pos));          }
    bool              operator==(const TMTArray<T,step>& arr) const        { return(CMTArrayBase::Compare(arr));          }
    bool              operator!=(const TMTArray<T,step>& arr) const        { return(!CMTArrayBase::Compare(arr));         }
    TMTArray<T,step>& operator= (const TMTArray<T,step>& arr)              { if(this!=&arr) Assign(arr); return(*this);   }
+   //--- C++ iteration
+   T*                begin(void)                                          { return(CMTArrayBase::m_data_total ? ((T*)CMTArrayBase::m_data) : nullptr);       }
+   const T*          begin(void) const                                    { return(CMTArrayBase::m_data_total ? ((const T*)CMTArrayBase::m_data) : nullptr); }
+   T*                end(void)                                            { return(CMTArrayBase::m_data && CMTArrayBase::m_data_total ? ((T*)CMTArrayBase::m_data+CMTArrayBase::m_data_total) : nullptr);       }
+   const T*          end(void) const                                      { return(CMTArrayBase::m_data && CMTArrayBase::m_data_total ? ((const T*)CMTArrayBase::m_data+CMTArrayBase::m_data_total) : nullptr); }
 
 private:
                      TMTArray(const TMTArray&) {};
@@ -677,13 +739,28 @@ private:
 //+------------------------------------------------------------------+
 //| Predefined arrays                                                |
 //+------------------------------------------------------------------+
-typedef TMTArray<UCHAR>   MTByteArray;
-typedef TMTArray<wchar_t> MTCharArray;
-typedef TMTArray<SHORT>   MTShortArray;
-typedef TMTArray<USHORT>  MTUShortArray;
-typedef TMTArray<int>     MTIntArray;
-typedef TMTArray<UINT>    MTUIntArray;
-typedef TMTArray<INT64>   MTInt64Array;
-typedef TMTArray<UINT64>  MTUInt64Array;
-typedef TMTArray<double>  MTDoubleArray;
+typedef TMTArray<uint8_t>   MTByteArray;
+typedef TMTArray<wchar_t>   MTCharArray;
+typedef TMTArray<SHORT>     MTShortArray;
+typedef TMTArray<uint16_t>  MTUShortArray;
+typedef TMTArray<int>       MTIntArray;
+typedef TMTArray<uint32_t>  MTUIntArray;
+typedef TMTArray<int64_t>   MTInt64Array;
+typedef TMTArray<uint64_t>  MTUInt64Array;
+typedef TMTArray<double>    MTDoubleArray;
+//+------------------------------------------------------------------+
+//| Placement adding an element to the end of the array              |
+//| Returns a pointer to a new element if successful, otherwise 0    |
+//+------------------------------------------------------------------+
+template <typename T,uint32_t step>
+template <typename... TArgs>
+T* TMTArray<T,step>::AddEmplace(TArgs&&... args)
+  {
+//--- appending an element
+   T *ptr=Append();
+//--- placement construction of an element by passed arguments
+   if(ptr)
+      new (ptr) T{std::forward<TArgs>(args)...};
+   return ptr;
+  }
 //+------------------------------------------------------------------+

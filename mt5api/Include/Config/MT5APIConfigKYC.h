@@ -1,6 +1,6 @@
-//+------------------------------------------------------------------+
+﻿//+------------------------------------------------------------------+
 //|                                                 MetaTrader 5 API |
-//|                             Copyright 2000-2024, MetaQuotes Ltd. |
+//|                             Copyright 2000-2026, MetaQuotes Ltd. |
 //|                                               www.metaquotes.net |
 //+------------------------------------------------------------------+
 #pragma once
@@ -51,7 +51,7 @@ public:
    //--- providers
    enum EnProviderType
      {
-      //---- SMS
+      //--- SMS
       PROVIDER_KYC_SUMSUB     =0,
       PROVIDER_KYC_WORLD_CHECK=1,
       PROVIDER_KYC_ESPEAR     =2,
@@ -67,8 +67,8 @@ public:
    virtual LPCWSTR   Name(void) const=0;
    virtual MTAPIRES  Name(LPCWSTR name)=0;
    //--- provider type
-   virtual UINT      ProviderType(void) const=0;
-   virtual MTAPIRES  ProviderType(const UINT provider)=0;
+   virtual uint32_t  ProviderType(void) const=0;
+   virtual MTAPIRES  ProviderType(const uint32_t provider)=0;
    //--- provider address
    virtual LPCWSTR   ProviderAddress(void) const=0;
    virtual MTAPIRES  ProviderAddress(LPCWSTR address)=0;
@@ -82,24 +82,24 @@ public:
    virtual LPCWSTR   ProviderToken(void) const=0;
    virtual MTAPIRES  ProviderToken(LPCWSTR token)=0;
    //--- EnFlags
-   virtual UINT64    Flags(void) const=0;
-   virtual MTAPIRES  Flags(const UINT64 flags)=0;
+   virtual uint64_t    Flags(void) const=0;
+   virtual MTAPIRES  Flags(const uint64_t flags)=0;
    //--- country settings
    virtual MTAPIRES  CountryAdd(IMTConKYCCountry* country)=0;
-   virtual MTAPIRES  CountryUpdate(const UINT pos,const IMTConKYCCountry* country)=0;
-   virtual MTAPIRES  CountryDelete(const UINT pos)=0;
+   virtual MTAPIRES  CountryUpdate(const uint32_t pos,const IMTConKYCCountry* country)=0;
+   virtual MTAPIRES  CountryDelete(const uint32_t pos)=0;
    virtual MTAPIRES  CountryClear(void)=0;
-   virtual MTAPIRES  CountryShift(const UINT pos,const int shift)=0;
-   virtual UINT      CountryTotal(void) const=0;
-   virtual MTAPIRES  CountryNext(const UINT pos,IMTConKYCCountry* country) const=0;
+   virtual MTAPIRES  CountryShift(const uint32_t pos,const int32_t shift)=0;
+   virtual uint32_t  CountryTotal(void) const=0;
+   virtual MTAPIRES  CountryNext(const uint32_t pos,IMTConKYCCountry* country) const=0;
    //--- group settings
    virtual MTAPIRES  GroupAdd(IMTConKYCGroup* group)=0;
-   virtual MTAPIRES  GroupUpdate(const UINT pos,const IMTConKYCGroup* group)=0;
-   virtual MTAPIRES  GroupDelete(const UINT pos)=0;
+   virtual MTAPIRES  GroupUpdate(const uint32_t pos,const IMTConKYCGroup* group)=0;
+   virtual MTAPIRES  GroupDelete(const uint32_t pos)=0;
    virtual MTAPIRES  GroupClear(void)=0;
-   virtual MTAPIRES  GroupShift(const UINT pos,const int shift)=0;
-   virtual UINT      GroupTotal(void) const=0;
-   virtual MTAPIRES  GroupNext(const UINT pos,IMTConKYCGroup* group) const=0;
+   virtual MTAPIRES  GroupShift(const uint32_t pos,const int32_t shift)=0;
+   virtual uint32_t  GroupTotal(void) const=0;
+   virtual MTAPIRES  GroupNext(const uint32_t pos,IMTConKYCGroup* group) const=0;
    //--- explicit destructor is prohibited
 protected:
                     ~IMTConKYC(void) {}

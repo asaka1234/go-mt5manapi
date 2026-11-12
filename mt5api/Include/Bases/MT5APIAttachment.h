@@ -1,6 +1,6 @@
-//+------------------------------------------------------------------+
+﻿//+------------------------------------------------------------------+
 //|                                                 MetaTrader 5 API |
-//|                             Copyright 2000-2024, MetaQuotes Ltd. |
+//|                             Copyright 2000-2026, MetaQuotes Ltd. |
 //|                                               www.metaquotes.net |
 //+------------------------------------------------------------------+
 #pragma once
@@ -38,25 +38,25 @@ public:
    virtual MTAPIRES  Assign(const IMTAttachment* file)=0;
    virtual MTAPIRES  Clear(void)=0;
    //--- record id
-   virtual UINT64    RecordID(void) const=0;
-   virtual MTAPIRES  RecordID(const UINT64 record_id)=0;
+   virtual uint64_t  RecordID(void) const=0;
+   virtual MTAPIRES  RecordID(const uint64_t record_id)=0;
    //--- related client
-   virtual UINT64    RelatedClient(void) const=0;
-   virtual MTAPIRES  RelatedClient(const UINT64 record_id)=0;
+   virtual uint64_t  RelatedClient(void) const=0;
+   virtual MTAPIRES  RelatedClient(const uint64_t record_id)=0;
    //--- file type
-   virtual UINT      FileType(void) const=0;
-   virtual MTAPIRES  FileType(const UINT type)=0;
+   virtual uint32_t  FileType(void) const=0;
+   virtual MTAPIRES  FileType(const uint32_t type)=0;
    //--- file name
    virtual LPCWSTR   FileName(void) const=0;
    virtual MTAPIRES  FileName(LPCWSTR name)=0;
    //--- file content
-   virtual const void* FileContent(UINT& content_size) const=0;
-   virtual MTAPIRES  FileContent(const void* content,const UINT content_size)=0;
+   virtual const void* FileContent(uint32_t& content_size) const=0;
+   virtual MTAPIRES  FileContent(const void* content,const uint32_t content_size)=0;
    //--- file size
-   virtual UINT      FileSize(void)=0;
+   virtual uint32_t  FileSize(void)=0;
    //--- file flags
-   virtual UINT      FileFlags(void) const=0;
-   virtual MTAPIRES  FileFlags(const UINT flags)=0;
+   virtual uint32_t  FileFlags(void) const=0;
+   virtual MTAPIRES  FileFlags(const uint32_t flags)=0;
    //--- explicit destructor is prohibited
 protected:
                     ~IMTAttachment(void) {}
@@ -77,24 +77,24 @@ public:
    virtual MTAPIRES  Add(IMTAttachmentArray* array)=0;
    virtual MTAPIRES  AddCopy(const IMTAttachmentArray* array)=0;
    //--- delete & detach
-   virtual MTAPIRES  Delete(const UINT pos)=0;
-   virtual IMTAttachment *Detach(const UINT pos)=0;
+   virtual MTAPIRES  Delete(const uint32_t pos)=0;
+   virtual IMTAttachment *Detach(const uint32_t pos)=0;
    //--- update
-   virtual MTAPIRES  Update(const UINT pos,IMTAttachment* attachment)=0;
-   virtual MTAPIRES  UpdateCopy(const UINT pos,const IMTAttachment* attachment)=0;
-   virtual MTAPIRES  Shift(const UINT pos,const int shift)=0;
+   virtual MTAPIRES  Update(const uint32_t pos,IMTAttachment* attachment)=0;
+   virtual MTAPIRES  UpdateCopy(const uint32_t pos,const IMTAttachment* attachment)=0;
+   virtual MTAPIRES  Shift(const uint32_t pos,const int32_t shift)=0;
    //--- data access
-   virtual UINT      Total(void) const=0;
-   virtual IMTAttachment *Next(const UINT index) const=0;
+   virtual uint32_t  Total(void) const=0;
+   virtual IMTAttachment *Next(const uint32_t index) const=0;
    //--- sorting and search
    virtual MTAPIRES  Sort(MTSortFunctionPtr sort_function)=0;
-   virtual int       Search(const void *key,MTSortFunctionPtr sort_function) const=0;
-   virtual int       SearchGreatOrEq(const void *key,MTSortFunctionPtr sort_function) const=0;
-   virtual int       SearchGreater(const void *key,MTSortFunctionPtr sort_function) const=0;
-   virtual int       SearchLessOrEq(const void *key,MTSortFunctionPtr sort_function) const=0;
-   virtual int       SearchLess(const void *key,MTSortFunctionPtr sort_function) const=0;
-   virtual int       SearchLeft(const void *key,MTSortFunctionPtr sort_function) const=0;
-   virtual int       SearchRight(const void *key,MTSortFunctionPtr sort_function) const=0;
+   virtual int32_t   Search(const void *key,MTSortFunctionPtr sort_function) const=0;
+   virtual int32_t   SearchGreatOrEq(const void *key,MTSortFunctionPtr sort_function) const=0;
+   virtual int32_t   SearchGreater(const void *key,MTSortFunctionPtr sort_function) const=0;
+   virtual int32_t   SearchLessOrEq(const void *key,MTSortFunctionPtr sort_function) const=0;
+   virtual int32_t   SearchLess(const void *key,MTSortFunctionPtr sort_function) const=0;
+   virtual int32_t   SearchLeft(const void *key,MTSortFunctionPtr sort_function) const=0;
+   virtual int32_t   SearchRight(const void *key,MTSortFunctionPtr sort_function) const=0;
    //--- explicit destructor is prohibited
 protected:
                     ~IMTAttachmentArray(void) {}

@@ -1,6 +1,6 @@
-//+------------------------------------------------------------------+
+﻿//+------------------------------------------------------------------+
 //|                                                 MetaTrader 5 API |
-//|                             Copyright 2000-2024, MetaQuotes Ltd. |
+//|                             Copyright 2000-2026, MetaQuotes Ltd. |
 //|                                               www.metaquotes.net |
 //+------------------------------------------------------------------+
 #pragma once
@@ -70,7 +70,7 @@ public:
    virtual LPCWSTR   Region(void) const=0;
    virtual LPCWSTR   Province(void) const=0;
    //--- ASN
-   virtual UINT64    ASN(void) const=0;
+   virtual uint64_t  ASN(void) const=0;
    virtual LPCWSTR   ASNOrganization(void) const=0;
    //--- ISP
    virtual LPCWSTR   ISP(void) const=0;
@@ -79,7 +79,7 @@ public:
    virtual double    Latitude(void) const=0;
    virtual double    Longitude(void) const=0;
    //--- EnGeoDetails
-   virtual UINT64    Details(void) const=0;
+   virtual uint64_t  Details(void) const=0;
    //--- explicit destructor is prohibited
 protected:
                     ~IMTGeo(void) {}

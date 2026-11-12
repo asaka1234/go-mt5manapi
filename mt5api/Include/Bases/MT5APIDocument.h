@@ -1,6 +1,6 @@
-//+------------------------------------------------------------------+
+﻿//+------------------------------------------------------------------+
 //|                                                 MetaTrader 5 API |
-//|                             Copyright 2000-2024, MetaQuotes Ltd. |
+//|                             Copyright 2000-2026, MetaQuotes Ltd. |
 //|                                               www.metaquotes.net |
 //+------------------------------------------------------------------+
 #pragma once
@@ -72,26 +72,26 @@ public:
    virtual MTAPIRES  Assign(const IMTDocument* document)=0;
    virtual MTAPIRES  Clear(void)=0;
    //--- record id
-   virtual UINT64    RecordID(void) const=0;
-   virtual MTAPIRES  RecordID(const UINT64 record_id)=0;
+   virtual uint64_t  RecordID(void) const=0;
+   virtual MTAPIRES  RecordID(const uint64_t record_id)=0;
    //--- related client
-   virtual UINT64    RelatedClient(void) const=0;
-   virtual MTAPIRES  RelatedClient(const UINT64 record_id)=0;
+   virtual uint64_t  RelatedClient(void) const=0;
+   virtual MTAPIRES  RelatedClient(const uint64_t record_id)=0;
    //--- approved date
-   virtual INT64     ApprovedDate(void) const=0;
-   virtual MTAPIRES  ApprovedDate(const INT64 date)=0;
+   virtual int64_t   ApprovedDate(void) const=0;
+   virtual MTAPIRES  ApprovedDate(const int64_t date)=0;
    //--- approved by
-   virtual UINT64    ApprovedBy(void) const=0;
-   virtual MTAPIRES  ApprovedBy(const UINT64 manager)=0;
+   virtual uint64_t  ApprovedBy(void) const=0;
+   virtual MTAPIRES  ApprovedBy(const uint64_t manager)=0;
    //--- date issue
-   virtual INT64     DateIssue(void) const=0;
-   virtual MTAPIRES  DateIssue(const INT64 date)=0;
+   virtual int64_t   DateIssue(void) const=0;
+   virtual MTAPIRES  DateIssue(const int64_t date)=0;
    //--- date expiration
-   virtual INT64     DateExpiration(void) const=0;
-   virtual MTAPIRES  DateExpiration(const INT64 date)=0;
+   virtual int64_t   DateExpiration(void) const=0;
+   virtual MTAPIRES  DateExpiration(const int64_t date)=0;
    //--- document type
-   virtual UINT      DocumentType(void) const=0;
-   virtual MTAPIRES  DocumentType(const UINT type)=0;
+   virtual uint32_t  DocumentType(void) const=0;
+   virtual MTAPIRES  DocumentType(const uint32_t type)=0;
    //--- document name
    virtual LPCWSTR   DocumentName(void) const=0;
    virtual MTAPIRES  DocumentName(LPCWSTR name)=0;
@@ -99,16 +99,16 @@ public:
    virtual LPCWSTR   DocumentComment(void) const=0;
    virtual MTAPIRES  DocumentComment(LPCWSTR comment)=0;
    //--- document status
-   virtual UINT      DocumentStatus(void) const=0;
-   virtual MTAPIRES  DocumentStatus(const UINT status)=0;
+   virtual uint32_t  DocumentStatus(void) const=0;
+   virtual MTAPIRES  DocumentStatus(const uint32_t status)=0;
    //--- attachments
    virtual MTAPIRES  AttachmentsAdd(const IMTAttachment *attachment)=0;
    virtual MTAPIRES  AttachmentsClear(void)=0;
-   virtual UINT      AttachmentsTotal(void) const=0;
-   virtual MTAPIRES  AttachmentsNext(const UINT pos,UINT64& attachment_id,MTAPISTR& attachment_name,UINT& attachment_size) const=0;
+   virtual uint32_t  AttachmentsTotal(void) const=0;
+   virtual MTAPIRES  AttachmentsNext(const uint32_t pos,uint64_t& attachment_id,MTAPISTR& attachment_name,uint32_t& attachment_size) const=0;
    //--- document subtype
-   virtual UINT      DocumentSubtype(void) const=0;
-   virtual MTAPIRES  DocumentSubtype(const UINT subtype)=0;
+   virtual uint32_t  DocumentSubtype(void) const=0;
+   virtual MTAPIRES  DocumentSubtype(const uint32_t subtype)=0;
    //--- explicit destructor is prohibited
 protected:
                     ~IMTDocument(void) {}
@@ -129,24 +129,24 @@ public:
    virtual MTAPIRES  Add(IMTDocumentArray* array)=0;
    virtual MTAPIRES  AddCopy(const IMTDocumentArray* array)=0;
    //--- delete & detach
-   virtual MTAPIRES  Delete(const UINT pos)=0;
-   virtual IMTDocument *Detach(const UINT pos)=0;
+   virtual MTAPIRES  Delete(const uint32_t pos)=0;
+   virtual IMTDocument *Detach(const uint32_t pos)=0;
    //--- update
-   virtual MTAPIRES  Update(const UINT pos,IMTDocument* document)=0;
-   virtual MTAPIRES  UpdateCopy(const UINT pos,const IMTDocument* document)=0;
-   virtual MTAPIRES  Shift(const UINT pos,const int shift)=0;
+   virtual MTAPIRES  Update(const uint32_t pos,IMTDocument* document)=0;
+   virtual MTAPIRES  UpdateCopy(const uint32_t pos,const IMTDocument* document)=0;
+   virtual MTAPIRES  Shift(const uint32_t pos,const int32_t shift)=0;
    //--- data access
-   virtual UINT      Total(void) const=0;
-   virtual IMTDocument*Next(const UINT index) const=0;
+   virtual uint32_t  Total(void) const=0;
+   virtual IMTDocument* Next(const uint32_t index) const=0;
    //--- sorting and search
    virtual MTAPIRES  Sort(MTSortFunctionPtr sort_function)=0;
-   virtual int       Search(const void *key,MTSortFunctionPtr sort_function) const=0;
-   virtual int       SearchGreatOrEq(const void *key,MTSortFunctionPtr sort_function) const=0;
-   virtual int       SearchGreater(const void *key,MTSortFunctionPtr sort_function) const=0;
-   virtual int       SearchLessOrEq(const void *key,MTSortFunctionPtr sort_function) const=0;
-   virtual int       SearchLess(const void *key,MTSortFunctionPtr sort_function) const=0;
-   virtual int       SearchLeft(const void *key,MTSortFunctionPtr sort_function) const=0;
-   virtual int       SearchRight(const void *key,MTSortFunctionPtr sort_function) const=0;
+   virtual int32_t   Search(const void *key,MTSortFunctionPtr sort_function) const=0;
+   virtual int32_t   SearchGreatOrEq(const void *key,MTSortFunctionPtr sort_function) const=0;
+   virtual int32_t   SearchGreater(const void *key,MTSortFunctionPtr sort_function) const=0;
+   virtual int32_t   SearchLessOrEq(const void *key,MTSortFunctionPtr sort_function) const=0;
+   virtual int32_t   SearchLess(const void *key,MTSortFunctionPtr sort_function) const=0;
+   virtual int32_t   SearchLeft(const void *key,MTSortFunctionPtr sort_function) const=0;
+   virtual int32_t   SearchRight(const void *key,MTSortFunctionPtr sort_function) const=0;
    //--- explicit destructor is prohibited
 protected:
                     ~IMTDocumentArray(void) {}

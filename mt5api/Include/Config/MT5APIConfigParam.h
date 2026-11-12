@@ -1,6 +1,6 @@
-//+------------------------------------------------------------------+
+﻿//+------------------------------------------------------------------+
 //|                                                 MetaTrader 5 API |
-//|                             Copyright 2000-2024, MetaQuotes Ltd. |
+//|                             Copyright 2000-2026, MetaQuotes Ltd. |
 //|                                               www.metaquotes.net |
 //+------------------------------------------------------------------+
 #pragma once
@@ -13,19 +13,24 @@ public:
    //--- parameter types
    enum EnParamType
      {
-      TYPE_STRING    =0,   // string
-      TYPE_INT       =1,   // integer
-      TYPE_FLOAT     =2,   // floating
-      TYPE_TIME      =3 ,  // time only
-      TYPE_DATE      =4 ,  // date only
-      TYPE_DATETIME  =5 ,  // date & time
-      TYPE_GROUPS    =6,   // groups list
-      TYPE_SYMBOLS   =7,   // symbols list
-      TYPE_BOOL      =8,   // bool
-      TYPE_COLOR     =9,   // color
+      TYPE_STRING                  =0,   // string
+      TYPE_INT                     =1,   // integer
+      TYPE_FLOAT                   =2,   // floating
+      TYPE_TIME                    =3,   // time only
+      TYPE_DATE                    =4,   // date only
+      TYPE_DATETIME                =5,   // date & time
+      TYPE_GROUPS                  =6,   // groups list
+      TYPE_SYMBOLS                 =7,   // symbols list
+      TYPE_BOOL                    =8,   // bool
+      TYPE_COLOR                   =9,   // color
+      TYPE_GATEWAY                 =10,  // gateway
+      TYPE_ULTENCY_MATCHING_ENGINE =11,  // Ultency matching engine server
+      TYPE_ULTENCY_PROVIDER        =12,  // Ultency liquidity provider
+      TYPE_ULTENCY_SYMBOLS         =13,  // Ultency aggregated symbols list
+      TYPE_PERIOD                  =14,  // period
       //--- enumeration borders
-      TYPE_FIRST     =TYPE_STRING,
-      TYPE_LAST      =TYPE_COLOR
+      TYPE_FIRST                   =TYPE_STRING,
+      TYPE_LAST                    =TYPE_PERIOD
      };
    //--- common methods
    virtual void      Release(void)=0;
@@ -35,8 +40,8 @@ public:
    virtual LPCWSTR   Name(void) const=0;
    virtual MTAPIRES  Name(LPCWSTR name)=0;
    //--- parameter type
-   virtual UINT      Type(void) const=0;
-   virtual MTAPIRES  Type(const UINT type)=0;
+   virtual uint32_t  Type(void) const=0;
+   virtual MTAPIRES  Type(const uint32_t type)=0;
    //--- parameter value (raw string)
    virtual LPCWSTR   Value(void) const=0;
    virtual MTAPIRES  Value(LPCWSTR value)=0;
@@ -44,17 +49,17 @@ public:
    virtual LPCWSTR   ValueString(void) const=0;
    virtual MTAPIRES  ValueString(LPCWSTR value)=0;
    //--- parameter value integer
-   virtual INT64     ValueInt(void) const=0;
-   virtual MTAPIRES  ValueInt(const INT64 value)=0;
+   virtual int64_t   ValueInt(void) const=0;
+   virtual MTAPIRES  ValueInt(const int64_t value)=0;
    //--- parameter value float
    virtual double    ValueFloat(void) const=0;
    virtual MTAPIRES  ValueFloat(const double value)=0;
    //--- parameter value time
-   virtual INT64     ValueTime(void) const=0;
-   virtual MTAPIRES  ValueTime(const INT64 value)=0;
+   virtual int64_t   ValueTime(void) const=0;
+   virtual MTAPIRES  ValueTime(const int64_t value)=0;
    //--- parameter value datetime
-   virtual INT64     ValueDatetime(void) const=0;
-   virtual MTAPIRES  ValueDatetime(const INT64 value)=0;
+   virtual int64_t   ValueDatetime(void) const=0;
+   virtual MTAPIRES  ValueDatetime(const int64_t value)=0;
    //--- parameter value groups
    virtual LPCWSTR   ValueGroups(void) const=0;
    virtual MTAPIRES  ValueGroups(LPCWSTR value)=0;
@@ -64,9 +69,24 @@ public:
    //--- parameter value bool
    virtual bool      ValueBool(void) const=0;
    virtual MTAPIRES  ValueBool(const bool value)=0;
-   //--- value color
+   //--- parameter value color
    virtual COLORREF  ValueColor(void) const=0;
    virtual MTAPIRES  ValueColor(const COLORREF value)=0;
+   //--- parameter value gateway
+   virtual uint64_t  ValueGateway(void) const=0;
+   virtual MTAPIRES  ValueGateway(uint64_t value)=0;
+   //--- parameter value Ultency matching engine server
+   virtual uint64_t  ValueUltencyMatchingEngine(void) const=0;
+   virtual MTAPIRES  ValueUltencyMatchingEngine(uint64_t value)=0;
+   //--- parameter value Ultency liquidity provider
+   virtual uint64_t  ValueUltencyProvider(void) const=0;
+   virtual MTAPIRES  ValueUltencyProvider(uint64_t value)=0;
+   //--- parameter value Ultency aggregated symbols list
+   virtual LPCWSTR   ValueUltencySymbols(void) const=0;
+   virtual MTAPIRES  ValueUltencySymbols(LPCWSTR value)=0;
+   //--- parameter value period
+   virtual MTPERIOD  ValuePeriod(void) const=0;
+   virtual MTAPIRES  ValuePeriod(MTPERIOD value)=0;
    //--- explicit destructor is prohibited
 protected:
                     ~IMTConParam(void) {}
@@ -87,24 +107,24 @@ public:
    virtual MTAPIRES  Add(IMTConParamArray* array)=0;
    virtual MTAPIRES  AddCopy(const IMTConParamArray* array)=0;
    //--- delete & detach
-   virtual MTAPIRES  Delete(const UINT pos)=0;
-   virtual IMTConParam* Detach(const UINT pos)=0;
+   virtual MTAPIRES  Delete(const uint32_t pos)=0;
+   virtual IMTConParam* Detach(const uint32_t pos)=0;
    //--- update
-   virtual MTAPIRES  Update(const UINT pos,IMTConParam* param)=0;
-   virtual MTAPIRES  UpdateCopy(const UINT pos,const IMTConParam* param)=0;
-   virtual MTAPIRES  Shift(const UINT pos,const int shift)=0;
+   virtual MTAPIRES  Update(const uint32_t pos,IMTConParam* param)=0;
+   virtual MTAPIRES  UpdateCopy(const uint32_t pos,const IMTConParam* param)=0;
+   virtual MTAPIRES  Shift(const uint32_t pos,const int32_t shift)=0;
    //--- data access
-   virtual UINT      Total(void) const=0;
-   virtual IMTConParam* Next(const UINT index) const=0;
+   virtual uint32_t  Total(void) const=0;
+   virtual IMTConParam* Next(const uint32_t index) const=0;
    //--- sorting and search
    virtual MTAPIRES  Sort(MTSortFunctionPtr sort_function)=0;
-   virtual int       Search(const void *key,MTSortFunctionPtr sort_function) const=0;
-   virtual int       SearchGreatOrEq(const void *key,MTSortFunctionPtr sort_function) const=0;
-   virtual int       SearchGreater(const void *key,MTSortFunctionPtr sort_function) const=0;
-   virtual int       SearchLessOrEq(const void *key,MTSortFunctionPtr sort_function) const=0;
-   virtual int       SearchLess(const void *key,MTSortFunctionPtr sort_function) const=0;
-   virtual int       SearchLeft(const void *key,MTSortFunctionPtr sort_function) const=0;
-   virtual int       SearchRight(const void *key,MTSortFunctionPtr sort_function) const=0;
+   virtual int32_t   Search(const void *key,MTSortFunctionPtr sort_function) const=0;
+   virtual int32_t   SearchGreatOrEq(const void *key,MTSortFunctionPtr sort_function) const=0;
+   virtual int32_t   SearchGreater(const void *key,MTSortFunctionPtr sort_function) const=0;
+   virtual int32_t   SearchLessOrEq(const void *key,MTSortFunctionPtr sort_function) const=0;
+   virtual int32_t   SearchLess(const void *key,MTSortFunctionPtr sort_function) const=0;
+   virtual int32_t   SearchLeft(const void *key,MTSortFunctionPtr sort_function) const=0;
+   virtual int32_t   SearchRight(const void *key,MTSortFunctionPtr sort_function) const=0;
    //--- explicit destructor is prohibited
 protected:
                     ~IMTConParamArray(void) {}

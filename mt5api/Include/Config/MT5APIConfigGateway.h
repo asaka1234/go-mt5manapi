@@ -1,6 +1,6 @@
-//+------------------------------------------------------------------+
+﻿//+------------------------------------------------------------------+
 //|                                                 MetaTrader 5 API |
-//|                             Copyright 2000-2024, MetaQuotes Ltd. |
+//|                             Copyright 2000-2026, MetaQuotes Ltd. |
 //|                                               www.metaquotes.net |
 //+------------------------------------------------------------------+
 #pragma once
@@ -42,14 +42,14 @@ public:
    //--- gateway default password for trading
    virtual LPCWSTR   TradingPassword(void) const=0;
    //--- gateway version
-   virtual UINT      Version(void) const=0;
+   virtual uint32_t  Version(void) const=0;
    //--- gateway available flags (IMTConGateway::EnGatewayFlags)
-   virtual UINT      Flags(void) const=0;
+   virtual uint32_t  Flags(void) const=0;
    //--- changeable EnFeedersFieldFlags
-   virtual UINT      Fields(void) const=0;
+   virtual uint32_t  Fields(void) const=0;
    //--- default gateway parameters
-   virtual UINT      ParameterTotal(void) const=0;
-   virtual MTAPIRES  ParameterNext(const UINT pos,IMTConParam* param) const=0;
+   virtual uint32_t  ParameterTotal(void) const=0;
+   virtual MTAPIRES  ParameterNext(const uint32_t pos,IMTConParam* param) const=0;
    virtual MTAPIRES  ParameterGet(LPCWSTR name,IMTConParam* param) const=0;
    //--- gateway given name
    virtual LPCWSTR   Gateway(void) const=0;
@@ -80,7 +80,7 @@ public:
    virtual INT       AskMarkup(void) const=0;
    virtual MTAPIRES  AskMarkup(const INT markup)=0;
    //--- digits
-   virtual UINT      Digits(void) const=0;
+   virtual uint32_t  Digits(void) const=0;
    //--- explicit destructor is prohibited
 protected:
                     ~IMTConGatewayTranslate(void) {}
@@ -100,7 +100,7 @@ public:
       GATEWAY_FLAG_IMPORT_BALANCES=0x00000008,       // gateway can import client balances to MetaTrader platform
       GATEWAY_FLAG_EXTENDED_LOG   =0x00000010,       // gateway writes extended log
       GATEWAY_FLAG_SUPP_POSITIONS =0x00000020,       // gateway support request of trading positions from external trading system
-      GATEWAY_FLAG_PROFILLING     =0x00000040,       // gateway support request of trading positions from external trading system
+      GATEWAY_FLAG_PROFILLING     =0x00000080,       // gateway support request of trading positions from external trading system
       GATEWAY_FLAG_TRIAL          =0x00000100,       // gateway in trial mode
       GATEWAY_FLAG_INTERNAL       =0x00000200,       // gateway works as part of history server
       //--- flags borders
@@ -126,8 +126,8 @@ public:
    virtual LPCWSTR   Name(void) const=0;
    virtual MTAPIRES  Name(LPCWSTR name)=0;
    //--- gateway trade request routing id (dealer id)
-   virtual UINT64    ID(void) const=0;
-   virtual MTAPIRES  ID(const UINT64 id)=0;
+   virtual uint64_t    ID(void) const=0;
+   virtual MTAPIRES  ID(const uint64_t id)=0;
    //--- gateway module name
    virtual LPCWSTR   Module(void) const=0;
    virtual MTAPIRES  Module(LPCWSTR name)=0;
@@ -144,60 +144,60 @@ public:
    virtual LPCWSTR   GatewayServer(void) const=0;
    virtual MTAPIRES  GatewayServer(LPCWSTR server)=0;
    //--- EnGatewayMode
-   virtual UINT      Mode(void) const=0;
-   virtual MTAPIRES  Mode(const UINT mode)=0;
+   virtual uint32_t  Mode(void) const=0;
+   virtual MTAPIRES  Mode(const uint32_t mode)=0;
    //--- EnGatewayFlags
-   virtual UINT      Flags(void) const=0;
-   virtual MTAPIRES  Flags(const UINT flags)=0;
+   virtual uint32_t  Flags(void) const=0;
+   virtual MTAPIRES  Flags(const uint32_t flags)=0;
    //--- obsolete value
-   virtual UINT      ObsoleteValue(void) const=0;
-   virtual MTAPIRES  ObsoleteValue(const UINT value)=0;
+   virtual uint32_t  ObsoleteValue(void) const=0;
+   virtual MTAPIRES  ObsoleteValue(const uint32_t value)=0;
    //--- gateway reconnect timeout
-   virtual UINT      TimeoutReconnect(void) const=0;
-   virtual MTAPIRES  TimeoutReconnect(const UINT timeout)=0;
+   virtual uint32_t  TimeoutReconnect(void) const=0;
+   virtual MTAPIRES  TimeoutReconnect(const uint32_t timeout)=0;
    //--- gateway sleep timeout
-   virtual UINT      TimeoutSleep(void) const=0;
-   virtual MTAPIRES  TimeoutSleep(const UINT timeout)=0;
+   virtual uint32_t  TimeoutSleep(void) const=0;
+   virtual MTAPIRES  TimeoutSleep(const uint32_t timeout)=0;
    //--- gateway attempts before timeout
-   virtual UINT      TimeoutAttempts(void) const=0;
-   virtual MTAPIRES  TimeoutAttempts(const UINT attempts)=0;
+   virtual uint32_t  TimeoutAttempts(void) const=0;
+   virtual MTAPIRES  TimeoutAttempts(const uint32_t attempts)=0;
    //--- gateway additional parameters access
    virtual MTAPIRES  ParameterAdd(IMTConParam* param)=0;
-   virtual MTAPIRES  ParameterUpdate(const UINT pos,const IMTConParam* param)=0;
-   virtual MTAPIRES  ParameterDelete(const UINT pos)=0;
+   virtual MTAPIRES  ParameterUpdate(const uint32_t pos,const IMTConParam* param)=0;
+   virtual MTAPIRES  ParameterDelete(const uint32_t pos)=0;
    virtual MTAPIRES  ParameterClear(void)=0;
-   virtual MTAPIRES  ParameterShift(const UINT pos,const int shift)=0;
-   virtual UINT      ParameterTotal(void) const=0;
-   virtual MTAPIRES  ParameterNext(const UINT pos,IMTConParam* param) const=0;
+   virtual MTAPIRES  ParameterShift(const uint32_t pos,const int32_t shift)=0;
+   virtual uint32_t  ParameterTotal(void) const=0;
+   virtual MTAPIRES  ParameterNext(const uint32_t pos,IMTConParam* param) const=0;
    virtual MTAPIRES  ParameterGet(LPCWSTR name,IMTConParam* param) const=0;
    //--- list of symbols for translating quotes
    virtual MTAPIRES  SymbolAdd(LPCWSTR path)=0;
-   virtual MTAPIRES  SymbolUpdate(const UINT pos,LPCWSTR path)=0;
-   virtual MTAPIRES  SymbolDelete(const UINT pos)=0;
+   virtual MTAPIRES  SymbolUpdate(const uint32_t pos,LPCWSTR path)=0;
+   virtual MTAPIRES  SymbolDelete(const uint32_t pos)=0;
    virtual MTAPIRES  SymbolClear(void)=0;
-   virtual MTAPIRES  SymbolShift(const UINT pos,const int shift)=0;
-   virtual UINT      SymbolTotal(void) const=0;
-   virtual LPCWSTR   SymbolNext(const UINT pos) const=0;
+   virtual MTAPIRES  SymbolShift(const uint32_t pos,const int32_t shift)=0;
+   virtual uint32_t  SymbolTotal(void) const=0;
+   virtual LPCWSTR   SymbolNext(const uint32_t pos) const=0;
    //--- list of users groups who works through gateway
    virtual MTAPIRES  GroupAdd(LPCWSTR path)=0;
-   virtual MTAPIRES  GroupUpdate(const UINT pos,LPCWSTR path)=0;
-   virtual MTAPIRES  GroupDelete(const UINT pos)=0;
+   virtual MTAPIRES  GroupUpdate(const uint32_t pos,LPCWSTR path)=0;
+   virtual MTAPIRES  GroupDelete(const uint32_t pos)=0;
    virtual MTAPIRES  GroupClear(void)=0;
-   virtual MTAPIRES  GroupShift(const UINT pos,const int shift)=0;
-   virtual UINT      GroupTotal(void) const=0;
-   virtual LPCWSTR   GroupNext(const UINT pos) const=0;
+   virtual MTAPIRES  GroupShift(const uint32_t pos,const int32_t shift)=0;
+   virtual uint32_t  GroupTotal(void) const=0;
+   virtual LPCWSTR   GroupNext(const uint32_t pos) const=0;
    //--- list of symbols translations
    virtual MTAPIRES  TranslateAdd(IMTConGatewayTranslate* param)=0;
-   virtual MTAPIRES  TranslateUpdate(const UINT pos,const IMTConGatewayTranslate* param)=0;
-   virtual MTAPIRES  TranslateDelete(const UINT pos)=0;
+   virtual MTAPIRES  TranslateUpdate(const uint32_t pos,const IMTConGatewayTranslate* param)=0;
+   virtual MTAPIRES  TranslateDelete(const uint32_t pos)=0;
    virtual MTAPIRES  TranslateClear(void)=0;
-   virtual MTAPIRES  TranslateShift(const UINT pos,const int shift)=0;
-   virtual UINT      TranslateTotal(void) const=0;
-   virtual MTAPIRES  TranslateNext(const UINT pos,IMTConGatewayTranslate* param) const=0;
+   virtual MTAPIRES  TranslateShift(const uint32_t pos,const int32_t shift)=0;
+   virtual uint32_t  TranslateTotal(void) const=0;
+   virtual MTAPIRES  TranslateNext(const uint32_t pos,IMTConGatewayTranslate* param) const=0;
    virtual MTAPIRES  TranslateGet(LPCWSTR symbol,IMTConGatewayTranslate* param) const=0;
    //--- gateway server login
-   virtual UINT64    GatewayLogin(void) const=0;
-   virtual MTAPIRES  GatewayLogin(UINT64 login)=0;
+   virtual uint64_t    GatewayLogin(void) const=0;
+   virtual MTAPIRES  GatewayLogin(uint64_t login)=0;
    //--- gateway server password
    virtual LPCWSTR   GatewayPassword(void) const=0;
    virtual MTAPIRES  GatewayPassword(LPCWSTR password)=0;
@@ -207,12 +207,12 @@ public:
    virtual LPCWSTR   Gateway(void) const=0;
    //--- gateway state information
    virtual bool      StateConnected(void) const=0;
-   virtual UINT      StateReceivedTicks(void) const=0;
-   virtual UINT      StateReceivedBooks(void) const=0;
-   virtual UINT      StateTrafficIn(void) const=0;
-   virtual UINT      StateTrafficOut(void) const=0;
-   virtual UINT      StateTradesTotal(void) const=0;
-   virtual UINT      StateTradesAverageTime(void) const=0;
+   virtual uint32_t  StateReceivedTicks(void) const=0;
+   virtual uint32_t  StateReceivedBooks(void) const=0;
+   virtual uint32_t  StateTrafficIn(void) const=0;
+   virtual uint32_t  StateTrafficOut(void) const=0;
+   virtual uint32_t  StateTradesTotal(void) const=0;
+   virtual uint32_t  StateTradesAverageTime(void) const=0;
    //--- explicit destructor is prohibited
 protected:
                     ~IMTConGateway(void) {}

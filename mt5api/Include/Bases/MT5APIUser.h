@@ -1,6 +1,6 @@
-//+------------------------------------------------------------------+
+﻿//+------------------------------------------------------------------+
 //|                                                 MetaTrader 5 API |
-//|                             Copyright 2000-2024, MetaQuotes Ltd. |
+//|                             Copyright 2000-2026, MetaQuotes Ltd. |
 //|                                               www.metaquotes.net |
 //+------------------------------------------------------------------+
 #pragma once
@@ -43,12 +43,19 @@ public:
    //--- password types
    enum EnUsersPasswords
      {
-      USER_PASS_MAIN    =0,
-      USER_PASS_INVESTOR=1,
-      USER_PASS_API     =2,
+      USER_PASS_MAIN           =0,
+      USER_PASS_INVESTOR       =1,
+      USER_PASS_API            =2,
+      USER_PASS_TRADER         =3,
+      USER_PASS_MONEY          =4,
+      //---
+      USER_PASS_CLIENT_MAIN    =100,
+      USER_PASS_CLIENT_TRADER  =101,
+      USER_PASS_CLIENT_MONEY   =102,
+      USER_PASS_CLIENT_INVESTOR=103,
       //--- enumeration borders
       USER_PASS_FIRST   =USER_PASS_MAIN,
-      USER_PASS_LAST    =USER_PASS_API,
+      USER_PASS_LAST    =USER_PASS_CLIENT_INVESTOR,
      };
    //--- connection types
    enum EnUsersConnectionTypes
@@ -77,19 +84,19 @@ public:
    virtual MTAPIRES  Assign(const IMTUser* user)=0;
    virtual MTAPIRES  Clear(void)=0;
    //--- login
-   virtual UINT64    Login(void) const=0;
-   virtual MTAPIRES  Login(const UINT64 login)=0;
+   virtual uint64_t  Login(void) const=0;
+   virtual MTAPIRES  Login(const uint64_t login)=0;
    //--- group
    virtual LPCWSTR   Group(void) const=0;
    virtual MTAPIRES  Group(LPCWSTR group)=0;
    //--- certificate serial number
-   virtual UINT64    CertSerialNumber(void) const=0;
+   virtual uint64_t  CertSerialNumber(void) const=0;
    //--- EnUsersRights
-   virtual UINT64    Rights(void) const=0;
-   virtual MTAPIRES  Rights(const UINT64 rights)=0;
+   virtual uint64_t  Rights(void) const=0;
+   virtual MTAPIRES  Rights(const uint64_t rights)=0;
    //--- registration datetime (filled by MT5)
-   virtual INT64     Registration(void) const=0;
-   virtual INT64     LastAccess(void) const =0;
+   virtual int64_t   Registration(void) const=0;
+   virtual int64_t   LastAccess(void) const =0;
    virtual LPCWSTR   LastIP(MTAPISTR& ip) const=0;
    //--- name
    virtual LPCWSTR   Name(void) const=0;
@@ -104,8 +111,8 @@ public:
    virtual LPCWSTR   Country(void) const=0;
    virtual MTAPIRES  Country(LPCWSTR account)=0;
    //--- client language (WinAPI LANGID)
-   virtual UINT      Language(void) const=0;
-   virtual MTAPIRES  Language(const UINT language)=0;
+   virtual uint32_t  Language(void) const=0;
+   virtual MTAPIRES  Language(const uint32_t language)=0;
    //--- city
    virtual LPCWSTR   City(void) const=0;
    virtual MTAPIRES  City(LPCWSTR city)=0;
@@ -140,11 +147,11 @@ public:
    virtual LPCWSTR   PhonePassword(void) const=0;
    virtual MTAPIRES  PhonePassword(LPCWSTR password)=0;
    //--- leverage
-   virtual UINT      Leverage(void) const=0;
-   virtual MTAPIRES  Leverage(const UINT leverage)=0;
+   virtual uint32_t  Leverage(void) const=0;
+   virtual MTAPIRES  Leverage(const uint32_t leverage)=0;
    //--- agent account
-   virtual UINT64    Agent(void) const=0;
-   virtual MTAPIRES  Agent(const UINT64 agent)=0;
+   virtual uint64_t  Agent(void) const=0;
+   virtual MTAPIRES  Agent(const uint64_t agent)=0;
    //--- balance & credit
    virtual double    Balance(void) const=0;
    virtual double    Credit(void) const=0;
@@ -163,35 +170,35 @@ public:
    virtual double    EquityPrevDay(void) const=0;
    virtual double    EquityPrevMonth(void) const=0;
    //--- user record internal data for API usage
-   virtual MTAPIRES  ApiDataSet(const USHORT app_id,const UCHAR id,const INT64 value)=0;
-   virtual MTAPIRES  ApiDataSet(const USHORT app_id,const UCHAR id,const UINT64 value)=0;
-   virtual MTAPIRES  ApiDataSet(const USHORT app_id,const UCHAR id,const double value)=0;
-   virtual MTAPIRES  ApiDataGet(const USHORT app_id,const UCHAR id,INT64& value) const=0;
-   virtual MTAPIRES  ApiDataGet(const USHORT app_id,const UCHAR id,UINT64& value) const=0;
-   virtual MTAPIRES  ApiDataGet(const USHORT app_id,const UCHAR id,double& value) const=0;
-   virtual MTAPIRES  ApiDataClear(const USHORT app_id)=0;
+   virtual MTAPIRES  ApiDataSet(const uint16_t app_id,const uint8_t id,const int64_t value)=0;
+   virtual MTAPIRES  ApiDataSet(const uint16_t app_id,const uint8_t id,const uint64_t value)=0;
+   virtual MTAPIRES  ApiDataSet(const uint16_t app_id,const uint8_t id,const double value)=0;
+   virtual MTAPIRES  ApiDataGet(const uint16_t app_id,const uint8_t id,int64_t& value) const=0;
+   virtual MTAPIRES  ApiDataGet(const uint16_t app_id,const uint8_t id,uint64_t& value) const=0;
+   virtual MTAPIRES  ApiDataGet(const uint16_t app_id,const uint8_t id,double& value) const=0;
+   virtual MTAPIRES  ApiDataClear(const uint16_t app_id)=0;
    virtual MTAPIRES  ApiDataClearAll(void)=0;
    //--- external accounts
-   virtual MTAPIRES  ExternalAccountAdd(const UINT64 gateway_id,LPCWSTR account)=0;
-   virtual MTAPIRES  ExternalAccountUpdate(const UINT pos,const UINT64 gateway_id,LPCWSTR account)=0;
-   virtual MTAPIRES  ExternalAccountDelete(const UINT pos)=0;
+   virtual MTAPIRES  ExternalAccountAdd(const uint64_t gateway_id,LPCWSTR account)=0;
+   virtual MTAPIRES  ExternalAccountUpdate(const uint32_t pos,const uint64_t gateway_id,LPCWSTR account)=0;
+   virtual MTAPIRES  ExternalAccountDelete(const uint32_t pos)=0;
    virtual MTAPIRES  ExternalAccountClear(void)=0;
-   virtual UINT      ExternalAccountTotal(void) const=0;
-   virtual MTAPIRES  ExternalAccountNext(const UINT pos,UINT64& gateway_id,MTAPISTR& account) const=0;
-   virtual MTAPIRES  ExternalAccountGet(const UINT64 gateway_id,MTAPISTR& account) const=0;
+   virtual uint32_t  ExternalAccountTotal(void) const=0;
+   virtual MTAPIRES  ExternalAccountNext(const uint32_t pos,uint64_t& gateway_id,MTAPISTR& account) const=0;
+   virtual MTAPIRES  ExternalAccountGet(const uint64_t gateway_id,MTAPISTR& account) const=0;
    //--- last password change datetime (filled by MT5)
-   virtual INT64     LastPassChange(void) const =0;
+   virtual int64_t     LastPassChange(void) const =0;
    //--- client's MetaQuotes ID
    virtual LPCWSTR   MQID(MTAPISTR& mqid) const=0;
    //--- user record internal data for API usage
-   virtual MTAPIRES  ApiDataUpdate(const UINT pos,const USHORT app_id,const UCHAR id,const INT64 value)=0;
-   virtual MTAPIRES  ApiDataUpdate(const UINT pos,const USHORT app_id,const UCHAR id,const UINT64 value)=0;
-   virtual MTAPIRES  ApiDataUpdate(const UINT pos,const USHORT app_id,const UCHAR id,const double value)=0;
-   virtual MTAPIRES  ApiDataNext(const UINT pos,USHORT& app_id,UCHAR& id,INT64& value) const=0;
-   virtual MTAPIRES  ApiDataNext(const UINT pos,USHORT& app_id,UCHAR& id,UINT64& value) const=0;
-   virtual MTAPIRES  ApiDataNext(const UINT pos,USHORT& app_id,UCHAR& id,double& value) const=0;
+   virtual MTAPIRES  ApiDataUpdate(const uint32_t pos,const uint16_t app_id,const uint8_t id,const int64_t value)=0;
+   virtual MTAPIRES  ApiDataUpdate(const uint32_t pos,const uint16_t app_id,const uint8_t id,const uint64_t value)=0;
+   virtual MTAPIRES  ApiDataUpdate(const uint32_t pos,const uint16_t app_id,const uint8_t id,const double value)=0;
+   virtual MTAPIRES  ApiDataNext(const uint32_t pos,uint16_t& app_id,uint8_t& id,int64_t& value) const=0;
+   virtual MTAPIRES  ApiDataNext(const uint32_t pos,uint16_t& app_id,uint8_t& id,uint64_t& value) const=0;
+   virtual MTAPIRES  ApiDataNext(const uint32_t pos,uint16_t& app_id,uint8_t& id,double& value) const=0;
    //--- clients passwords derivative hash for password comparison
-   virtual MTAPIRES  PasswordHash(const UINT type,MTAPISTR& password_hash) const=0;
+   virtual MTAPIRES  PasswordHash(const uint32_t type,MTAPISTR& password_hash) const=0;
    //--- lead campaign
    virtual LPCWSTR   LeadCampaign(void) const=0;
    virtual MTAPIRES  LeadCampaign(LPCWSTR lead_campaign)=0;
@@ -199,8 +206,8 @@ public:
    virtual LPCWSTR   LeadSource(void) const=0;
    virtual MTAPIRES  LeadSource(LPCWSTR lead_source)=0;
    //--- client id
-   virtual UINT64    ClientID(void) const=0;
-   virtual MTAPIRES  ClientID(const UINT64 id)=0;
+   virtual uint64_t  ClientID(void) const=0;
+   virtual MTAPIRES  ClientID(const uint64_t id)=0;
    //--- first name
    virtual LPCWSTR   FirstName(void) const=0;
    virtual MTAPIRES  FirstName(LPCWSTR first_name)=0;
@@ -211,18 +218,18 @@ public:
    virtual LPCWSTR   MiddleName(void) const=0;
    virtual MTAPIRES  MiddleName(LPCWSTR middle_name)=0;
    //--- registration datetime (filled by MT5)
-   virtual MTAPIRES  RegistrationSet(const INT64 datetime)=0;
+   virtual MTAPIRES  RegistrationSet(const int64_t datetime)=0;
    //--- otp secret
    virtual LPCWSTR   OTPSecret(void) const=0;
    virtual MTAPIRES  OTPSecret(LPCWSTR otp_secret)=0;
    //--- open orders limit
-   virtual UINT      LimitOrders(void) const=0;
-   virtual MTAPIRES  LimitOrders(const UINT id)=0;
+   virtual uint32_t  LimitOrders(void) const=0;
+   virtual MTAPIRES  LimitOrders(const uint32_t id)=0;
    //--- open positions value limit
    virtual double    LimitPositionsValue(void) const=0;
    virtual MTAPIRES  LimitPositionsValue(const double value)=0;
    //--- visitor id
-   virtual UINT64    VisitorID(void) const=0;
+   virtual uint64_t  VisitorID(void) const=0;
    //--- explicit destructor is prohibited
 protected:
                     ~IMTUser(void) {}
@@ -243,24 +250,24 @@ public:
    virtual MTAPIRES  Add(IMTUserArray* array)=0;
    virtual MTAPIRES  AddCopy(const IMTUserArray* array)=0;
    //--- delete & detach
-   virtual MTAPIRES  Delete(const UINT pos)=0;
-   virtual IMTUser*  Detach(const UINT pos)=0;
+   virtual MTAPIRES  Delete(const uint32_t pos)=0;
+   virtual IMTUser*  Detach(const uint32_t pos)=0;
    //--- update
-   virtual MTAPIRES  Update(const UINT pos,IMTUser* account)=0;
-   virtual MTAPIRES  UpdateCopy(const UINT pos,const IMTUser* account)=0;
-   virtual MTAPIRES  Shift(const UINT pos,const int shift)=0;
+   virtual MTAPIRES  Update(const uint32_t pos,IMTUser* account)=0;
+   virtual MTAPIRES  UpdateCopy(const uint32_t pos,const IMTUser* account)=0;
+   virtual MTAPIRES  Shift(const uint32_t pos,const int32_t shift)=0;
    //--- data access
-   virtual UINT      Total(void) const=0;
-   virtual IMTUser*  Next(const UINT index) const=0;
+   virtual uint32_t  Total(void) const=0;
+   virtual IMTUser*  Next(const uint32_t index) const=0;
    //--- sorting and search
    virtual MTAPIRES  Sort(MTSortFunctionPtr sort_function)=0;
-   virtual int       Search(const void *key,MTSortFunctionPtr sort_function) const=0;
-   virtual int       SearchGreatOrEq(const void *key,MTSortFunctionPtr sort_function) const=0;
-   virtual int       SearchGreater(const void *key,MTSortFunctionPtr sort_function) const=0;
-   virtual int       SearchLessOrEq(const void *key,MTSortFunctionPtr sort_function) const=0;
-   virtual int       SearchLess(const void *key,MTSortFunctionPtr sort_function) const=0;
-   virtual int       SearchLeft(const void *key,MTSortFunctionPtr sort_function) const=0;
-   virtual int       SearchRight(const void *key,MTSortFunctionPtr sort_function) const=0;
+   virtual int32_t   Search(const void *key,MTSortFunctionPtr sort_function) const=0;
+   virtual int32_t   SearchGreatOrEq(const void *key,MTSortFunctionPtr sort_function) const=0;
+   virtual int32_t   SearchGreater(const void *key,MTSortFunctionPtr sort_function) const=0;
+   virtual int32_t   SearchLessOrEq(const void *key,MTSortFunctionPtr sort_function) const=0;
+   virtual int32_t   SearchLess(const void *key,MTSortFunctionPtr sort_function) const=0;
+   virtual int32_t   SearchLeft(const void *key,MTSortFunctionPtr sort_function) const=0;
+   virtual int32_t   SearchRight(const void *key,MTSortFunctionPtr sort_function) const=0;
    //--- explicit destructor is prohibited
 protected:
                     ~IMTUserArray(void) {}
@@ -275,16 +282,16 @@ public:
    virtual void      OnUserAdd(const IMTUser*    /*user*/)           {  }
    virtual void      OnUserUpdate(const IMTUser* /*user*/)           {  }
    virtual void      OnUserDelete(const IMTUser* /*user*/)           {  }
-   virtual void      OnUserClean(const UINT64 /*login*/)             {  }
-   virtual void      OnUserLogin(LPCWSTR /*ip*/,const IMTUser* /*user*/,const UINT /*type*/) {  }
+   virtual void      OnUserClean(const uint64_t /*login*/)             {  }
+   virtual void      OnUserLogin(LPCWSTR /*ip*/,const IMTUser* /*user*/,const uint32_t /*type*/) {  }
    virtual void      OnUserSync(void)                                {  }
    //--- hooks
    virtual MTAPIRES  HookUserAdd(IMTUser* /*user*/)                                            { return(MT_RET_OK); }
    virtual MTAPIRES  HookUserUpdate(const IMTUser* /*prev*/,IMTUser* /*user*/)                 { return(MT_RET_OK); }
    virtual MTAPIRES  HookUserDelete(const IMTUser* /*user*/)                                   { return(MT_RET_OK); }
-   virtual MTAPIRES  HookUserLogin(LPCWSTR /*ip*/,const IMTUser* /*user*/,const UINT /*type*/) { return(MT_RET_OK); }
+   virtual MTAPIRES  HookUserLogin(LPCWSTR /*ip*/,const IMTUser* /*user*/,const uint32_t /*type*/) { return(MT_RET_OK); }
    //--- events
-   virtual void      OnUserLogout(LPCWSTR /*ip*/,const IMTUser* /*user*/,const UINT /*type*/)  {                    }
+   virtual void      OnUserLogout(LPCWSTR /*ip*/,const IMTUser* /*user*/,const uint32_t /*type*/)  {                    }
    virtual void      OnUserArchive(const IMTUser*  /*user*/)                                   {                    }
    virtual void      OnUserRestore(const IMTUser*  /*user*/)                                   {                    }
    //--- hooks
@@ -294,9 +301,9 @@ public:
    virtual void      OnUserLoginExt(const IMTUser* /*user*/,const IMTOnline* /*online*/)       {  }
    virtual void      OnUserLogoutExt(const IMTUser* /*user*/,const IMTOnline* /*online*/)      {  }
    virtual void      OnUserAddExt(const IMTUser* /*user*/,LPCWSTR /*master_password*/,LPCWSTR /*investor_password*/)   {  }
-   virtual void      OnUserChangePassword(const IMTUser* /*user*/,const UINT /*password_type*/,LPCWSTR /*password*/)   {  }
+   virtual void      OnUserChangePassword(const IMTUser* /*user*/,const uint32_t /*password_type*/,LPCWSTR /*password*/)   {  }
    //--- hooks
    virtual MTAPIRES  HookUserAddExt(IMTUser* /*user*/,LPCWSTR /*master_password*/,LPCWSTR /*investor_password*/) { return(MT_RET_OK); }
-   virtual MTAPIRES  HookUserChangePassword(const IMTUser* /*user*/,const UINT /*password_type*/,LPCWSTR /*password*/) { return(MT_RET_OK); }
+   virtual MTAPIRES  HookUserChangePassword(const IMTUser* /*user*/,const uint32_t /*password_type*/,LPCWSTR /*password*/) { return(MT_RET_OK); }
   };
 //+------------------------------------------------------------------+

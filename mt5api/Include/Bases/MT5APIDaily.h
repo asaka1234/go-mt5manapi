@@ -1,6 +1,6 @@
-//+------------------------------------------------------------------+
+﻿//+------------------------------------------------------------------+
 //|                                         MetaTrader 5 API Server  |
-//|                             Copyright 2000-2024, MetaQuotes Ltd. |
+//|                             Copyright 2000-2026, MetaQuotes Ltd. |
 //|                                               www.metaquotes.net |
 //+------------------------------------------------------------------+
 #pragma once
@@ -15,14 +15,14 @@ public:
    virtual MTAPIRES  Assign(const IMTDaily* exec)=0;
    virtual MTAPIRES  Clear(void)=0;
    //--- date and time
-   virtual INT64     Datetime(void) const=0;
-   virtual MTAPIRES  Datetime(const INT64 datetime)=0;
+   virtual int64_t   Datetime(void) const=0;
+   virtual MTAPIRES  Datetime(const int64_t datetime)=0;
    //--- previous generation datetime
-   virtual INT64     DatetimePrev(void) const=0;
-   virtual MTAPIRES  DatetimePrev(const INT64 datetime)=0;
+   virtual int64_t   DatetimePrev(void) const=0;
+   virtual MTAPIRES  DatetimePrev(const int64_t datetime)=0;
    //--- login
-   virtual UINT64    Login(void) const=0;
-   virtual MTAPIRES  Login(const UINT64 login)=0;
+   virtual uint64_t  Login(void) const=0;
+   virtual MTAPIRES  Login(const uint64_t login)=0;
    //--- name
    virtual LPCWSTR   Name(void) const=0;
    virtual MTAPIRES  Name(LPCWSTR name)=0;
@@ -32,7 +32,7 @@ public:
    //--- currency
    virtual LPCWSTR   Currency(void) const=0;
    virtual MTAPIRES  Currency(LPCWSTR curr)=0;
-   virtual UINT      CurrencyDigits(void) const=0;
+   virtual uint32_t  CurrencyDigits(void) const=0;
    //--- company
    virtual LPCWSTR   Company(void) const=0;
    virtual MTAPIRES  Company(LPCWSTR company)=0;
@@ -84,8 +84,8 @@ public:
    virtual double    MarginLevel(void) const=0;
    virtual MTAPIRES  MarginLevel(const double margin_level)=0;
    //--- margin leverage
-   virtual UINT      MarginLeverage(void) const=0;
-   virtual MTAPIRES  MarginLeverage(const UINT leverage)=0;
+   virtual uint32_t  MarginLeverage(void) const=0;
+   virtual MTAPIRES  MarginLeverage(const uint32_t leverage)=0;
    //---
    //--- floating profit
    //---
@@ -137,22 +137,22 @@ public:
    virtual MTAPIRES  DailyInterest(const double interest)=0;
    //--- list of open positions
    virtual MTAPIRES  PositionAdd(IMTPosition* position)=0;
-   virtual MTAPIRES  PositionUpdate(const UINT pos,const IMTPosition* position)=0;
-   virtual MTAPIRES  PositionDelete(const UINT pos)=0;
+   virtual MTAPIRES  PositionUpdate(const uint32_t pos,const IMTPosition* position)=0;
+   virtual MTAPIRES  PositionDelete(const uint32_t pos)=0;
    virtual MTAPIRES  PositionClear(void)=0;
-   virtual MTAPIRES  PositionShift(const UINT pos,const int shift)=0;
-   virtual UINT      PositionTotal(void) const=0;
-   virtual MTAPIRES  PositionNext(const UINT pos,IMTPosition* position) const=0;
+   virtual MTAPIRES  PositionShift(const uint32_t pos,const int32_t shift)=0;
+   virtual uint32_t  PositionTotal(void) const=0;
+   virtual MTAPIRES  PositionNext(const uint32_t pos,IMTPosition* position) const=0;
    virtual MTAPIRES  PositionGet(LPCWSTR symbol,IMTPosition* position) const=0;
    //--- list of open orders
    virtual MTAPIRES  OrderAdd(IMTOrder* order)=0;
-   virtual MTAPIRES  OrderUpdate(const UINT pos,const IMTOrder* order)=0;
-   virtual MTAPIRES  OrderDelete(const UINT pos)=0;
+   virtual MTAPIRES  OrderUpdate(const uint32_t pos,const IMTOrder* order)=0;
+   virtual MTAPIRES  OrderDelete(const uint32_t pos)=0;
    virtual MTAPIRES  OrderClear(void)=0;
-   virtual MTAPIRES  OrderShift(const UINT pos,const int shift)=0;
-   virtual UINT      OrderTotal(void) const=0;
-   virtual MTAPIRES  OrderNext(const UINT pos,IMTOrder* order) const=0;
-   virtual MTAPIRES  OrderGet(const UINT64 ticket,IMTOrder* order) const=0;
+   virtual MTAPIRES  OrderShift(const uint32_t pos,const int32_t shift)=0;
+   virtual uint32_t  OrderTotal(void) const=0;
+   virtual MTAPIRES  OrderNext(const uint32_t pos,IMTOrder* order) const=0;
+   virtual MTAPIRES  OrderGet(const uint64_t ticket,IMTOrder* order) const=0;
    //--- assets
    virtual double    ProfitAssets(void) const=0;
    virtual MTAPIRES  ProfitAssets(const double assets)=0;
@@ -174,6 +174,9 @@ public:
    //--- 
    virtual double    DailySOCompensationCredit(void) const=0;
    virtual MTAPIRES  DailySOCompensationCredit(const double compensation)=0;
+   //---
+   virtual double    DailyCommAccumulated(void) const=0;
+   virtual MTAPIRES  DailyCommAccumulated(const double comm)=0;
    //--- explicit destructor is prohibited
 protected:
                     ~IMTDaily(void) {}
@@ -194,24 +197,24 @@ public:
    virtual MTAPIRES  Add(IMTDailyArray* array)=0;
    virtual MTAPIRES  AddCopy(const IMTDailyArray* array)=0;
    //--- delete & detach
-   virtual MTAPIRES  Delete(const UINT pos)=0;
-   virtual IMTDaily* Detach(const UINT pos)=0;
+   virtual MTAPIRES  Delete(const uint32_t pos)=0;
+   virtual IMTDaily* Detach(const uint32_t pos)=0;
    //--- update
-   virtual MTAPIRES  Update(const UINT pos,IMTDaily* daily)=0;
-   virtual MTAPIRES  UpdateCopy(const UINT pos,const IMTDaily* daily)=0;
-   virtual MTAPIRES  Shift(const UINT pos,const int shift)=0;
+   virtual MTAPIRES  Update(const uint32_t pos,IMTDaily* daily)=0;
+   virtual MTAPIRES  UpdateCopy(const uint32_t pos,const IMTDaily* daily)=0;
+   virtual MTAPIRES  Shift(const uint32_t pos,const int32_t shift)=0;
    //--- data access
-   virtual UINT      Total(void) const=0;
-   virtual IMTDaily* Next(const UINT index) const=0;
+   virtual uint32_t  Total(void) const=0;
+   virtual IMTDaily* Next(const uint32_t index) const=0;
    //--- sorting and search
    virtual MTAPIRES  Sort(MTSortFunctionPtr sort_function)=0;
-   virtual int       Search(const void *key,MTSortFunctionPtr sort_function) const=0;
-   virtual int       SearchGreatOrEq(const void *key,MTSortFunctionPtr sort_function) const=0;
-   virtual int       SearchGreater(const void *key,MTSortFunctionPtr sort_function) const=0;
-   virtual int       SearchLessOrEq(const void *key,MTSortFunctionPtr sort_function) const=0;
-   virtual int       SearchLess(const void *key,MTSortFunctionPtr sort_function) const=0;
-   virtual int       SearchLeft(const void *key,MTSortFunctionPtr sort_function) const=0;
-   virtual int       SearchRight(const void *key,MTSortFunctionPtr sort_function) const=0;
+   virtual int32_t   Search(const void *key,MTSortFunctionPtr sort_function) const=0;
+   virtual int32_t   SearchGreatOrEq(const void *key,MTSortFunctionPtr sort_function) const=0;
+   virtual int32_t   SearchGreater(const void *key,MTSortFunctionPtr sort_function) const=0;
+   virtual int32_t   SearchLessOrEq(const void *key,MTSortFunctionPtr sort_function) const=0;
+   virtual int32_t   SearchLess(const void *key,MTSortFunctionPtr sort_function) const=0;
+   virtual int32_t   SearchLeft(const void *key,MTSortFunctionPtr sort_function) const=0;
+   virtual int32_t   SearchRight(const void *key,MTSortFunctionPtr sort_function) const=0;
    //--- explicit destructor is prohibited
 protected:
                     ~IMTDailyArray(void) {}
@@ -225,7 +228,7 @@ public:
    virtual void      OnDailyAdd(const IMTDaily*    /*daily*/)  {  }
    virtual void      OnDailyUpdate(const IMTDaily* /*daily*/)  {  }
    virtual void      OnDailyDelete(const IMTDaily* /*daily*/)  {  }
-   virtual void      OnDailyClean(const UINT64 /*login*/)      {  }
+   virtual void      OnDailyClean(const uint64_t /*login*/)      {  }
    virtual void      OnDailySync(void)                         {  }
   };
 //+------------------------------------------------------------------+

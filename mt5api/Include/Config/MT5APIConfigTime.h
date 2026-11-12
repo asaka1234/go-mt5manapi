@@ -1,6 +1,6 @@
-//+------------------------------------------------------------------+
+﻿//+------------------------------------------------------------------+
 //|                                                 MetaTrader 5 API |
-//|                             Copyright 2000-2024, MetaQuotes Ltd. |
+//|                             Copyright 2000-2026, MetaQuotes Ltd. |
 //|                                               www.metaquotes.net |
 //+------------------------------------------------------------------+
 #pragma once
@@ -27,16 +27,16 @@ public:
    virtual bool      Daylight(void) const=0;
    virtual MTAPIRES  Daylight(const bool enable)=0;
    //--- server timezone in minutes (0=GMT;-60=GMT-1;60=GMT+1)
-   virtual int       TimeZone(void) const=0;
-   virtual MTAPIRES  TimeZone(const int zone)=0;
+   virtual int32_t   TimeZone(void) const=0;
+   virtual MTAPIRES  TimeZone(const int32_t zone)=0;
    //--- time synchronization server address (TIME or NTP protocol)
    virtual LPCWSTR   TimeServer(void) const=0;
    virtual MTAPIRES  TimeServer(LPCWSTR server)=0;
    //--- time schedule (wday -> 0-Sunday,6-Saturday, hour-> 0-24, mode-> EnTimeTableMode)
-   virtual MTAPIRES  TimeTableGet(const UINT wday,const UINT hour,UINT& mode) const=0;
-   virtual MTAPIRES  TimeTableSet(const UINT wday,const UINT hour,const UINT mode)=0;
+   virtual MTAPIRES  TimeTableGet(const uint32_t wday,const uint32_t hour,uint32_t& mode) const=0;
+   virtual MTAPIRES  TimeTableSet(const uint32_t wday,const uint32_t hour,const uint32_t mode)=0;
    //--- current daylight state
-   virtual int       DaylightState(void) const=0;
+   virtual int32_t   DaylightState(void) const=0;
    //--- explicit destructor is prohibited
 protected:
                     ~IMTConTime(void) {}

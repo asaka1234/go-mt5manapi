@@ -1,6 +1,6 @@
-//+------------------------------------------------------------------+
+﻿//+------------------------------------------------------------------+
 //|                                                MetaTrader 5 API  |
-//|                             Copyright 2000-2024, MetaQuotes Ltd. |
+//|                             Copyright 2000-2026, MetaQuotes Ltd. |
 //|                                               www.metaquotes.net |
 //+------------------------------------------------------------------+
 #pragma once
@@ -61,19 +61,19 @@ public:
    virtual LPCWSTR   Path(void) const=0;
    virtual MTAPIRES  Path(LPCWSTR path)=0;
    //--- EnRangeMode
-   virtual UINT      RangeMode(void) const=0;
-   virtual MTAPIRES  RangeMode(const UINT mode)=0;
-   //---- value calculation currency
+   virtual uint32_t  RangeMode(void) const=0;
+   virtual MTAPIRES  RangeMode(const uint32_t mode)=0;
+   //--- value calculation currency
    virtual LPCWSTR   RangeValueCurrency(void) const=0;
    virtual MTAPIRES  RangeValueCurrency(LPCWSTR currency)=0;
    //--- commission tiers
    virtual MTAPIRES  TierAdd(IMTConLeverageTier* tier)=0;
-   virtual MTAPIRES  TierUpdate(const UINT pos,const IMTConLeverageTier* tier)=0;
-   virtual MTAPIRES  TierDelete(const UINT pos)=0;
+   virtual MTAPIRES  TierUpdate(const uint32_t pos,const IMTConLeverageTier* tier)=0;
+   virtual MTAPIRES  TierDelete(const uint32_t pos)=0;
    virtual MTAPIRES  TierClear(void)=0;
-   virtual MTAPIRES  TierShift(const UINT pos,const int shift)=0;
-   virtual UINT      TierTotal(void) const=0;
-   virtual MTAPIRES  TierNext(const UINT pos,IMTConLeverageTier* tier) const=0;
+   virtual MTAPIRES  TierShift(const uint32_t pos,const int32_t shift)=0;
+   virtual uint32_t  TierTotal(void) const=0;
+   virtual MTAPIRES  TierNext(const uint32_t pos,IMTConLeverageTier* tier) const=0;
    //--- explicit destructor is prohibited
 protected:
                     ~IMTConLeverageRule(void) {}
@@ -93,12 +93,12 @@ public:
    virtual MTAPIRES  Name(LPCWSTR name)=0;
    //--- rules
    virtual MTAPIRES  RuleAdd(IMTConLeverageRule* cfg)=0;
-   virtual MTAPIRES  RuleUpdate(const UINT pos,const IMTConLeverageRule* cfg)=0;
-   virtual MTAPIRES  RuleDelete(const UINT pos)=0;
+   virtual MTAPIRES  RuleUpdate(const uint32_t pos,const IMTConLeverageRule* cfg)=0;
+   virtual MTAPIRES  RuleDelete(const uint32_t pos)=0;
    virtual MTAPIRES  RuleClear(void)=0;
-   virtual MTAPIRES  RuleShift(const UINT pos,const int shift)=0;
-   virtual UINT      RuleTotal(void) const=0;
-   virtual MTAPIRES  RuleNext(const UINT pos,IMTConLeverageRule* cfg) const=0;
+   virtual MTAPIRES  RuleShift(const uint32_t pos,const int32_t shift)=0;
+   virtual uint32_t  RuleTotal(void) const=0;
+   virtual MTAPIRES  RuleNext(const uint32_t pos,IMTConLeverageRule* cfg) const=0;
    virtual MTAPIRES  RuleGet(LPCWSTR name,IMTConLeverageRule* cfg) const=0;
    //--- explicit destructor is prohibited
 protected:
@@ -120,24 +120,24 @@ public:
    virtual MTAPIRES  Add(IMTConLeverageArray* array)=0;
    virtual MTAPIRES  AddCopy(const IMTConLeverageArray* array)=0;
    //--- delete & detach
-   virtual MTAPIRES  Delete(const UINT pos)=0;
-   virtual IMTConLeverage* Detach(const UINT pos)=0;
+   virtual MTAPIRES  Delete(const uint32_t pos)=0;
+   virtual IMTConLeverage* Detach(const uint32_t pos)=0;
    //--- update
-   virtual MTAPIRES  Update(const UINT pos,IMTConLeverage* record)=0;
-   virtual MTAPIRES  UpdateCopy(const UINT pos,const IMTConLeverage* record)=0;
-   virtual MTAPIRES  Shift(const UINT pos,const int shift)=0;
+   virtual MTAPIRES  Update(const uint32_t pos,IMTConLeverage* record)=0;
+   virtual MTAPIRES  UpdateCopy(const uint32_t pos,const IMTConLeverage* record)=0;
+   virtual MTAPIRES  Shift(const uint32_t pos,const int32_t shift)=0;
    //--- data access
-   virtual UINT      Total(void) const=0;
-   virtual IMTConLeverage*  Next(const UINT index) const=0;
+   virtual uint32_t  Total(void) const=0;
+   virtual IMTConLeverage*  Next(const uint32_t index) const=0;
    //--- sorting and search
    virtual MTAPIRES  Sort(MTSortFunctionPtr sort_function)=0;
-   virtual int       Search(const void *key,MTSortFunctionPtr sort_function) const=0;
-   virtual int       SearchGreatOrEq(const void *key,MTSortFunctionPtr sort_function) const=0;
-   virtual int       SearchGreater(const void *key,MTSortFunctionPtr sort_function) const=0;
-   virtual int       SearchLessOrEq(const void *key,MTSortFunctionPtr sort_function) const=0;
-   virtual int       SearchLess(const void *key,MTSortFunctionPtr sort_function) const=0;
-   virtual int       SearchLeft(const void *key,MTSortFunctionPtr sort_function) const=0;
-   virtual int       SearchRight(const void *key,MTSortFunctionPtr sort_function) const=0;
+   virtual int32_t   Search(const void *key,MTSortFunctionPtr sort_function) const=0;
+   virtual int32_t   SearchGreatOrEq(const void *key,MTSortFunctionPtr sort_function) const=0;
+   virtual int32_t   SearchGreater(const void *key,MTSortFunctionPtr sort_function) const=0;
+   virtual int32_t   SearchLessOrEq(const void *key,MTSortFunctionPtr sort_function) const=0;
+   virtual int32_t   SearchLess(const void *key,MTSortFunctionPtr sort_function) const=0;
+   virtual int32_t   SearchLeft(const void *key,MTSortFunctionPtr sort_function) const=0;
+   virtual int32_t   SearchRight(const void *key,MTSortFunctionPtr sort_function) const=0;
    //--- explicit destructor is prohibited
 protected:
                     ~IMTConLeverageArray(void) {}
@@ -153,8 +153,8 @@ public:
    virtual void      OnLeverageDelete(const IMTConLeverage* /*config*/) {  }
    virtual void      OnLeverageSync(void)                            {  }
    //--- config modification hooks (only for Server API)
-   virtual MTAPIRES  HookLeverageAdd(const UINT64 /*login*/,IMTConLeverage* /*new_cfg*/)                                  { return(MT_RET_OK); }
-   virtual MTAPIRES  HookLeverageUpdate(const UINT64 /*login*/,const IMTConLeverage* /*cfg*/,IMTConLeverage* /*new_cfg*/) { return(MT_RET_OK); }
-   virtual MTAPIRES  HookLeverageDelete(const UINT64 /*login*/,const IMTConLeverage* /*cfg*/)                             { return(MT_RET_OK); }
+   virtual MTAPIRES  HookLeverageAdd(const uint64_t /*login*/,IMTConLeverage* /*new_cfg*/)                                  { return(MT_RET_OK); }
+   virtual MTAPIRES  HookLeverageUpdate(const uint64_t /*login*/,const IMTConLeverage* /*cfg*/,IMTConLeverage* /*new_cfg*/) { return(MT_RET_OK); }
+   virtual MTAPIRES  HookLeverageDelete(const uint64_t /*login*/,const IMTConLeverage* /*cfg*/)                             { return(MT_RET_OK); }
   };
 //+------------------------------------------------------------------+ 

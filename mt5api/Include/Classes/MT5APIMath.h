@@ -1,24 +1,23 @@
-//+------------------------------------------------------------------+
+﻿//+------------------------------------------------------------------+
 //|                                                 MetaTrader 5 API |
-//|                             Copyright 2000-2024, MetaQuotes Ltd. |
+//|                             Copyright 2000-2026, MetaQuotes Ltd. |
 //|                                               www.metaquotes.net |
 //+------------------------------------------------------------------+
 #pragma once
 #include <string.h>
 #include <math.h>
-#include <stdint.h>
 //+------------------------------------------------------------------+
 //| Volume constants                                                 |
 //+------------------------------------------------------------------+
 #define MTAPI_VOLUME_DIV        (10000.0)
 #define MTAPI_VOLUME_DIGITS     (4)
-#define MTAPI_VOLUME_MAX        ((UINT64)10000000000)
+#define MTAPI_VOLUME_MAX        ((uint64_t)10000000000)
 //+------------------------------------------------------------------+
 //| Volume with extended accuracy constants                          |
 //+------------------------------------------------------------------+
 #define MTAPI_VOLUME_EXT_DIV    (100000000.0)
 #define MTAPI_VOLUME_EXT_DIGITS (8)
-#define MTAPI_VOLUME_EXT_MAX    ((UINT64)10000000000000000000u)
+#define MTAPI_VOLUME_EXT_MAX    ((uint64_t)10000000000000000000u)
 //+------------------------------------------------------------------+
 //| Price constants                                                  |
 //+------------------------------------------------------------------+
@@ -32,34 +31,34 @@ class SMTMath
 private:
    static const double s_decimal[16];
    static const double s_fdecimal[16];
-   static const INT64 s_decimal_i[16];
+   static const int64_t s_decimal_i[16];
    static const double s_double_max[16];
    static const double s_rounder_math;
 
 public:
    //--- common functions
-   static double     DecPow(INT digits);
+   static double     DecPow(int32_t digits);
    //--- price functions
-   static double     PriceNormalize(const double price,UINT digits);
-   static INT64      PriceToInt(const double price,const UINT digits);
-   static UINT64     PriceToIntPos(const double price,const UINT digits);
-   static double     PriceToDouble(const INT64 value,UINT digits);
+   static double     PriceNormalize(const double price,uint32_t digits);
+   static int64_t    PriceToInt(const double price,const uint32_t digits);
+   static uint64_t   PriceToIntPos(const double price,const uint32_t digits);
+   static double     PriceToDouble(const int64_t value,uint32_t digits);
    //--- volume functions
-   static UINT64     VolumeToInt(const double volume);
-   static double     VolumeToDouble(const UINT64 volume);
-   static double     VolumeToSize(const UINT64 volume,double contract_size);
-   static UINT64     VolumeFromSize(const double size,double contract_size);
-   static UINT64     VolumeFromVolumeExt(const UINT64 volume);
+   static uint64_t   VolumeToInt(const double volume);
+   static double     VolumeToDouble(const uint64_t volume);
+   static double     VolumeToSize(const uint64_t volume,double contract_size);
+   static uint64_t   VolumeFromSize(const double size,double contract_size);
+   static uint64_t   VolumeFromVolumeExt(const uint64_t volume);
    //--- volume with extended accuracy functions
-   static UINT64     VolumeExtToInt(const double volume);
-   static double     VolumeExtToDouble(const UINT64 volume);
-   static double     VolumeExtToSize(const UINT64 volume,double contract_size);
-   static UINT64     VolumeExtFromSize(const double size,double contract_size);
-   static UINT64     VolumeExtFromVolume(const UINT64 volume);
+   static uint64_t   VolumeExtToInt(const double volume);
+   static double     VolumeExtToDouble(const uint64_t volume);
+   static double     VolumeExtToSize(const uint64_t volume,double contract_size);
+   static uint64_t   VolumeExtFromSize(const double size,double contract_size);
+   static uint64_t   VolumeExtFromVolume(const uint64_t volume);
    //--- money digits
-   static double     MoneyAdd(const double left,const double right,const UCHAR digits);
-   static bool       MoneyEqual(const double left,const double right,const UCHAR digits);
-   static UINT       MoneyDigits(LPCWSTR currency);
+   static double     MoneyAdd(const double left,const double right,const uint8_t digits);
+   static bool       MoneyEqual(const double left,const double right,const uint8_t digits);
+   static uint32_t   MoneyDigits(LPCWSTR currency);
   };
 //+------------------------------------------------------------------+
 //| 16 powers                                                        |
@@ -136,7 +135,7 @@ const __declspec(selectany) double SMTMath::s_double_max[16]=
 //+------------------------------------------------------------------+
 //| 16 powers                                                        |
 //+------------------------------------------------------------------+
-const __declspec(selectany) INT64 SMTMath::s_decimal_i[16]=
+const __declspec(selectany) int64_t SMTMath::s_decimal_i[16]=
    {
     1,
     10,
@@ -158,7 +157,7 @@ const __declspec(selectany) INT64 SMTMath::s_decimal_i[16]=
 //+------------------------------------------------------------------+
 //| Decimal power                                                    |
 //+------------------------------------------------------------------+
-inline double SMTMath::DecPow(INT digits)
+inline double SMTMath::DecPow(int32_t digits)
   {
 //--- check sign
    if(digits>0 && digits<_countof(s_decimal))
@@ -172,7 +171,7 @@ inline double SMTMath::DecPow(INT digits)
 //+------------------------------------------------------------------+
 //| Price normalization                                              |
 //+------------------------------------------------------------------+
-inline double SMTMath::PriceNormalize(const double val,UINT digits)
+inline double SMTMath::PriceNormalize(const double val,uint32_t digits)
   {
    double dbl_integer;
 //--- check digits
@@ -180,20 +179,20 @@ inline double SMTMath::PriceNormalize(const double val,UINT digits)
       digits=MTAPI_PRICE_DIGITS_MAX;
 //--- calculate dividers
    double p=s_decimal[digits];
-   dbl_integer=double(int64_t(val));
+   dbl_integer=double(__int64(val));
    double dbl_fract=(val-dbl_integer)*p;
 //--- check sign
    if(val>0) dbl_fract+=s_rounder_math;
    else      dbl_fract-=s_rounder_math;
 //--- calc fractional part
-   dbl_fract=double(int64_t(dbl_fract));
+   dbl_fract=double(__int64(dbl_fract));
 //--- summary
    return(dbl_integer+dbl_fract/p);
   }
 //+------------------------------------------------------------------+
 //| Price conversion from double to integer                          |
 //+------------------------------------------------------------------+
-inline INT64 SMTMath::PriceToInt(const double price,const UINT digits)
+inline int64_t SMTMath::PriceToInt(const double price,const uint32_t digits)
   {
 //--- check
    if(digits>MTAPI_PRICE_DIGITS_MAX || price==0.0 || price>double(_I64_MAX))
@@ -203,24 +202,24 @@ inline INT64 SMTMath::PriceToInt(const double price,const UINT digits)
      {
       //--- check complexity
       if(price<s_double_max[digits])
-         return((INT64)(price*s_decimal[digits]+s_rounder_math));
+         return((int64_t)(price*s_decimal[digits]+s_rounder_math));
       //--- 
-      INT64 i=INT64(price);
+      int64_t i=int64_t(price);
       //--- convert by integer multiply
-      return(i*s_decimal_i[digits]+INT64((price-i)*s_decimal[digits]+s_rounder_math));
+      return(i*s_decimal_i[digits]+int64_t((price-i)*s_decimal[digits]+s_rounder_math));
      }
 //--- check complexity
    if(price>-s_double_max[digits])
-      return((INT64)(price*s_decimal[digits]-s_rounder_math));
+      return((int64_t)(price*s_decimal[digits]-s_rounder_math));
 //--- 
-   INT64 i=INT64(price);
+   int64_t i=int64_t(price);
 //--- convert by integer multiply
-   return(i*s_decimal_i[digits]+INT64((price-i)*s_decimal[digits]-s_rounder_math));
+   return(i*s_decimal_i[digits]+int64_t((price-i)*s_decimal[digits]-s_rounder_math));
   }
 //+------------------------------------------------------------------+
 //| Price conversion from double to integer                          |
 //+------------------------------------------------------------------+
-inline UINT64 SMTMath::PriceToIntPos(const double price,const UINT digits)
+inline uint64_t SMTMath::PriceToIntPos(const double price,const uint32_t digits)
   {
 //--- check
    if(price<=0.0)
@@ -229,17 +228,17 @@ inline UINT64 SMTMath::PriceToIntPos(const double price,const UINT digits)
      {
       //--- check complexity
       if(price<s_double_max[digits])
-         return((UINT64)(price*s_decimal[digits]+s_rounder_math));
+         return((uint64_t)(price*s_decimal[digits]+s_rounder_math));
      }
 //--- 
-   UINT64 i=UINT64(price);
+   uint64_t i=uint64_t(price);
 //--- convert by integer multiply
-   return(i*s_decimal_i[digits]+UINT64((price-i)*s_decimal[digits]+s_rounder_math));
+   return(i*s_decimal_i[digits]+uint64_t((price-i)*s_decimal[digits]+s_rounder_math));
   }
 //+------------------------------------------------------------------+
 //| Price conversion from integer to double                          |
 //+------------------------------------------------------------------+
-inline double SMTMath::PriceToDouble(const INT64 value,UINT digits)
+inline double SMTMath::PriceToDouble(const int64_t value,uint32_t digits)
   {
 //--- check
    if(digits>15)
@@ -247,97 +246,97 @@ inline double SMTMath::PriceToDouble(const INT64 value,UINT digits)
 //--- the number satisfies the accuracy of Double (2 ^ 53-1), divide and normalize
    if(value>-0x1FFFFFFFFFFFFF && value<0x1FFFFFFFFFFFFF)
       return(PriceNormalize(double(value)/s_decimal[digits],digits));
-//---- divide the integer part separately
+//--- divide the integer part separately
    return(PriceNormalize((value/s_decimal_i[digits])+(value%s_decimal_i[digits])/s_decimal[digits],digits));
   }
 //+------------------------------------------------------------------+
 //| Volume conversion from double to integer                         |
 //+------------------------------------------------------------------+
-inline UINT64 SMTMath::VolumeToInt(const double volume)
+inline uint64_t SMTMath::VolumeToInt(const double volume)
   {
    return(PriceToIntPos(volume,MTAPI_VOLUME_DIGITS));
   }
 //+------------------------------------------------------------------+
 //| Volume conversion from integer to double                         |
 //+------------------------------------------------------------------+
-inline double SMTMath::VolumeToDouble(const UINT64 volume)
+inline double SMTMath::VolumeToDouble(const uint64_t volume)
   {
    return(PriceNormalize(volume/double(MTAPI_VOLUME_DIV),MTAPI_VOLUME_DIGITS));
   }
 //+------------------------------------------------------------------+
 //| Volume conversion from lots to amount                            |
 //+------------------------------------------------------------------+
-inline double SMTMath::VolumeToSize(const UINT64 volume,double contract_size)
+inline double SMTMath::VolumeToSize(const uint64_t volume,double contract_size)
   {
    return(PriceNormalize(volume/double(MTAPI_VOLUME_DIV)*contract_size,MTAPI_VOLUME_DIGITS));
   }
 //+------------------------------------------------------------------+
 //| Volume conversion from amount to lots                            |
 //+------------------------------------------------------------------+
-inline UINT64 SMTMath::VolumeFromSize(const double size,double contract_size)
+inline uint64_t SMTMath::VolumeFromSize(const double size,double contract_size)
   {
-   return((UINT64)PriceNormalize((size/contract_size)*double(MTAPI_VOLUME_DIV),0));
+   return((uint64_t)PriceNormalize((size/contract_size)*double(MTAPI_VOLUME_DIV),0));
   }
 //+------------------------------------------------------------------+
 //| Volume conversion from extended accuracy volume                  |
 //+------------------------------------------------------------------+
-inline UINT64 SMTMath::VolumeFromVolumeExt(const UINT64 volume_ext)
+inline uint64_t SMTMath::VolumeFromVolumeExt(const uint64_t volume_ext)
   {
    return(volume_ext/10000);
   }
 //+------------------------------------------------------------------+
 //| Volume conversion from double to integer                         |
 //+------------------------------------------------------------------+
-inline UINT64 SMTMath::VolumeExtToInt(const double volume)
+inline uint64_t SMTMath::VolumeExtToInt(const double volume)
   {
    return(PriceToIntPos(volume,MTAPI_VOLUME_EXT_DIGITS));
   }
 //+------------------------------------------------------------------+
 //| Volume conversion from integer to double                         |
 //+------------------------------------------------------------------+
-inline double SMTMath::VolumeExtToDouble(const UINT64 volume)
+inline double SMTMath::VolumeExtToDouble(const uint64_t volume)
   {
    return(PriceNormalize(volume/double(MTAPI_VOLUME_EXT_DIV),MTAPI_VOLUME_EXT_DIGITS));
   }
 //+------------------------------------------------------------------+
 //| Volume conversion from lots to amount                            |
 //+------------------------------------------------------------------+
-inline double SMTMath::VolumeExtToSize(const UINT64 volume,double contract_size)
+inline double SMTMath::VolumeExtToSize(const uint64_t volume,double contract_size)
   {
    return(PriceNormalize(volume/double(MTAPI_VOLUME_EXT_DIV)*contract_size,MTAPI_VOLUME_EXT_DIGITS));
   }
 //+------------------------------------------------------------------+
 //| Volume conversion from amount to lots                            |
 //+------------------------------------------------------------------+
-inline UINT64 SMTMath::VolumeExtFromSize(const double size,double contract_size)
+inline uint64_t SMTMath::VolumeExtFromSize(const double size,double contract_size)
   {
-   return((UINT64)PriceNormalize((size/contract_size)*double(MTAPI_VOLUME_EXT_DIV),0));
+   return((uint64_t)PriceNormalize((size/contract_size)*double(MTAPI_VOLUME_EXT_DIV),0));
   }
 //+------------------------------------------------------------------+
 //| Volume conversion to extended accuracy volume                  |
 //+------------------------------------------------------------------+
-inline UINT64 SMTMath::VolumeExtFromVolume(const UINT64 volume)
+inline uint64_t SMTMath::VolumeExtFromVolume(const uint64_t volume)
   {
    return(volume*10000);
   }
 //+------------------------------------------------------------------+
 //| Money add                                                        |
 //+------------------------------------------------------------------+
-inline double SMTMath::MoneyAdd(const double left,const double right,const UCHAR digits)
+inline double SMTMath::MoneyAdd(const double left,const double right,const uint8_t digits)
   {
    return(PriceNormalize(left+right,digits));
   }
 //+------------------------------------------------------------------+
 //| Money Compare                                                    |
 //+------------------------------------------------------------------+
-inline bool SMTMath::MoneyEqual(const double left,const double right,const UCHAR digits)
+inline bool SMTMath::MoneyEqual(const double left,const double right,const uint8_t digits)
   {
    return(fabs(left-right)<DecPow(-(digits+1)));
   }
 //+------------------------------------------------------------------+
 //| Digits by currency                                               |
 //+------------------------------------------------------------------+
-inline UINT SMTMath::MoneyDigits(LPCWSTR currency)
+inline uint32_t SMTMath::MoneyDigits(LPCWSTR currency)
   {
 //--- check param
    if(currency)

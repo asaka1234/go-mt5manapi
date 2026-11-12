@@ -1,6 +1,6 @@
-//+------------------------------------------------------------------+
+﻿//+------------------------------------------------------------------+
 //|                                                 MetaTrader 5 API |
-//|                             Copyright 2000-2024, MetaQuotes Ltd. |
+//|                             Copyright 2000-2026, MetaQuotes Ltd. |
 //|                                               www.metaquotes.net |
 //+------------------------------------------------------------------+
 #pragma once
@@ -25,8 +25,8 @@ public:
    virtual MTAPIRES  Assign(const IMTConFirewall* param)=0;
    virtual MTAPIRES  Clear(void)=0;
    //--- action with connection (EnAction)
-   virtual UINT      Action(void) const=0;
-   virtual MTAPIRES  Action(const UINT action)=0;
+   virtual uint32_t  Action(void) const=0;
+   virtual MTAPIRES  Action(const uint32_t action)=0;
    //--- IP range from
    virtual LPCWSTR   From(void) const=0;
    virtual MTAPIRES  From(LPCWSTR name)=0;

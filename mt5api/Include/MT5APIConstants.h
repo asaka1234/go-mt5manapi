@@ -1,6 +1,6 @@
-//+------------------------------------------------------------------+
+﻿//+------------------------------------------------------------------+
 //|                                                 MetaTrader 5 API |
-//|                             Copyright 2000-2024, MetaQuotes Ltd. |
+//|                             Copyright 2000-2026, MetaQuotes Ltd. |
 //|                                               www.metaquotes.net |
 //+------------------------------------------------------------------+
 #pragma once
@@ -66,6 +66,7 @@ enum EnMTAPIRetcode
    MT_RET_AUTH_VERIFY_BAD_EMAIL =1032,    // Email verification code could not be sent
    MT_RET_AUTH_VERIFY_BAD_PHONE =1033,    // Phone verification code could not be sent
    MT_RET_AUTH_API_DISABLED     =1034,    // Account API connection disabled
+   MT_RET_AUTH_CLIENT_UPGRADE   =1035,    // Need client upgrade
 //--- config management retcodes
    MT_RET_CFG_LAST_ADMIN        =2000,    // Last admin config deleting
    MT_RET_CFG_LAST_ADMIN_GROUP  =2001,    // Last admin group cannot be deleted
@@ -101,13 +102,14 @@ enum EnMTAPIRetcode
    MT_RET_USR_DIFFERENT_CURRENCY=3010,    // Attempt to move account to different currency group
    MT_RET_USR_IMPORT_BALANCE    =3011,    // Account balance import error
    MT_RET_USR_IMPORT_GROUP      =3012,    // Account import with invalid group
-   MT_RET_USR_ACCOUNT_EXIST     =3013,    // Account already exist
+   MT_RET_USR_ACCOUNT_EXIST     =3013,    // Account already exists
    MT_RET_USR_IMPORT_ACCOUNT    =3014,    // Account trade data import error
    MT_RET_USR_IMPORT_POSITIONS  =3015,    // Account trade positions import error
    MT_RET_USR_IMPORT_ORDERS     =3016,    // Account open orders import error
    MT_RET_USR_IMPORT_DEALS      =3017,    // Account deals history import error
    MT_RET_USR_IMPORT_HISTORY    =3018,    // Account orders history import error
    MT_RET_USR_API_LIMIT_REACHED =3019,    // Users with API enabled limit reached
+   MT_RET_USR_ULTENCY_COVERAGE  =3020,    // Account is used as an Ultency coverage account
 //--- trades management retcodes
    MT_RET_TRADE_LIMIT_REACHED   =4001,    // Orders or deals limit reached
    MT_RET_TRADE_ORDER_EXIST     =4002,    // Order already exists

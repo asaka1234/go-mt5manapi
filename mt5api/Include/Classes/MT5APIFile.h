@@ -1,6 +1,6 @@
-//+------------------------------------------------------------------+
+﻿//+------------------------------------------------------------------+
 //|                                                 MetaTrader 5 API |
-//|                             Copyright 2000-2024, MetaQuotes Ltd. |
+//|                             Copyright 2000-2026, MetaQuotes Ltd. |
 //|                                               www.metaquotes.net |
 //+------------------------------------------------------------------+
 #pragma once
@@ -11,7 +11,7 @@
 class CMTFile
   {
 public:
-   static const UINT64 INVALID_POSITION;
+   static const uint64_t INVALID_POSITION;
 private:
    HANDLE            m_file;
 
@@ -26,21 +26,21 @@ public:
    void              Close(void);
    //--- file properties
    HANDLE            Handle(void);
-   bool              IsOpen() const;
-   UINT64            Size(void) const;
-   static UINT64     Size(LPCWSTR path);
+   bool              IsOpen(void) const;
+   uint64_t          Size(void) const;
+   static uint64_t   Size(LPCWSTR path);
    FILETIME          TimeCreate(void) const;
    FILETIME          TimeLastAccess(void) const;
    FILETIME          TimeLastModify(void) const;
-   UINT64            CurrPos(void);
+   uint64_t          CurrPos(void);
    //--- file operations
    DWORD             Read(void  *buffer,const DWORD length);
    DWORD             Write(const void *buffer,const DWORD length);
-   UINT64            Seek(const INT64 distance,const DWORD method);
-   bool              ChangeSize(const UINT64 size);
-   bool              Flush();
+   uint64_t          Seek(const int64_t distance,const DWORD method);
+   bool              ChangeSize(const uint64_t size);
+   bool              Flush(void);
    //--- files group operations
-   static int        FilesCopy(const CMTStr& path,const CMTStr& newpath,const CMTStr& mask,const bool subdir);
+   static int32_t    FilesCopy(const CMTStr& path,const CMTStr& newpath,const CMTStr& mask,const bool subdir);
    //--- directory operations
    static bool       DirectoryCreate(const CMTStr& path);
    static bool       DirectoryRemove(const CMTStr& path);
@@ -49,7 +49,7 @@ public:
 //+------------------------------------------------------------------+
 //| Constant declaration                                             |
 //+------------------------------------------------------------------+
-const __declspec(selectany) UINT64 CMTFile::INVALID_POSITION=_UI64_MAX;
+const __declspec(selectany) uint64_t CMTFile::INVALID_POSITION=_UI64_MAX;
 //+------------------------------------------------------------------+
 //| File open                                                        |
 //+------------------------------------------------------------------+
@@ -105,19 +105,19 @@ inline bool CMTFile::IsOpen(void) const
 //+------------------------------------------------------------------+
 //| File size                                                        |
 //+------------------------------------------------------------------+
-inline UINT64 CMTFile::Size() const
+inline uint64_t CMTFile::Size() const
   {
    LARGE_INTEGER li={};
 //--- check and receive
    if(m_file==INVALID_HANDLE_VALUE || !::GetFileSizeEx(m_file,&li))
       return(0);
 //--- return result
-   return((UINT64)li.QuadPart);
+   return((uint64_t)li.QuadPart);
   }
 //+------------------------------------------------------------------+
 //| File size                                                        |
 //+------------------------------------------------------------------+
-inline UINT64 CMTFile::Size(LPCWSTR path)
+inline uint64_t CMTFile::Size(LPCWSTR path)
   {
    LARGE_INTEGER             li={};
    WIN32_FILE_ATTRIBUTE_DATA fad;
@@ -128,7 +128,7 @@ inline UINT64 CMTFile::Size(LPCWSTR path)
       li.HighPart=(LONG)fad.nFileSizeHigh;
      }
 //--- return result
-   return((UINT64)li.QuadPart);
+   return((uint64_t)li.QuadPart);
   }
 //+------------------------------------------------------------------+
 //| File creation time                                               |
@@ -169,9 +169,9 @@ inline FILETIME CMTFile::TimeLastModify() const
 //+------------------------------------------------------------------+
 //| File pointer position                                            |
 //+------------------------------------------------------------------+
-inline UINT64 CMTFile::CurrPos()
+inline uint64_t CMTFile::CurrPos(void)
   {
-   return(CMTFile::Seek(INT64(0),FILE_CURRENT));
+   return(CMTFile::Seek(int64_t(0),FILE_CURRENT));
   }
 //+------------------------------------------------------------------+
 //| File read                                                        |
@@ -208,7 +208,7 @@ inline DWORD CMTFile::Write(const void *buffer,const DWORD length)
 //+------------------------------------------------------------------+
 //| Seek file pointer                                                |
 //+------------------------------------------------------------------+
-inline UINT64 CMTFile::Seek(const INT64 distance,const DWORD method)
+inline uint64_t CMTFile::Seek(const int64_t distance,const DWORD method)
   {
 //--- check
    if(m_file==INVALID_HANDLE_VALUE)
@@ -222,19 +222,19 @@ inline UINT64 CMTFile::Seek(const INT64 distance,const DWORD method)
    if(li.LowPart==INVALID_SET_FILE_POINTER && GetLastError()!=NO_ERROR)
       return(INVALID_POSITION);
 //--- return new file pointer position
-   return((UINT64)li.QuadPart);
+   return((uint64_t)li.QuadPart);
   }
 //+------------------------------------------------------------------+
 //| Change file size                                                 |
 //+------------------------------------------------------------------+
-inline bool CMTFile::ChangeSize(const UINT64 size)
+inline bool CMTFile::ChangeSize(const uint64_t size)
   {
-   return(CMTFile::Seek((INT64)size,FILE_BEGIN)==size && SetEndOfFile(m_file));
+   return(CMTFile::Seek((int64_t)size,FILE_BEGIN)==size && SetEndOfFile(m_file));
   }
 //+------------------------------------------------------------------+
 //| Flush file buffer                                                |
 //+------------------------------------------------------------------+
-inline bool CMTFile::Flush()
+inline bool CMTFile::Flush(void)
   {
    if(m_file!=INVALID_HANDLE_VALUE)
       return(::FlushFileBuffers(m_file)!=0);
@@ -243,12 +243,12 @@ inline bool CMTFile::Flush()
 //+------------------------------------------------------------------+
 //| Copy files by mask                                               |
 //+------------------------------------------------------------------+
-inline int CMTFile::FilesCopy(const CMTStr& path,const CMTStr& newpath,const CMTStr& mask,const bool subdir)
+inline int32_t CMTFile::FilesCopy(const CMTStr& path,const CMTStr& newpath,const CMTStr& mask,const bool subdir)
   {
    CMTStr512        src,dst,name;
    HANDLE           hSearch;
    WIN32_FIND_DATAW fnd;
-   int              count=0;
+   int32_t              count=0;
 //--- find files
    src.Format(L"%s\\%s",path.Str(),mask.Str());
    if((hSearch=FindFirstFileW(src.Str(), &fnd))!=INVALID_HANDLE_VALUE)

@@ -1,6 +1,6 @@
-//+------------------------------------------------------------------+
+﻿//+------------------------------------------------------------------+
 //|                                         MetaTrader 5 API Server  |
-//|                             Copyright 2000-2024, MetaQuotes Ltd. |
+//|                             Copyright 2000-2026, MetaQuotes Ltd. |
 //|                                               www.metaquotes.net |
 //+------------------------------------------------------------------+
 #pragma once
@@ -30,6 +30,9 @@ public:
       TYPE_DATETIME           =13,                    // Datetime (Int64)
       TYPE_TIME_MSC           =14,                    // Time in milliseconds (Int64)
       TYPE_DATETIME_MSC       =15,                    // Datetime in milliseconds (Int64)
+      TYPE_TIME_MIN           =16,                    // Time in seconds with HH:MM format (Int64)
+      TYPE_GROUP              =17,                    // Group (Unicode String)
+      TYPE_SYMBOL             =18,                    // Symbol (Unicode String)
       //--- prices
       TYPE_PRICE              =100,                   // Price (Double)
       TYPE_PRICES             =101,                   // Bid/Ask (Double[2])
@@ -40,25 +43,35 @@ public:
       TYPE_VOLUME_EXT         =202,                   // Volume with extended accuracy (UInt64)
       TYPE_VOLUME_ORDER_EXT   =203,                   // Initial Volume/Current Volume with extended accuracy (UInt64[2])
       TYPE_VOLUME_POSITION_EXT=204,                   // Close Volume/Open Volume with extended accuracy (UInt64[2])
+      TYPE_VOLUME_SIGNED      =205,                   // Signed Volume (Int64)
       //--- positions
-      TYPE_POSITION_TYPE      =300,                   // Position Type (UInt)
+      TYPE_POSITION_TYPE      =300,                   // Position Type (UInt32)
+      TYPE_POSITION_POSITION  =301,                   // Position Ticket (UInt64)
       //--- orders
-      TYPE_ORDER_TYPE         =400,                   // Order Type (UInt)
-      TYPE_ORDER_TYPE_TIME    =401,                   // Order Type by Time (UInt)
-      TYPE_ORDER_TYPE_REASON  =402,                   // Order Type by Reason (UInt)
-      TYPE_ORDER_STATUS       =403,                   // Order Status (UInt)
-      TYPE_ORDER_FILLING      =404,                   // Order Filling (UInt)
+      TYPE_ORDER_TYPE         =400,                   // Order Type (UInt32)
+      TYPE_ORDER_TYPE_TIME    =401,                   // Order Type by Time (UInt32)
+      TYPE_ORDER_TYPE_REASON  =402,                   // Order Type by Reason (UInt32)
+      TYPE_ORDER_STATUS       =403,                   // Order Status (UInt32)
+      TYPE_ORDER_FILLING      =404,                   // Order Filling (UInt32)
+      TYPE_ORDER_ORDER        =405,                   // Order Ticket (UInt64)
       //--- deals
-      TYPE_DEAL_ACTION        =500,                   // Deal Action (UInt)
-      TYPE_DEAL_ENTRY         =501,                   // Deal Entry (UInt)
+      TYPE_DEAL_ACTION        =500,                   // Deal Action (UInt32)
+      TYPE_DEAL_ENTRY         =501,                   // Deal Entry (UInt32)
+      TYPE_DEAL_DEAL          =502,                   // Deal Ticket (UInt64)
       //--- accounts
       TYPE_USER_LOGIN         =600,                   // Account Login (UInt64)
-      TYPE_USER_LEVERAGE      =601,                   // Account Leverage (UInt)
+      TYPE_USER_LEVERAGE      =601,                   // Account Leverage (UInt32)
       //--- clients
       TYPE_CLIENT_ID          =700,                   // Client Id (UInt64)
+      //--- gateways
+      TYPE_GATEWAY_LOGIN      =800,                   // Gateway Login (UInt64)
+      //--- Ultency
+      TYPE_ULTENCY_MATCHING_ENGINE_LOGIN=900,         // Ultency matching engine server Login (UInt64)
+      TYPE_ULTENCY_PROVIDER_ID=901,                   // Ultency liquidity provider ID (UInt32)
+      TYPE_ULTENCY_SYMBOL     =902,                   // Ultency aggregated symbol (Unicode String)
       //--- enumeration borders
       TYPE_FIRST              =TYPE_INT8,
-      TYPE_LAST               =TYPE_CLIENT_ID
+      TYPE_LAST               =TYPE_ULTENCY_SYMBOL
      };
    //--- column flags
    enum EnFlags
@@ -71,16 +84,27 @@ public:
       FLAG_LEFT               =0x00000008,            // force align left
       FLAG_RIGHT              =0x00000010,            // force align right
       FLAG_CENTER             =FLAG_LEFT|FLAG_RIGHT,  // force align center
-      FLAG_SORT_DEFAULT       =0x00000100,            // deafult sort column
+      FLAG_SORT_DEFAULT       =0x00000100,            // default sort column
       FLAG_INVISIBLE_DEFAULT  =0x00000200,            // column not visible in grid view by default
+      FLAG_SORT_DESC_DEFAULT  =0x00000400,            // default descending order sort column
       //--- enumeration borders
-      FLAG_ALL                =FLAG_PRIMARY|FLAG_HIDDEN|FLAG_CENTER|FLAG_SORT_DEFAULT|FLAG_INVISIBLE_DEFAULT
+      FLAG_ALL                =FLAG_PRIMARY|FLAG_HIDDEN|FLAG_CENTER|FLAG_SORT_DEFAULT|FLAG_INVISIBLE_DEFAULT|FLAG_SORT_DESC_DEFAULT
      };
    //--- color
    enum EnColumnColor
      {
       COLUMN_COLOR_AUTO       =0xFFFFFFFF,            // auto color
      };
+   //--- sorting types
+   enum EnSorting
+     {
+      SORTING_BY_VALUE        =0x00000000,            // sort by value
+      SORTING_BY_MODULO       =0x00000001,            // sort by value module
+      //--- enumeration borders
+      SORTING_FIRST           =SORTING_BY_VALUE,
+      SORTING_LAST            =SORTING_BY_MODULO
+     };
+
    //--- common methods
    virtual void      Release(void)=0;
    virtual MTAPIRES  Assign(const IMTDatasetColumn *column)=0;
@@ -89,35 +113,54 @@ public:
    virtual LPCWSTR   Name(void) const=0;
    virtual MTAPIRES  Name(LPCWSTR name)=0;
    //--- column id
-   virtual UINT      ColumnID(void) const=0;
-   virtual MTAPIRES  ColumnID(const UINT column_id)=0;
+   virtual uint32_t  ColumnID(void) const=0;
+   virtual MTAPIRES  ColumnID(const uint32_t column_id)=0;
    //--- type IMTDatasetColumn::EnType
-   virtual UINT      Type(void) const=0;
-   virtual MTAPIRES  Type(const UINT type)=0;
+   virtual uint32_t  Type(void) const=0;
+   virtual MTAPIRES  Type(const uint32_t type)=0;
    //--- column relative width
-   virtual UINT      Width(void) const=0;
-   virtual MTAPIRES  Width(const UINT width)=0;
+   virtual uint32_t  Width(void) const=0;
+   virtual MTAPIRES  Width(const uint32_t width)=0;
    //--- column max width in pixels
-   virtual UINT      WidthMax(void) const=0;
-   virtual MTAPIRES  WidthMax(const UINT width_max)=0;
+   virtual uint32_t  WidthMax(void) const=0;
+   virtual MTAPIRES  WidthMax(const uint32_t width_max)=0;
    //--- default digits
-   virtual UINT      Digits(void) const=0;
-   virtual MTAPIRES  Digits(const UINT digits)=0;
+   virtual uint32_t  Digits(void) const=0;
+   virtual MTAPIRES  Digits(const uint32_t digits)=0;
    //--- column digits reference
-   virtual UINT      DigitsColumn(void) const=0;
-   virtual MTAPIRES  DigitsColumn(const UINT column_id)=0;
+   virtual uint32_t  DigitsColumn(void) const=0;
+   virtual MTAPIRES  DigitsColumn(const uint32_t column_id)=0;
    //--- flags IMTDatasetColumn::EnFlags
-   virtual UINT64    Flags(void) const=0;
-   virtual MTAPIRES  Flags(const UINT64 flags)=0;
+   virtual uint64_t  Flags(void) const=0;
+   virtual MTAPIRES  Flags(const uint64_t flags)=0;
    //--- offset
-   virtual UINT      Offset(void) const=0;
-   virtual MTAPIRES  Offset(const UINT offset)=0;
+   virtual uint32_t  Offset(void) const=0;
+   virtual MTAPIRES  Offset(const uint32_t offset)=0;
    //--- size
-   virtual UINT      Size(void) const=0;
-   virtual MTAPIRES  Size(const UINT size)=0;
+   virtual uint32_t  Size(void) const=0;
+   virtual MTAPIRES  Size(const uint32_t size)=0;
    //--- chart color
-   virtual UINT      Color(void) const=0;
-   virtual MTAPIRES  Color(const UINT color)=0;
+   virtual uint32_t  Color(void) const=0;
+   virtual MTAPIRES  Color(const uint32_t color)=0;
+   //--- sorting types
+   virtual uint32_t  Sorting(void) const=0;
+   virtual MTAPIRES  Sorting(const uint32_t sorting)=0;
+   //--- conditional style clear
+   virtual MTAPIRES  StyleClear(void)=0;
+   //--- conditional style for signed values
+   virtual MTAPIRES  StyleSigned(double epsilon=0.0)=0;
+   //--- conditional style for profit/loss values
+   virtual MTAPIRES  StyleProfitLoss(double epsilon=0.0)=0;
+   //--- conditional style for expense values
+   virtual MTAPIRES  StyleExpense(double epsilon=0.0)=0;
+   //--- conditional style, higher values are worse
+   virtual MTAPIRES  StyleThresholdHigher(double warning,double critical)=0;
+   //--- conditional style, lower values are worse
+   virtual MTAPIRES  StyleThresholdLower(double warning,double critical)=0;
+   //--- conditional style for normal value range
+   virtual MTAPIRES  StyleRange(double minimum,double maximum)=0;
+   //--- conditional style heat map
+   virtual MTAPIRES  StyleHeatMap(double minimum,double maximum)=0;
    //--- explicit destructor is prohibited
 protected:
                     ~IMTDatasetColumn(void) {}
@@ -149,9 +192,10 @@ public:
       TYPE_VOLUME_EXT         =202,                   // Volume with extended accuracy (UInt64)
       TYPE_VOLUME_ORDER_EXT   =203,                   // Initial Volume/Current Volume with extended accuracy (UInt64[2])
       TYPE_VOLUME_POSITION_EXT=204,                   // Close Volume/Open Volume with extended accuracy (UInt64[2])
+      TYPE_VOLUME_SIGNED      =205,                   // Signed Volume (Int64)
       //--- enumeration borders
       TYPE_FIRST              =TYPE_INT,
-      TYPE_LAST               =TYPE_VOLUME_POSITION_EXT
+      TYPE_LAST               =TYPE_VOLUME_SIGNED
      };
    //--- summary flags
    enum EnFlags
@@ -163,31 +207,31 @@ public:
    virtual MTAPIRES  Assign(const IMTDatasetSummary *summary)=0;
    virtual MTAPIRES  Clear(void)=0;
    //--- column id
-   virtual UINT      ColumnID(void) const=0;
-   virtual MTAPIRES  ColumnID(UINT column_id)=0;
+   virtual uint32_t  ColumnID(void) const=0;
+   virtual MTAPIRES  ColumnID(uint32_t column_id)=0;
    //--- line index
-   virtual UINT      Line(void) const=0;
-   virtual MTAPIRES  Line(UINT line)=0;
+   virtual uint32_t  Line(void) const=0;
+   virtual MTAPIRES  Line(uint32_t line)=0;
    //--- column for merging (merging from ColumnID to MergeColumn)
-   virtual UINT      MergeColumn(void) const=0;
-   virtual MTAPIRES  MergeColumn(UINT column_id)=0;
+   virtual uint32_t  MergeColumn(void) const=0;
+   virtual MTAPIRES  MergeColumn(uint32_t column_id)=0;
    //--- text color
-   virtual UINT      Color(void) const=0;
-   virtual MTAPIRES  Color(UINT color)=0;
+   virtual uint32_t  Color(void) const=0;
+   virtual MTAPIRES  Color(uint32_t color)=0;
    //--- flags IMTDatasetSummary::EnFlags
-   virtual UINT64    Flags(void) const=0;
-   virtual MTAPIRES  Flags(UINT64 flags)=0;
+   virtual uint64_t  Flags(void) const=0;
+   virtual MTAPIRES  Flags(uint64_t flags)=0;
    //--- type IMTDatasetSummary::EnType
-   virtual UINT      Type(void) const=0;
+   virtual uint32_t  Type(void) const=0;
    //--- digits
-   virtual UINT      Digits(void) const=0;
-   virtual MTAPIRES  Digits(UINT digits)=0;
+   virtual uint32_t  Digits(void) const=0;
+   virtual MTAPIRES  Digits(uint32_t digits)=0;
    //--- integer
-   virtual INT64     ValueInt(void) const=0;
-   virtual MTAPIRES  ValueInt(INT64 value)=0;
+   virtual int64_t   ValueInt(void) const=0;
+   virtual MTAPIRES  ValueInt(int64_t value)=0;
    //--- unsigned integer
-   virtual UINT64    ValueUInt(void) const=0;
-   virtual MTAPIRES  ValueUInt(UINT64 value)=0;
+   virtual uint64_t  ValueUInt(void) const=0;
+   virtual MTAPIRES  ValueUInt(uint64_t value)=0;
    //--- double
    virtual double    ValueDouble(void) const=0;
    virtual MTAPIRES  ValueDouble(double value)=0;
@@ -198,14 +242,14 @@ public:
    virtual LPCWSTR   ValueString(void) const=0;
    virtual MTAPIRES  ValueString(LPCWSTR value)=0;
    //--- date
-   virtual INT64     ValueDate(void) const=0;
-   virtual MTAPIRES  ValueDate(INT64 value)=0;
+   virtual int64_t   ValueDate(void) const=0;
+   virtual MTAPIRES  ValueDate(int64_t value)=0;
    //--- time
-   virtual INT64     ValueTime(void) const=0;
-   virtual MTAPIRES  ValueTime(INT64 value)=0;
+   virtual int64_t   ValueTime(void) const=0;
+   virtual MTAPIRES  ValueTime(int64_t value)=0;
    //--- datetime
-   virtual INT64     ValueDateTime(void) const=0;
-   virtual MTAPIRES  ValueDateTime(INT64 value)=0;
+   virtual int64_t   ValueDateTime(void) const=0;
+   virtual MTAPIRES  ValueDateTime(int64_t value)=0;
    //--- price
    virtual double    ValuePrice(void) const=0;
    virtual MTAPIRES  ValuePrice(double value)=0;
@@ -214,19 +258,19 @@ public:
    virtual double    ValuePricesAsk(void) const=0;
    virtual MTAPIRES  ValuePrices(double value_bid,double value_ask)=0;
    //--- volume
-   virtual UINT64    ValueVolume(void) const=0;
-   virtual MTAPIRES  ValueVolume(UINT64 value)=0;
+   virtual uint64_t  ValueVolume(void) const=0;
+   virtual MTAPIRES  ValueVolume(uint64_t value)=0;
    //--- order volume
-   virtual UINT64    ValueVolumeInitial(void) const=0;
-   virtual UINT64    ValueVolumeCurrent(void) const=0;
-   virtual MTAPIRES  ValueVolume(UINT64 value_initial,UINT64 value_current)=0;
+   virtual uint64_t  ValueVolumeInitial(void) const=0;
+   virtual uint64_t  ValueVolumeCurrent(void) const=0;
+   virtual MTAPIRES  ValueVolume(uint64_t value_initial,uint64_t value_current)=0;
    //--- volume with extended accuracy
-   virtual UINT64    ValueVolumeExt(void) const=0;
-   virtual MTAPIRES  ValueVolumeExt(UINT64 value)=0;
+   virtual uint64_t  ValueVolumeExt(void) const=0;
+   virtual MTAPIRES  ValueVolumeExt(uint64_t value)=0;
    //--- order volume with extended accuracy
-   virtual UINT64    ValueVolumeExtInitial(void) const=0;
-   virtual UINT64    ValueVolumeExtCurrent(void) const=0;
-   virtual MTAPIRES  ValueVolumeExt(UINT64 value_initial,UINT64 value_current)=0;
+   virtual uint64_t  ValueVolumeExtInitial(void) const=0;
+   virtual uint64_t  ValueVolumeExtCurrent(void) const=0;
+   virtual MTAPIRES  ValueVolumeExt(uint64_t value_initial,uint64_t value_current)=0;
    //--- explicit destructor is prohibited
 protected:
                     ~IMTDatasetSummary(void) {}
@@ -240,7 +284,8 @@ public:
    //--- flags
    enum EnDataSetFlags
      {
-      DATASET_FLAG_NONE     =0x0,    // no flags
+      DATASET_FLAG_NONE       =0x0, // no flags
+      DATASET_FLAG_COMPRESSED =0x1, // compressed dataset
      };
 
 public:
@@ -248,8 +293,8 @@ public:
    virtual MTAPIRES  Assign(const IMTDataset *data)=0;
    virtual MTAPIRES  Clear(void)=0;
    //--- flags
-   virtual UINT64    Flags(void) const=0;
-   virtual MTAPIRES  Flags(UINT64 flags)=0;
+   virtual uint64_t  Flags(void) const=0;
+   virtual MTAPIRES  Flags(uint64_t flags)=0;
    //--- reserved properties methods
    virtual MTAPIRES  Reserved1(void)=0;
    virtual MTAPIRES  Reserved2(void)=0;
@@ -259,25 +304,25 @@ public:
    virtual IMTDatasetColumn* ColumnCreate(void)=0;
    virtual MTAPIRES  ColumnClear(void)=0;
    virtual MTAPIRES  ColumnAdd(const IMTDatasetColumn *column)=0;
-   virtual MTAPIRES  ColumnDelete(UINT pos)=0;
-   virtual UINT      ColumnTotal(void) const=0;
-   virtual UINT      ColumnSize(void) const=0;
-   virtual MTAPIRES  ColumnNext(UINT pos,IMTDatasetColumn *column)=0;
+   virtual MTAPIRES  ColumnDelete(uint32_t pos)=0;
+   virtual uint32_t  ColumnTotal(void) const=0;
+   virtual uint32_t  ColumnSize(void) const=0;
+   virtual MTAPIRES  ColumnNext(uint32_t pos,IMTDatasetColumn *column)=0;
    virtual MTAPIRES  ColumnReserved1(void)=0;
    virtual MTAPIRES  ColumnReserved2(void)=0;
    //--- data set row management
    virtual MTAPIRES  RowClear(void)=0;
-   virtual MTAPIRES  RowWrite(const void *data,UINT size)=0;
-   virtual UINT      RowTotal(void) const=0;
-   virtual MTAPIRES  RowRead(UINT pos,void *data,UINT size) const=0;
+   virtual MTAPIRES  RowWrite(const void *data,uint32_t size)=0;
+   virtual uint32_t  RowTotal(void) const=0;
+   virtual MTAPIRES  RowRead(uint32_t pos,void *data,uint32_t size) const=0;
    virtual MTAPIRES  RowReserved2(void)=0;
    //--- data set summary management
    virtual IMTDatasetSummary* SummaryCreate(void)=0;
    virtual MTAPIRES  SummaryClear(void)=0;
    virtual MTAPIRES  SummaryAdd(const IMTDatasetSummary *summary)=0;
-   virtual MTAPIRES  SummaryDelete(UINT pos)=0;
-   virtual MTAPIRES  SummaryNext(UINT pos,IMTDatasetSummary *summary)=0;
-   virtual UINT      SummaryTotal(void) const=0;
+   virtual MTAPIRES  SummaryDelete(uint32_t pos)=0;
+   virtual MTAPIRES  SummaryNext(uint32_t pos,IMTDatasetSummary *summary)=0;
+   virtual uint32_t  SummaryTotal(void) const=0;
    virtual MTAPIRES  SummaryReserved1(void)=0;
    virtual MTAPIRES  SummaryReserved2(void)=0;
    //--- life control
@@ -308,17 +353,17 @@ public:
    enum EnFieldId
      {
       //--- User fields enumeration
-      FIELD_USER_LOGIN                       =1,            // UINT64      , login
+      FIELD_USER_LOGIN                       =1,            // uint64_t    , login
       FIELD_USER_GROUP                       =2,            // wchar_t[64] , group
-      FIELD_USER_CERT_SERIAL_NUMBER          =3,            // UINT64      , certificate serial number
-      FIELD_USER_RIGHTS                      =4,            // UINT64      , EnUsersRights
-      FIELD_USER_REGISTRATION                =5,            // INT64       , registration datetime (filled by MT5)
-      FIELD_USER_LAST_ACCESS                 =6,            // INT64       , last access datetime (filled by MT5)
+      FIELD_USER_CERT_SERIAL_NUMBER          =3,            // uint64_t    , certificate serial number
+      FIELD_USER_RIGHTS                      =4,            // uint64_t    , EnUsersRights
+      FIELD_USER_REGISTRATION                =5,            // int64_t     , registration datetime (filled by MT5)
+      FIELD_USER_LAST_ACCESS                 =6,            // int64_t     , last access datetime (filled by MT5)
       FIELD_USER_NAME                        =7,            // wchar_t[256], name
       FIELD_USER_COMPANY                     =8,            // wchar_t[32] , company
       FIELD_USER_ACCOUNT                     =9,            // wchar_t[64] , external system account (exchange, ECN, etc)
       FIELD_USER_COUNTRY                     =10,           // wchar_t[32] , country
-      FIELD_USER_LANGUAGE                    =11,           // UINT        , client language (WinAPI LANGID)
+      FIELD_USER_LANGUAGE                    =11,           // uint32_t    , client language (WinAPI LANGID)
       FIELD_USER_CITY                        =12,           // wchar_t[32] , city
       FIELD_USER_STATE                       =13,           // wchar_t[32] , state
       FIELD_USER_ZIP_CODE                    =14,           // wchar_t[16] , ZIP code
@@ -328,10 +373,10 @@ public:
       FIELD_USER_ID                          =18,           // wchar_t[32] , additional ID
       FIELD_USER_STATUS                      =19,           // wchar_t[16] , additional status
       FIELD_USER_COMMENT                     =20,           // wchar_t[64] , comment
-      FIELD_USER_COLOR                       =21,           // UINT        , color (WinAPI COLORREF)
+      FIELD_USER_COLOR                       =21,           // uint32_t    , color (WinAPI COLORREF)
       FIELD_USER_PHONE_PASSWORD              =22,           // wchar_t[32] , phone password
-      FIELD_USER_LEVERAGE                    =23,           // UINT        , leverage
-      FIELD_USER_AGENT                       =24,           // UINT64      , agent account
+      FIELD_USER_LEVERAGE                    =23,           // uint32_t    , leverage
+      FIELD_USER_AGENT                       =24,           // uint64_t    , agent account
       FIELD_USER_BALANCE                     =25,           // double      , balance
       FIELD_USER_CREDIT                      =26,           // double      , credit
       FIELD_USER_INTEREST_RATE               =27,           // double      , accumulated interest rate
@@ -343,11 +388,11 @@ public:
       FIELD_USER_BALANCE_PREV_MONTH          =33,           // double      , previous month balance state
       FIELD_USER_EQUITY_PREV_DAY             =34,           // double      , previous day equity state
       FIELD_USER_EQUITY_PREV_MONTH           =35,           // double      , previous month equity state
-      FIELD_USER_LAST_PASS_CHANGE            =36,           // INT64       , last password change datetime (filled by MT5)
-      FIELD_USER_MQID                        =37,           // UINT        , client's MetaQuotes ID
+      FIELD_USER_LAST_PASS_CHANGE            =36,           // int64_t     , last password change datetime (filled by MT5)
+      FIELD_USER_MQID                        =37,           // uint32_t    , client's MetaQuotes ID
       FIELD_USER_LEAD_CAMPAIGN               =38,           // wchar_t[32] , lead campaign
       FIELD_USER_LEAD_SOURCE                 =39,           // wchar_t[32] , lead source
-      FIELD_USER_CLIENT_ID                   =40,           // UINT64      , client id
+      FIELD_USER_CLIENT_ID                   =40,           // uint64_t    , client id
       FIELD_USER_FIRST_NAME                  =41,           // wchar_t[128], first name
       FIELD_USER_LAST_NAME                   =42,           // wchar_t[64] , last name
       FIELD_USER_MIDDLE_NAME                 =43,           // wchar_t[64] , middle name
@@ -355,19 +400,19 @@ public:
       FIELD_USER_FIRST                       =FIELD_USER_LOGIN,
       FIELD_USER_LAST                        =FIELD_USER_MIDDLE_NAME,
       //--- Client fields enumeration
-      FIELD_CLIENT_ID                        =1001,         // UINT64      , client id
-      FIELD_CLIENT_CREATED_TIME              =1002,         // INT64       , creation date and time
-      FIELD_CLIENT_CREATED_BY                =1003,         // UINT64      , login of manager who created the client
-      FIELD_CLIENT_MODIFIED_TIME             =1004,         // INT64       , modification date
-      FIELD_CLIENT_MODIFIED_BY               =1005,         // UINT64      , login of manager who modified the client
-      FIELD_CLIENT_TYPE                      =1006,         // UINT        , client type (EnClientType)
-      FIELD_CLIENT_STATUS                    =1007,         // UINT        , client status (EnClientStatus)
-      FIELD_CLIENT_ASSIGNED_MANAGER          =1008,         // UINT64      , assigned manager login
+      FIELD_CLIENT_ID                        =1001,         // uint64_t    , client id
+      FIELD_CLIENT_CREATED_TIME              =1002,         // int64_t     , creation date and time
+      FIELD_CLIENT_CREATED_BY                =1003,         // uint64_t    , login of manager who created the client
+      FIELD_CLIENT_MODIFIED_TIME             =1004,         // int64_t     , modification date
+      FIELD_CLIENT_MODIFIED_BY               =1005,         // uint64_t    , login of manager who modified the client
+      FIELD_CLIENT_TYPE                      =1006,         // uint32_t    , client type (EnClientType)
+      FIELD_CLIENT_STATUS                    =1007,         // uint32_t    , client status (EnClientStatus)
+      FIELD_CLIENT_ASSIGNED_MANAGER          =1008,         // uint64_t    , assigned manager login
       FIELD_CLIENT_COMMENT                   =1009,         // wchar_t[128], comment
-      FIELD_CLIENT_COMPLIANCE_APPROVED_BY    =1010,         // UINT64      , login of manager who approved the client
+      FIELD_CLIENT_COMPLIANCE_APPROVED_BY    =1010,         // uint64_t    , login of manager who approved the client
       FIELD_CLIENT_COMPLIANCE_CLIENT_CATEGORY=1011,         // wchar_t[64] , customer classification according to the rules of the local regulator
-      FIELD_CLIENT_COMPLIANCE_TIME_APPROVAL  =1012,         // INT64       , approval date and time
-      FIELD_CLIENT_COMPLIANCE_TIME_TERMINATION=1013,        // INT64       , agreement termination date and time
+      FIELD_CLIENT_COMPLIANCE_TIME_APPROVAL  =1012,         // int64_t     , approval date and time
+      FIELD_CLIENT_COMPLIANCE_TIME_TERMINATION=1013,        // int64_t     , agreement termination date and time
       FIELD_CLIENT_LEAD_CAMPAIGN             =1014,         // wchar_t[64] , lead campaign
       FIELD_CLIENT_LEAD_SOURCE               =1015,         // wchar_t[64] , lead source
       FIELD_CLIENT_INTRODUCER                =1016,         // wchar_t[32] , IB or Referal
@@ -375,24 +420,24 @@ public:
       FIELD_CLIENT_PERSON_NAME               =1018,         // wchar_t[32] , first name
       FIELD_CLIENT_PERSON_MIDDLE_NAME        =1019,         // wchar_t[32] , middle name
       FIELD_CLIENT_PERSON_LAST_NAME          =1020,         // wchar_t[32] , second name
-      FIELD_CLIENT_PERSON_BIRTH_DATE         =1021,         // INT64       , date of birth (file time, number of 100-nanosecond since 12:00 A.M. January 1, 1601 UTC)
+      FIELD_CLIENT_PERSON_BIRTH_DATE         =1021,         // int64_t     , date of birth (file time, number of 100-nanosecond since 12:00 A.M. January 1, 1601 UTC)
       FIELD_CLIENT_PERSON_CITIZENSHIP        =1022,         // wchar_t[64] , citizenship
-      FIELD_CLIENT_PERSON_GENDER             =1023,         // UINT        , gender (EnGender)
+      FIELD_CLIENT_PERSON_GENDER             =1023,         // uint32_t    , gender (EnGender)
       FIELD_CLIENT_PERSON_TAX_ID             =1024,         // wchar_t[64] , tax id
       FIELD_CLIENT_PERSON_DOCUMENT_TYPE      =1025,         // wchar_t[16] , document type
       FIELD_CLIENT_PERSON_DOCUMENT_NUMBER    =1026,         // wchar_t[32] , document number
-      FIELD_CLIENT_PERSON_DOCUMENT_DATE      =1027,         // INT64       , document issue or expiration date
+      FIELD_CLIENT_PERSON_DOCUMENT_DATE      =1027,         // int64_t     , document issue or expiration date
       FIELD_CLIENT_PERSON_DOCUMENT_EXTRA     =1028,         // wchar_t[64] , document extra data
-      FIELD_CLIENT_PERSON_EMPLOYMENT         =1029,         // UINT        , employment status (EnEmployment)
-      FIELD_CLIENT_PERSON_INDUSTRY           =1030,         // UINT        , employment industry (EnEmploymentIndustry)
-      FIELD_CLIENT_PERSON_EDUCATION          =1031,         // UINT        , education level (EnEducationLevel)
-      FIELD_CLIENT_PERSON_WEALTH_SOURCE      =1032,         // UINT        , wealth source (EnWealthSource)
+      FIELD_CLIENT_PERSON_EMPLOYMENT         =1029,         // uint32_t    , employment status (EnEmployment)
+      FIELD_CLIENT_PERSON_INDUSTRY           =1030,         // uint32_t    , employment industry (EnEmploymentIndustry)
+      FIELD_CLIENT_PERSON_EDUCATION          =1031,         // uint32_t    , education level (EnEducationLevel)
+      FIELD_CLIENT_PERSON_WEALTH_SOURCE      =1032,         // uint32_t    , wealth source (EnWealthSource)
       FIELD_CLIENT_PERSON_ANNUAL_INCOME      =1033,         // double      , annual income, USD
       FIELD_CLIENT_PERSON_NET_WORTH          =1034,         // double      , net worth, USD
       FIELD_CLIENT_PERSON_ANNUAL_DEPOSIT     =1035,         // double      , annual deposit, USD
       FIELD_CLIENT_COMPANY_NAME              =1036,         // wchar_t[64] , company name
       FIELD_CLIENT_COMPANY_REG_NUMBER        =1037,         // wchar_t[64] , company registration number
-      FIELD_CLIENT_COMPANY_REG_DATE          =1038,         // INT64       , company registration date
+      FIELD_CLIENT_COMPANY_REG_DATE          =1038,         // int64_t     , company registration date
       FIELD_CLIENT_COMPANY_REG_AUTHORITY     =1039,         // wchar_t[64] , company registration authority
       FIELD_CLIENT_COMPANY_VAT               =1040,         // wchar_t[64] , VAT registration number
       FIELD_CLIENT_COMPANY_LEI               =1041,         // wchar_t[64] , EI number for EMIR reports
@@ -401,59 +446,65 @@ public:
       FIELD_CLIENT_COMPANY_COUNTRY           =1044,         // wchar_t[64] , company registration country
       FIELD_CLIENT_COMPANY_ADDRESS           =1045,         // wchar_t[64] , company registration address
       FIELD_CLIENT_COMPANY_WEBSITE           =1046,         // wchar_t[64] , company website
-      FIELD_CLIENT_CONTACT_PREFERRED         =1047,         // UINT        , preferred communication type
+      FIELD_CLIENT_CONTACT_PREFERRED         =1047,         // uint32_t    , preferred communication type
       FIELD_CLIENT_CONTACT_LANGUAGE          =1048,         // wchar_t[64] , communication language
       FIELD_CLIENT_CONTACT_EMAIL             =1049,         // wchar_t[64] , email (or multiple comma-separated emails)
       FIELD_CLIENT_CONTACT_PHONE             =1050,         // wchar_t[128], phone numbers (or multiple comma-separated phone numbers)
       FIELD_CLIENT_CONTACT_MESSENGERS        =1051,         // wchar_t[128], messengers in format: "skype:username, qq:5454535454"
       FIELD_CLIENT_CONTACT_SOCIALNETWORKS    =1052,         // wchar_t[128], social networks ids: "fb:user_id, vk:user_id"
-      FIELD_CLIENT_CONTACT_LAST_DATE         =1053,         // INT64       , date and time of the last contact
+      FIELD_CLIENT_CONTACT_LAST_DATE         =1053,         // int64_t     , date and time of the last contact
       FIELD_CLIENT_ADDRESS_COUNTRY           =1054,         // wchar_t[64] , address - country
       FIELD_CLIENT_ADDRESS_POSTCODE          =1055,         // wchar_t[16] , address - zip code
       FIELD_CLIENT_ADDRESS_STREET            =1056,         // wchar_t[128], address - street address
       FIELD_CLIENT_ADDRESS_STATE             =1057,         // wchar_t[64] , address - state, province or district
       FIELD_CLIENT_ADDRESS_CITY              =1058,         // wchar_t[64] , address - city or town
-      FIELD_CLIENT_EXPERIENCE_FX             =1059,         // UINT        , Forex trading experience (EnTradingExperience)
-      FIELD_CLIENT_EXPERIENCE_CFD            =1060,         // UINT        , CFD trading experience (EnTradingExperience)
-      FIELD_CLIENT_EXPERIENCE_FUTURES        =1061,         // UINT        , futures trading experience (EnTradingExperience)
-      FIELD_CLIENT_EXPERIENCE_STOCKS         =1062,         // UINT        , stocks trading experience (EnTradingExperience)
+      FIELD_CLIENT_EXPERIENCE_FX             =1059,         // uint32_t    , Forex trading experience (EnTradingExperience)
+      FIELD_CLIENT_EXPERIENCE_CFD            =1060,         // uint32_t    , CFD trading experience (EnTradingExperience)
+      FIELD_CLIENT_EXPERIENCE_FUTURES        =1061,         // uint32_t    , futures trading experience (EnTradingExperience)
+      FIELD_CLIENT_EXPERIENCE_STOCKS         =1062,         // uint32_t    , stocks trading experience (EnTradingExperience)
+      FIELD_CLIENT_TRADING_GROUP             =1063,         // wchar_t[64] , user group that is the origin of the client creation
+      FIELD_CLIENT_ORIGIN                    =1064,         // uint32_t    , origin type (EnClientOrigin)
+      FIELD_CLIENT_ORIGIN_LOGIN              =1065,         // uint64_t    , origin user login
+      FIELD_CLIENT_EXTERNAL_ID               =1066,         // wchar_t[64] , external ID
+      FIELD_CLIENT_PERSON_DOCUMENT_EXPIRATION=1067,         // int64_t     , person document expiration date
+      FIELD_CLIENT_KYC_STATUS                =1068,         // uint32_t    , KYC status (EnKYCStatus)
       //--- Client fields enumeration borders
       FIELD_CLIENT_FIRST                     =FIELD_CLIENT_ID,
-      FIELD_CLIENT_LAST                      =FIELD_CLIENT_EXPERIENCE_STOCKS,
+      FIELD_CLIENT_LAST                      =FIELD_CLIENT_KYC_STATUS,
       //--- Deal fields enumeration
-      FIELD_DEAL_DEAL                        =2001,         // UINT64      , deal ticket
+      FIELD_DEAL_DEAL                        =2001,         // uint64_t    , deal ticket
       FIELD_DEAL_EXTERNAL_ID                 =2002,         // wchar_t[32] , deal ticket in external system (exchange, ECN, etc)
-      FIELD_DEAL_LOGIN                       =2003,         // UINT64      , client login
-      FIELD_DEAL_DEALER                      =2004,         // UINT64      , processed dealer login (0-means auto)
-      FIELD_DEAL_ORDER                       =2005,         // UINT64      , deal order ticket
-      FIELD_DEAL_ACTION                      =2006,         // UINT        , IMTDeal::EnDealAction
-      FIELD_DEAL_ENTRY                       =2007,         // UINT        , IMTDeal::EnDealEntry
-      FIELD_DEAL_DIGITS                      =2008,         // UINT        , price digits
-      FIELD_DEAL_DIGITS_CURRENCY             =2009,         // UINT        , currency digits
+      FIELD_DEAL_LOGIN                       =2003,         // uint64_t    , client login
+      FIELD_DEAL_DEALER                      =2004,         // uint64_t    , processed dealer login (0-means auto)
+      FIELD_DEAL_ORDER                       =2005,         // uint64_t    , deal order ticket
+      FIELD_DEAL_ACTION                      =2006,         // uint32_t    , IMTDeal::EnDealAction
+      FIELD_DEAL_ENTRY                       =2007,         // uint32_t    , IMTDeal::EnDealEntry
+      FIELD_DEAL_DIGITS                      =2008,         // uint32_t    , price digits
+      FIELD_DEAL_DIGITS_CURRENCY             =2009,         // uint32_t    , currency digits
       FIELD_DEAL_CONTRACT_SIZE               =2010,         // double      , symbol contract size
-      FIELD_DEAL_TIME                        =2011,         // INT64       , deal creation datetime in seconds
+      FIELD_DEAL_TIME                        =2011,         // int64_t     , deal creation datetime in seconds
       FIELD_DEAL_SYMBOL                      =2012,         // wchar_t[32] , deal symbol
       FIELD_DEAL_PRICE                       =2013,         // double      , deal price
-      FIELD_DEAL_VOLUME_EXT                  =2014,         // UINT64      , deal volume with extended accuracy
+      FIELD_DEAL_VOLUME_EXT                  =2014,         // uint64_t    , deal volume with extended accuracy
       FIELD_DEAL_PROFIT                      =2015,         // double      , deal profit
       FIELD_DEAL_STORAGE                     =2016,         // double      , deal collected swaps
       FIELD_DEAL_COMMISSION                  =2017,         // double      , deal commission
       FIELD_DEAL_RATE_PROFIT                 =2018,         // double      , profit conversion rate (from symbol profit currency to deposit currency)
       FIELD_DEAL_RATE_MARGIN                 =2019,         // double      , margin conversion rate (from symbol margin currency to deposit currency)
-      FIELD_DEAL_EXPERT_ID                   =2020,         // UINT64      , expert id (filled by expert advisor)
-      FIELD_DEAL_POSITION_ID                 =2021,         // UINT64      , position id
+      FIELD_DEAL_EXPERT_ID                   =2020,         // uint64_t    , expert id (filled by expert advisor)
+      FIELD_DEAL_POSITION_ID                 =2021,         // uint64_t    , position id
       FIELD_DEAL_COMMENT                     =2022,         // wchar_t[32] , deal comment
       FIELD_DEAL_PROFIT_RAW                  =2023,         // double      , deal profit in symbol's profit currency
       FIELD_DEAL_PRICE_POSITION              =2024,         // double      , closed position  price
-      FIELD_DEAL_VOLUME_CLOSED_EXT           =2025,         // UINT64      , closed volume with extended accuracy
+      FIELD_DEAL_VOLUME_CLOSED_EXT           =2025,         // uint64_t    , closed volume with extended accuracy
       FIELD_DEAL_TICK_VALUE                  =2026,         // double      , tick value
       FIELD_DEAL_TICK_SIZE                   =2027,         // double      , tick size
-      FIELD_DEAL_FLAGS                       =2028,         // UINT64      , flags
-      FIELD_DEAL_TIME_MSC                    =2029,         // INT64       , deal creation datetime in msc since 1970.01.01
-      FIELD_DEAL_REASON                      =2030,         // UINT        , EnDealReason
+      FIELD_DEAL_FLAGS                       =2028,         // uint64_t    , flags
+      FIELD_DEAL_TIME_MSC                    =2029,         // int64_t     , deal creation datetime in us since 1970.01.01
+      FIELD_DEAL_REASON                      =2030,         // uint32_t    , EnDealReason
       FIELD_DEAL_GATEWAY                     =2031,         // wchar_t[16] , source gateway name
       FIELD_DEAL_PRICE_GATEWAY               =2032,         // double      , deal price on gateway
-      FIELD_DEAL_MODIFICATION_FLAGS          =2033,         // UINT        , modification flags
+      FIELD_DEAL_MODIFICATION_FLAGS          =2033,         // uint32_t    , modification flags
       FIELD_DEAL_PRICE_SL                    =2034,         // double      , order SL
       FIELD_DEAL_PRICE_TP                    =2035,         // double      , order TP
       FIELD_DEAL_FEE                         =2036,         // double      , fee
@@ -461,172 +512,304 @@ public:
       FIELD_DEAL_MARKET_BID                  =2038,         // double      , bid market price at time of the deal
       FIELD_DEAL_MARKET_ASK                  =2039,         // double      , ask market price at time of the deal
       FIELD_DEAL_MARKET_LAST                 =2040,         // double      , last market price at time of the deal
+      FIELD_DEAL_VOLUME_GATEWAY_EXT          =2041,         // uint64_t    , confirmed gateway volume with extended accuracy
+      FIELD_DEAL_ACTION_GATEWAY              =2042,         // uint32_t    , confirmed gateway deal type
+      FIELD_DEAL_PARTY_ID                    =2043,         // uint64_t    , party id
       //--- Deal fields enumeration borders
       FIELD_DEAL_FIRST                       =FIELD_DEAL_DEAL,
-      FIELD_DEAL_LAST                        =FIELD_DEAL_MARKET_LAST,
+      FIELD_DEAL_LAST                        =FIELD_DEAL_PARTY_ID,
       //--- Order fields enumeration
-      FIELD_ORDER_ORDER                      =3001,        // UINT64      , order ticket
-      FIELD_ORDER_EXTERNAL_ID                =3002,        // wchar_t[32] , order ticket in external system (exchange, ECN, etc)
-      FIELD_ORDER_LOGIN                      =3003,        // UINT64      , client login
-      FIELD_ORDER_DEALER                     =3004,        // UINT64      , processed dealer login (0-means auto)
-      FIELD_ORDER_SYMBOL                     =3005,        // wchar_t[32] , order symbol
-      FIELD_ORDER_TIME_SETUP                 =3006,        // INT64       , time of order reception from a client into the system
-      FIELD_ORDER_TIME_EXPIRATION            =3007,        // INT64       , order expiration time
-      FIELD_ORDER_TIME_DONE                  =3008,        // INT64       , order cancellation time
-      FIELD_ORDER_TYPE                       =3009,        // UINT        , order type
-      FIELD_ORDER_TYPE_FILL                  =3010,        // UINT        , order type by filling
-      FIELD_ORDER_TYPE_TIME                  =3011,        // UINT        , order type by time
-      FIELD_ORDER_TYPE_REASON                =3012,        // UINT        , order creation reason
-      FIELD_ORDER_PRICE_ORDER                =3013,        // double      , order price
-      FIELD_ORDER_PRICE_TRIGGER              =3014,        // double      , order execution price
-      FIELD_ORDER_PRICE_CURRENT              =3015,        // double      , current order price
-      FIELD_ORDER_PRICE_SL                   =3016,        // double      , stop-loss price
-      FIELD_ORDER_PRICE_TP                   =3017,        // double      , take-profit price
-      FIELD_ORDER_VOLUME_INITIAL             =3018,        // UINT64      , starting order volume
-      FIELD_ORDER_VOLUME_CURRENT             =3019,        // UINT64      , current order volume
-      FIELD_ORDER_STATE                      =3020,        // UINT        , actual order state
-      FIELD_ORDER_EXPERT_ID                  =3021,        // UINT64      , expert ID
-      FIELD_ORDER_POSITION_ID                =3022,        // UINT64      , position ID which the order opens or closes
-      FIELD_ORDER_COMMENT                    =3023,        // wchar_t[32] , order comment
-      FIELD_ORDER_CONTRACT_SIZE              =3024,        // double      , order contract size
-      FIELD_ORDER_DIGITS                     =3025,        // UINT        , number of digits of order symbol
-      FIELD_ORDER_DIGITS_CURRENCY            =3026,        // UINT        , number of digits of order currency
-      FIELD_ORDER_POSITION_BY_ID             =3027,        // UINT64      , counter Position ID for Close-By orders
-      FIELD_ORDER_MARGIN_RATE                =3028,        // double      , margin conversion rate at the creation time
-      FIELD_ORDER_TIME_SETUP_MSC             =3029,        // INT64       , order reception from a client into the system in milliseconds
-      FIELD_ORDER_TIME_DONE_MSC              =3030,        // INT64       , order cancellation time in milliseconds
-      FIELD_ORDER_MODIFICATION_FLAGS         =3031,        // UINT        , order modification flags
-      FIELD_ORDER_ACTIVATION_MODE            =3032,        // UINT        , order activation mode (for manager)
-      FIELD_ORDER_ACTIVATION_TIME            =3033,        // INT64       , order activation time (for manager)
-      FIELD_ORDER_ACTIVATION_PRICE           =3034,        // double      , order activation price (for manager)
-      FIELD_ORDER_ACTIVATION_FLAGS           =3035,        // UINT        , order activation flags
-      FIELD_ORDER_GROUP                      =3036,        // wchar_t[64] , group (only for open orders)
+      FIELD_ORDER_ORDER                      =3001,        // uint64_t     , order ticket
+      FIELD_ORDER_EXTERNAL_ID                =3002,        // wchar_t[32]  , order ticket in external system (exchange, ECN, etc)
+      FIELD_ORDER_LOGIN                      =3003,        // uint64_t     , client login
+      FIELD_ORDER_DEALER                     =3004,        // uint64_t     , processed dealer login (0-means auto)
+      FIELD_ORDER_SYMBOL                     =3005,        // wchar_t[32]  , order symbol
+      FIELD_ORDER_TIME_SETUP                 =3006,        // int64_t      , time of order reception from a client into the system
+      FIELD_ORDER_TIME_EXPIRATION            =3007,        // int64_t      , order expiration time
+      FIELD_ORDER_TIME_DONE                  =3008,        // int64_t      , order cancellation time
+      FIELD_ORDER_TYPE                       =3009,        // uint32_t     , order type
+      FIELD_ORDER_TYPE_FILL                  =3010,        // uint32_t     , order type by filling
+      FIELD_ORDER_TYPE_TIME                  =3011,        // uint32_t     , order type by time
+      FIELD_ORDER_TYPE_REASON                =3012,        // uint32_t     , order creation reason
+      FIELD_ORDER_PRICE_ORDER                =3013,        // double       , order price
+      FIELD_ORDER_PRICE_TRIGGER              =3014,        // double       , order execution price
+      FIELD_ORDER_PRICE_CURRENT              =3015,        // double       , current order price
+      FIELD_ORDER_PRICE_SL                   =3016,        // double       , stop-loss price
+      FIELD_ORDER_PRICE_TP                   =3017,        // double       , take-profit price
+      FIELD_ORDER_VOLUME_INITIAL             =3018,        // uint64_t     , starting order volume
+      FIELD_ORDER_VOLUME_CURRENT             =3019,        // uint64_t     , current order volume
+      FIELD_ORDER_STATE                      =3020,        // uint32_t     , actual order state
+      FIELD_ORDER_EXPERT_ID                  =3021,        // uint64_t     , expert ID
+      FIELD_ORDER_POSITION_ID                =3022,        // uint64_t     , position ID which the order opens or closes
+      FIELD_ORDER_COMMENT                    =3023,        // wchar_t[32]  , order comment
+      FIELD_ORDER_CONTRACT_SIZE              =3024,        // double       , order contract size
+      FIELD_ORDER_DIGITS                     =3025,        // uint32_t     , number of digits of order symbol
+      FIELD_ORDER_DIGITS_CURRENCY            =3026,        // uint32_t     , number of digits of order currency
+      FIELD_ORDER_POSITION_BY_ID             =3027,        // uint64_t     , counter Position ID for Close-By orders
+      FIELD_ORDER_MARGIN_RATE                =3028,        // double       , margin conversion rate at the creation time
+      FIELD_ORDER_TIME_SETUP_MSC             =3029,        // int64_t      , order reception from a client into the system in milliseconds
+      FIELD_ORDER_TIME_DONE_MSC              =3030,        // int64_t      , order cancellation time in milliseconds
+      FIELD_ORDER_MODIFICATION_FLAGS         =3031,        // uint32_t     , order modification flags
+      FIELD_ORDER_ACTIVATION_MODE            =3032,        // uint32_t     , order activation mode (for manager)
+      FIELD_ORDER_ACTIVATION_TIME            =3033,        // int64_t      , order activation time (for manager)
+      FIELD_ORDER_ACTIVATION_PRICE           =3034,        // double       , order activation price (for manager)
+      FIELD_ORDER_ACTIVATION_FLAGS           =3035,        // uint32_t     , order activation flags
+      FIELD_ORDER_GROUP                      =3036,        // wchar_t[64]  , group (only for open orders)
+      FIELD_ORDER_PARTY_ID                   =3037,        // uint64_t     , party id
       //--- Order fields enumeration borders
       FIELD_ORDER_FIRST                      =FIELD_ORDER_ORDER,
-      FIELD_ORDER_LAST                       =FIELD_ORDER_GROUP,
+      FIELD_ORDER_LAST                       =FIELD_ORDER_PARTY_ID,
       //--- Daily report fields enumeration
-      FIELD_DAILY_DATE_TIME                  =4001,        // INT64       , report generation date and time
-      FIELD_DAILY_DATE_TIME_PREV             =4002,        // INT64       , date and time of previous report generation
-      FIELD_DAILY_LOGIN                      =4003,        // UINT64      , login
-      FIELD_DAILY_NAME                       =4004,        // wchar_t[128], name
-      FIELD_DAILY_GROUP                      =4005,        // wchar_t[64] , group
-      FIELD_DAILY_CURRENCY                   =4006,        // wchar_t[32] , currency
-      FIELD_DAILY_DIGITS_CURRENCY            =4007,        // UINT        , number of digits of report currency
-      FIELD_DAILY_COMPANY                    =4008,        // wchar_t[64] , company
-      FIELD_DAILY_EMAIL                      =4009,        // wchar_t[64] , e-mail
-      FIELD_DAILY_BALANCE                    =4010,        // double      , balance
-      FIELD_DAILY_CREDIT                     =4011,        // double      , credit
-      FIELD_DAILY_INTEREST_RATE              =4012,        // double      , interest rate
-      FIELD_DAILY_COMMISSION_DAILY           =4013,        // double      , commission daily
-      FIELD_DAILY_COMMISSION_MONTHLY         =4014,        // double      , commission monthly
-      FIELD_DAILY_AGENT_DAILY                =4015,        // double      , commission daily
-      FIELD_DAILY_AGENT_MONTHLY              =4016,        // double      , commission monthly
-      FIELD_DAILY_BALANCE_PREV_DAY           =4017,        // double      , last day balance
-      FIELD_DAILY_BALANCE_PREV_MONTH         =4018,        // double      , last month balance
-      FIELD_DAILY_EQUITY_PREV_DAY            =4019,        // double      , last day equity
-      FIELD_DAILY_EQUITY_PREV_MONTH          =4020,        // double      , last month equity
-      FIELD_DAILY_MARGIN                     =4021,        // double      , margin
-      FIELD_DAILY_MARGIN_FREE                =4022,        // double      , free margin 
-      FIELD_DAILY_MARGIN_LEVEL               =4023,        // double      , margin level
-      FIELD_DAILY_MARGIN_LEVERAGE            =4024,        // UINT        , margin leverage
-      FIELD_DAILY_PROFIT                     =4025,        // double      , floating profit
-      FIELD_DAILY_PROFIT_STORAGE             =4026,        // double      , storage
-      FIELD_DAILY_PROFIT_COMMISSION          =4027,        // double      , commission
-      FIELD_DAILY_PROFIT_EQUITY              =4028,        // double      , equity
-      FIELD_DAILY_DAILY_PROFIT               =4029,        // double      , daily fixed profit details
-      FIELD_DAILY_DAILY_BALANCE              =4030,        // double      , daily balance operations
-      FIELD_DAILY_DAILY_CREDIT               =4031,        // double      , daily credit operations
-      FIELD_DAILY_DAILY_CHARGE               =4032,        // double      , fees per day
-      FIELD_DAILY_DAILY_CORRECTION           =4033,        // double      , correction for the day
-      FIELD_DAILY_DAILY_BONUS                =4034,        // double      , bonuses per day
-      FIELD_DAILY_DAILY_STORAGE              =4035,        // double      , closed positions swap
-      FIELD_DAILY_DAILY_COMM_INSTANT         =4036,        // double      , commission charged immediately
-      FIELD_DAILY_DAILY_COMM_ROUND           =4037,        // double      , deferred commission
-      FIELD_DAILY_DAILY_AGENT                =4038,        // double      , agency commissions per day
-      FIELD_DAILY_DAILY_INTEREST             =4039,        // double      , interest per day
-      FIELD_DAILY_PROFIT_ASSETS              =4040,        // double      , assets
-      FIELD_DAILY_PROFIT_LIABILITIES         =4041,        // double      , liabilities
+      FIELD_DAILY_DATE_TIME                  =4001,        // int64_t      , report generation date and time
+      FIELD_DAILY_DATE_TIME_PREV             =4002,        // int64_t      , date and time of previous report generation
+      FIELD_DAILY_LOGIN                      =4003,        // uint64_t     , login
+      FIELD_DAILY_NAME                       =4004,        // wchar_t[128] , name
+      FIELD_DAILY_GROUP                      =4005,        // wchar_t[64]  , group
+      FIELD_DAILY_CURRENCY                   =4006,        // wchar_t[32]  , currency
+      FIELD_DAILY_DIGITS_CURRENCY            =4007,        // uint32_t     , number of digits of report currency
+      FIELD_DAILY_COMPANY                    =4008,        // wchar_t[64]  , company
+      FIELD_DAILY_EMAIL                      =4009,        // wchar_t[64]  , e-mail
+      FIELD_DAILY_BALANCE                    =4010,        // double       , balance
+      FIELD_DAILY_CREDIT                     =4011,        // double       , credit
+      FIELD_DAILY_INTEREST_RATE              =4012,        // double       , interest rate
+      FIELD_DAILY_COMMISSION_DAILY           =4013,        // double       , commission daily
+      FIELD_DAILY_COMMISSION_MONTHLY         =4014,        // double       , commission monthly
+      FIELD_DAILY_AGENT_DAILY                =4015,        // double       , commission daily
+      FIELD_DAILY_AGENT_MONTHLY              =4016,        // double       , commission monthly
+      FIELD_DAILY_BALANCE_PREV_DAY           =4017,        // double       , last day balance
+      FIELD_DAILY_BALANCE_PREV_MONTH         =4018,        // double       , last month balance
+      FIELD_DAILY_EQUITY_PREV_DAY            =4019,        // double       , last day equity
+      FIELD_DAILY_EQUITY_PREV_MONTH          =4020,        // double       , last month equity
+      FIELD_DAILY_MARGIN                     =4021,        // double       , margin
+      FIELD_DAILY_MARGIN_FREE                =4022,        // double       , free margin 
+      FIELD_DAILY_MARGIN_LEVEL               =4023,        // double       , margin level
+      FIELD_DAILY_MARGIN_LEVERAGE            =4024,        // uint32_t     , margin leverage
+      FIELD_DAILY_PROFIT                     =4025,        // double       , floating profit
+      FIELD_DAILY_PROFIT_STORAGE             =4026,        // double       , storage
+      FIELD_DAILY_PROFIT_COMMISSION          =4027,        // double       , commission
+      FIELD_DAILY_PROFIT_EQUITY              =4028,        // double       , equity
+      FIELD_DAILY_DAILY_PROFIT               =4029,        // double       , daily fixed profit details
+      FIELD_DAILY_DAILY_BALANCE              =4030,        // double       , daily balance operations
+      FIELD_DAILY_DAILY_CREDIT               =4031,        // double       , daily credit operations
+      FIELD_DAILY_DAILY_CHARGE               =4032,        // double       , fees per day
+      FIELD_DAILY_DAILY_CORRECTION           =4033,        // double       , correction for the day
+      FIELD_DAILY_DAILY_BONUS                =4034,        // double       , bonuses per day
+      FIELD_DAILY_DAILY_STORAGE              =4035,        // double       , closed positions swap
+      FIELD_DAILY_DAILY_COMM_INSTANT         =4036,        // double       , commission charged immediately
+      FIELD_DAILY_DAILY_COMM_ROUND           =4037,        // double       , deferred commission
+      FIELD_DAILY_DAILY_AGENT                =4038,        // double       , agency commissions per day
+      FIELD_DAILY_DAILY_INTEREST             =4039,        // double       , interest per day
+      FIELD_DAILY_PROFIT_ASSETS              =4040,        // double       , assets
+      FIELD_DAILY_PROFIT_LIABILITIES         =4041,        // double       , liabilities
+      FIELD_DAILY_DAILY_COMM_ACCUMULATED     =4042,        // double       , accumulated commission
       //--- Daily report fields enumeration borders
       FIELD_DAILY_FIRST                      =FIELD_DAILY_DATE_TIME,
-      FIELD_DAILY_LAST                       =FIELD_DAILY_PROFIT_LIABILITIES,
+      FIELD_DAILY_LAST                       =FIELD_DAILY_DAILY_COMM_ACCUMULATED,
       //--- Position fields enumeration
-      FIELD_POSITION_LOGIN                   =5001,        // UINT64      , owner client login
-      FIELD_POSITION_SYMBOL                  =5002,        // wchar_t[32] , position symbol
-      FIELD_POSITION_ACTION                  =5003,        // UINT        , EnPositionAction
-      FIELD_POSITION_DIGITS                  =5004,        // UINT        , number of digits of order symbol
-      FIELD_POSITION_DIGITS_CURRENCY         =5005,        // UINT        , number of digits of order currency
-      FIELD_POSITION_CONTRACT_SIZE           =5006,        // double      , symbol contract size
-      FIELD_POSITION_TIME_CREATE             =5007,        // INT64       , position create time
-      FIELD_POSITION_TIME_UPDATE             =5008,        // INT64       , position last update time
-      FIELD_POSITION_PRICE_OPEN              =5009,        // double      , position weighted average open price
-      FIELD_POSITION_PRICE_CURRENT           =5010,        // double      , position current price
-      FIELD_POSITION_PRICE_SL                =5011,        // double      , position SL price
-      FIELD_POSITION_PRICE_TP                =5012,        // double      , position TP price
-      FIELD_POSITION_VOLUME                  =5013,        // UINT64      , position volume
-      FIELD_POSITION_PROFIT                  =5014,        // double      , position floating profit
-      FIELD_POSITION_STORAGE                 =5015,        // double      , position accumulated swaps
-      FIELD_POSITION_RATE_PROFIT             =5016,        // double      , profit conversion rate (from symbol profit currency to deposit currency)
-      FIELD_POSITION_RATE_MARGIN             =5017,        // double      , margin conversion rate (from symbol margin currency to deposit currency)
-      FIELD_POSITION_EXPERT_ID               =5018,        // UINT64      , expert id (filled by expert advisor)
-      FIELD_POSITION_EXPERT_POSITION_ID      =5019,        // UINT64      , expert position id
-      FIELD_POSITION_COMMENT                 =5020,        // wchar_t[32] , comment
-      FIELD_POSITION_ACTIVATION_MODE         =5021,        // UINT        , order activation state, time and price
-      FIELD_POSITION_ACTIVATION_TIME         =5022,        // INT64       , activation mode
-      FIELD_POSITION_ACTIVATION_PRICE        =5023,        // double      , activation time
-      FIELD_POSITION_ACTIVATION_FLAGS        =5024,        // UINT        , activation flags
-      FIELD_POSITION_TIME_CREATE_MSC         =5025,        // INT64       , position create time in msc since 1970.01.01
-      FIELD_POSITION_TIME_UPDATE_MSC         =5026,        // INT64       , position last update time in msc since 1970.01.01
-      FIELD_POSITION_DEALER                  =5027,        // UINT64      , processed dealer login (0-means auto) (first position deal dealer)
-      FIELD_POSITION_POSITION                =5028,        // UINT64      , position ticket
-      FIELD_POSITION_EXTERNAL_ID             =5029,        // wchar_t[32] , position ticket in external system (exchange, ECN, etc)
-      FIELD_POSITION_MODIFICATION_FLAGS      =5030,        // UINT        , modification flags
-      FIELD_POSITION_REASON                  =5031,        // UINT        , position reason - EnPositionReason
-      FIELD_POSITION_VOLUME_EXT              =5032,        // UINT64      , position volume
-      FIELD_POSITION_GROUP                   =5033,        // wchar_t[64] , group
+      FIELD_POSITION_LOGIN                   =5001,        // uint64_t     , owner client login
+      FIELD_POSITION_SYMBOL                  =5002,        // wchar_t[32]  , position symbol
+      FIELD_POSITION_ACTION                  =5003,        // uint32_t     , EnPositionAction
+      FIELD_POSITION_DIGITS                  =5004,        // uint32_t     , number of digits of order symbol
+      FIELD_POSITION_DIGITS_CURRENCY         =5005,        // uint32_t     , number of digits of order currency
+      FIELD_POSITION_CONTRACT_SIZE           =5006,        // double       , symbol contract size
+      FIELD_POSITION_TIME_CREATE             =5007,        // int64_t      , position create time
+      FIELD_POSITION_TIME_UPDATE             =5008,        // int64_t      , position last update time
+      FIELD_POSITION_PRICE_OPEN              =5009,        // double       , position weighted average open price
+      FIELD_POSITION_PRICE_CURRENT           =5010,        // double       , position current price
+      FIELD_POSITION_PRICE_SL                =5011,        // double       , position SL price
+      FIELD_POSITION_PRICE_TP                =5012,        // double       , position TP price
+      FIELD_POSITION_VOLUME                  =5013,        // uint64_t     , position volume
+      FIELD_POSITION_PROFIT                  =5014,        // double       , position floating profit
+      FIELD_POSITION_STORAGE                 =5015,        // double       , position accumulated swaps
+      FIELD_POSITION_RATE_PROFIT             =5016,        // double       , profit conversion rate (from symbol profit currency to deposit currency)
+      FIELD_POSITION_RATE_MARGIN             =5017,        // double       , margin conversion rate (from symbol margin currency to deposit currency)
+      FIELD_POSITION_EXPERT_ID               =5018,        // uint64_t     , expert id (filled by expert advisor)
+      FIELD_POSITION_EXPERT_POSITION_ID      =5019,        // uint64_t     , expert position id
+      FIELD_POSITION_COMMENT                 =5020,        // wchar_t[32]  , comment
+      FIELD_POSITION_ACTIVATION_MODE         =5021,        // uint32_t     , order activation state, time and price
+      FIELD_POSITION_ACTIVATION_TIME         =5022,        // int64_t      , activation mode
+      FIELD_POSITION_ACTIVATION_PRICE        =5023,        // double       , activation time
+      FIELD_POSITION_ACTIVATION_FLAGS        =5024,        // uint32_t     , activation flags
+      FIELD_POSITION_TIME_CREATE_MSC         =5025,        // int64_t      , position create time in us since 1970.01.01
+      FIELD_POSITION_TIME_UPDATE_MSC         =5026,        // int64_t      , position last update time in us since 1970.01.01
+      FIELD_POSITION_DEALER                  =5027,        // uint64_t     , processed dealer login (0-means auto) (first position deal dealer)
+      FIELD_POSITION_POSITION                =5028,        // uint64_t     , position ticket
+      FIELD_POSITION_EXTERNAL_ID             =5029,        // wchar_t[32]  , position ticket in external system (exchange, ECN, etc)
+      FIELD_POSITION_MODIFICATION_FLAGS      =5030,        // uint32_t     , modification flags
+      FIELD_POSITION_REASON                  =5031,        // uint32_t     , position reason - EnPositionReason
+      FIELD_POSITION_VOLUME_EXT              =5032,        // uint64_t     , position volume
+      FIELD_POSITION_GROUP                   =5033,        // wchar_t[64]  , group
+      FIELD_POSITION_PRICE_GATEWAY           =5034,        // double       , execution price on gateway
+      FIELD_POSITION_VOLUME_GATEWAY_EXT      =5035,        // uint64_t     , confirmed gateway volume with extended accuracy
+      FIELD_POSITION_ACTION_GATEWAY          =5036,        // uint32_t     , confirmed gateway deal type
       //--- Position fields enumeration borders
       FIELD_POSITION_FIRST                   =FIELD_POSITION_LOGIN,
-      FIELD_POSITION_LAST                    =FIELD_POSITION_GROUP,
+      FIELD_POSITION_LAST                    =FIELD_POSITION_ACTION_GATEWAY,
       //--- Trade account fields enumeration
-      FIELD_ACCOUNT_LOGIN                    =6001,        // UINT64      , login
-      FIELD_ACCOUNT_GROUP                    =6002,        // wchar_t[64] , group
-      FIELD_ACCOUNT_CURRENCY_DIGITS          =6003,        // UINT        , currency digits
-      FIELD_ACCOUNT_BALANCE                  =6004,        // double      , balance
-      FIELD_ACCOUNT_CREDIT                   =6005,        // double      , credit
-      FIELD_ACCOUNT_MARGIN                   =6006,        // double      , margin
-      FIELD_ACCOUNT_MARGIN_FREE              =6007,        // double      , free margin
-      FIELD_ACCOUNT_MARGIN_LEVEL             =6008,        // double      , margin level
-      FIELD_ACCOUNT_MARGIN_LEVERAGE          =6009,        // UINT        , margin leverage
-      FIELD_ACCOUNT_MARGIN_INITIAL           =6010,        // double      , account initial margin
-      FIELD_ACCOUNT_MARGIN_MAINTENANCE       =6011,        // double      , account maintenance margin 
-      FIELD_ACCOUNT_PROFIT                   =6012,        // double      , floating profit
-      FIELD_ACCOUNT_STORAGE                  =6013,        // double      , storage
-      FIELD_ACCOUNT_COMMISSION               =6014,        // double      , commission
-      FIELD_ACCOUNT_FLOATING                 =6015,        // double      , cumulative floating
-      FIELD_ACCOUNT_EQUITY                   =6016,        // double      , equity
-      FIELD_ACCOUNT_BLOCKED_COMMISSION       =6017,        // double      , blocked daily & monthly commission
-      FIELD_ACCOUNT_BLOCKED_PROFIT           =6018,        // double      , blocked fixed profit
-      FIELD_ACCOUNT_ASSETS                   =6019,        // double      , account assets
-      FIELD_ACCOUNT_LIABILITIES              =6020,        // double      , account liabilities
-      FIELD_ACCOUNT_STOP_OUT_ACTIVATION      =6021,        // UINT        , stop-out activation mode
-      FIELD_ACCOUNT_STOP_OUT_TIME            =6022,        // INT64       , stop-out activation time
-      FIELD_ACCOUNT_STOP_OUT_LEVEL           =6023,        // double      , margin level on stop-out 
-      FIELD_ACCOUNT_STOP_OUT_EQUITY          =6024,        // double      , equity on stop-out
-      FIELD_ACCOUNT_STOP_OUT_MARGIN          =6025,        // double      , margin on stop-out
+      FIELD_ACCOUNT_LOGIN                    =6001,        // uint64_t     , login
+      FIELD_ACCOUNT_GROUP                    =6002,        // wchar_t[64]  , group
+      FIELD_ACCOUNT_CURRENCY_DIGITS          =6003,        // uint32_t     , currency digits
+      FIELD_ACCOUNT_BALANCE                  =6004,        // double       , balance
+      FIELD_ACCOUNT_CREDIT                   =6005,        // double       , credit
+      FIELD_ACCOUNT_MARGIN                   =6006,        // double       , margin
+      FIELD_ACCOUNT_MARGIN_FREE              =6007,        // double       , free margin
+      FIELD_ACCOUNT_MARGIN_LEVEL             =6008,        // double       , margin level
+      FIELD_ACCOUNT_MARGIN_LEVERAGE          =6009,        // uint32_t     , margin leverage
+      FIELD_ACCOUNT_MARGIN_INITIAL           =6010,        // double       , account initial margin
+      FIELD_ACCOUNT_MARGIN_MAINTENANCE       =6011,        // double       , account maintenance margin 
+      FIELD_ACCOUNT_PROFIT                   =6012,        // double       , floating profit
+      FIELD_ACCOUNT_STORAGE                  =6013,        // double       , storage
+      FIELD_ACCOUNT_COMMISSION               =6014,        // double       , commission
+      FIELD_ACCOUNT_FLOATING                 =6015,        // double       , cumulative floating
+      FIELD_ACCOUNT_EQUITY                   =6016,        // double       , equity
+      FIELD_ACCOUNT_BLOCKED_COMMISSION       =6017,        // double       , blocked daily & monthly commission
+      FIELD_ACCOUNT_BLOCKED_PROFIT           =6018,        // double       , blocked fixed profit
+      FIELD_ACCOUNT_ASSETS                   =6019,        // double       , account assets
+      FIELD_ACCOUNT_LIABILITIES              =6020,        // double       , account liabilities
+      FIELD_ACCOUNT_STOP_OUT_ACTIVATION      =6021,        // uint32_t     , stop-out activation mode
+      FIELD_ACCOUNT_STOP_OUT_TIME            =6022,        // int64_t      , stop-out activation time
+      FIELD_ACCOUNT_STOP_OUT_LEVEL           =6023,        // double       , margin level on stop-out 
+      FIELD_ACCOUNT_STOP_OUT_EQUITY          =6024,        // double       , equity on stop-out
+      FIELD_ACCOUNT_STOP_OUT_MARGIN          =6025,        // double       , margin on stop-out
       //--- Trade account fields enumeration borders
       FIELD_ACCOUNT_FIRST                    =FIELD_ACCOUNT_LOGIN,
-      FIELD_ACCOUNT_LAST                     =FIELD_ACCOUNT_LIABILITIES,
+      FIELD_ACCOUNT_LAST                     =FIELD_ACCOUNT_STOP_OUT_MARGIN,
+      //--- Deal ultency fields enumeration
+      FIELD_ULTENCY_DEAL                     =7001,         // uint64_t    , deal ticket 
+      FIELD_ULTENCY_DEAL_EXTERNAL_ID         =7002,         // wchar_t[32] , deal ticket in external system 
+      FIELD_ULTENCY_DEAL_INSTANCE_ID         =7003,         // uint64_t    , ME instance id 
+      FIELD_ULTENCY_DEAL_ORDER_LIQUIDITY     =7004,         // uint64_t    , liquidity order ticket 
+      FIELD_ULTENCY_DEAL_ORDER_MATCHING      =7005,         // uint64_t    , matching order ticket 
+      FIELD_ULTENCY_DEAL_LIQUIDITY_PROVIDER_ID=7006,        // uint64_t    , liquidity 
+      FIELD_ULTENCY_DEAL_LIQUIDITY_PROVIDER  =7007,         // uint32_t    , liquidity config 
+      FIELD_ULTENCY_DEAL_SOURCE_LOGIN        =7008,         // uint64_t    , source trade account login 
+      FIELD_ULTENCY_DEAL_SOURCE_CLIENT_ID    =7009,         // uint64_t    , source client id 
+      FIELD_ULTENCY_DEAL_ACTION              =7010,         // uint32_t    , EnDealAction 
+      FIELD_ULTENCY_DEAL_SYMBOL              =7011,         // wchar_t[32] , deal symbol 
+      FIELD_ULTENCY_DEAL_SIZE                =7012,         // uint64_t    , deal volume 
+      FIELD_ULTENCY_DEAL_PRICE               =7013,         // double      , deal price 
+      FIELD_ULTENCY_DEAL_MARKUP              =7014,         // int32_t     , markup 
+      FIELD_ULTENCY_DEAL_DIGITS              =7015,         // uint32_t    , price digits 
+      FIELD_ULTENCY_DEAL_CONTRACT_SIZE       =7016,         // double      , contract size 
+      FIELD_ULTENCY_DEAL_TIME                =7017,         // int64_t     , deal creation datetime in us 
+      FIELD_ULTENCY_DEAL_LP_SYMBOL           =7018,         // wchar_t[32] , deal symbol 
+      FIELD_ULTENCY_DEAL_LP_SIZE             =7019,         // uint64_t    , deal size 
+      FIELD_ULTENCY_DEAL_LP_VOLUME           =7020,         // uint64_t    , deal volume 
+      FIELD_ULTENCY_DEAL_LP_PRICE            =7021,         // double      , deal price 
+      FIELD_ULTENCY_DEAL_LP_MARKUP           =7022,         // int32_t     , markup 
+      FIELD_ULTENCY_DEAL_LP_DIGITS           =7023,         // uint32_t    , price digits 
+      FIELD_ULTENCY_DEAL_LP_CONTRACT_SIZE    =7024,         // double      , contract size
+      FIELD_ULTENCY_DEAL_LP_COMMISSION       =7025,         // double      , provider commission
+      FIELD_ULTENCY_DEAL_LP_PERFOMANCE_TIME  =7026,         // int64_t     , processing time in lp 
+      FIELD_ULTENCY_DEAL_PERFOMANCE_TIME     =7027,         // int64_t     , processing time in ultency 
+      FIELD_ULTENCY_DEAL_RATE_USD            =7028,         // double      , base currency rate to USD 
+      FIELD_ULTENCY_DEAL_FLAGS               =7029,         // uint32_t    , deal flags
+      FIELD_ULTENCY_DEAL_SOURCE_PARTY_ID     =7030,         // uint64_t    , source party id 
+      FIELD_ULTENCY_DEAL_LP_BASE_CURRENCY_DIGITS=7031,      // uint32_t    , provider base currency digits
+      FIELD_ULTENCY_DEAL_LP_CALC_MODE        =7032,         // uint32_t    , provider calc mode
+      FIELD_ULTENCY_DEAL_LP_TICK_VALUE       =7033,         // double      , provider tick value
+      FIELD_ULTENCY_DEAL_LP_TICK_SIZE        =7034,         // double      , provider tick size
+      FIELD_ULTENCY_DEAL_MARKUP_FLOAT        =7035,         // int32_t     , floating execution markup
+      //--- Deal ultency fields enumeration borders
+      FIELD_ULTENCY_DEAL_FIRST               =FIELD_ULTENCY_DEAL,
+      FIELD_ULTENCY_DEAL_LAST                =FIELD_ULTENCY_DEAL_MARKUP_FLOAT,
+      //--- Order ultency fields enumeration
+      FIELD_ULTENCY_MATCHING_ORDER                       =8001, // uint64_t    , order ticket 
+      FIELD_ULTENCY_MATCHING_ORDER_INSTANCE_ID           =8002, // uint64_t    , ME instance id 
+      FIELD_ULTENCY_MATCHING_ORDER_SOURCE_ORDER          =8003, // uint64_t    , source trade order 
+      FIELD_ULTENCY_MATCHING_ORDER_SOURCE_LOGIN          =8004, // uint64_t    , source trade account login
+      FIELD_ULTENCY_MATCHING_ORDER_SOURCE_CLIENT_ID      =8005, // uint64_t    , source client id 
+      FIELD_ULTENCY_MATCHING_ORDER_SOURCE_SERVER         =8006, // uint64_t    , source server id 
+      FIELD_ULTENCY_MATCHING_ORDER_SOURCE_GROUP          =8007, // wchar_t[64] , source order group 
+      FIELD_ULTENCY_MATCHING_ORDER_SOURCE_ACTION         =8008, // uint32_t    , source order IMTRequest::EnTradeActions 
+      FIELD_ULTENCY_MATCHING_ORDER_SOURCE_TYPE           =8009, // uint32_t    , source order IMTOrder::EnOrderType 
+      FIELD_ULTENCY_MATCHING_ORDER_SOURCE_TYPE_FILL      =8010, // uint32_t    , source order IMTOrder::EnOrderFilling 
+      FIELD_ULTENCY_MATCHING_ORDER_SOURCE_TYPE_TIME      =8011, // uint32_t    , source order EnOrderTime 
+      FIELD_ULTENCY_MATCHING_ORDER_SOURCE_TIME_EXPIRATION=8012, // int64_t     , source order expiration
+      FIELD_ULTENCY_MATCHING_ORDER_SOURCE_SYMBOL         =8013, // wchar_t[32] , source volume symbol 
+      FIELD_ULTENCY_MATCHING_ORDER_SOURCE_SIZE           =8014, // uint64_t    , source size 
+      FIELD_ULTENCY_MATCHING_ORDER_SOURCE_VOLUME         =8015, // uint64_t    , EnOrderFilling 
+      FIELD_ULTENCY_MATCHING_ORDER_SOURCE_CONTRACT_SIZE  =8016, // double      , EnOrderTime 
+      FIELD_ULTENCY_MATCHING_ORDER_SOURCE_PRICE          =8017, // double      , source price 
+      FIELD_ULTENCY_MATCHING_ORDER_SOURCE_DIGITS         =8018, // uint32_t    , source digits 
+      FIELD_ULTENCY_MATCHING_ORDER_STATE                 =8019, // uint32_t    , IMTUltMatchingOrder::EnMatchingState 
+      FIELD_ULTENCY_MATCHING_ORDER_TYPE                  =8020, // uint32_t    , IMTOrder::EnOrderType 
+      FIELD_ULTENCY_MATCHING_ORDER_TYPE_FILL             =8021, // uint32_t    , IMTOrder::EnOrderFilling 
+      FIELD_ULTENCY_MATCHING_ORDER_TYPE_TIME             =8022, // uint32_t    , order EnOrderTime 
+      FIELD_ULTENCY_MATCHING_ORDER_TIME_SETUP            =8023, // int64_t     , order setup time 
+      FIELD_ULTENCY_MATCHING_ORDER_TIME_EXPIRATION       =8024, // int64_t     , order expiration
+      FIELD_ULTENCY_MATCHING_ORDER_TIME_DONE             =8025, // int64_t     , order filling/cancel time 
+      FIELD_ULTENCY_MATCHING_ORDER_SYMBOL                =8026, // wchar_t[32] , order symbol 
+      FIELD_ULTENCY_MATCHING_ORDER_PRICE                 =8027, // double      , order price 
+      FIELD_ULTENCY_MATCHING_ORDER_MARKUP                =8028, // int32_t     , markup 
+      FIELD_ULTENCY_MATCHING_ORDER_COVERAGE              =8029, // double      , coverage ratio 
+      FIELD_ULTENCY_MATCHING_ORDER_DIGITS                =8030, // uint32_t    , price digits 
+      FIELD_ULTENCY_MATCHING_ORDER_MATCHING_FLAGS        =8031, // uint32_t    , flags EnMatchingFlags 
+      FIELD_ULTENCY_MATCHING_ORDER_ABOOK_SIZE            =8032, // uint64_t    , abook volume 
+      FIELD_ULTENCY_MATCHING_ORDER_BBOOK_SIZE            =8033, // uint64_t    , bbook volume 
+      FIELD_ULTENCY_MATCHING_ORDER_ABOOK_SIZE_TAKEN      =8034, // uint64_t    , abook volume taken 
+      FIELD_ULTENCY_MATCHING_ORDER_ABOOK_SIZE_EXECUTED   =8035, // uint64_t    , abook volume executed
+      FIELD_ULTENCY_MATCHING_ORDER_ABOOK_COST_EXECUTED   =8036, // double      , abook cost executed
+      FIELD_ULTENCY_MATCHING_ORDER_BBOOK_SIZE_EXECUTED   =8037, // uint64_t    , bbook volume executed
+      FIELD_ULTENCY_MATCHING_ORDER_BBOOK_COST_EXECUTED   =8038, // double      , bbook cost executed
+      FIELD_ULTENCY_MATCHING_ORDER_SOURCE_SIZE_EXECUTED  =8039, // uint64_t    , source size executed
+      FIELD_ULTENCY_MATCHING_ORDER_SOURCE_VOLUME_EXECUTED=8040, // uint64_t    , source volume executed
+      FIELD_ULTENCY_MATCHING_ORDER_SOURCE_COST_EXECUTED  =8041, // double      , source cost executed
+      FIELD_ULTENCY_MATCHING_ORDER_RATE_USD              =8042, // double      , base currency rate to USD
+      FIELD_ULTENCY_MATCHING_ORDER_SOURCE_REASON         =8043, // uint32_t    , source order reason
+      FIELD_ULTENCY_MATCHING_ORDER_SOURCE_PARTY_ID       =8044, // uint64_t    , source party id 
+      FIELD_ULTENCY_MATCHING_ORDER_MARKUP_FLOAT          =8045, // int32_t     , floating execution markup
+      //--- Deal ultency fields enumeration borders
+      FIELD_ULTENCY_MATCHING_ORDER_FIRST     =FIELD_ULTENCY_MATCHING_ORDER,
+      FIELD_ULTENCY_MATCHING_ORDER_LAST      =FIELD_ULTENCY_MATCHING_ORDER_MARKUP_FLOAT,
+      //--- Order ultency fields enumeration
+      FIELD_ULTENCY_LIQUIDITY_ORDER                      =9001, // uint64_t    , order ticket 
+      FIELD_ULTENCY_LIQUIDITY_ORDER_EXTERNAL_ID          =9002, // wchar_t[32] , order ticket in external system (exchange, ECN, etc) 
+      FIELD_ULTENCY_LIQUIDITY_ORDER_INSTANCE_ID          =9003, // uint64_t    , ME instance id 
+      FIELD_ULTENCY_LIQUIDITY_ORDER_MATCHING_ORDER       =9004, // uint64_t    , matching order ticket 
+      FIELD_ULTENCY_LIQUIDITY_ORDER_LIQUIDITY_PROVIDER   =9005, // uint32_t    , liquidity provider
+      FIELD_ULTENCY_LIQUIDITY_ORDER_LIQUIDITY_PROVIDER_ID=9006, // uint64_t    , liquidity provider config id 
+      FIELD_ULTENCY_LIQUIDITY_ORDER_SOURCE_LOGIN         =9007, // uint64_t    , source trade account login 
+      FIELD_ULTENCY_LIQUIDITY_ORDER_SOURCE_CLIENT_ID     =9008, // uint64_t    , source client id 
+      FIELD_ULTENCY_LIQUIDITY_ORDER_TYPE                 =9009, // uint32_t    , IMTOrder::EnOrderType 
+      FIELD_ULTENCY_LIQUIDITY_ORDER_TYPE_FILL            =9010, // uint32_t    , IMTOrder::EnOrderFilling 
+      FIELD_ULTENCY_LIQUIDITY_ORDER_STATE                =9011, // uint32_t    , IMTOrder::EnOrderState 
+      FIELD_ULTENCY_LIQUIDITY_ORDER_LP_SYMBOL            =9012, // wchar_t[32] , provider symbol 
+      FIELD_ULTENCY_LIQUIDITY_ORDER_SIZE_INITIAL         =9013, // uint64_t    , order initial size
+      FIELD_ULTENCY_LIQUIDITY_ORDER_SIZE_EXECUTED        =9014, // uint64_t    , order executed size 
+      FIELD_ULTENCY_LIQUIDITY_ORDER_VOLUME_INITIAL       =9015, // uint64_t    , order initial volume 
+      FIELD_ULTENCY_LIQUIDITY_ORDER_VOLUME_EXECUTED      =9016, // uint64_t    , order executed volumme 
+      FIELD_ULTENCY_LIQUIDITY_ORDER_CONTRACT_SIZE        =9017, // double      , order contract size 
+      FIELD_ULTENCY_LIQUIDITY_ORDER_PRICE                =9018, // double      , order price 
+      FIELD_ULTENCY_LIQUIDITY_ORDER_PRICE_EXPECTED       =9019, // double      , expected execution price 
+      FIELD_ULTENCY_LIQUIDITY_ORDER_TIME_SETUP           =9020, // int64_t     , order setup time 
+      FIELD_ULTENCY_LIQUIDITY_ORDER_TIME_EXPIRATION      =9021, // int64_t     , order expiration 
+      FIELD_ULTENCY_LIQUIDITY_ORDER_TIME_DONE            =9022, // int64_t     , order filling/cancel time
+      FIELD_ULTENCY_LIQUIDITY_ORDER_COST_EXECUTED        =9023, // double      , execution cost 
+      FIELD_ULTENCY_LIQUIDITY_ORDER_MARKUP               =9024, // int32_t     , markup 
+      FIELD_ULTENCY_LIQUIDITY_ORDER_DIGITS               =9025, // uint32_t    , price digits
+      FIELD_ULTENCY_LIQUIDITY_ORDER_PERFOMANCE_TIME_PLACE=9026, // int64_t     , processing time for order placement 
+      FIELD_ULTENCY_LIQUIDITY_ORDER_PERFOMANCE_TIME_FILL =9027, // int64_t     , processing time for order filling 
+      FIELD_ULTENCY_LIQUIDITY_ORDER_RATE_USD             =9028, // double      , base currency rate to USD 
+      FIELD_ULTENCY_LIQUIDITY_ORDER_SYMBOL               =9029, // wchar_t[32] , aggregated symbol 
+      FIELD_ULTENCY_LIQUIDITY_ORDER_FLAGS                =9030, // uint32_t    , liquidity order flags
+      FIELD_ULTENCY_LIQUIDITY_ORDER_SOURCE_PARTY_ID      =9031, // uint64_t    , source party id 
+      //--- Deal ultency fields enumeration borders
+      FIELD_ULTENCY_LIQUIDITY_ORDER_FIRST     =FIELD_ULTENCY_LIQUIDITY_ORDER,
+      FIELD_ULTENCY_LIQUIDITY_ORDER_LAST      =FIELD_ULTENCY_LIQUIDITY_ORDER_SOURCE_PARTY_ID,
       //--- enumeration borders
       FIELD_FIRST                            =FIELD_USER_FIRST,
-      FIELD_LAST                             =FIELD_ACCOUNT_LAST
+      FIELD_LAST                             =FIELD_ULTENCY_LIQUIDITY_ORDER_LAST
      };
    //--- flags
    enum EnFieldFlags
      {
       FLAG_NONE                              =0x0000000,    // none
       FLAG_SELECT                            =0x0000001,    // select field
+      FLAG_WHERE_STRING_MASK                 =0x0000002,    // treat where strings as masks
       //--- enumeration borders
       FLAG_DEFAULT                           =FLAG_SELECT,
-      FLAG_ALL                               =FLAG_SELECT
+      FLAG_ALL                               =FLAG_SELECT|FLAG_WHERE_STRING_MASK
      };
    //--- gender enumeration
    enum EnGender
@@ -757,6 +940,28 @@ public:
       EXPERIENCE_FIRST                       =EXPERIENCE_LESS_1_YEAR,
       EXPERIENCE_LAST                        =EXPERIENCE_ABOVE_3_YEAR
      };
+   //--- client origins
+   enum EnClientOrigin
+     {
+      CLIENT_ORIGIN_MANUAL                =0,               // manual created
+      CLIENT_ORIGIN_DEMO                  =1,               // automatic was created from demo account
+      CLIENT_ORIGIN_CONTEST               =2,               // automatic was created from contest account
+      CLIENT_ORIGIN_PRELIMINARY           =3,               // automatic was created from preliminary account
+      CLIENT_ORIGIN_REAL                  =4,               // automatic was created from real account
+      //--- enumeration borders
+      CLIENT_ORIGIN_FIRST                 =CLIENT_ORIGIN_MANUAL,
+      CLIENT_ORIGIN_LAST                  =CLIENT_ORIGIN_REAL,
+     };
+   //--- KYC status
+   enum EnKYCStatus
+     {
+      KYC_STATUS_UNDEFINED                =0,               // undefined
+      KYC_STATUS_APPROVED                 =1,               // approved
+      KYC_STATUS_DECLINED                 =2,               // declined
+      //--- enumeration borders
+      KYC_STATUS_FIRST                    =KYC_STATUS_UNDEFINED,
+      KYC_STATUS_LAST                     =KYC_STATUS_DECLINED
+     };
 
 public:
    //--- common methods
@@ -764,42 +969,42 @@ public:
    virtual MTAPIRES  Assign(const IMTDatasetField *field)=0;
    virtual MTAPIRES  Clear(void)=0;
    //--- field id, EnFieldId
-   virtual UINT      Id(void) const=0;
-   virtual MTAPIRES  Id(UINT id)=0;
+   virtual uint32_t  Id(void) const=0;
+   virtual MTAPIRES  Id(uint32_t id)=0;
    //--- type, EnFieldType
-   virtual UINT      Type(void) const=0;
+   virtual uint32_t  Type(void) const=0;
    //--- offset in bytes
-   virtual UINT      Offset(void) const=0;
-   virtual MTAPIRES  Offset(UINT offset)=0;
+   virtual uint32_t  Offset(void) const=0;
+   virtual MTAPIRES  Offset(uint32_t offset)=0;
    //--- size in bytes
-   virtual UINT      Size(void) const=0;
-   virtual MTAPIRES  Size(UINT size)=0;
+   virtual uint32_t  Size(void) const=0;
+   virtual MTAPIRES  Size(uint32_t size)=0;
    //--- flags, EnFieldFlags
-   virtual UINT64    Flags(void) const=0;
-   virtual MTAPIRES  Flags(UINT64 flags)=0;
+   virtual uint64_t    Flags(void) const=0;
+   virtual MTAPIRES  Flags(uint64_t flags)=0;
    //--- reserved properties methods
    virtual MTAPIRES  Reserved1(void)=0;
    virtual MTAPIRES  Reserved2(void)=0;
    virtual MTAPIRES  Reserved3(void)=0;
    virtual MTAPIRES  Reserved4(void)=0;
    //--- add where value(s)
-   virtual MTAPIRES  WhereAddInt(INT64 value)=0;
-   virtual MTAPIRES  WhereAddIntArray(const INT64 *values,UINT values_total)=0;
-   virtual MTAPIRES  WhereAddUInt(UINT64 value)=0;
-   virtual MTAPIRES  WhereAddUIntArray(const UINT64 *values,UINT values_total)=0;
+   virtual MTAPIRES  WhereAddInt(int64_t value)=0;
+   virtual MTAPIRES  WhereAddIntArray(const int64_t *values,uint32_t values_total)=0;
+   virtual MTAPIRES  WhereAddUInt(uint64_t value)=0;
+   virtual MTAPIRES  WhereAddUIntArray(const uint64_t *values,uint32_t values_total)=0;
    virtual MTAPIRES  WhereAddDouble(double value)=0;
-   virtual MTAPIRES  WhereAddDoubleArray(const double *values,UINT values_total)=0;
+   virtual MTAPIRES  WhereAddDoubleArray(const double *values,uint32_t values_total)=0;
    virtual MTAPIRES  WhereAddString(LPCWSTR value)=0;
-   virtual MTAPIRES  WhereAddStringArray(LPCWSTR *values,UINT values_total)=0;
+   virtual MTAPIRES  WhereAddStringArray(LPCWSTR *values,uint32_t values_total)=0;
    //--- set pointer to ascending sorted array with where values
-   virtual MTAPIRES  WhereUIntSet(const UINT64 *values,UINT values_total)=0;
+   virtual MTAPIRES  WhereUIntSet(const uint64_t *values,uint32_t values_total)=0;
    //--- reserved where methods
    virtual MTAPIRES  WhereReserved1(void)=0;
    virtual MTAPIRES  WhereReserved2(void)=0;
    virtual MTAPIRES  WhereReserved3(void)=0;
    //--- between values int
-   virtual MTAPIRES  BetweenInt(INT64 from,INT64 to)=0;
-   virtual MTAPIRES  BetweenUInt(UINT64 from,UINT64 to)=0;
+   virtual MTAPIRES  BetweenInt(int64_t from,int64_t to)=0;
+   virtual MTAPIRES  BetweenUInt(uint64_t from,uint64_t to)=0;
    virtual MTAPIRES  BetweenDouble(double from,double to)=0;
    //--- reserved between methods
    virtual MTAPIRES  BetweenReserved1(void)=0;
@@ -828,20 +1033,20 @@ public:
    //--- fields
    virtual IMTDatasetField* FieldCreate(void)=0;
    virtual MTAPIRES  FieldAdd(const IMTDatasetField *field)=0;
-   virtual MTAPIRES  FieldUpdate(UINT pos,const IMTDatasetField *field)=0;
-   virtual MTAPIRES  FieldDelete(UINT pos)=0;
+   virtual MTAPIRES  FieldUpdate(uint32_t pos,const IMTDatasetField *field)=0;
+   virtual MTAPIRES  FieldDelete(uint32_t pos)=0;
    virtual MTAPIRES  FieldClear(void)=0;
-   virtual MTAPIRES  FieldShift(UINT pos,int shift)=0;
-   virtual UINT      FieldTotal(void) const=0;
-   virtual MTAPIRES  FieldNext(UINT pos,IMTDatasetField *field) const=0;
-   virtual IMTDatasetField* FieldCreateReference(UINT pos)=0;
+   virtual MTAPIRES  FieldShift(uint32_t pos,int32_t shift)=0;
+   virtual uint32_t  FieldTotal(void) const=0;
+   virtual MTAPIRES  FieldNext(uint32_t pos,IMTDatasetField *field) const=0;
+   virtual IMTDatasetField* FieldCreateReference(uint32_t pos)=0;
    //--- reserved fields methods
    virtual MTAPIRES  FieldReserved1(void)=0;
    virtual MTAPIRES  FieldReserved2(void)=0;
    virtual MTAPIRES  FieldReserved3(void)=0;
    //--- limit the number of rows of the resulting dataset
-   virtual UINT      RowLimit(void) const=0;
-   virtual MTAPIRES  RowLimit(UINT rows)=0;
+   virtual uint32_t  RowLimit(void) const=0;
+   virtual MTAPIRES  RowLimit(uint32_t rows)=0;
    //--- explicit destructor is prohibited
 protected:
                     ~IMTDatasetRequest(void) {}

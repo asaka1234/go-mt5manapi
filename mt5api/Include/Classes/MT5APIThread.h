@@ -1,6 +1,6 @@
-//+------------------------------------------------------------------+
+﻿//+------------------------------------------------------------------+
 //|                                                     MetaTrader 5 |
-//|                             Copyright 2000-2024, MetaQuotes Ltd. |
+//|                             Copyright 2000-2026, MetaQuotes Ltd. |
 //|                                               www.metaquotes.net |
 //+------------------------------------------------------------------+
 #pragma once
@@ -30,7 +30,7 @@ public:
         }
      }
 
-   bool Start(unsigned (__stdcall *thread_func)(void*),void *thread_param,const UINT stack_size)
+   bool Start(unsigned (__stdcall *thread_func)(void*),void *thread_param,const uint32_t stack_size)
      {
       DWORD id=0;
       //--- thread has been started...
@@ -45,7 +45,7 @@ public:
          m_thread=NULL;
         }
       //--- start thread
-      m_thread=(HANDLE)_beginthreadex(NULL,stack_size,thread_func,(void*)thread_param,STACK_SIZE_PARAM_IS_A_RESERVATION,(UINT*)&id);
+      m_thread=(HANDLE)_beginthreadex(NULL,stack_size,thread_func,(void*)thread_param,STACK_SIZE_PARAM_IS_A_RESERVATION,(uint32_t*)&id);
       if(m_thread==0 || m_thread==INVALID_HANDLE_VALUE)
         {
          m_thread=NULL;
@@ -55,7 +55,7 @@ public:
       return(true);
      }
 
-   bool Shutdown(const UINT timeout=INFINITE)
+   bool Shutdown(const uint32_t timeout=INFINITE)
      {
       //--- check
       if(!m_thread)
@@ -100,7 +100,7 @@ public:
       return(false);
      }
 
-   bool Priority(int priority)
+   bool Priority(int32_t priority)
      {
       return(m_thread && SetThreadPriority(m_thread,priority));
      }
